@@ -5,12 +5,12 @@ Imports System.Data.SQLite
 
 Public Class Login_aken
 
+    Dim sugu As Integer
     Private Sub ResetForm()
         pnlLogoLogiSisse.Visible = True
         pnlLogiSisse.Visible = True
         pnlLooKonto.Visible = False
         pnlLooKontoEdasi.Visible = False
-        pnlLooKontoEdasi2.Visible = False
         pnlUnustasinSalasona.Visible = False
         txtLogiSisseSalasona.UseSystemPasswordChar = True
         txtLooKontoSalasona.UseSystemPasswordChar = True
@@ -19,7 +19,6 @@ Public Class Login_aken
         txtUnustasinSalasonaEdasiKordaSalasona.UseSystemPasswordChar = True
         lblLooKontoViga.Visible = False
         lblLooKontoEdasiViga.Visible = False
-        lblLooKontoEdasi2Viga.Visible = False
         lblLogiSisseViga.Visible = False
         lblUnustasinSalasonaEdasiViga.Visible = False
         lblKontotEiEksisteeri.Visible = False
@@ -39,8 +38,6 @@ Public Class Login_aken
         'End If
         'Next
         'Next
-
-
         For index = 140 To 210
             cmbPikkus.Items.Add(index)
         Next
@@ -55,6 +52,28 @@ Public Class Login_aken
             cmbVanus.Items.Add(index)
         Next
         cmbVanus.SelectedItem = 20
+        turvaKusimused()
+    End Sub
+
+    Sub turvaKusimused()
+        Dim connectionString As String = "Data Source=C:\Users\alder\Documents\Toitumispaevik\database.db;Version=3;"
+        Using connection As New SQLiteConnection(connectionString)
+            connection.Open()
+            For index = 0 To 10
+                Dim selectSql As String = "SELECT recovery_question FROM recovery_questions WHERE recovery_question_id = @id"
+
+                Using cmd As New SQLiteCommand(selectSql, connection)
+                    cmd.Parameters.AddWithValue("@id", index)
+
+                    Using reader As SQLiteDataReader = cmd.ExecuteReader()
+                        While reader.Read()
+                            cmbTurvaKüsimus.Items.Add(reader("recovery_question"))
+                        End While
+                    End Using
+                End Using
+            Next
+        End Using
+        cmbTurvaKüsimus.SelectedIndex = 0
     End Sub
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ResetForm()
@@ -76,27 +95,48 @@ Public Class Login_aken
     End Sub
 
     Private Sub btnLooKontoEdasi_Click(sender As Object, e As EventArgs) Handles btnLooKontoEdasi.Click
-        pnlLooKonto.Visible = False
-        pnlLooKontoEdasi.Visible = True
-    End Sub
-    Private Sub btnLooKontoEdasi2_Click(sender As Object, e As EventArgs) Handles btnLooKontoEdasi2.Click
-        pnlLooKontoEdasi.Visible = False
-        pnlLooKontoEdasi2.Visible = True
+        Dim profiil As New CKasutajaProfiil.CKasutajaProfiil
+        If Len(txtLooKontoSalasona.Text) < 8 Then
+            lblLooKontoViga.Text = "Salasõna pikkus peab olema vähemalt 8 tähemärki!"
+            lblLooKontoViga.Visible = True
+        ElseIf txtLooKontoSalasona.Text <> txtKordaSalasona.Text Then
+            lblLooKontoViga.Text = "Salasõnad ei ühti!"
+            lblLooKontoViga.Visible = True
+        ElseIf profiil.KontrolliKontoOlemasolu(txtLooKontoKasutajanimi.text) = True Then
+            lblLooKontoViga.Text = "Sellise kasutajanimega konto on juba olemas!"
+            lblLooKontoViga.Visible = True
+        Else
+            lblLooKontoViga.Visible = False
+            pnlLooKonto.Visible = False
+            pnlLooKontoEdasi.Visible = True
+        End If
     End Sub
     Private Sub btnLooKonto_Click(sender As Object, e As EventArgs) Handles btnLooKonto.Click
-        ResetForm()
-        Me.Hide()
-        Pohiaken.Show()
+        If txtTurvaVastus.Text = "" Then
+            lblLooKontoEdasiViga.Text = "Parooli taasteküsimuse vastuse viga!"
+            lblLooKontoEdasiViga.Visible = True
+        ElseIf rdbMeesSugu.Checked = False And rdbNaisSugu.Checked = False Then
+            lblLooKontoEdasiViga.Text = "Viga soo valikul!"
+            lblLooKontoEdasiViga.Visible = True
+        Else
+            lblLooKontoEdasiViga.Visible = False
+            Dim profiil As New CKasutajaProfiil.CKasutajaProfiil()
+            If profiil.LooKonto(txtLooKontoKasutajanimi.Text, txtLooKontoSalasona.Text, txtEesnimi.Text,
+                                                              cmbTurvaKüsimus.SelectedIndex, txtTurvaVastus.Text, cmbPikkus.SelectedItem, cmbKehaKaal.SelectedItem, sugu,
+                                                              cmbVanus.SelectedItem) > 0 Then
+                ResetForm()
+                Me.Hide()
+                Pohiaken.Show()
+            Else
+                lblLooKontoEdasiViga.Text = "Konto loomine ebaõnnestus!"
+                lblLooKontoEdasiViga.Visible = True
+            End If
+        End If
     End Sub
 
     Private Sub lblUnustasidSalasona_Click(sender As Object, e As EventArgs) Handles lblUnustasidSalasona.Click
         pnlLogiSisse.Visible = False
         pnlUnustasinSalasona.Visible = True
-    End Sub
-
-    Private Sub lblLooKontoEdasi2Tagasi_Click(sender As Object, e As EventArgs) Handles lblLooKontoEdasi2Tagasi.Click
-        pnlLooKontoEdasi2.Visible = False
-        pnlLooKontoEdasi.Visible = True
     End Sub
 
     Private Sub lblLooKontoEdasiTagasi_Click(sender As Object, e As EventArgs) Handles lblLooKontoEdasiTagasi.Click
@@ -120,5 +160,18 @@ Public Class Login_aken
         pnlUnustasinSalasonaEdasi.Visible = False
         pnlLogiSisse.Visible = True
     End Sub
+
+    Private Sub btnNaitaTurvakusimust_Click(sender As Object, e As EventArgs) Handles btnNaitaTurvakusimust.Click
+        Dim profiil As New CKasutajaProfiil.CKasutajaProfiil
+        If profiil.KontrolliKontoOlemasolu(txtUnustasinSalasonaKasutajanimi.Text) = False Then
+            lblKontotEiEksisteeri.Text = "Sisestatud kasutajanimega kontot ei eksisteeri!"
+            lblKontotEiEksisteeri.Visible = True
+        Else
+            lblKontotEiEksisteeri.Visible = False
+            lblTurvaKusimus.Text = profiil.TurvaKusimuseLeidmine(txtUnustasinSalasonaKasutajanimi.Text)
+            lblTurvaKusimus.Visible = True
+        End If
+    End Sub
+
 End Class
 
