@@ -1,5 +1,6 @@
 ﻿Imports System.Data.SqlClient
 Imports System.Data.SQLite
+Imports System.IO
 Public Class CKasutajaProfiil
     Public Function LooKonto(ByVal kasutajanimi As String, ByVal salasona As String, ByVal eesnimi As String,
                                  ByVal taaste_id As Integer, ByVal taaste_vastus As String, ByVal pikkus As Integer,
@@ -7,7 +8,8 @@ Public Class CKasutajaProfiil
 
         Dim kasutaja_id As Integer = GenereeriId()
         Dim olek As Integer
-        Dim tabeli_asukoht As String = "Data Source=C:\Users\alder\Documents\Toitumispaevik\database.db;Version=3;"
+        Dim tabeli_asukoht As String = $"Data Source={Path.Combine(Path.GetFullPath(Path.Combine _
+        (AppDomain.CurrentDomain.BaseDirectory, "..\..\..\")), "Data", "database.db")};Version=3;"
         Using connection As New SQLiteConnection(tabeli_asukoht)
             connection.Open()
             Dim insertDataSql As String = "INSERT INTO user_data (user_id, username, password, firstname, recovery_question_id,
@@ -37,7 +39,8 @@ Public Class CKasutajaProfiil
     Public Function KontrolliKontoOlemasolu(ByVal kasutajanimi As String) As Boolean
 
         Dim olek As Integer
-        Dim tabeli_asukoht As String = "Data Source=C:\Users\alder\Documents\Toitumispaevik\database.db;Version=3;"
+        Dim tabeli_asukoht As String = $"Data Source={Path.Combine(Path.GetFullPath(Path.Combine _
+        (AppDomain.CurrentDomain.BaseDirectory, "..\..\..\")), "Data", "database.db")};Version=3;"
         Using connection As New SQLiteConnection(tabeli_asukoht)
             connection.Open()
 
@@ -60,7 +63,8 @@ Public Class CKasutajaProfiil
 
         Dim kusimuse_id As Integer
         Dim kusimus As String = ""
-        Dim tabeli_asukoht As String = "Data Source=C:\Users\alder\Documents\Toitumispaevik\database.db;Version=3;"
+        Dim tabeli_asukoht As String = $"Data Source={Path.Combine(Path.GetFullPath(Path.Combine _
+        (AppDomain.CurrentDomain.BaseDirectory, "..\..\..\")), "Data", "database.db")};Version=3;"
         Using connection As New SQLiteConnection(tabeli_asukoht)
             connection.Open()
 

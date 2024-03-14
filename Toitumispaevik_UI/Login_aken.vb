@@ -56,8 +56,9 @@ Public Class Login_aken
     End Sub
 
     Sub turvaKusimused()
-        Dim connectionString As String = "Data Source=C:\Users\alder\Documents\Toitumispaevik\database.db;Version=3;"
-        Using connection As New SQLiteConnection(connectionString)
+        Dim tabeli_asukoht As String = $"Data Source={Path.Combine(Path.GetFullPath(Path.Combine _
+(AppDomain.CurrentDomain.BaseDirectory, "..\..\..\")), "Data", "database.db")};Version=3;"
+        Using connection As New SQLiteConnection(tabeli_asukoht)
             connection.Open()
             For index = 0 To 10
                 Dim selectSql As String = "SELECT recovery_question FROM recovery_questions WHERE recovery_question_id = @id"
@@ -102,7 +103,7 @@ Public Class Login_aken
         ElseIf txtLooKontoSalasona.Text <> txtKordaSalasona.Text Then
             lblLooKontoViga.Text = "Salasõnad ei ühti!"
             lblLooKontoViga.Visible = True
-        ElseIf profiil.KontrolliKontoOlemasolu(txtLooKontoKasutajanimi.text) = True Then
+        ElseIf profiil.KontrolliKontoOlemasolu(txtLooKontoKasutajanimi.Text) = True Then
             lblLooKontoViga.Text = "Sellise kasutajanimega konto on juba olemas!"
             lblLooKontoViga.Visible = True
         Else
@@ -119,6 +120,9 @@ Public Class Login_aken
             lblLooKontoEdasiViga.Text = "Viga soo valikul!"
             lblLooKontoEdasiViga.Visible = True
         Else
+            If rdbNaisSugu.Checked = True Then
+                sugu = 1
+            End If
             lblLooKontoEdasiViga.Visible = False
             Dim profiil As New CKasutajaProfiil.CKasutajaProfiil()
             If profiil.LooKonto(txtLooKontoKasutajanimi.Text, txtLooKontoSalasona.Text, txtEesnimi.Text,
@@ -149,6 +153,8 @@ Public Class Login_aken
         pnlLogiSisse.Visible = True
     End Sub
     Private Sub btnEsitaTurvaKusimuseVastus_Click(sender As Object, e As EventArgs) Handles btnEsitaTurvaKusimuseVastus.Click
+        lblTurvaKusimusEdasiKasutajanimi.Text = txtUnustasinSalasonaKasutajanimi.Text
+        lblTurvaKusimusEdasiKasutajanimi.Visible = True
         pnlUnustasinSalasona.Visible = False
         pnlUnustasinSalasonaEdasi.Visible = True
     End Sub
