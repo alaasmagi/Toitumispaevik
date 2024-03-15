@@ -23,9 +23,9 @@ Partial Class Pohiaken
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Pohiaken))
-        Dim ChartArea2 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
-        Dim Legend2 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
-        Dim Series2 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
+        Dim ChartArea1 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
+        Dim Legend1 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
+        Dim Series1 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
         Me.pnlLeftBar = New System.Windows.Forms.Panel()
         Me.btnAjalugu = New System.Windows.Forms.Button()
         Me.btnYlevaade = New System.Windows.Forms.Button()
@@ -41,7 +41,7 @@ Partial Class Pohiaken
         Me.pnlTopBar = New System.Windows.Forms.Panel()
         Me.btnLogiValja = New System.Windows.Forms.Button()
         Me.btnProfiiliSeaded = New System.Windows.Forms.Button()
-        Me.Label1 = New System.Windows.Forms.Label()
+        Me.lblEesnimi = New System.Windows.Forms.Label()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.pnlToidulaud = New System.Windows.Forms.Panel()
         Me.Label15 = New System.Windows.Forms.Label()
@@ -63,7 +63,7 @@ Partial Class Pohiaken
         Me.Label2 = New System.Windows.Forms.Label()
         Me.PictureBox2 = New System.Windows.Forms.PictureBox()
         Me.pnlKodu = New System.Windows.Forms.Panel()
-        Me.Label14 = New System.Windows.Forms.Label()
+        Me.lblKoduEesnimi = New System.Windows.Forms.Label()
         Me.Label13 = New System.Windows.Forms.Label()
         Me.pnlTreeningud = New System.Windows.Forms.Panel()
         Me.Label16 = New System.Windows.Forms.Label()
@@ -280,7 +280,7 @@ Partial Class Pohiaken
         Me.pnlTopBar.BackColor = System.Drawing.Color.FromArgb(CType(CType(188, Byte), Integer), CType(CType(227, Byte), Integer), CType(CType(224, Byte), Integer))
         Me.pnlTopBar.Controls.Add(Me.btnLogiValja)
         Me.pnlTopBar.Controls.Add(Me.btnProfiiliSeaded)
-        Me.pnlTopBar.Controls.Add(Me.Label1)
+        Me.pnlTopBar.Controls.Add(Me.lblEesnimi)
         Me.pnlTopBar.Controls.Add(Me.PictureBox1)
         Me.pnlTopBar.Dock = System.Windows.Forms.DockStyle.Top
         Me.pnlTopBar.Location = New System.Drawing.Point(232, 0)
@@ -318,16 +318,16 @@ Partial Class Pohiaken
         Me.btnProfiiliSeaded.Text = "Profiili seaded"
         Me.btnProfiiliSeaded.UseVisualStyleBackColor = False
         '
-        'Label1
+        'lblEesnimi
         '
-        Me.Label1.AutoSize = True
-        Me.Label1.Font = New System.Drawing.Font("Century Gothic", 12.0!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Italic), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label1.ForeColor = System.Drawing.Color.FromArgb(CType(CType(35, Byte), Integer), CType(CType(74, Byte), Integer), CType(CType(71, Byte), Integer))
-        Me.Label1.Location = New System.Drawing.Point(87, 39)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(68, 21)
-        Me.Label1.TabIndex = 2
-        Me.Label1.Text = "Eesnimi"
+        Me.lblEesnimi.AutoSize = True
+        Me.lblEesnimi.Font = New System.Drawing.Font("Century Gothic", 12.0!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Italic), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblEesnimi.ForeColor = System.Drawing.Color.FromArgb(CType(CType(35, Byte), Integer), CType(CType(74, Byte), Integer), CType(CType(71, Byte), Integer))
+        Me.lblEesnimi.Location = New System.Drawing.Point(87, 39)
+        Me.lblEesnimi.Name = "lblEesnimi"
+        Me.lblEesnimi.Size = New System.Drawing.Size(68, 21)
+        Me.lblEesnimi.TabIndex = 2
+        Me.lblEesnimi.Text = "Eesnimi"
         '
         'PictureBox1
         '
@@ -541,22 +541,22 @@ Partial Class Pohiaken
         '
         'pnlKodu
         '
-        Me.pnlKodu.Controls.Add(Me.Label14)
+        Me.pnlKodu.Controls.Add(Me.lblKoduEesnimi)
         Me.pnlKodu.Controls.Add(Me.Label13)
         Me.pnlKodu.Location = New System.Drawing.Point(232, 100)
         Me.pnlKodu.Name = "pnlKodu"
         Me.pnlKodu.Size = New System.Drawing.Size(853, 524)
         Me.pnlKodu.TabIndex = 11
         '
-        'Label14
+        'lblKoduEesnimi
         '
-        Me.Label14.AutoSize = True
-        Me.Label14.Font = New System.Drawing.Font("Century Gothic", 18.0!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Italic), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label14.Location = New System.Drawing.Point(83, 30)
-        Me.Label14.Name = "Label14"
-        Me.Label14.Size = New System.Drawing.Size(107, 30)
-        Me.Label14.TabIndex = 1
-        Me.Label14.Text = "Eesnimi!"
+        Me.lblKoduEesnimi.AutoSize = True
+        Me.lblKoduEesnimi.Font = New System.Drawing.Font("Century Gothic", 18.0!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Italic), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblKoduEesnimi.Location = New System.Drawing.Point(83, 30)
+        Me.lblKoduEesnimi.Name = "lblKoduEesnimi"
+        Me.lblKoduEesnimi.Size = New System.Drawing.Size(107, 30)
+        Me.lblKoduEesnimi.TabIndex = 1
+        Me.lblKoduEesnimi.Text = "Eesnimi!"
         '
         'Label13
         '
@@ -692,16 +692,16 @@ Partial Class Pohiaken
         Me.chrAjalugu.BorderlineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid
         Me.chrAjalugu.BorderSkin.BackColor = System.Drawing.Color.FromArgb(CType(CType(238, Byte), Integer), CType(CType(248, Byte), Integer), CType(CType(247, Byte), Integer))
         Me.chrAjalugu.BorderSkin.PageColor = System.Drawing.Color.FromArgb(CType(CType(238, Byte), Integer), CType(CType(248, Byte), Integer), CType(CType(247, Byte), Integer))
-        ChartArea2.Name = "ChartArea1"
-        Me.chrAjalugu.ChartAreas.Add(ChartArea2)
-        Legend2.Name = "Legend1"
-        Me.chrAjalugu.Legends.Add(Legend2)
+        ChartArea1.Name = "ChartArea1"
+        Me.chrAjalugu.ChartAreas.Add(ChartArea1)
+        Legend1.Name = "Legend1"
+        Me.chrAjalugu.Legends.Add(Legend1)
         Me.chrAjalugu.Location = New System.Drawing.Point(345, 67)
         Me.chrAjalugu.Name = "chrAjalugu"
-        Series2.ChartArea = "ChartArea1"
-        Series2.Legend = "Legend1"
-        Series2.Name = "Series1"
-        Me.chrAjalugu.Series.Add(Series2)
+        Series1.ChartArea = "ChartArea1"
+        Series1.Legend = "Legend1"
+        Series1.Name = "Series1"
+        Me.chrAjalugu.Series.Add(Series1)
         Me.chrAjalugu.Size = New System.Drawing.Size(496, 446)
         Me.chrAjalugu.TabIndex = 5
         Me.chrAjalugu.Text = "Ajalugu"
@@ -759,13 +759,13 @@ Partial Class Pohiaken
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(241, Byte), Integer), CType(CType(239, Byte), Integer))
         Me.ClientSize = New System.Drawing.Size(1085, 625)
+        Me.Controls.Add(Me.pnlKodu)
         Me.Controls.Add(Me.pnlTulevik)
         Me.Controls.Add(Me.pnlAjalugu)
         Me.Controls.Add(Me.pnlYlevaade)
         Me.Controls.Add(Me.pnlTreeningud)
         Me.Controls.Add(Me.pnlProfiiliSeaded)
         Me.Controls.Add(Me.pnlRakenduseInfo)
-        Me.Controls.Add(Me.pnlKodu)
         Me.Controls.Add(Me.pnlToidulaud)
         Me.Controls.Add(Me.pnlTopBar)
         Me.Controls.Add(Me.pnlLeftBar)
@@ -818,7 +818,7 @@ Partial Class Pohiaken
     Friend WithEvents btnLogiValja As Button
     Friend WithEvents PictureBox1 As PictureBox
     Friend WithEvents btnProfiiliSeaded As Button
-    Friend WithEvents Label1 As Label
+    Friend WithEvents lblEesnimi As Label
     Friend WithEvents btnTulevik As Button
     Friend WithEvents btnKodu As Button
     Friend WithEvents Panel1 As Panel
@@ -848,7 +848,7 @@ Partial Class Pohiaken
     Friend WithEvents Label10 As Label
     Friend WithEvents pnlKodu As Panel
     Friend WithEvents Label13 As Label
-    Friend WithEvents Label14 As Label
+    Friend WithEvents lblKoduEesnimi As Label
     Friend WithEvents pnlTreeningud As Panel
     Friend WithEvents Label15 As Label
     Friend WithEvents Label16 As Label

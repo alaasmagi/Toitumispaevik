@@ -1,5 +1,12 @@
 ﻿Public Class Pohiaken
-    Private Sub Form2_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+    Private _kasutaja_id As Integer
+
+    Public Sub New(ByVal kasutaja_id As Integer)
+        InitializeComponent()
+        _kasutaja_id = kasutaja_id
+    End Sub
+    Private Sub Pohiaken_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         pnlLogo.Visible = True
         pnlTopBar.Visible = True
         pnlLeftBar.Visible = True
@@ -11,6 +18,9 @@
         pnlProfiiliSeaded.Visible = False
         pnlRakenduseInfo.Visible = False
         pnlKodu.Visible = True
+        Dim profiil As New CKasutajaProfiil.CKasutajaProfiil
+        lblEesnimi.Text = profiil.EesnimeKuvamine(_kasutaja_id)
+        lblKoduEesnimi.Text = lblEesnimi.Text & "!"
 
         cmbAjaluguGraafikuPeriood.Items.Add("Viimased 7 päeva")
         cmbAjaluguGraafikuPeriood.SelectedItem = "Viimased 7 päeva"
@@ -51,7 +61,9 @@
 
     Private Sub btnLogiValja_Click(sender As Object, e As EventArgs) Handles btnLogiValja.Click
         Me.Hide()
-        Login_aken.Show()
+        Dim login_aken As New Login_aken()
+        login_aken.Show()
+        Me.Close()
     End Sub
 
 
