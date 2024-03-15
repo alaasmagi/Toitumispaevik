@@ -23,9 +23,9 @@ Partial Class Pohiaken
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Pohiaken))
-        Dim ChartArea2 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
-        Dim Legend2 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
-        Dim Series2 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
+        Dim ChartArea3 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
+        Dim Legend3 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
+        Dim Series3 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
         Me.pnlLeftBar = New System.Windows.Forms.Panel()
         Me.btnAjalugu = New System.Windows.Forms.Button()
         Me.btnYlevaade = New System.Windows.Forms.Button()
@@ -117,9 +117,9 @@ Partial Class Pohiaken
         Me.btnAjalugu.Font = New System.Drawing.Font("Century Gothic", 12.0!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Italic), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnAjalugu.ForeColor = System.Drawing.Color.FromArgb(CType(CType(35, Byte), Integer), CType(CType(74, Byte), Integer), CType(CType(71, Byte), Integer))
         Me.btnAjalugu.Image = Global.Toitumispaevik_UI.My.Resources.Resources.history
-        Me.btnAjalugu.Location = New System.Drawing.Point(0, 348)
+        Me.btnAjalugu.Location = New System.Drawing.Point(0, 331)
         Me.btnAjalugu.Name = "btnAjalugu"
-        Me.btnAjalugu.Size = New System.Drawing.Size(232, 61)
+        Me.btnAjalugu.Size = New System.Drawing.Size(232, 76)
         Me.btnAjalugu.TabIndex = 8
         Me.btnAjalugu.Text = " Ajalugu"
         Me.btnAjalugu.TextAlign = System.Drawing.ContentAlignment.MiddleRight
@@ -135,9 +135,9 @@ Partial Class Pohiaken
         Me.btnYlevaade.Font = New System.Drawing.Font("Century Gothic", 12.0!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Italic), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnYlevaade.ForeColor = System.Drawing.Color.FromArgb(CType(CType(35, Byte), Integer), CType(CType(74, Byte), Integer), CType(CType(71, Byte), Integer))
         Me.btnYlevaade.Image = Global.Toitumispaevik_UI.My.Resources.Resources.search
-        Me.btnYlevaade.Location = New System.Drawing.Point(0, 286)
+        Me.btnYlevaade.Location = New System.Drawing.Point(0, 254)
         Me.btnYlevaade.Name = "btnYlevaade"
-        Me.btnYlevaade.Size = New System.Drawing.Size(232, 61)
+        Me.btnYlevaade.Size = New System.Drawing.Size(232, 76)
         Me.btnYlevaade.TabIndex = 9
         Me.btnYlevaade.Text = " Ülevaade"
         Me.btnYlevaade.TextAlign = System.Drawing.ContentAlignment.MiddleRight
@@ -153,9 +153,9 @@ Partial Class Pohiaken
         Me.btnTreeningud.Font = New System.Drawing.Font("Century Gothic", 12.0!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Italic), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnTreeningud.ForeColor = System.Drawing.Color.FromArgb(CType(CType(35, Byte), Integer), CType(CType(74, Byte), Integer), CType(CType(71, Byte), Integer))
         Me.btnTreeningud.Image = Global.Toitumispaevik_UI.My.Resources.Resources.barbell
-        Me.btnTreeningud.Location = New System.Drawing.Point(0, 224)
+        Me.btnTreeningud.Location = New System.Drawing.Point(0, 177)
         Me.btnTreeningud.Name = "btnTreeningud"
-        Me.btnTreeningud.Size = New System.Drawing.Size(232, 61)
+        Me.btnTreeningud.Size = New System.Drawing.Size(232, 76)
         Me.btnTreeningud.TabIndex = 10
         Me.btnTreeningud.Text = " Treeningud"
         Me.btnTreeningud.TextAlign = System.Drawing.ContentAlignment.MiddleRight
@@ -172,9 +172,9 @@ Partial Class Pohiaken
         Me.btnToidulaud.Font = New System.Drawing.Font("Century Gothic", 12.0!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Italic), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnToidulaud.ForeColor = System.Drawing.Color.FromArgb(CType(CType(35, Byte), Integer), CType(CType(74, Byte), Integer), CType(CType(71, Byte), Integer))
         Me.btnToidulaud.Image = Global.Toitumispaevik_UI.My.Resources.Resources.cutlery
-        Me.btnToidulaud.Location = New System.Drawing.Point(0, 162)
+        Me.btnToidulaud.Location = New System.Drawing.Point(0, 100)
         Me.btnToidulaud.Name = "btnToidulaud"
-        Me.btnToidulaud.Size = New System.Drawing.Size(232, 61)
+        Me.btnToidulaud.Size = New System.Drawing.Size(232, 76)
         Me.btnToidulaud.TabIndex = 8
         Me.btnToidulaud.Text = " Toidulaud"
         Me.btnToidulaud.TextAlign = System.Drawing.ContentAlignment.MiddleRight
@@ -184,24 +184,24 @@ Partial Class Pohiaken
         'pnlNuppudeTagapaneel
         '
         Me.pnlNuppudeTagapaneel.BackColor = System.Drawing.Color.Silver
-        Me.pnlNuppudeTagapaneel.Location = New System.Drawing.Point(45, 162)
+        Me.pnlNuppudeTagapaneel.Location = New System.Drawing.Point(45, 100)
         Me.pnlNuppudeTagapaneel.Name = "pnlNuppudeTagapaneel"
-        Me.pnlNuppudeTagapaneel.Size = New System.Drawing.Size(142, 247)
+        Me.pnlNuppudeTagapaneel.Size = New System.Drawing.Size(142, 307)
         Me.pnlNuppudeTagapaneel.TabIndex = 11
         '
         'btnKodu
         '
         Me.btnKodu.BackColor = System.Drawing.Color.FromArgb(CType(CType(188, Byte), Integer), CType(CType(227, Byte), Integer), CType(CType(224, Byte), Integer))
-        Me.btnKodu.BackgroundImage = Global.Toitumispaevik_UI.My.Resources.Resources.home
-        Me.btnKodu.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
+        Me.btnKodu.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None
         Me.btnKodu.FlatAppearance.BorderSize = 0
         Me.btnKodu.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(CType(CType(155, Byte), Integer), CType(CType(214, Byte), Integer), CType(CType(208, Byte), Integer))
         Me.btnKodu.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.btnKodu.Font = New System.Drawing.Font("Century Gothic", 12.0!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Italic), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnKodu.ForeColor = System.Drawing.Color.White
-        Me.btnKodu.Location = New System.Drawing.Point(0, 542)
+        Me.btnKodu.Image = Global.Toitumispaevik_UI.My.Resources.Resources.home__2_
+        Me.btnKodu.Location = New System.Drawing.Point(0, 501)
         Me.btnKodu.Name = "btnKodu"
-        Me.btnKodu.Size = New System.Drawing.Size(232, 58)
+        Me.btnKodu.Size = New System.Drawing.Size(232, 76)
         Me.btnKodu.TabIndex = 7
         Me.btnKodu.UseVisualStyleBackColor = False
         '
@@ -632,16 +632,16 @@ Partial Class Pohiaken
         Me.chrAjalugu.BorderlineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid
         Me.chrAjalugu.BorderSkin.BackColor = System.Drawing.Color.FromArgb(CType(CType(238, Byte), Integer), CType(CType(248, Byte), Integer), CType(CType(247, Byte), Integer))
         Me.chrAjalugu.BorderSkin.PageColor = System.Drawing.Color.FromArgb(CType(CType(238, Byte), Integer), CType(CType(248, Byte), Integer), CType(CType(247, Byte), Integer))
-        ChartArea2.Name = "ChartArea1"
-        Me.chrAjalugu.ChartAreas.Add(ChartArea2)
-        Legend2.Name = "Legend1"
-        Me.chrAjalugu.Legends.Add(Legend2)
+        ChartArea3.Name = "ChartArea1"
+        Me.chrAjalugu.ChartAreas.Add(ChartArea3)
+        Legend3.Name = "Legend1"
+        Me.chrAjalugu.Legends.Add(Legend3)
         Me.chrAjalugu.Location = New System.Drawing.Point(345, 67)
         Me.chrAjalugu.Name = "chrAjalugu"
-        Series2.ChartArea = "ChartArea1"
-        Series2.Legend = "Legend1"
-        Series2.Name = "Series1"
-        Me.chrAjalugu.Series.Add(Series2)
+        Series3.ChartArea = "ChartArea1"
+        Series3.Legend = "Legend1"
+        Series3.Name = "Series1"
+        Me.chrAjalugu.Series.Add(Series3)
         Me.chrAjalugu.Size = New System.Drawing.Size(496, 446)
         Me.chrAjalugu.TabIndex = 5
         Me.chrAjalugu.Text = "Ajalugu"
