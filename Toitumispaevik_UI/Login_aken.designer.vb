@@ -248,7 +248,7 @@ Partial Class Login_aken
         Me.pnlLooKonto.Controls.Add(Me.txtKordaSalasona)
         Me.pnlLooKonto.Controls.Add(Me.btnLooKontoEdasi)
         Me.pnlLooKonto.Location = New System.Drawing.Point(56, 440)
-        Me.pnlLooKonto.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.pnlLooKonto.Margin = New System.Windows.Forms.Padding(4)
         Me.pnlLooKonto.Name = "pnlLooKonto"
         Me.pnlLooKonto.Size = New System.Drawing.Size(806, 502)
         Me.pnlLooKonto.TabIndex = 15
@@ -285,7 +285,7 @@ Partial Class Login_aken
         Me.pnlLooKontoEdasi.Controls.Add(Me.Label3)
         Me.pnlLooKontoEdasi.Controls.Add(Me.Label4)
         Me.pnlLooKontoEdasi.Location = New System.Drawing.Point(56, 440)
-        Me.pnlLooKontoEdasi.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.pnlLooKontoEdasi.Margin = New System.Windows.Forms.Padding(4)
         Me.pnlLooKontoEdasi.Name = "pnlLooKontoEdasi"
         Me.pnlLooKontoEdasi.Size = New System.Drawing.Size(806, 502)
         Me.pnlLooKontoEdasi.TabIndex = 16
@@ -331,7 +331,7 @@ Partial Class Login_aken
         Me.cmbPikkus.IntegralHeight = False
         Me.cmbPikkus.ItemHeight = 26
         Me.cmbPikkus.Location = New System.Drawing.Point(411, 278)
-        Me.cmbPikkus.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.cmbPikkus.Margin = New System.Windows.Forms.Padding(4)
         Me.cmbPikkus.Name = "cmbPikkus"
         Me.cmbPikkus.Size = New System.Drawing.Size(122, 34)
         Me.cmbPikkus.TabIndex = 36
@@ -356,7 +356,7 @@ Partial Class Login_aken
         Me.cmbKehaKaal.FormattingEnabled = True
         Me.cmbKehaKaal.ItemHeight = 26
         Me.cmbKehaKaal.Location = New System.Drawing.Point(244, 278)
-        Me.cmbKehaKaal.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.cmbKehaKaal.Margin = New System.Windows.Forms.Padding(4)
         Me.cmbKehaKaal.Name = "cmbKehaKaal"
         Me.cmbKehaKaal.Size = New System.Drawing.Size(122, 34)
         Me.cmbKehaKaal.TabIndex = 43
@@ -365,7 +365,7 @@ Partial Class Login_aken
         '
         Me.rdbNaisSugu.AutoSize = True
         Me.rdbNaisSugu.Location = New System.Drawing.Point(356, 184)
-        Me.rdbNaisSugu.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.rdbNaisSugu.Margin = New System.Windows.Forms.Padding(4)
         Me.rdbNaisSugu.Name = "rdbNaisSugu"
         Me.rdbNaisSugu.Size = New System.Drawing.Size(109, 32)
         Me.rdbNaisSugu.TabIndex = 32
@@ -393,7 +393,7 @@ Partial Class Login_aken
         '
         Me.rdbMeesSugu.AutoSize = True
         Me.rdbMeesSugu.Location = New System.Drawing.Point(244, 184)
-        Me.rdbMeesSugu.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.rdbMeesSugu.Margin = New System.Windows.Forms.Padding(4)
         Me.rdbMeesSugu.Name = "rdbMeesSugu"
         Me.rdbMeesSugu.Size = New System.Drawing.Size(101, 32)
         Me.rdbMeesSugu.TabIndex = 31
@@ -430,7 +430,7 @@ Partial Class Login_aken
         Me.cmbVanus.IntegralHeight = False
         Me.cmbVanus.ItemHeight = 26
         Me.cmbVanus.Location = New System.Drawing.Point(588, 276)
-        Me.cmbVanus.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.cmbVanus.Margin = New System.Windows.Forms.Padding(4)
         Me.cmbVanus.Name = "cmbVanus"
         Me.cmbVanus.Size = New System.Drawing.Size(122, 34)
         Me.cmbVanus.TabIndex = 23
@@ -449,7 +449,7 @@ Partial Class Login_aken
         Me.cmbTurvaKüsimus.Font = New System.Drawing.Font("Century Gothic", 11.25!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cmbTurvaKüsimus.FormattingEnabled = True
         Me.cmbTurvaKüsimus.Location = New System.Drawing.Point(244, 39)
-        Me.cmbTurvaKüsimus.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.cmbTurvaKüsimus.Margin = New System.Windows.Forms.Padding(4)
         Me.cmbTurvaKüsimus.Name = "cmbTurvaKüsimus"
         Me.cmbTurvaKüsimus.Size = New System.Drawing.Size(466, 34)
         Me.cmbTurvaKüsimus.TabIndex = 18
@@ -485,7 +485,7 @@ Partial Class Login_aken
         Me.pnlLogiSisse.Controls.Add(Me.lblUnustasidSalasona)
         Me.pnlLogiSisse.Controls.Add(Me.lblPoleKontot)
         Me.pnlLogiSisse.Location = New System.Drawing.Point(56, 440)
-        Me.pnlLogiSisse.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.pnlLogiSisse.Margin = New System.Windows.Forms.Padding(4)
         Me.pnlLogiSisse.Name = "pnlLogiSisse"
         Me.pnlLogiSisse.Size = New System.Drawing.Size(806, 502)
         Me.pnlLogiSisse.TabIndex = 15
@@ -553,7 +553,7 @@ Partial Class Login_aken
         Me.pnlUnustasinSalasona.Controls.Add(Me.txtUnustasinSalasonaTurvaVastus)
         Me.pnlUnustasinSalasona.Controls.Add(Me.txtUnustasinSalasonaKasutajanimi)
         Me.pnlUnustasinSalasona.Location = New System.Drawing.Point(56, 440)
-        Me.pnlUnustasinSalasona.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.pnlUnustasinSalasona.Margin = New System.Windows.Forms.Padding(4)
         Me.pnlUnustasinSalasona.Name = "pnlUnustasinSalasona"
         Me.pnlUnustasinSalasona.Size = New System.Drawing.Size(806, 502)
         Me.pnlUnustasinSalasona.TabIndex = 19
@@ -697,7 +697,7 @@ Partial Class Login_aken
         Me.pnlUnustasinSalasonaEdasi.Controls.Add(Me.Label12)
         Me.pnlUnustasinSalasonaEdasi.Controls.Add(Me.txtUnustasinSalasonaEdasiUusSalasona)
         Me.pnlUnustasinSalasonaEdasi.Location = New System.Drawing.Point(56, 440)
-        Me.pnlUnustasinSalasonaEdasi.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.pnlUnustasinSalasonaEdasi.Margin = New System.Windows.Forms.Padding(4)
         Me.pnlUnustasinSalasonaEdasi.Name = "pnlUnustasinSalasonaEdasi"
         Me.pnlUnustasinSalasonaEdasi.Size = New System.Drawing.Size(806, 502)
         Me.pnlUnustasinSalasonaEdasi.TabIndex = 20
@@ -816,14 +816,15 @@ Partial Class Login_aken
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(144.0!, 144.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi
+        Me.AutoSize = True
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(241, Byte), Integer), CType(CType(239, Byte), Integer))
         Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
         Me.ClientSize = New System.Drawing.Size(921, 962)
+        Me.Controls.Add(Me.pnlLogiSisse)
         Me.Controls.Add(Me.pnlUnustasinSalasonaEdasi)
         Me.Controls.Add(Me.pnlUnustasinSalasona)
         Me.Controls.Add(Me.pnlLooKonto)
         Me.Controls.Add(Me.pnlLooKontoEdasi)
-        Me.Controls.Add(Me.pnlLogiSisse)
         Me.Controls.Add(Me.pnlLogoLogiSisse)
         Me.Font = New System.Drawing.Font("Century Gothic", 12.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
