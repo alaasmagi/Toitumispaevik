@@ -12,7 +12,6 @@
         pnlLeftBar.Visible = True
         pnlYlevaade.Visible = False
         pnlTreeningud.Visible = False
-        pnlTulevik.Visible = False
         pnlToidulaud.Visible = False
         pnlAjalugu.Visible = False
         pnlProfiiliSeaded.Visible = False
@@ -35,7 +34,6 @@
     Private Sub pnlLogo_Click(sender As Object, e As EventArgs) Handles pnlLogo.Click
         pnlYlevaade.Visible = False
         pnlTreeningud.Visible = False
-        pnlTulevik.Visible = False
         pnlToidulaud.Visible = False
         pnlAjalugu.Visible = False
         pnlKodu.Visible = False
@@ -70,7 +68,6 @@
     Private Sub btnToidulaud_Click(sender As Object, e As EventArgs) Handles btnToidulaud.Click
         pnlYlevaade.Visible = False
         pnlTreeningud.Visible = False
-        pnlTulevik.Visible = False
         pnlAjalugu.Visible = False
         pnlKodu.Visible = False
         pnlProfiiliSeaded.Visible = False
@@ -80,7 +77,6 @@
 
     Private Sub btnTreeningud_Click(sender As Object, e As EventArgs) Handles btnTreeningud.Click
         pnlYlevaade.Visible = False
-        pnlTulevik.Visible = False
         pnlToidulaud.Visible = False
         pnlAjalugu.Visible = False
         pnlKodu.Visible = False
@@ -91,7 +87,6 @@
 
     Private Sub btnYlevaade_Click(sender As Object, e As EventArgs) Handles btnYlevaade.Click
         pnlTreeningud.Visible = False
-        pnlTulevik.Visible = False
         pnlToidulaud.Visible = False
         pnlAjalugu.Visible = False
         pnlKodu.Visible = False
@@ -103,7 +98,6 @@
     Private Sub btnAjalugu_Click(sender As Object, e As EventArgs) Handles btnAjalugu.Click
         pnlYlevaade.Visible = False
         pnlTreeningud.Visible = False
-        pnlTulevik.Visible = False
         pnlToidulaud.Visible = False
         pnlAjalugu.Visible = False
         pnlKodu.Visible = False
@@ -112,7 +106,7 @@
         pnlAjalugu.Visible = True
     End Sub
 
-    Private Sub btnTulevik_Click(sender As Object, e As EventArgs) Handles btnTulevik.Click
+    Private Sub btnTulevik_Click(sender As Object, e As EventArgs)
         pnlYlevaade.Visible = False
         pnlTreeningud.Visible = False
         pnlToidulaud.Visible = False
@@ -120,13 +114,11 @@
         pnlKodu.Visible = False
         pnlProfiiliSeaded.Visible = False
         pnlRakenduseInfo.Visible = False
-        pnlTulevik.Visible = True
     End Sub
 
     Private Sub btnProfiiliSeaded_Click(sender As Object, e As EventArgs) Handles btnProfiiliSeaded.Click
         pnlYlevaade.Visible = False
         pnlTreeningud.Visible = False
-        pnlTulevik.Visible = False
         pnlToidulaud.Visible = False
         pnlAjalugu.Visible = False
         pnlKodu.Visible = False
@@ -137,7 +129,6 @@
     Private Sub btnKodu_Click(sender As Object, e As EventArgs) Handles btnKodu.Click
         pnlYlevaade.Visible = False
         pnlTreeningud.Visible = False
-        pnlTulevik.Visible = False
         pnlToidulaud.Visible = False
         pnlAjalugu.Visible = False
         pnlProfiiliSeaded.Visible = False

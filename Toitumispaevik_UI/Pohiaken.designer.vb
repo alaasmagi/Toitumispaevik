@@ -23,20 +23,16 @@ Partial Class Pohiaken
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Pohiaken))
-        Dim ChartArea1 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
-        Dim Legend1 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
-        Dim Series1 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
+        Dim ChartArea2 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
+        Dim Legend2 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
+        Dim Series2 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
         Me.pnlLeftBar = New System.Windows.Forms.Panel()
         Me.btnAjalugu = New System.Windows.Forms.Button()
         Me.btnYlevaade = New System.Windows.Forms.Button()
         Me.btnTreeningud = New System.Windows.Forms.Button()
-        Me.btnTulevik = New System.Windows.Forms.Button()
         Me.btnToidulaud = New System.Windows.Forms.Button()
         Me.pnlNuppudeTagapaneel = New System.Windows.Forms.Panel()
         Me.btnKodu = New System.Windows.Forms.Button()
-        Me.Panel1 = New System.Windows.Forms.Panel()
-        Me.Label3 = New System.Windows.Forms.Label()
-        Me.ProgressBar1 = New System.Windows.Forms.ProgressBar()
         Me.pnlLogo = New System.Windows.Forms.Panel()
         Me.pnlTopBar = New System.Windows.Forms.Panel()
         Me.btnLogiValja = New System.Windows.Forms.Button()
@@ -78,12 +74,9 @@ Partial Class Pohiaken
         Me.Label21 = New System.Windows.Forms.Label()
         Me.chrAjalugu = New System.Windows.Forms.DataVisualization.Charting.Chart()
         Me.Label18 = New System.Windows.Forms.Label()
-        Me.pnlTulevik = New System.Windows.Forms.Panel()
-        Me.Label19 = New System.Windows.Forms.Label()
         Me.pnlProfiiliSeaded = New System.Windows.Forms.Panel()
         Me.Label20 = New System.Windows.Forms.Label()
         Me.pnlLeftBar.SuspendLayout()
-        Me.Panel1.SuspendLayout()
         Me.pnlTopBar.SuspendLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.pnlToidulaud.SuspendLayout()
@@ -96,7 +89,6 @@ Partial Class Pohiaken
         Me.pnlAjalugu.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
         CType(Me.chrAjalugu, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.pnlTulevik.SuspendLayout()
         Me.pnlProfiiliSeaded.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -106,11 +98,9 @@ Partial Class Pohiaken
         Me.pnlLeftBar.Controls.Add(Me.btnAjalugu)
         Me.pnlLeftBar.Controls.Add(Me.btnYlevaade)
         Me.pnlLeftBar.Controls.Add(Me.btnTreeningud)
-        Me.pnlLeftBar.Controls.Add(Me.btnTulevik)
         Me.pnlLeftBar.Controls.Add(Me.btnToidulaud)
         Me.pnlLeftBar.Controls.Add(Me.pnlNuppudeTagapaneel)
         Me.pnlLeftBar.Controls.Add(Me.btnKodu)
-        Me.pnlLeftBar.Controls.Add(Me.Panel1)
         Me.pnlLeftBar.Controls.Add(Me.pnlLogo)
         Me.pnlLeftBar.Dock = System.Windows.Forms.DockStyle.Left
         Me.pnlLeftBar.Location = New System.Drawing.Point(0, 0)
@@ -127,7 +117,7 @@ Partial Class Pohiaken
         Me.btnAjalugu.Font = New System.Drawing.Font("Century Gothic", 12.0!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Italic), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnAjalugu.ForeColor = System.Drawing.Color.FromArgb(CType(CType(35, Byte), Integer), CType(CType(74, Byte), Integer), CType(CType(71, Byte), Integer))
         Me.btnAjalugu.Image = Global.Toitumispaevik_UI.My.Resources.Resources.history
-        Me.btnAjalugu.Location = New System.Drawing.Point(0, 286)
+        Me.btnAjalugu.Location = New System.Drawing.Point(0, 348)
         Me.btnAjalugu.Name = "btnAjalugu"
         Me.btnAjalugu.Size = New System.Drawing.Size(232, 61)
         Me.btnAjalugu.TabIndex = 8
@@ -145,7 +135,7 @@ Partial Class Pohiaken
         Me.btnYlevaade.Font = New System.Drawing.Font("Century Gothic", 12.0!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Italic), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnYlevaade.ForeColor = System.Drawing.Color.FromArgb(CType(CType(35, Byte), Integer), CType(CType(74, Byte), Integer), CType(CType(71, Byte), Integer))
         Me.btnYlevaade.Image = Global.Toitumispaevik_UI.My.Resources.Resources.search
-        Me.btnYlevaade.Location = New System.Drawing.Point(0, 224)
+        Me.btnYlevaade.Location = New System.Drawing.Point(0, 286)
         Me.btnYlevaade.Name = "btnYlevaade"
         Me.btnYlevaade.Size = New System.Drawing.Size(232, 61)
         Me.btnYlevaade.TabIndex = 9
@@ -163,7 +153,7 @@ Partial Class Pohiaken
         Me.btnTreeningud.Font = New System.Drawing.Font("Century Gothic", 12.0!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Italic), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnTreeningud.ForeColor = System.Drawing.Color.FromArgb(CType(CType(35, Byte), Integer), CType(CType(74, Byte), Integer), CType(CType(71, Byte), Integer))
         Me.btnTreeningud.Image = Global.Toitumispaevik_UI.My.Resources.Resources.barbell
-        Me.btnTreeningud.Location = New System.Drawing.Point(0, 162)
+        Me.btnTreeningud.Location = New System.Drawing.Point(0, 224)
         Me.btnTreeningud.Name = "btnTreeningud"
         Me.btnTreeningud.Size = New System.Drawing.Size(232, 61)
         Me.btnTreeningud.TabIndex = 10
@@ -171,25 +161,6 @@ Partial Class Pohiaken
         Me.btnTreeningud.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.btnTreeningud.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
         Me.btnTreeningud.UseVisualStyleBackColor = False
-        '
-        'btnTulevik
-        '
-        Me.btnTulevik.BackColor = System.Drawing.Color.FromArgb(CType(CType(188, Byte), Integer), CType(CType(227, Byte), Integer), CType(CType(224, Byte), Integer))
-        Me.btnTulevik.Cursor = System.Windows.Forms.Cursors.Default
-        Me.btnTulevik.FlatAppearance.BorderSize = 0
-        Me.btnTulevik.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(CType(CType(155, Byte), Integer), CType(CType(214, Byte), Integer), CType(CType(208, Byte), Integer))
-        Me.btnTulevik.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnTulevik.Font = New System.Drawing.Font("Century Gothic", 12.0!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Italic), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnTulevik.ForeColor = System.Drawing.Color.FromArgb(CType(CType(35, Byte), Integer), CType(CType(74, Byte), Integer), CType(CType(71, Byte), Integer))
-        Me.btnTulevik.Image = Global.Toitumispaevik_UI.My.Resources.Resources.double_chevron
-        Me.btnTulevik.Location = New System.Drawing.Point(0, 348)
-        Me.btnTulevik.Name = "btnTulevik"
-        Me.btnTulevik.Size = New System.Drawing.Size(232, 61)
-        Me.btnTulevik.TabIndex = 5
-        Me.btnTulevik.Text = " Tulevik"
-        Me.btnTulevik.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.btnTulevik.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
-        Me.btnTulevik.UseVisualStyleBackColor = False
         '
         'btnToidulaud
         '
@@ -201,7 +172,7 @@ Partial Class Pohiaken
         Me.btnToidulaud.Font = New System.Drawing.Font("Century Gothic", 12.0!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Italic), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnToidulaud.ForeColor = System.Drawing.Color.FromArgb(CType(CType(35, Byte), Integer), CType(CType(74, Byte), Integer), CType(CType(71, Byte), Integer))
         Me.btnToidulaud.Image = Global.Toitumispaevik_UI.My.Resources.Resources.cutlery
-        Me.btnToidulaud.Location = New System.Drawing.Point(0, 100)
+        Me.btnToidulaud.Location = New System.Drawing.Point(0, 162)
         Me.btnToidulaud.Name = "btnToidulaud"
         Me.btnToidulaud.Size = New System.Drawing.Size(232, 61)
         Me.btnToidulaud.TabIndex = 8
@@ -213,9 +184,9 @@ Partial Class Pohiaken
         'pnlNuppudeTagapaneel
         '
         Me.pnlNuppudeTagapaneel.BackColor = System.Drawing.Color.Silver
-        Me.pnlNuppudeTagapaneel.Location = New System.Drawing.Point(45, 100)
+        Me.pnlNuppudeTagapaneel.Location = New System.Drawing.Point(45, 162)
         Me.pnlNuppudeTagapaneel.Name = "pnlNuppudeTagapaneel"
-        Me.pnlNuppudeTagapaneel.Size = New System.Drawing.Size(142, 309)
+        Me.pnlNuppudeTagapaneel.Size = New System.Drawing.Size(142, 247)
         Me.pnlNuppudeTagapaneel.TabIndex = 11
         '
         'btnKodu
@@ -228,42 +199,11 @@ Partial Class Pohiaken
         Me.btnKodu.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.btnKodu.Font = New System.Drawing.Font("Century Gothic", 12.0!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Italic), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnKodu.ForeColor = System.Drawing.Color.White
-        Me.btnKodu.Location = New System.Drawing.Point(0, 473)
+        Me.btnKodu.Location = New System.Drawing.Point(0, 542)
         Me.btnKodu.Name = "btnKodu"
-        Me.btnKodu.Size = New System.Drawing.Size(232, 46)
+        Me.btnKodu.Size = New System.Drawing.Size(232, 58)
         Me.btnKodu.TabIndex = 7
         Me.btnKodu.UseVisualStyleBackColor = False
-        '
-        'Panel1
-        '
-        Me.Panel1.BackColor = System.Drawing.Color.Transparent
-        Me.Panel1.Controls.Add(Me.Label3)
-        Me.Panel1.Controls.Add(Me.ProgressBar1)
-        Me.Panel1.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.Panel1.Location = New System.Drawing.Point(0, 525)
-        Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(232, 100)
-        Me.Panel1.TabIndex = 2
-        '
-        'Label3
-        '
-        Me.Label3.AutoSize = True
-        Me.Label3.Font = New System.Drawing.Font("Century Gothic", 12.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label3.ForeColor = System.Drawing.Color.FromArgb(CType(CType(35, Byte), Integer), CType(CType(74, Byte), Integer), CType(CType(71, Byte), Integer))
-        Me.Label3.Location = New System.Drawing.Point(12, 33)
-        Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(198, 19)
-        Me.Label3.TabIndex = 2
-        Me.Label3.Text = "Päevane valkude kogus:"
-        '
-        'ProgressBar1
-        '
-        Me.ProgressBar1.Location = New System.Drawing.Point(16, 55)
-        Me.ProgressBar1.Name = "ProgressBar1"
-        Me.ProgressBar1.Size = New System.Drawing.Size(187, 24)
-        Me.ProgressBar1.Style = System.Windows.Forms.ProgressBarStyle.Continuous
-        Me.ProgressBar1.TabIndex = 0
-        Me.ProgressBar1.Value = 45
         '
         'pnlLogo
         '
@@ -692,16 +632,16 @@ Partial Class Pohiaken
         Me.chrAjalugu.BorderlineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid
         Me.chrAjalugu.BorderSkin.BackColor = System.Drawing.Color.FromArgb(CType(CType(238, Byte), Integer), CType(CType(248, Byte), Integer), CType(CType(247, Byte), Integer))
         Me.chrAjalugu.BorderSkin.PageColor = System.Drawing.Color.FromArgb(CType(CType(238, Byte), Integer), CType(CType(248, Byte), Integer), CType(CType(247, Byte), Integer))
-        ChartArea1.Name = "ChartArea1"
-        Me.chrAjalugu.ChartAreas.Add(ChartArea1)
-        Legend1.Name = "Legend1"
-        Me.chrAjalugu.Legends.Add(Legend1)
+        ChartArea2.Name = "ChartArea1"
+        Me.chrAjalugu.ChartAreas.Add(ChartArea2)
+        Legend2.Name = "Legend1"
+        Me.chrAjalugu.Legends.Add(Legend2)
         Me.chrAjalugu.Location = New System.Drawing.Point(345, 67)
         Me.chrAjalugu.Name = "chrAjalugu"
-        Series1.ChartArea = "ChartArea1"
-        Series1.Legend = "Legend1"
-        Series1.Name = "Series1"
-        Me.chrAjalugu.Series.Add(Series1)
+        Series2.ChartArea = "ChartArea1"
+        Series2.Legend = "Legend1"
+        Series2.Name = "Series1"
+        Me.chrAjalugu.Series.Add(Series2)
         Me.chrAjalugu.Size = New System.Drawing.Size(496, 446)
         Me.chrAjalugu.TabIndex = 5
         Me.chrAjalugu.Text = "Ajalugu"
@@ -715,25 +655,6 @@ Partial Class Pohiaken
         Me.Label18.Size = New System.Drawing.Size(103, 30)
         Me.Label18.TabIndex = 4
         Me.Label18.Text = "Ajalugu"
-        '
-        'pnlTulevik
-        '
-        Me.pnlTulevik.Controls.Add(Me.Label19)
-        Me.pnlTulevik.Dock = System.Windows.Forms.DockStyle.Top
-        Me.pnlTulevik.Location = New System.Drawing.Point(232, 624)
-        Me.pnlTulevik.Name = "pnlTulevik"
-        Me.pnlTulevik.Size = New System.Drawing.Size(853, 524)
-        Me.pnlTulevik.TabIndex = 6
-        '
-        'Label19
-        '
-        Me.Label19.AutoSize = True
-        Me.Label19.Font = New System.Drawing.Font("Century Gothic", 18.0!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Italic), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label19.Location = New System.Drawing.Point(22, 31)
-        Me.Label19.Name = "Label19"
-        Me.Label19.Size = New System.Drawing.Size(91, 30)
-        Me.Label19.TabIndex = 4
-        Me.Label19.Text = "Tulevik"
         '
         'pnlProfiiliSeaded
         '
@@ -760,7 +681,6 @@ Partial Class Pohiaken
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(241, Byte), Integer), CType(CType(239, Byte), Integer))
         Me.ClientSize = New System.Drawing.Size(1085, 625)
         Me.Controls.Add(Me.pnlKodu)
-        Me.Controls.Add(Me.pnlTulevik)
         Me.Controls.Add(Me.pnlAjalugu)
         Me.Controls.Add(Me.pnlYlevaade)
         Me.Controls.Add(Me.pnlTreeningud)
@@ -781,8 +701,6 @@ Partial Class Pohiaken
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Janar"
         Me.pnlLeftBar.ResumeLayout(False)
-        Me.Panel1.ResumeLayout(False)
-        Me.Panel1.PerformLayout()
         Me.pnlTopBar.ResumeLayout(False)
         Me.pnlTopBar.PerformLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
@@ -804,8 +722,6 @@ Partial Class Pohiaken
         Me.GroupBox2.ResumeLayout(False)
         Me.GroupBox2.PerformLayout()
         CType(Me.chrAjalugu, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.pnlTulevik.ResumeLayout(False)
-        Me.pnlTulevik.PerformLayout()
         Me.pnlProfiiliSeaded.ResumeLayout(False)
         Me.pnlProfiiliSeaded.PerformLayout()
         Me.ResumeLayout(False)
@@ -819,11 +735,7 @@ Partial Class Pohiaken
     Friend WithEvents PictureBox1 As PictureBox
     Friend WithEvents btnProfiiliSeaded As Button
     Friend WithEvents lblEesnimi As Label
-    Friend WithEvents btnTulevik As Button
     Friend WithEvents btnKodu As Button
-    Friend WithEvents Panel1 As Panel
-    Friend WithEvents ProgressBar1 As ProgressBar
-    Friend WithEvents Label3 As Label
     Friend WithEvents pnlToidulaud As Panel
     Friend WithEvents btnAjalugu As Button
     Friend WithEvents btnYlevaade As Button
@@ -856,8 +768,6 @@ Partial Class Pohiaken
     Friend WithEvents Label17 As Label
     Friend WithEvents pnlAjalugu As Panel
     Friend WithEvents Label18 As Label
-    Friend WithEvents pnlTulevik As Panel
-    Friend WithEvents Label19 As Label
     Friend WithEvents pnlProfiiliSeaded As Panel
     Friend WithEvents Label20 As Label
     Friend WithEvents chrAjalugu As DataVisualization.Charting.Chart
