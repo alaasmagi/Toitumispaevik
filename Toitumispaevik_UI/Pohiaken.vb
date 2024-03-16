@@ -18,7 +18,7 @@
         pnlRakenduseInfo.Visible = False
         pnlKodu.Visible = True
         Dim profiil As New CKasutajaProfiil.CKasutajaProfiil
-        lblEesnimi.Text = profiil.EesnimeKuvamine(_kasutaja_id)
+        lblEesnimi.Text = profiil.Dekrupteerimine(profiil.UheAndmevaljaParing(_kasutaja_id, "firstname"))
         lblKoduEesnimi.Text = lblEesnimi.Text & "!"
 
         cmbAjaluguGraafikuPeriood.Items.Add("Viimased 7 päeva")

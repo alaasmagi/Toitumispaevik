@@ -142,28 +142,25 @@ Public Class CKasutajaProfiil
         Return builder.ToString()
     End Function
 
-    Public Function EesnimeKuvamine(ByVal kasutaja_id As String) As String
-        Dim tagastus As String
-        Dim eesnimi As String = ""
+    Public Function UheAndmevaljaParing(ByVal kasutaja_id As String, ByVal andmevali As String) As String
+        Dim tagastus As String = ""
         Dim tabeli_asukoht As String = $"Data Source={Path.Combine(Path.GetFullPath(Path.Combine _
         (AppDomain.CurrentDomain.BaseDirectory, "..\..\..\")), "Data", "database.db")};Version=3;"
         Using connection As New SQLiteConnection(tabeli_asukoht)
             connection.Open()
-            Dim sql As String = "SELECT firstname FROM user_data WHERE user_id = @kasutaja_id"
+            Dim sql As String = $"SELECT {andmevali} FROM user_data WHERE user_id = @kasutaja_id"
             Using cmd As New SQLiteCommand(sql, connection)
                 cmd.Parameters.AddWithValue("@kasutaja_id", kasutaja_id)
                 Using reader As SQLiteDataReader = cmd.ExecuteReader()
                     While reader.Read()
-                        eesnimi = reader("firstname")
+                        tagastus = reader(andmevali).ToString()
                     End While
                 End Using
             End Using
         End Using
-
-        tagastus = Dekrupteerimine(eesnimi)
-
         Return tagastus
     End Function
+
 
     Public Function Krupteerimine(ByVal sisend As String) As String
         Dim valjund As New StringBuilder()
