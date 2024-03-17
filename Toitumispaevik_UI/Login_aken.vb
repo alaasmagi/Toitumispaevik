@@ -180,18 +180,39 @@ Public Class Login_aken
         pnlLogiSisse.Visible = True
     End Sub
     Private Sub btnEsitaTurvaKusimuseVastus_Click(sender As Object, e As EventArgs) Handles btnEsitaTurvaKusimuseVastus.Click
-        lblTurvaKusimusEdasiKasutajanimi.Text = txtUnustasinSalasonaKasutajanimi.Text
-        lblTurvaKusimusEdasiKasutajanimi.Visible = True
-        pnlUnustasinSalasona.Visible = False
-        pnlUnustasinSalasonaEdasi.Visible = True
+        Dim profiil As New CKasutajaProfiil.CKasutajaProfiil
+
+        If profiil.UheAndmevaljaParingKasutajaTabelist(kasutaja_id, "recovery_answer") = profiil.ArvutaHash(txtUnustasinSalasonaTurvaVastus.Text) Then
+            lblTurvaKusimusEdasiKasutajanimi.Text = txtUnustasinSalasonaKasutajanimi.Text
+            lblTurvaKüsimuseVastuseViga.Visible = False
+            lblTurvaKusimusEdasiKasutajanimi.Visible = True
+            pnlUnustasinSalasona.Visible = False
+            pnlUnustasinSalasonaEdasi.Visible = True
+        Else
+            txtTurvaVastus.Text = ""
+            lblTurvaKüsimuseVastuseViga.Text = "Turvaküsimuse vastus on vale!"
+            lblTurvaKüsimuseVastuseViga.Visible = True
+        End If
     End Sub
     Private Sub lblUnustasinSalasonaEdasiSalasonaMeenus_Click(sender As Object, e As EventArgs) Handles lblUnustasinSalasonaEdasiSalasonaMeenus.Click
         pnlUnustasinSalasonaEdasi.Visible = False
         pnlLogiSisse.Visible = True
     End Sub
     Private Sub btnKinnitaUusSalasona_Click(sender As Object, e As EventArgs) Handles btnKinnitaUusSalasona.Click
-        pnlUnustasinSalasonaEdasi.Visible = False
-        pnlLogiSisse.Visible = True
+        If Len(txtUnustasinSalasonaEdasiUusSalasona.Text) < 8 Then
+            lblUnustasinSalasonaEdasiViga.Text = "Salasõna pikkus peab olema vähemalt 8 tähemärki!"
+            lblUnustasinSalasonaEdasiViga.Visible = True
+        ElseIf txtUnustasinSalasonaEdasiUusSalasona.Text <> txtUnustasinSalasonaEdasiKordaSalasona.Text Then
+            lblUnustasinSalasonaEdasiViga.Text = "Salasõnad ei ühti!"
+            lblUnustasinSalasonaEdasiViga.Visible = True
+        Else
+            Dim profiil As New CKasutajaProfiil.CKasutajaProfiil
+            profiil.VahetaSalasona(kasutaja_id, txtUnustasinSalasonaEdasiUusSalasona.Text)
+            lblUnustasinSalasonaEdasiViga.Visible = False
+            pnlUnustasinSalasonaEdasi.Visible = False
+            pnlLogiSisse.Visible = True
+        End If
+
     End Sub
 
     Private Sub btnNaitaTurvakusimust_Click(sender As Object, e As EventArgs) Handles btnNaitaTurvakusimust.Click
@@ -224,7 +245,6 @@ Public Class Login_aken
             End If
         Next
     End Sub
-
 
 End Class
 

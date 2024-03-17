@@ -574,7 +574,7 @@ Partial Class Login_aken
         Me.lblTurvaKüsimuseVastuseViga.AutoSize = True
         Me.lblTurvaKüsimuseVastuseViga.Font = New System.Drawing.Font("Century Gothic", 12.0!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Italic), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblTurvaKüsimuseVastuseViga.ForeColor = System.Drawing.Color.Red
-        Me.lblTurvaKüsimuseVastuseViga.Location = New System.Drawing.Point(287, 307)
+        Me.lblTurvaKüsimuseVastuseViga.Location = New System.Drawing.Point(196, 309)
         Me.lblTurvaKüsimuseVastuseViga.Name = "lblTurvaKüsimuseVastuseViga"
         Me.lblTurvaKüsimuseVastuseViga.Size = New System.Drawing.Size(50, 21)
         Me.lblTurvaKüsimuseVastuseViga.TabIndex = 48
