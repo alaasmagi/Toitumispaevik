@@ -136,6 +136,8 @@ Public Class Login_aken
         Else
             If rdbNaisSugu.Checked = True Then
                 sugu = 1
+            Else
+                sugu = 0
             End If
             lblLooKontoEdasiViga.Visible = False
             Dim profiil As New CKasutajaProfiil.CKasutajaProfiil()
