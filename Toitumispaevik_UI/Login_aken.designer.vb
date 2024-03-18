@@ -703,11 +703,13 @@ Partial Class Login_aken
         Me.lblUnustasinSalasonaEdasiViga.AutoSize = True
         Me.lblUnustasinSalasonaEdasiViga.Font = New System.Drawing.Font("Century Gothic", 12.0!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Italic), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblUnustasinSalasonaEdasiViga.ForeColor = System.Drawing.Color.Red
-        Me.lblUnustasinSalasonaEdasiViga.Location = New System.Drawing.Point(297, 306)
+        Me.lblUnustasinSalasonaEdasiViga.Location = New System.Drawing.Point(113, 307)
         Me.lblUnustasinSalasonaEdasiViga.Name = "lblUnustasinSalasonaEdasiViga"
+        Me.lblUnustasinSalasonaEdasiViga.RightToLeft = System.Windows.Forms.RightToLeft.No
         Me.lblUnustasinSalasonaEdasiViga.Size = New System.Drawing.Size(50, 21)
         Me.lblUnustasinSalasonaEdasiViga.TabIndex = 49
         Me.lblUnustasinSalasonaEdasiViga.Text = "VIGA"
+        Me.lblUnustasinSalasonaEdasiViga.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.lblUnustasinSalasonaEdasiViga.Visible = False
         '
         'btnKinnitaUusSalasona
@@ -803,8 +805,8 @@ Partial Class Login_aken
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(241, Byte), Integer), CType(CType(239, Byte), Integer))
         Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
         Me.ClientSize = New System.Drawing.Size(618, 642)
-        Me.Controls.Add(Me.pnlLooKontoEdasi)
         Me.Controls.Add(Me.pnlUnustasinSalasonaEdasi)
+        Me.Controls.Add(Me.pnlLooKontoEdasi)
         Me.Controls.Add(Me.pnlUnustasinSalasona)
         Me.Controls.Add(Me.pnlLooKonto)
         Me.Controls.Add(Me.pnlLogiSisse)

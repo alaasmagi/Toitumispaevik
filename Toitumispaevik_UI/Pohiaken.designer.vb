@@ -94,6 +94,13 @@ Partial Class Pohiaken
         Me.lblProfiiliSeadedEesnimi = New System.Windows.Forms.Label()
         Me.PictureBox3 = New System.Windows.Forms.PictureBox()
         Me.Label20 = New System.Windows.Forms.Label()
+        Me.GroupBox6 = New System.Windows.Forms.GroupBox()
+        Me.txtVahetaSalasona = New System.Windows.Forms.TextBox()
+        Me.txtKordaSalasona = New System.Windows.Forms.TextBox()
+        Me.btnKinnitaUusSalasona = New System.Windows.Forms.Button()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.Label19 = New System.Windows.Forms.Label()
+        Me.lblVahetaSalasonaViga = New System.Windows.Forms.Label()
         Me.pnlLeftBar.SuspendLayout()
         Me.pnlTopBar.SuspendLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -112,6 +119,7 @@ Partial Class Pohiaken
         Me.GroupBox4.SuspendLayout()
         Me.GroupBox3.SuspendLayout()
         CType(Me.PictureBox3, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.GroupBox6.SuspendLayout()
         Me.SuspendLayout()
         '
         'pnlLeftBar
@@ -680,6 +688,7 @@ Partial Class Pohiaken
         '
         'pnlProfiiliSeaded
         '
+        Me.pnlProfiiliSeaded.Controls.Add(Me.GroupBox6)
         Me.pnlProfiiliSeaded.Controls.Add(Me.GroupBox5)
         Me.pnlProfiiliSeaded.Controls.Add(Me.GroupBox4)
         Me.pnlProfiiliSeaded.Controls.Add(Me.GroupBox3)
@@ -913,6 +922,83 @@ Partial Class Pohiaken
         Me.Label20.TabIndex = 3
         Me.Label20.Text = "Profiili seaded"
         '
+        'GroupBox6
+        '
+        Me.GroupBox6.Controls.Add(Me.lblVahetaSalasonaViga)
+        Me.GroupBox6.Controls.Add(Me.Label19)
+        Me.GroupBox6.Controls.Add(Me.Label1)
+        Me.GroupBox6.Controls.Add(Me.btnKinnitaUusSalasona)
+        Me.GroupBox6.Controls.Add(Me.txtVahetaSalasona)
+        Me.GroupBox6.Controls.Add(Me.txtKordaSalasona)
+        Me.GroupBox6.Location = New System.Drawing.Point(327, 285)
+        Me.GroupBox6.Name = "GroupBox6"
+        Me.GroupBox6.Size = New System.Drawing.Size(514, 208)
+        Me.GroupBox6.TabIndex = 15
+        Me.GroupBox6.TabStop = False
+        Me.GroupBox6.Text = "Vaheta salasõna"
+        '
+        'txtVahetaSalasona
+        '
+        Me.txtVahetaSalasona.Location = New System.Drawing.Point(193, 47)
+        Me.txtVahetaSalasona.Margin = New System.Windows.Forms.Padding(6, 4, 6, 4)
+        Me.txtVahetaSalasona.Name = "txtVahetaSalasona"
+        Me.txtVahetaSalasona.Size = New System.Drawing.Size(312, 27)
+        Me.txtVahetaSalasona.TabIndex = 20
+        '
+        'txtKordaSalasona
+        '
+        Me.txtKordaSalasona.Location = New System.Drawing.Point(193, 88)
+        Me.txtKordaSalasona.Margin = New System.Windows.Forms.Padding(6, 4, 6, 4)
+        Me.txtKordaSalasona.Name = "txtKordaSalasona"
+        Me.txtKordaSalasona.Size = New System.Drawing.Size(312, 27)
+        Me.txtKordaSalasona.TabIndex = 21
+        '
+        'btnKinnitaUusSalasona
+        '
+        Me.btnKinnitaUusSalasona.BackColor = System.Drawing.Color.FromArgb(CType(CType(80, Byte), Integer), CType(CType(168, Byte), Integer), CType(CType(160, Byte), Integer))
+        Me.btnKinnitaUusSalasona.FlatAppearance.BorderSize = 0
+        Me.btnKinnitaUusSalasona.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(CType(CType(62, Byte), Integer), CType(CType(130, Byte), Integer), CType(CType(124, Byte), Integer))
+        Me.btnKinnitaUusSalasona.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnKinnitaUusSalasona.Font = New System.Drawing.Font("Century Gothic", 12.0!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Italic), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnKinnitaUusSalasona.ForeColor = System.Drawing.Color.White
+        Me.btnKinnitaUusSalasona.Location = New System.Drawing.Point(193, 147)
+        Me.btnKinnitaUusSalasona.Margin = New System.Windows.Forms.Padding(6, 4, 6, 4)
+        Me.btnKinnitaUusSalasona.Name = "btnKinnitaUusSalasona"
+        Me.btnKinnitaUusSalasona.Size = New System.Drawing.Size(312, 50)
+        Me.btnKinnitaUusSalasona.TabIndex = 22
+        Me.btnKinnitaUusSalasona.Text = "Kinnita uus salasõna"
+        Me.btnKinnitaUusSalasona.UseVisualStyleBackColor = False
+        '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.Location = New System.Drawing.Point(72, 50)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(112, 19)
+        Me.Label1.TabIndex = 23
+        Me.Label1.Text = "Uus salasõna:"
+        '
+        'Label19
+        '
+        Me.Label19.AutoSize = True
+        Me.Label19.Location = New System.Drawing.Point(21, 91)
+        Me.Label19.Name = "Label19"
+        Me.Label19.Size = New System.Drawing.Size(163, 19)
+        Me.Label19.TabIndex = 24
+        Me.Label19.Text = "Korda uut salasõna:"
+        '
+        'lblVahetaSalasonaViga
+        '
+        Me.lblVahetaSalasonaViga.AutoSize = True
+        Me.lblVahetaSalasonaViga.Font = New System.Drawing.Font("Century Gothic", 12.0!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Italic), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblVahetaSalasonaViga.ForeColor = System.Drawing.Color.Red
+        Me.lblVahetaSalasonaViga.Location = New System.Drawing.Point(44, 121)
+        Me.lblVahetaSalasonaViga.Name = "lblVahetaSalasonaViga"
+        Me.lblVahetaSalasonaViga.Size = New System.Drawing.Size(50, 21)
+        Me.lblVahetaSalasonaViga.TabIndex = 25
+        Me.lblVahetaSalasonaViga.Text = "VIGA"
+        Me.lblVahetaSalasonaViga.Visible = False
+        '
         'Pohiaken
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(96.0!, 96.0!)
@@ -970,6 +1056,8 @@ Partial Class Pohiaken
         Me.GroupBox3.ResumeLayout(False)
         Me.GroupBox3.PerformLayout()
         CType(Me.PictureBox3, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.GroupBox6.ResumeLayout(False)
+        Me.GroupBox6.PerformLayout()
         Me.ResumeLayout(False)
 
     End Sub
@@ -1042,4 +1130,11 @@ Partial Class Pohiaken
     Friend WithEvents cmbMuudaVanust As ComboBox
     Friend WithEvents cmbMuudaKaalu As ComboBox
     Friend WithEvents cmbMuudaPikkust As ComboBox
+    Friend WithEvents GroupBox6 As GroupBox
+    Friend WithEvents txtKordaSalasona As TextBox
+    Friend WithEvents txtVahetaSalasona As TextBox
+    Friend WithEvents Label19 As Label
+    Friend WithEvents Label1 As Label
+    Friend WithEvents btnKinnitaUusSalasona As Button
+    Friend WithEvents lblVahetaSalasonaViga As Label
 End Class

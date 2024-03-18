@@ -200,4 +200,22 @@
         lblKasutajaPikkus.Text = profiil.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "height")
         KomboKastid()
     End Sub
+
+    Private Sub btnKinnitaUusSalasona_Click(sender As Object, e As EventArgs) Handles btnKinnitaUusSalasona.Click
+        lblVahetaSalasonaViga.ForeColor = Color.Red
+        lblVahetaSalasonaViga.Visible = False
+        If Len(txtVahetaSalasona.Text) < 8 Then
+            lblVahetaSalasonaViga.Text = "Salasõna pikkus peab olema vähemalt 8 tähemärki!"
+            lblVahetaSalasonaViga.Visible = True
+        ElseIf txtVahetaSalasona.Text <> txtKordaSalasona.Text Then
+            lblVahetaSalasonaViga.Text = "Salasõnad ei ühti!"
+            lblVahetaSalasonaViga.Visible = True
+        Else
+            Dim profiil As New CKasutajaProfiil.CKasutajaProfiil
+            profiil.VahetaSalasona(_kasutaja_id, txtVahetaSalasona.Text)
+            lblVahetaSalasonaViga.ForeColor = Color.Green
+            lblVahetaSalasonaViga.Text = "Salasõna vahetus õnnestus!"
+            lblVahetaSalasonaViga.Visible = True
+        End If
+    End Sub
 End Class
