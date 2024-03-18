@@ -11,6 +11,7 @@ Public Class Login_aken
     Dim sugu As Integer
     Dim kasutaja_id As Integer = 0
     Private Sub ResetForm()
+        TuhjendaKonteiner(Me)
         pnlLogoLogiSisse.Visible = True
         pnlLogiSisse.Visible = True
         pnlLooKonto.Visible = False
@@ -30,18 +31,6 @@ Public Class Login_aken
         lblTurvaKusimusEdasiKasutajanimi.Visible = False
         pnlUnustasinSalasonaEdasi.Visible = False
 
-
-        'For Each pnl As Panel In Me.Controls.OfType(Of Panel)()
-        'For Each ctrl As Control In pnl.Controls
-        'If ctrl Is TextBox Then  ' Check type using Is
-        'ctrl.Text = ""  ' Clear text box (safe casting)
-        'ElseIf ctrl Is RadioButton Then
-        'CType(ctrl, RadioButton).Checked = False  ' Safe casting for RadioButton
-        'ElseIf ctrl Is CheckBox Then
-        'CType(ctrl, CheckBox).Checked = False  ' Safe casting for CheckBox
-        'End If
-        'Next
-        'Next
         For index = 140 To 210
             cmbPikkus.Items.Add(index)
         Next
@@ -108,10 +97,10 @@ Public Class Login_aken
             txtLogiSisseSalasona.Text = ""
         Else
             lblLogiSisseViga.Visible = False
-            TuhjendaKonteiner(Me)
             ResetForm()
             Me.Hide()
             Dim pohiaken As New Pohiaken(kasutaja_id)
+            pohiaken.ResetForm()
             pohiaken.Show()
         End If
     End Sub
@@ -150,13 +139,14 @@ Public Class Login_aken
             End If
             lblLooKontoEdasiViga.Visible = False
             Dim profiil As New CKasutajaProfiil.CKasutajaProfiil()
-            If profiil.LooKonto(txtLooKontoKasutajanimi.Text, txtLooKontoSalasona.Text, txtEesnimi.Text,
+            kasutaja_id = profiil.LooKonto(txtLooKontoKasutajanimi.Text, txtLooKontoSalasona.Text, txtEesnimi.Text,
                                                               cmbTurvaKüsimus.SelectedIndex, txtTurvaVastus.Text, cmbPikkus.SelectedItem, cmbKehaKaal.SelectedItem, sugu,
-                                                              cmbVanus.SelectedItem) > 0 Then
-                TuhjendaKonteiner(Me)
+                                                              cmbVanus.SelectedItem)
+            If kasutaja_id > 0 Then
                 ResetForm()
                 Me.Hide()
                 Dim pohiaken As New Pohiaken(kasutaja_id)
+                pohiaken.ResetForm()
                 pohiaken.Show()
             Else
                 lblLooKontoEdasiViga.Text = "Konto loomine ebaõnnestus!"

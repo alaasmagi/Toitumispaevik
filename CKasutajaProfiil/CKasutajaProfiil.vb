@@ -9,7 +9,6 @@ Public Class CKasutajaProfiil
                                  ByVal kaal As Integer, ByVal sugu As Boolean, ByVal vanus As Integer) As Integer
 
         Dim kasutaja_id As Integer = GenereeriId()
-        Dim olek As Integer = 0
         Dim salasona_hash As String = ArvutaHash(salasona)
         Dim taaste_vastus_hash As String = ArvutaHash(taaste_vastus)
         Dim eesnimi_krupt As String = Krupteerimine(eesnimi)
@@ -37,10 +36,10 @@ Public Class CKasutajaProfiil
                     cmd.Parameters.AddWithValue("@sugu", 0)
                 End If
                 cmd.Parameters.AddWithValue("@vanus", vanus)
-                olek = cmd.ExecuteNonQuery()
+                cmd.ExecuteNonQuery()
             End Using
         End Using
-        Return olek
+        Return kasutaja_id
     End Function
 
     Public Function KontrolliKontoOlemasolu(ByVal kasutajanimi As String) As Integer
@@ -194,6 +193,38 @@ Public Class CKasutajaProfiil
         Return valjund.ToString()
     End Function
 
+    Public Function UheIntegerAndmeValjaParingKasutajaTabelist(ByVal kasutaja_id As Integer, ByVal andmevali As String) As Integer
+        Dim tagastus As Integer
+        Dim tabeli_asukoht As String = $"Data Source={Path.Combine(Path.GetFullPath(Path.Combine _
+        (AppDomain.CurrentDomain.BaseDirectory, "..\..\..\")), "Data", "database.db")};Version=3;"
+        Using connection As New SQLiteConnection(tabeli_asukoht)
+            connection.Open()
+            Dim sql As String = $"SELECT {andmevali} FROM user_data WHERE user_id = @kasutaja_id"
+            Using cmd As New SQLiteCommand(sql, connection)
+                cmd.Parameters.AddWithValue("@kasutaja_id", kasutaja_id)
+                Using reader As SQLiteDataReader = cmd.ExecuteReader()
+                    While reader.Read()
+                        tagastus = Integer.Parse(reader(andmevali).ToString())
+                    End While
+                End Using
+            End Using
+        End Using
+        Return tagastus
+    End Function
+
+    Public Sub IntegerAndmeValjaSisestusKasutajaTabelisse(ByVal kasutaja_id As Integer, ByVal uus_vaartus As Integer, ByVal andmevali As String)
+        Dim tabeli_asukoht As String = $"Data Source={Path.Combine(Path.GetFullPath(Path.Combine _
+        (AppDomain.CurrentDomain.BaseDirectory, "..\..\..\")), "Data", "database.db")};Version=3;"
+        Using connection As New SQLiteConnection(tabeli_asukoht)
+            connection.Open()
+            Dim sql As String = $"UPDATE user_data SET {andmevali} = @sisend WHERE user_id = @kasutaja_id"
+            Using cmd As New SQLiteCommand(sql, connection)
+                cmd.Parameters.AddWithValue("@sisend", uus_vaartus)
+                cmd.Parameters.AddWithValue("@kasutaja_id", kasutaja_id)
+                cmd.ExecuteNonQuery()
+            End Using
+        End Using
+    End Sub
     Public Sub VahetaSalasona(ByVal kasutaja_id As String, ByVal uus_salasona As String)
         Dim sisend = ArvutaHash(uus_salasona)
         Dim tabeli_asukoht As String = $"Data Source={Path.Combine(Path.GetFullPath(Path.Combine _

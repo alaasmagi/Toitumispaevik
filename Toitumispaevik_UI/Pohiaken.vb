@@ -6,7 +6,8 @@
         InitializeComponent()
         _kasutaja_id = kasutaja_id
     End Sub
-    Private Sub Pohiaken_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+    Public Sub ResetForm()
+        TuhjendaKonteiner(Me)
         pnlLogo.Visible = True
         pnlTopBar.Visible = True
         pnlLeftBar.Visible = True
@@ -20,6 +21,12 @@
         Dim profiil As New CKasutajaProfiil.CKasutajaProfiil
         lblEesnimi.Text = profiil.Dekrupteerimine(profiil.UheAndmevaljaParingKasutajaTabelist(_kasutaja_id, "firstname"))
         lblKoduEesnimi.Text = lblEesnimi.Text & "!"
+        lblProfiiliSeadedEesnimi.Text = lblEesnimi.Text
+        lblProfiiliSeadedKasutajanimi.Text = profiil.Dekrupteerimine(profiil.UheAndmevaljaParingKasutajaTabelist(_kasutaja_id, "username"))
+        lblKasutajaPikkus.Text = profiil.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "height")
+        lblKasutajaKaal.Text = profiil.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "weight")
+        lblKasutajaVanus.Text = profiil.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "age")
+        KomboKastid()
 
         cmbAjaluguGraafikuPeriood.Items.Add("Viimased 7 päeva")
         cmbAjaluguGraafikuPeriood.SelectedItem = "Viimased 7 päeva"
@@ -135,5 +142,62 @@
         pnlRakenduseInfo.Visible = False
         pnlKodu.Visible = True
     End Sub
+    Private Sub TuhjendaKonteiner(ByVal parentControl As Control)
+        For Each ctrl As Control In parentControl.Controls
+            If TypeOf ctrl Is System.Windows.Forms.TextBox Then
+                DirectCast(ctrl, System.Windows.Forms.TextBox).Text = ""
+            ElseIf TypeOf ctrl Is System.Windows.Forms.ComboBox Then
+                DirectCast(ctrl, System.Windows.Forms.ComboBox).SelectedIndex = -1
+            ElseIf TypeOf ctrl Is System.Windows.Forms.CheckBox Then
+                DirectCast(ctrl, System.Windows.Forms.CheckBox).Checked = False
+            ElseIf TypeOf ctrl Is System.Windows.Forms.RadioButton Then
+                DirectCast(ctrl, System.Windows.Forms.RadioButton).Checked = False
+            ElseIf TypeOf ctrl Is System.Windows.Forms.ListBox Then
+                DirectCast(ctrl, System.Windows.Forms.ListBox).Items.Clear()
+            ElseIf TypeOf ctrl Is Panel Then
+                TuhjendaKonteiner(ctrl)
+            End If
+        Next
+    End Sub
 
+    Sub KomboKastid()
+
+        Dim profiil As New CKasutajaProfiil.CKasutajaProfiil
+
+        For index = 140 To 210
+            cmbMuudaPikkust.Items.Add(index)
+        Next
+        cmbMuudaPikkust.SelectedItem = profiil.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "height")
+
+        For index = 30 To 150
+            cmbMuudaKaalu.Items.Add(index)
+        Next
+        cmbMuudaKaalu.SelectedItem = profiil.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "weight")
+
+        For index = 12 To 100
+            cmbMuudaVanust.Items.Add(index)
+        Next
+        cmbMuudaVanust.SelectedItem = profiil.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "age")
+    End Sub
+
+    Private Sub btnMuudaVanust_Click(sender As Object, e As EventArgs) Handles btnMuudaVanust.Click
+        Dim profiil As New CKasutajaProfiil.CKasutajaProfiil
+        profiil.IntegerAndmeValjaSisestusKasutajaTabelisse(_kasutaja_id, cmbMuudaVanust.SelectedItem, "age")
+        lblKasutajaVanus.Text = profiil.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "age")
+        KomboKastid()
+    End Sub
+
+    Private Sub btnMuudaKaalu_Click(sender As Object, e As EventArgs) Handles btnMuudaKaalu.Click
+        Dim profiil As New CKasutajaProfiil.CKasutajaProfiil
+        profiil.IntegerAndmeValjaSisestusKasutajaTabelisse(_kasutaja_id, cmbMuudaKaalu.SelectedItem, "weight")
+        lblKasutajaKaal.Text = profiil.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "weight")
+        KomboKastid()
+    End Sub
+
+    Private Sub btnMuudaPikkust_Click(sender As Object, e As EventArgs) Handles btnMuudaPikkust.Click
+        Dim profiil As New CKasutajaProfiil.CKasutajaProfiil
+        profiil.IntegerAndmeValjaSisestusKasutajaTabelisse(_kasutaja_id, cmbMuudaPikkust.SelectedItem, "height")
+        lblKasutajaPikkus.Text = profiil.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "height")
+        KomboKastid()
+    End Sub
 End Class
