@@ -1,4 +1,6 @@
-﻿Public Class Pohiaken
+﻿Imports System.Windows.Forms.VisualStyles
+
+Public Class Pohiaken
 
     Private _kasutaja_id As Integer
 
@@ -26,6 +28,14 @@
         lblKasutajaPikkus.Text = profiil.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "height")
         lblKasutajaKaal.Text = profiil.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "weight")
         lblKasutajaVanus.Text = profiil.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "age")
+
+        If profiil.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "sex") = 0 Then
+            pbUlemineMees.Visible = True
+            pbAlumineMees.Visible = True
+        ElseIf profiil.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "sex") = 1 Then
+            pbUlemineNaine.Visible = True
+            pbAlumineNaine.Visible = True
+        End If
         KomboKastid()
 
         cmbAjaluguGraafikuPeriood.Items.Add("Viimased 7 päeva")
