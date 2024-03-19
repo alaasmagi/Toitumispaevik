@@ -207,6 +207,18 @@
   <ItemGroup>
     <None Include="Resources\icons8-home-button-54.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icons8-back-48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icons8-double-left-48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icons8-double-right-64.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icons8-double-left-64.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
