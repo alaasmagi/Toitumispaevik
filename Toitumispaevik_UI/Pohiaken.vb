@@ -204,18 +204,31 @@
     Private Sub btnKinnitaUusSalasona_Click(sender As Object, e As EventArgs) Handles btnKinnitaUusSalasona.Click
         lblVahetaSalasonaViga.ForeColor = Color.Red
         lblVahetaSalasonaViga.Visible = False
-        If Len(txtVahetaSalasona.Text) < 8 Then
-            lblVahetaSalasonaViga.Text = "Salasõna pikkus peab olema vähemalt 8 tähemärki!"
-            lblVahetaSalasonaViga.Visible = True
-        ElseIf txtVahetaSalasona.Text <> txtKordaSalasona.Text Then
-            lblVahetaSalasonaViga.Text = "Salasõnad ei ühti!"
-            lblVahetaSalasonaViga.Visible = True
+        Dim profiil As New CKasutajaProfiil.CKasutajaProfiil
+        If (profiil.ArvutaHash(txtKehtivSalasona.Text) = profiil.UheAndmevaljaParingKasutajaTabelist(_kasutaja_id, "password")) Then
+            If Len(txtVahetaSalasona.Text) < 8 Then
+                txtVahetaSalasona.Text = ""
+                lblVahetaSalasonaViga.Text = "Salasõna pikkus peab olema vähemalt 8 tähemärki!"
+                lblVahetaSalasonaViga.Visible = True
+            ElseIf txtVahetaSalasona.Text <> txtKordaSalasona.Text Then
+                txtKordaSalasona.Text = ""
+                lblVahetaSalasonaViga.Text = "Salasõnad ei ühti!"
+                lblVahetaSalasonaViga.Visible = True
+            Else
+                profiil.VahetaSalasona(_kasutaja_id, txtVahetaSalasona.Text)
+                lblVahetaSalasonaViga.ForeColor = Color.Green
+                txtKehtivSalasona.Text = ""
+                txtKordaSalasona.Text = ""
+                txtVahetaSalasona.Text = ""
+                lblVahetaSalasonaViga.Text = "Salasõna vahetus õnnestus!"
+                lblVahetaSalasonaViga.Visible = True
+            End If
         Else
-            Dim profiil As New CKasutajaProfiil.CKasutajaProfiil
-            profiil.VahetaSalasona(_kasutaja_id, txtVahetaSalasona.Text)
-            lblVahetaSalasonaViga.ForeColor = Color.Green
-            lblVahetaSalasonaViga.Text = "Salasõna vahetus õnnestus!"
+            txtKehtivSalasona.Text = ""
+            lblVahetaSalasonaViga.Text = "Kehtiv salasõna on vale!"
             lblVahetaSalasonaViga.Visible = True
         End If
+
+
     End Sub
 End Class
