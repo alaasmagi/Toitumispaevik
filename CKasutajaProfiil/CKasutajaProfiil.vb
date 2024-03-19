@@ -175,7 +175,7 @@ Public Class CKasutajaProfiil
         Next
         Return valjund.ToString()
     End Function
-    Public Function Dekrupteerimine(ByVal sisend As String)
+    Public Function Dekrupteerimine(ByVal sisend As String) As String
         Dim valjund As New StringBuilder()
 
         For Each taht As Char In sisend
