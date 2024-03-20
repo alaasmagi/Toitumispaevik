@@ -1726,5 +1726,5 @@ Partial Class Pohiaken
     Friend WithEvents txtToiduaineKiirvalikKogus As TextBox
     Friend WithEvents Chart1 As DataVisualization.Charting.Chart
     Friend WithEvents LblPaevaneTarbimine As Label
-    Friend WithEvents chrYlevaade As Chart
+    Friend WithEvents chrYlevaade As DataVisualization.Charting.Chart
 End Class
