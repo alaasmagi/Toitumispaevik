@@ -151,6 +151,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\AnaluusiKomponent\AnaluusiKomponent.vbproj">
+      <Project>{6f358f9f-37e8-47a5-b320-7c74e0f1b3d9}</Project>
+      <Name>AnaluusiKomponent</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CKasutajaProfiil\KasutajaProfiilKomponent.vbproj">
       <Project>{94023c19-1f3d-4a6d-a449-b33b97a1d3aa}</Project>
       <Name>KasutajaProfiilKomponent</Name>

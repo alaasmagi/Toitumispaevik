@@ -3,6 +3,10 @@
 Public Class Pohiaken
 
     Private _kasutaja_id As Integer
+    Private HommikKcal As Integer
+    Private LounaKcal As Integer
+    Private OhtuKcal As Integer
+    Private VahepKcal As Integer
 
     Public Sub New(ByVal kasutaja_id As Integer)
         InitializeComponent()
@@ -28,6 +32,14 @@ Public Class Pohiaken
         lblKasutajaPikkus.Text = profiil.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "height")
         lblKasutajaKaal.Text = profiil.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "weight")
         lblKasutajaVanus.Text = profiil.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "age")
+
+        Dim AnaluusK As AnaluusiKomponent.IAnaluus
+        AnaluusK = New AnaluusiKomponent.CAnaluus
+        HommikKcal = AnaluusK.ToidukordKokku(AnaluusK.KclParingAndmebaasist(_kasutaja_id, 100, "hommik"))
+        chrKoduPaneel.Series("Soogikorrad").Points.AddXY("hommik", HommikKcal)
+
+        LounaKcal = AnaluusK.ToidukordKokku(AnaluusK.KclParingAndmebaasist(_kasutaja_id, 100, "louna"))
+        chrKoduPaneel.Series("Soogikorrad").Points.AddXY("lõuna", LounaKcal)
 
         If profiil.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "sex") = 0 Then
             pbUlemineMees.Visible = True
