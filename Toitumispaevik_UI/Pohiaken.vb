@@ -6,6 +6,11 @@ Imports ToidudRetseptidKomponent
 Public Class Pohiaken
 
     Private _kasutaja_id As Integer
+    Private HommikKcal As Integer = 0
+    Private LounaKcal As Integer = 0
+    Private OhtuKcal As Integer = 0
+    Private VahepKcal As Integer = 0
+    Private ToidukorradKoos As Integer
 
     Public Sub New(ByVal kasutaja_id As Integer)
         InitializeComponent()
@@ -31,6 +36,33 @@ Public Class Pohiaken
         lblKasutajaPikkus.Text = profiil.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "height")
         lblKasutajaKaal.Text = profiil.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "weight")
         lblKasutajaVanus.Text = profiil.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "age")
+
+        Dim AnaluusK As AnaluusiKomponent.IAnaluus
+        AnaluusK = New AnaluusiKomponent.CAnaluus
+
+        'sisendid 2 ja 3 KclParingAndmebaasist vajavad vahetamist (2 kuupäev mingis formaadis) (3 söögiaeg kas nii voi 0-3)
+        HommikKcal = AnaluusK.ToidukordKokku(AnaluusK.KclParingAndmebaasist(_kasutaja_id, 100, "hommik"))
+        chrKoduPaneel.Series("Soogikorrad").Points.AddXY("Hommik", HommikKcal)
+
+        'sisendid 2 ja 3 KclParingAndmebaasist vajavad vahetamist (2 kuupäev mingis formaadis) (3 söögiaeg kas nii voi 0-3)
+        LounaKcal = AnaluusK.ToidukordKokku(AnaluusK.KclParingAndmebaasist(_kasutaja_id, 100, "louna"))
+        chrKoduPaneel.Series("Soogikorrad").Points.AddXY("Lõuna", LounaKcal)
+
+        'sisendid 2 ja 3 KclParingAndmebaasist vajavad vahetamist (2 kuupäev mingis formaadis) (3 söögiaeg kas nii voi 0-3)
+        OhtuKcal = AnaluusK.ToidukordKokku(AnaluusK.KclParingAndmebaasist(_kasutaja_id, 100, "ohtu"))
+        chrKoduPaneel.Series("Soogikorrad").Points.AddXY("Õhtu", OhtuKcal)
+
+        'sisendid 2 ja 3 KclParingAndmebaasist vajavad vahetamist (2 kuupäev mingis formaadis) (3 söögiaeg kas nii voi 0-3)
+        VahepKcal = AnaluusK.ToidukordKokku(AnaluusK.KclParingAndmebaasist(_kasutaja_id, 100, "vahep"))
+        chrKoduPaneel.Series("Soogikorrad").Points.AddXY("Vahepalad", VahepKcal)
+
+        'lisada muutuja soovitud kalori tarbimis koguseks "3000" asemel
+        ToidukorradKoos = AnaluusK.paevaneKcal(HommikKcal, LounaKcal, OhtuKcal, VahepKcal)
+        chrKoduPaneel.Series("Soogikorrad").Points.AddXY("Söömata", 3000 - ToidukorradKoos)
+
+        LblPaevaneTarbimine.Text = ToidukorradKoos & Environment.NewLine & "/" & Environment.NewLine & "3000"
+
+
 
         If profiil.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "sex") = 0 Then
             pbUlemineMees.Visible = True
