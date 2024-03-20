@@ -57,6 +57,8 @@ Public Class Pohiaken
         ToidukorradKoos = AnaluusK.paevaneKcal(HommikKcal, LounaKcal, OhtuKcal, VahepKcal)
         chrKoduPaneel.Series("Soogikorrad").Points.AddXY("Söömata", 3000 - ToidukorradKoos)
 
+        LblPaevaneTarbimine.Text = ToidukorradKoos & Environment.NewLine & "/" & Environment.NewLine & "3000"
+
 
 
         If profiil.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "sex") = 0 Then
