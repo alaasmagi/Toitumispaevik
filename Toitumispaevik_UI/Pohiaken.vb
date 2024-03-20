@@ -334,5 +334,6 @@ Public Class Pohiaken
         End Using
         cmbToiduaineKiirvalik.SelectedIndex = 0
     End Sub
+
 End Class
 
