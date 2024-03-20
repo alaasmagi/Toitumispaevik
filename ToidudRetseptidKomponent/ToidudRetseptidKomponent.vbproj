@@ -5,37 +5,33 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{4FBEDFB5-152A-47B9-BC49-CB3834229374}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
-    <StartupObject>Toitumispaevik_UI.My.MyApplication</StartupObject>
-    <RootNamespace>Toitumispaevik_UI</RootNamespace>
-    <AssemblyName>Toitumispaevik_UI</AssemblyName>
+    <ProjectGuid>{086100DF-7956-4195-AD79-4AAEA94DEFD4}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>ToidudRetseptidKomponent</RootNamespace>
+    <AssemblyName>ToidudRetseptidKomponent</AssemblyName>
     <FileAlignment>512</FileAlignment>
-    <MyType>WindowsForms</MyType>
+    <MyType>Windows</MyType>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Debug\</OutputPath>
-    <DocumentationFile>Toitumispaevik_UI.xml</DocumentationFile>
+    <DocumentationFile>ToidudRetseptidKomponent.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <DefineDebug>false</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DocumentationFile>Toitumispaevik_UI.xml</DocumentationFile>
+    <DocumentationFile>ToidudRetseptidKomponent.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup>
@@ -69,11 +65,6 @@
     <Reference Include="System.Data.SQLite.Linq, Version=1.0.118.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Data.SQLite.Linq.1.0.118.0\lib\net46\System.Data.SQLite.Linq.dll</HintPath>
     </Reference>
-    <Reference Include="System.Deployment" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Windows.Forms.DataVisualization" />
-    <Reference Include="System.Windows.Forms.DataVisualization.Design" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -86,25 +77,18 @@
     <Import Include="System.Collections" />
     <Import Include="System.Collections.Generic" />
     <Import Include="System.Data" />
-    <Import Include="System.Drawing" />
     <Import Include="System.Diagnostics" />
-    <Import Include="System.Windows.Forms" />
     <Import Include="System.Linq" />
     <Import Include="System.Xml.Linq" />
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Login_aken.designer.vb">
-      <DependentUpon>Login_aken.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Login_aken.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="CToidudJaRetseptid.vb" />
+    <Compile Include="IToidudjaRetseptid.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
       <DependentUpon>Application.myapp</DependentUpon>
-      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="My Project\Resources.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -116,28 +100,17 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="Pohiaken.designer.vb">
-      <DependentUpon>Pohiaken.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Pohiaken.vb">
-      <SubType>Form</SubType>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Login_aken.resx">
-      <DependentUpon>Login_aken.vb</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Pohiaken.resx">
-      <DependentUpon>Pohiaken.vb</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.config" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
@@ -147,81 +120,7 @@
       <CustomToolNamespace>My</CustomToolNamespace>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
-    <None Include="App.config" />
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\CKasutajaProfiil\KasutajaProfiilKomponent.vbproj">
-      <Project>{94023c19-1f3d-4a6d-a449-b33b97a1d3aa}</Project>
-      <Name>KasutajaProfiilKomponent</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\TreeninguteKomponent\TreeninguteKomponent.vbproj">
-      <Project>{5110f966-fef3-49ec-929b-19be65504916}</Project>
-      <Name>TreeninguteKomponent</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\icons8-home-button-192.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\icons8-home-button-96.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\icons8-home-button-48.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\icons8-home-button-65.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\icons8-dumbbell-32.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\icons8-dumbbell-25.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\icons8-dumbbell-22.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\icons8-cutlery-22.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\icons8-cutlery-22 %281%29.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\icons8-overview-22.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\icons8-history-22.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\icons8-overview-22 %281%29.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\icons8-dumbbell-22 %281%29.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\icons8-home-button-60.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\PXL_20240315_150251639.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\icons8-home-button-481.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\icons8-home-button-54.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\icons8-back-48.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\icons8-double-left-48.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\icons8-double-right-64.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\icons8-double-left-64.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

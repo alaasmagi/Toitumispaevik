@@ -241,4 +241,8 @@ Public Class Pohiaken
 
 
     End Sub
+
+    Private Sub btnLisaUusToiduaine_Click(sender As Object, e As EventArgs) Handles btnLisaUusToiduaine.Click
+
+    End Sub
 End Class
