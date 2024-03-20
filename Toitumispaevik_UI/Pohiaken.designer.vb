@@ -136,6 +136,8 @@ Partial Class Pohiaken
         Me.pnlProfiiliSeaded = New System.Windows.Forms.Panel()
         Me.pbAlumineMees = New System.Windows.Forms.PictureBox()
         Me.pbAlumineNaine = New System.Windows.Forms.PictureBox()
+        Me.Label27 = New System.Windows.Forms.Label()
+        Me.Label28 = New System.Windows.Forms.Label()
         Me.pnlLeftBar.SuspendLayout()
         Me.pnlTopBar.SuspendLayout()
         CType(Me.pbUlemineNaine, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -717,6 +719,8 @@ Partial Class Pohiaken
         '
         'GroupBox8
         '
+        Me.GroupBox8.Controls.Add(Me.Label28)
+        Me.GroupBox8.Controls.Add(Me.Label27)
         Me.GroupBox8.Controls.Add(Me.btnToiduaineKiirvalikLisa)
         Me.GroupBox8.Controls.Add(Me.txtToiduaineKiirvalikKogus)
         Me.GroupBox8.Controls.Add(Me.cmbToiduaineKiirvalik)
@@ -724,7 +728,7 @@ Partial Class Pohiaken
         Me.GroupBox8.Margin = New System.Windows.Forms.Padding(2)
         Me.GroupBox8.Name = "GroupBox8"
         Me.GroupBox8.Padding = New System.Windows.Forms.Padding(2)
-        Me.GroupBox8.Size = New System.Drawing.Size(346, 139)
+        Me.GroupBox8.Size = New System.Drawing.Size(346, 136)
         Me.GroupBox8.TabIndex = 7
         Me.GroupBox8.TabStop = False
         Me.GroupBox8.Text = "Toiduaine kiire lisamine"
@@ -737,7 +741,7 @@ Partial Class Pohiaken
         Me.btnToiduaineKiirvalikLisa.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.btnToiduaineKiirvalikLisa.Font = New System.Drawing.Font("Century Gothic", 12.0!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Italic), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnToiduaineKiirvalikLisa.ForeColor = System.Drawing.SystemColors.Window
-        Me.btnToiduaineKiirvalikLisa.Location = New System.Drawing.Point(113, 78)
+        Me.btnToiduaineKiirvalikLisa.Location = New System.Drawing.Point(220, 85)
         Me.btnToiduaineKiirvalikLisa.Margin = New System.Windows.Forms.Padding(6, 4, 6, 4)
         Me.btnToiduaineKiirvalikLisa.Name = "btnToiduaineKiirvalikLisa"
         Me.btnToiduaineKiirvalikLisa.Size = New System.Drawing.Size(86, 27)
@@ -747,7 +751,7 @@ Partial Class Pohiaken
         '
         'txtToiduaineKiirvalikKogus
         '
-        Me.txtToiduaineKiirvalikKogus.Location = New System.Drawing.Point(12, 83)
+        Me.txtToiduaineKiirvalikKogus.Location = New System.Drawing.Point(118, 86)
         Me.txtToiduaineKiirvalikKogus.Margin = New System.Windows.Forms.Padding(2)
         Me.txtToiduaineKiirvalikKogus.Name = "txtToiduaineKiirvalikKogus"
         Me.txtToiduaineKiirvalikKogus.Size = New System.Drawing.Size(52, 27)
@@ -761,7 +765,7 @@ Partial Class Pohiaken
         Me.cmbToiduaineKiirvalik.FormattingEnabled = True
         Me.cmbToiduaineKiirvalik.IntegralHeight = False
         Me.cmbToiduaineKiirvalik.ItemHeight = 18
-        Me.cmbToiduaineKiirvalik.Location = New System.Drawing.Point(12, 44)
+        Me.cmbToiduaineKiirvalik.Location = New System.Drawing.Point(118, 43)
         Me.cmbToiduaineKiirvalik.Margin = New System.Windows.Forms.Padding(2)
         Me.cmbToiduaineKiirvalik.Name = "cmbToiduaineKiirvalik"
         Me.cmbToiduaineKiirvalik.Size = New System.Drawing.Size(188, 26)
@@ -1505,6 +1509,26 @@ Partial Class Pohiaken
         Me.pbAlumineNaine.TabStop = False
         Me.pbAlumineNaine.Visible = False
         '
+        'Label27
+        '
+        Me.Label27.AutoSize = True
+        Me.Label27.ForeColor = System.Drawing.Color.Black
+        Me.Label27.Location = New System.Drawing.Point(25, 48)
+        Me.Label27.Name = "Label27"
+        Me.Label27.Size = New System.Drawing.Size(79, 19)
+        Me.Label27.TabIndex = 30
+        Me.Label27.Text = "Nimetus:"
+        '
+        'Label28
+        '
+        Me.Label28.AutoSize = True
+        Me.Label28.ForeColor = System.Drawing.Color.Black
+        Me.Label28.Location = New System.Drawing.Point(45, 89)
+        Me.Label28.Name = "Label28"
+        Me.Label28.Size = New System.Drawing.Size(59, 19)
+        Me.Label28.TabIndex = 31
+        Me.Label28.Text = "Kogus:"
+        '
         'Pohiaken
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(96.0!, 96.0!)
@@ -1678,4 +1702,6 @@ Partial Class Pohiaken
     Friend WithEvents Chart1 As DataVisualization.Charting.Chart
     Friend WithEvents LblPaevaneTarbimine As Label
     Friend WithEvents chrYlevaade As DataVisualization.Charting.Chart
+    Friend WithEvents Label27 As Label
+    Friend WithEvents Label28 As Label
 End Class
