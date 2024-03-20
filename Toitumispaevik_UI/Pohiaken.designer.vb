@@ -1,4 +1,6 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
+﻿Imports System.Windows.Forms.DataVisualization.Charting
+
+<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class Pohiaken
     Inherits System.Windows.Forms.Form
 
@@ -1724,4 +1726,5 @@ Partial Class Pohiaken
     Friend WithEvents txtToiduaineKiirvalikKogus As TextBox
     Friend WithEvents Chart1 As DataVisualization.Charting.Chart
     Friend WithEvents LblPaevaneTarbimine As Label
+    Friend WithEvents chrYlevaade As Chart
 End Class
