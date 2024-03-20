@@ -155,6 +155,10 @@
       <Project>{94023c19-1f3d-4a6d-a449-b33b97a1d3aa}</Project>
       <Name>KasutajaProfiilKomponent</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ToidudRetseptidKomponent\ToidudRetseptidKomponent.vbproj">
+      <Project>{086100df-7956-4195-ad79-4aaea94defd4}</Project>
+      <Name>ToidudRetseptidKomponent</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TreeninguteKomponent\TreeninguteKomponent.vbproj">
       <Project>{5110f966-fef3-49ec-929b-19be65504916}</Project>
       <Name>TreeninguteKomponent</Name>

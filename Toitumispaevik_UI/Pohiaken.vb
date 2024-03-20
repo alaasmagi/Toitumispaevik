@@ -1,4 +1,7 @@
-﻿Imports System.Windows.Forms.VisualStyles
+﻿Imports System.Data.SQLite
+Imports System.IO
+Imports System.Windows.Forms.VisualStyles
+Imports ToidudRetseptidKomponent
 
 Public Class Pohiaken
 
@@ -37,7 +40,7 @@ Public Class Pohiaken
             pbAlumineNaine.Visible = True
         End If
         KomboKastid()
-
+        KiirLisamiseValikud()
         cmbAjaluguGraafikuPeriood.Items.Add("Viimased 7 päeva")
         cmbAjaluguGraafikuPeriood.SelectedItem = "Viimased 7 päeva"
         cmbAjaluguGraafikuPeriood.Items.Add("Viimane kuu")
@@ -188,6 +191,8 @@ Public Class Pohiaken
             cmbMuudaVanust.Items.Add(index)
         Next
         cmbMuudaVanust.SelectedItem = profiil.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "age")
+
+
     End Sub
 
     Private Sub btnMuudaVanust_Click(sender As Object, e As EventArgs) Handles btnMuudaVanust.Click
@@ -242,7 +247,60 @@ Public Class Pohiaken
 
     End Sub
 
+
     Private Sub btnLisaUusToiduaine_Click(sender As Object, e As EventArgs) Handles btnLisaUusToiduaine.Click
+        Dim kalorid As New CToidudJaRetseptid
+
+        Dim toiduaineNimi As String = txtUueToiduaineNimi.Text
+        Dim energia As Double
+        Dim valgud As Double
+        Dim susivesikud As Double
+        Dim rasvad As Double
+        Dim suhkrud As Double
+
+        If Double.TryParse(txtUueToiduaineKcal.Text, energia) AndAlso
+           Double.TryParse(txtUueToiduaineValgud.Text, valgud) AndAlso
+           Double.TryParse(txtUueToiduaineSusivesikud.Text, susivesikud) AndAlso
+           Double.TryParse(txtUueToiduaineRasvad.Text, rasvad) AndAlso
+           Double.TryParse(txtUueToiduaineSuhkrud.Text, suhkrud) Then
+
+            If kalorid.ToiduAineNimiEksisteerib(toiduaineNimi) > 0 Then
+                lblUueToiduaineLisamineViga.Text = "Viga toiduaine lisamisel!"
+                lblUueToiduaineLisamineViga.Visible = True
+            Else
+                lblUueToiduaineLisamineViga.Visible = False
+                kalorid.LisaToiduaine(toiduaineNimi, energia, valgud, susivesikud, rasvad, suhkrud)
+            End If
+        Else
+            lblUueToiduaineLisamineViga.Text = "Viga toiduaine lisamisel!"
+            lblUueToiduaineLisamineViga.Visible = True
+        End If
+    End Sub
+
+    Private Sub btnToiduaineKiirvalikLisa_Click(sender As Object, e As EventArgs) Handles btnToiduaineKiirvalikLisa.Click
 
     End Sub
+
+    Sub KiirLisamiseValikud()
+        Dim tabeli_asukoht As String = $"Data Source={Path.Combine(Path.GetFullPath(Path.Combine _
+            (AppDomain.CurrentDomain.BaseDirectory, "..\..\..\")), "Data", "database.db")};Version=3;"
+        Using connection As New SQLiteConnection(tabeli_asukoht)
+            connection.Open()
+            For index = 0 To 10000
+                Dim selectSql As String = "SELECT food_name FROM food_data WHERE food_id = @id"
+
+                Using cmd As New SQLiteCommand(selectSql, connection)
+                    cmd.Parameters.AddWithValue("@id", index)
+
+                    Using reader As SQLiteDataReader = cmd.ExecuteReader()
+                        While reader.Read()
+                            cmbToiduaineKiirvalik.Items.Add(reader("food_name"))
+                        End While
+                    End Using
+                End Using
+            Next
+        End Using
+        cmbToiduaineKiirvalik.SelectedIndex = 0
+    End Sub
 End Class
+
