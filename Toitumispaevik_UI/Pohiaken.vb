@@ -1,5 +1,7 @@
-﻿Imports System.Data.SQLite
+﻿Imports System.Data.Entity.Core.Mapping
+Imports System.Data.SQLite
 Imports System.IO
+Imports System.Security.Authentication.ExtendedProtection
 Imports System.Windows.Forms.VisualStyles
 Imports KasutajaProfiilKomponent
 Imports ToidudRetseptidKomponent
@@ -288,26 +290,18 @@ Public Class Pohiaken
     Private Sub btnLisaUusToiduaine_Click(sender As Object, e As EventArgs) Handles btnLisaUusToiduaine.Click
         Dim kalorid As New CToidudJaRetseptid
 
-        Dim toiduaineNimi As String = txtUueToiduaineNimi.Text
-        Dim energia As Double
-        Dim valgud As Double
-        Dim susivesikud As Double
-        Dim rasvad As Double
-        Dim suhkrud As Double
-
-        If Double.TryParse(txtUueToiduaineKcal.Text, energia) AndAlso
-           Double.TryParse(txtUueToiduaineValgud.Text, valgud) AndAlso
-           Double.TryParse(txtUueToiduaineSusivesikud.Text, susivesikud) AndAlso
-           Double.TryParse(txtUueToiduaineRasvad.Text, rasvad) AndAlso
-           Double.TryParse(txtUueToiduaineSuhkrud.Text, suhkrud) Then
-
-            If kalorid.ToiduAineNimiEksisteerib(toiduaineNimi) > 0 Then
-                lblUueToiduaineLisamineViga.Text = "Viga toiduaine lisamisel!"
-                lblUueToiduaineLisamineViga.Visible = True
-            Else
-                lblUueToiduaineLisamineViga.Visible = False
-                kalorid.LisaToiduaine(toiduaineNimi, energia, valgud, susivesikud, rasvad, suhkrud)
-            End If
+        If IsNumeric(txtUueToiduaineKcal.Text) AndAlso IsNumeric(txtUueToiduaineSusivesikud.Text) AndAlso IsNumeric(txtUueToiduaineSuhkrud.Text) AndAlso
+            IsNumeric(txtUueToiduaineRasvad.Text) AndAlso IsNumeric(txtUueToiduaineValgud.Text) Then
+            lblUueToiduaineLisamineViga.Visible = False
+            kalorid.LisaToiduaine(txtUueToiduaineNimi.Text, txtUueToiduaineKcal.Text, txtUueToiduaineValgud.Text, txtUueToiduaineSusivesikud.Text,
+                                  txtUueToiduaineRasvad.Text, txtUueToiduaineSuhkrud.Text)
+            txtUueToiduaineNimi.Text = ""
+            txtUueToiduaineKcal.Text = ""
+            txtUueToiduaineSusivesikud.Text = ""
+            txtUueToiduaineSuhkrud.Text = ""
+            txtUueToiduaineValgud.Text = ""
+            txtUueToiduaineRasvad.Text = ""
+            KiirLisamiseValikud()
         Else
             lblUueToiduaineLisamineViga.Text = "Viga toiduaine lisamisel!"
             lblUueToiduaineLisamineViga.Visible = True
@@ -327,13 +321,25 @@ Public Class Pohiaken
             toidukord = 2
         ElseIf rdbOhtu.Checked = True Then
             toidukord = 3
+        Else
+            lblToiduAineRetseptiLisamineViga.Text = "Toidukorda pole valitud!"
+            lblToiduAineRetseptiLisamineViga.Visible = True
         End If
-        ToidudRetseptidK.KasutajaToiduaineVõiRetseptiLisamine(_kasutaja_id, AnaluusK.KuupaevIntegeriks(Date.Now.Date), toidukord, ToidudRetseptidK.ToiduAineNimiEksisteerib(cmbToiduaineKiirvalik.SelectedItem), txtToiduaineKiirvalikKogus.Text)
-        KoduGraafik()
+        If IsNumeric(txtToiduaineKiirvalikKogus.Text) Then
+            ToidudRetseptidK.KasutajaToiduaineVõiRetseptiLisamine(_kasutaja_id, AnaluusK.KuupaevIntegeriks(Date.Now.Date), toidukord, ToidudRetseptidK.ToiduAineNimiEksisteerib(cmbToiduaineKiirvalik.SelectedItem), txtToiduaineKiirvalikKogus.Text)
+            KoduGraafik()
+            lblToiduAineRetseptiLisamineViga.Visible = False
+            txtToiduaineKiirvalikKogus.Text = ""
+        Else
+            lblToiduAineRetseptiLisamineViga.Text = "Viga koguse sisestuses!"
+            lblToiduAineRetseptiLisamineViga.Visible = True
+        End If
+
     End Sub
 
     Private Sub KiirLisamiseValikud()
         ToidudRetseptidK = New ToidudRetseptidKomponent.CToidudJaRetseptid
+        cmbToiduaineKiirvalik.Items.Clear()
 
         Dim toiduaineteNimed As List(Of String) = ToidudRetseptidK.KiirlisamiseToiduaineNimed
         For Each nimetus As String In toiduaineteNimed
@@ -346,9 +352,8 @@ Public Class Pohiaken
         ProfiilK = New KasutajaProfiilKomponent.CKasutajaProfiil
         If (IsNumeric(txtKalorilimiit.Text)) Then
             ProfiilK.IntegerAndmeValjaSisestusKasutajaTabelisse(_kasutaja_id, txtKalorilimiit.Text, "calorie_limit")
-            lblKaloriLimiitViga.ForeColor = Color.Green
-            lblKaloriLimiitViga.Text = "Limiidi seadmine õnnestus!"
-            lblKaloriLimiitViga.Visible = True
+            txtKalorilimiit.Text = ""
+            lblKaloriLimiitViga.Visible = False
         Else
             lblKaloriLimiitViga.ForeColor = Color.Red
             lblKaloriLimiitViga.Text = "Viga limiidi seadmisel!"
