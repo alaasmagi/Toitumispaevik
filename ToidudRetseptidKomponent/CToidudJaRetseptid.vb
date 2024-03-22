@@ -3,15 +3,10 @@ Imports System.Data.SqlClient
 Imports System.Data.SQLite
 
 Public Class CToidudJaRetseptid
+    Implements IToidudjaRetseptid
 
     Public Function LisaToiduaine(ByVal toiduainenimi As String, ByVal energia As Double, ByVal valgud As Double,
-                                   ByVal susivesikud As Double, ByVal rasvad As Double, ByVal suhkrud As Double) As Integer
-
-        'Toiduaine nime olemas olu kontroll
-        If ToiduAineNimiEksisteerib(toiduainenimi) Then
-            Console.WriteLine("Sama nimega toit juba eksisteerib.")
-            Return -1
-        End If
+                                   ByVal susivesikud As Double, ByVal rasvad As Double, ByVal suhkrud As Double) As Integer Implements IToidudjaRetseptid.LisaToiduaine
 
         Dim toiduaine_id As Integer = GenereeriId()
 
@@ -36,14 +31,37 @@ Public Class CToidudJaRetseptid
         Return toiduaine_id
     End Function
 
-    Private Function GenereeriId() As Integer
+    Private Function GenereeriId() As Integer Implements IToidudjaRetseptid.GenereeriId
         Dim random As New Random()
-        Dim genereeritudId As Integer = random.Next(1002, 10000)
+        Dim genereeritudId As Integer = random.Next(0, 250)
 
         Return genereeritudId
     End Function
 
-    Public Function ToiduAineNimiEksisteerib(ByVal foodName As String) As Integer
+    Public Function KiirlisamiseToiduaineNimed() As List(Of String) Implements IToidudjaRetseptid.KiirlisamiseToiduaineNimed
+        Dim toiduaineteNimed As New List(Of String)()
+        Dim tabeli_asukoht As String = $"Data Source={Path.Combine(Path.GetFullPath(Path.Combine _
+               (AppDomain.CurrentDomain.BaseDirectory, "..\..\..\")), "Data", "database.db")};Version=3;"
+        Using connection As New SQLiteConnection(tabeli_asukoht)
+            connection.Open()
+            For index = 0 To 250
+                Dim selectSql As String = "SELECT food_name FROM food_data WHERE food_id = @id"
+
+                Using cmd As New SQLiteCommand(selectSql, connection)
+                    cmd.Parameters.AddWithValue("@id", index)
+
+                    Using reader As SQLiteDataReader = cmd.ExecuteReader()
+                        While reader.Read()
+                            toiduaineteNimed.Add(reader("food_name"))
+                        End While
+                    End Using
+                End Using
+            Next
+        End Using
+        Return toiduaineteNimed
+    End Function
+
+    Public Function ToiduAineNimiEksisteerib(ByVal toiduaineNimi As String) As Integer Implements IToidudjaRetseptid.ToiduAineNimiEksisteerib
         Dim toiduaine_id As Integer = 0
         Dim tabeli_asukoht As String = $"Data Source={Path.Combine(Path.GetFullPath(Path.Combine _
         (AppDomain.CurrentDomain.BaseDirectory, "..\..\..\")), "Data", "database.db")};Version=3;"
@@ -51,7 +69,7 @@ Public Class CToidudJaRetseptid
             connection.Open()
             Dim selectSql As String = "SELECT food_id FROM food_data WHERE food_name = @foodName"
             Using cmd As New SQLiteCommand(selectSql, connection)
-                cmd.Parameters.AddWithValue("@foodName", foodName)
+                cmd.Parameters.AddWithValue("@foodName", toiduaineNimi)
 
                 Dim result As Object = cmd.ExecuteScalar()
                 If result IsNot Nothing AndAlso Not DBNull.Value.Equals(result) Then
@@ -62,7 +80,8 @@ Public Class CToidudJaRetseptid
         Return toiduaine_id
     End Function
 
+    Public Function KasutajaToiduaineVõiRetseptiLisamine(ByVal kasutaja_id As String, ByVal kuupaev As Integer, ByVal toidukord As Integer, ByVal toiduaine_retsept_id As Integer, ByVal kogus As Integer) As Integer
 
-
+    End Function
 
 End Class

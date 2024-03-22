@@ -2,51 +2,6 @@
 Imports System.IO
 Public Class CAnaluus
     Implements IAnaluus
-
-    'Public Property kcalHommik As Integer Implements IAnaluus.kcalHommik
-    'Get
-    'Throw New NotImplementedException()
-    'End Get
-    'Set(value As Integer)
-    'Throw New NotImplementedException()
-    'End Set
-    'End Property
-
-    'Public Property kcalLouna As Integer Implements IAnaluus.kcalLouna
-    'Get
-    'Throw New NotImplementedException()
-    'End Get
-    'Set(value As Integer)
-    'Throw New NotImplementedException()
-    'End Set
-    'End Property
-
-    'Public Property kcalVahepala As Integer Implements IAnaluus.kcalVahepala
-    'Get
-    'Throw New NotImplementedException()
-    'End Get
-    'Set(value As Integer)
-    'Throw New NotImplementedException()
-    'End Set
-    'End Property
-
-    'Public Property kcalOhtu As Integer Implements IAnaluus.kcalOhtu
-    'Get
-    'Throw New NotImplementedException()
-    'End Get
-    'Set(value As Integer)
-    'Throw New NotImplementedException()
-    'End Set
-    'End Property
-    'ajutine!!!!!!!!!!!
-    'Dim kuupaev As Integer = 100
-    'Dim kasutaja_id As Integer = 
-
-    '    Dim kcalHommik As Integer = ToidukordKokku(KclParingAndmebaasist(kasutajaId, kuupaev, ))
-    '   Dim kcalHommik As Integer = ToidukordKokku()
-    '  Dim kcalHommik As Integer = ToidukordKokku()
-    ' Dim kcalHommik As Integer = ToidukordKokku()
-
     Public Function paevaneKcal(kcalHommik, kcalLouna, kcalOhtu, kcalVahepala) As Integer Implements IAnaluus.paevaneKcal
         Return kcalHommik + kcalLouna + kcalVahepala + kcalOhtu
     End Function
