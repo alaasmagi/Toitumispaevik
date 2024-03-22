@@ -141,7 +141,6 @@ Public Class CKasutajaProfiil
 
         Return builder.ToString()
     End Function
-
     Public Function UheAndmevaljaParingKasutajaTabelist(ByVal kasutaja_id As String, ByVal andmevali As String) As String Implements IKasutajaProfiil.UheAndmevaljaParingKasutajaTabelist
         Dim tagastus As String = ""
         Dim tabeli_asukoht As String = $"Data Source={Path.Combine(Path.GetFullPath(Path.Combine _

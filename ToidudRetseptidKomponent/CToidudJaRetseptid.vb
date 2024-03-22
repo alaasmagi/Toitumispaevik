@@ -61,15 +61,15 @@ Public Class CToidudJaRetseptid
         Return toiduaineteNimed
     End Function
 
-    Public Function ToiduAineNimiEksisteerib(ByVal toiduaineNimi As String) As Integer Implements IToidudjaRetseptid.ToiduAineNimiEksisteerib
+    Public Function ToiduAineNimiEksisteerib(ByVal toiduaine_nimi As String) As Integer Implements IToidudjaRetseptid.ToiduAineNimiEksisteerib
         Dim toiduaine_id As Integer = 0
         Dim tabeli_asukoht As String = $"Data Source={Path.Combine(Path.GetFullPath(Path.Combine _
         (AppDomain.CurrentDomain.BaseDirectory, "..\..\..\")), "Data", "database.db")};Version=3;"
         Using connection As New SQLiteConnection(tabeli_asukoht)
             connection.Open()
-            Dim selectSql As String = "SELECT food_id FROM food_data WHERE food_name = @foodName"
+            Dim selectSql As String = "SELECT food_id FROM food_data WHERE food_name = @toiduaine_nimi"
             Using cmd As New SQLiteCommand(selectSql, connection)
-                cmd.Parameters.AddWithValue("@foodName", toiduaineNimi)
+                cmd.Parameters.AddWithValue("@toiduaine_nimi", toiduaine_nimi)
 
                 Dim result As Object = cmd.ExecuteScalar()
                 If result IsNot Nothing AndAlso Not DBNull.Value.Equals(result) Then
@@ -80,8 +80,54 @@ Public Class CToidudJaRetseptid
         Return toiduaine_id
     End Function
 
-    Public Function KasutajaToiduaineVõiRetseptiLisamine(ByVal kasutaja_id As String, ByVal kuupaev As Integer, ByVal toidukord As Integer, ByVal toiduaine_retsept_id As Integer, ByVal kogus As Integer) As Integer
+    Public Function ToiteVaartuseParing(ByVal toiduaine_id As Integer, ByVal otsitav_suurus As String) As Integer Implements IToidudjaRetseptid.ToiteVaartuseParing
+        Dim tulemus As Integer
+        Dim tabeli_asukoht As String = $"Data Source={Path.Combine(Path.GetFullPath(Path.Combine _
+        (AppDomain.CurrentDomain.BaseDirectory, "..\..\..\")), "Data", "database.db")};Version=3;"
+        Using connection As New SQLiteConnection(tabeli_asukoht)
+            connection.Open()
+            Dim selectSql As String = $"SELECT {otsitav_suurus} FROM food_data WHERE food_id = @toiduaine_id"
+            Using cmd As New SQLiteCommand(selectSql, connection)
+                cmd.Parameters.AddWithValue("@toiduaine_id", toiduaine_id)
+                Dim result As Object = cmd.ExecuteScalar()
+                If result IsNot Nothing AndAlso Not DBNull.Value.Equals(result) Then
+                    tulemus = Convert.ToInt32(result)
+                End If
+            End Using
+        End Using
+        Return tulemus
+    End Function
 
+    Public Function KasutajaToiduaineVõiRetseptiLisamine(ByVal kasutaja_id As String, ByVal kuupaev As Integer, ByVal toidukord As Integer, ByVal toiduaine_id As Integer, ByVal kogus As Integer) As Integer Implements IToidudjaRetseptid.KasutajaToiduaineVõiRetseptiLisamine
+        Dim kalorid = 0.1 * kogus * ToiteVaartuseParing(toiduaine_id, "energy")
+        Dim susivesikud = 0.1 * kogus * ToiteVaartuseParing(toiduaine_id, "c_hydrates")
+        Dim suhkur = 0.1 * kogus * ToiteVaartuseParing(toiduaine_id, "sugar")
+        Dim valgud = 0.1 * kogus * ToiteVaartuseParing(toiduaine_id, "protein")
+        Dim rasvad = 0.1 * kogus * ToiteVaartuseParing(toiduaine_id, "lipid")
+
+
+
+        Dim tabeli_asukoht As String = $"Data Source={Path.Combine(Path.GetFullPath(Path.Combine _
+        (AppDomain.CurrentDomain.BaseDirectory, "..\..\..\")), "Data", "database.db")};Version=3;"
+        Using connection As New SQLiteConnection(tabeli_asukoht)
+            connection.Open()
+            Dim insertDataSql As String = "INSERT INTO user_food_history (user_id, time, time_of_meal, food_id, amount, energy_intake, total_c_hydrates, total_sugar, total_protein, total_lipid)
+          VALUES (@kasutaja_id, @kuupaev, @toidukord, @toiduaine_id, @kogus, @kalorid, @susivesikud, @suhkur, @valgud, @rasvad)"
+            Using cmd As New SQLiteCommand(insertDataSql, connection)
+                cmd.Parameters.AddWithValue("@kasutaja_id", kasutaja_id)
+                cmd.Parameters.AddWithValue("@kuupaev", kuupaev)
+                cmd.Parameters.AddWithValue("@toidukord", toidukord)
+                cmd.Parameters.AddWithValue("@toiduaine_id", toiduaine_id)
+                cmd.Parameters.AddWithValue("@kogus", kogus)
+                cmd.Parameters.AddWithValue("@kalorid", 0.01 * kogus * ToiteVaartuseParing(toiduaine_id, "energy"))
+                cmd.Parameters.AddWithValue("@susivesikud", 0.01 * kogus * ToiteVaartuseParing(toiduaine_id, "c_hydrates"))
+                cmd.Parameters.AddWithValue("@suhkur", 0.01 * kogus * ToiteVaartuseParing(toiduaine_id, "sugar"))
+                cmd.Parameters.AddWithValue("@valgud", 0.01 * kogus * ToiteVaartuseParing(toiduaine_id, "protein"))
+                cmd.Parameters.AddWithValue("@rasvad", 0.01 * kogus * ToiteVaartuseParing(toiduaine_id, "lipid"))
+                cmd.ExecuteNonQuery()
+            End Using
+        End Using
+        Return toiduaine_id
     End Function
 
 End Class

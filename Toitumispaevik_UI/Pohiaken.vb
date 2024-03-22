@@ -7,6 +7,7 @@ Imports ToidudRetseptidKomponent
 Public Class Pohiaken
 
     Private _kasutaja_id As Integer
+    Private kalorilimiit As Integer
     Private HommikKcal As Integer = 0
     Private LounaKcal As Integer = 0
     Private OhtuKcal As Integer = 0
@@ -20,6 +21,8 @@ Public Class Pohiaken
     Public Sub New(ByVal kasutaja_id As Integer)
         InitializeComponent()
         _kasutaja_id = kasutaja_id
+        Dim ProfiilK As New KasutajaProfiilKomponent.CKasutajaProfiil
+        kalorilimiit = ProfiilK.UheAndmevaljaParingKasutajaTabelist(_kasutaja_id, "calorie_limit")
     End Sub
     Public Sub ResetForm()
         ProfiilK = New KasutajaProfiilKomponent.CKasutajaProfiil
@@ -43,31 +46,6 @@ Public Class Pohiaken
         lblKasutajaPikkus.Text = ProfiilK.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "height")
         lblKasutajaKaal.Text = ProfiilK.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "weight")
         lblKasutajaVanus.Text = ProfiilK.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "age")
-        Dim AnaluusK As AnaluusiKomponent.IAnaluus
-        AnaluusK = New AnaluusiKomponent.CAnaluus
-
-        'sisendid 2 ja 3 KclParingAndmebaasist vajavad vahetamist (2 kuupäev mingis formaadis) (3 söögiaeg kas nii voi 0-3)
-        HommikKcal = AnaluusK.ToidukordKokku(AnaluusK.KclParingAndmebaasist(_kasutaja_id, 100, "hommik"))
-        chrKoduPaneel.Series("Soogikorrad").Points.AddXY("Hommik", HommikKcal)
-
-        'sisendid 2 ja 3 KclParingAndmebaasist vajavad vahetamist (2 kuupäev mingis formaadis) (3 söögiaeg kas nii voi 0-3)
-        LounaKcal = AnaluusK.ToidukordKokku(AnaluusK.KclParingAndmebaasist(_kasutaja_id, 100, "louna"))
-        chrKoduPaneel.Series("Soogikorrad").Points.AddXY("Lõuna", LounaKcal)
-
-        'sisendid 2 ja 3 KclParingAndmebaasist vajavad vahetamist (2 kuupäev mingis formaadis) (3 söögiaeg kas nii voi 0-3)
-        OhtuKcal = AnaluusK.ToidukordKokku(AnaluusK.KclParingAndmebaasist(_kasutaja_id, 100, "ohtu"))
-        chrKoduPaneel.Series("Soogikorrad").Points.AddXY("Õhtu", OhtuKcal)
-
-        'sisendid 2 ja 3 KclParingAndmebaasist vajavad vahetamist (2 kuupäev mingis formaadis) (3 söögiaeg kas nii voi 0-3)
-        VahepKcal = AnaluusK.ToidukordKokku(AnaluusK.KclParingAndmebaasist(_kasutaja_id, 100, "vahep"))
-        chrKoduPaneel.Series("Soogikorrad").Points.AddXY("Vahepalad", VahepKcal)
-
-        'lisada muutuja soovitud kalori tarbimis koguseks "3000" asemel
-        ToidukorradKoos = AnaluusK.paevaneKcal(HommikKcal, LounaKcal, OhtuKcal, VahepKcal)
-        chrKoduPaneel.Series("Soogikorrad").Points.AddXY("Söömata", 3000 - ToidukorradKoos)
-
-        LblPaevaneTarbimine.Text = ToidukorradKoos & Environment.NewLine & "/" & Environment.NewLine & "3000"
-
 
 
         If ProfiilK.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "sex") = 0 Then
@@ -78,6 +56,7 @@ Public Class Pohiaken
             pbAlumineNaine.Visible = True
         End If
         KomboKastid()
+        KoduGraafik()
         KiirLisamiseValikud()
         cmbAjaluguGraafikuPeriood.Items.Add("Viimased 7 päeva")
         cmbAjaluguGraafikuPeriood.SelectedItem = "Viimased 7 päeva"
@@ -88,7 +67,27 @@ Public Class Pohiaken
         cmbAjaluguGraafikuPeriood.Items.Add("Kogu ajalugu")
     End Sub
 
+    Private Sub KoduGraafik()
+        chrKoduPaneel.Series("Soogikorrad").Points.Clear()
+        AnaluusK = New AnaluusiKomponent.CAnaluus
 
+        HommikKcal = AnaluusK.ToidukordKokku(AnaluusK.KclParingAndmebaasist(_kasutaja_id, AnaluusK.KuupaevIntegeriks(Date.Now.Date), 0))
+        chrKoduPaneel.Series("Soogikorrad").Points.AddXY("Hommik", HommikKcal)
+
+        LounaKcal = AnaluusK.ToidukordKokku(AnaluusK.KclParingAndmebaasist(_kasutaja_id, AnaluusK.KuupaevIntegeriks(Date.Now.Date), 1))
+        chrKoduPaneel.Series("Soogikorrad").Points.AddXY("Lõuna", LounaKcal)
+
+        OhtuKcal = AnaluusK.ToidukordKokku(AnaluusK.KclParingAndmebaasist(_kasutaja_id, AnaluusK.KuupaevIntegeriks(Date.Now.Date), 3))
+        chrKoduPaneel.Series("Soogikorrad").Points.AddXY("Õhtu", OhtuKcal)
+
+        VahepKcal = AnaluusK.ToidukordKokku(AnaluusK.KclParingAndmebaasist(_kasutaja_id, AnaluusK.KuupaevIntegeriks(Date.Now.Date), 2))
+        chrKoduPaneel.Series("Soogikorrad").Points.AddXY("Vahepalad", VahepKcal)
+
+        ToidukorradKoos = AnaluusK.paevaneKcal(HommikKcal, LounaKcal, OhtuKcal, VahepKcal)
+        chrKoduPaneel.Series("Soogikorrad").Points.AddXY("Söömata", kalorilimiit - ToidukorradKoos)
+
+        LblPaevaneTarbimine.Text = ToidukorradKoos & Environment.NewLine & "/" & Environment.NewLine & kalorilimiit
+    End Sub
     Private Sub pnlLogo_Click(sender As Object, e As EventArgs) Handles pnlLogo.Click
         pnlYlevaade.Visible = False
         pnlTreeningud.Visible = False
@@ -316,7 +315,21 @@ Public Class Pohiaken
     End Sub
 
     Private Sub btnToiduaineKiirvalikLisa_Click(sender As Object, e As EventArgs) Handles btnToiduaineKiirvalikLisa.Click
+        Dim toidukord As Integer = 0
+        ToidudRetseptidK = New ToidudRetseptidKomponent.CToidudJaRetseptid
+        AnaluusK = New AnaluusiKomponent.CAnaluus
 
+        If rdbHommik.Checked = True Then
+            toidukord = 0
+        ElseIf rdbLouna.Checked = True Then
+            toidukord = 1
+        ElseIf rdbVahepala.Checked = True Then
+            toidukord = 2
+        ElseIf rdbOhtu.Checked = True Then
+            toidukord = 3
+        End If
+        ToidudRetseptidK.KasutajaToiduaineVõiRetseptiLisamine(_kasutaja_id, AnaluusK.KuupaevIntegeriks(Date.Now.Date), toidukord, ToidudRetseptidK.ToiduAineNimiEksisteerib(cmbToiduaineKiirvalik.SelectedItem), txtToiduaineKiirvalikKogus.Text)
+        KoduGraafik()
     End Sub
 
     Private Sub KiirLisamiseValikud()
@@ -327,6 +340,20 @@ Public Class Pohiaken
             cmbToiduaineKiirvalik.Items.Add(nimetus)
         Next
         cmbToiduaineKiirvalik.SelectedIndex = 0
+    End Sub
+
+    Private Sub btnKaloriLimiit_Click(sender As Object, e As EventArgs) Handles btnKaloriLimiit.Click
+        ProfiilK = New KasutajaProfiilKomponent.CKasutajaProfiil
+        If (IsNumeric(txtKalorilimiit.Text)) Then
+            ProfiilK.IntegerAndmeValjaSisestusKasutajaTabelisse(_kasutaja_id, txtKalorilimiit.Text, "calorie_limit")
+            lblKaloriLimiitViga.ForeColor = Color.Green
+            lblKaloriLimiitViga.Text = "Limiidi seadmine õnnestus!"
+            lblKaloriLimiitViga.Visible = True
+        Else
+            lblKaloriLimiitViga.ForeColor = Color.Red
+            lblKaloriLimiitViga.Text = "Viga limiidi seadmisel!"
+            lblKaloriLimiitViga.Visible = True
+        End If
     End Sub
 End Class
 
