@@ -55,15 +55,11 @@ Public Class CAnaluus
         Dim tabeli_asukoht As String = $"Data Source={Path.Combine(Path.GetFullPath(Path.Combine _
         (AppDomain.CurrentDomain.BaseDirectory, "..\..\..\")), "Data", "database.db")};Version=3;"
 
-        ' SQL query to select multiple values
         Dim paring As String = "SELECT energy_intake FROM user_food_history WHERE user_id = @kasutaja_id AND time = @kuupaev AND time_of_meal = @toidukord;"
-
-        ' Initialize a list to store the integer values
         Dim integerValues As New List(Of Integer)
 
         Using connection As New SQLiteConnection(tabeli_asukoht)
             Using command As New SQLiteCommand(paring, connection)
-                ' Add parameters if needed
                 command.Parameters.AddWithValue("@kasutaja_id", kasutaja_id)
                 command.Parameters.AddWithValue("@kuupaev", kuupaev)
                 command.Parameters.AddWithValue("@toidukord", toidukord)
@@ -72,7 +68,6 @@ Public Class CAnaluus
 
                 Using reader As SQLiteDataReader = command.ExecuteReader()
                     While reader.Read()
-                        ' Retrieve integer values from the query result and add them to the list
                         For i As Integer = 0 To reader.FieldCount - 1
                             integerValues.Add(reader.GetInt32(i))
                         Next
@@ -81,8 +76,6 @@ Public Class CAnaluus
 
             End Using
         End Using
-
-        ' Return the list of integer values as an array
         Return integerValues.ToArray()
 
     End Function
@@ -93,8 +86,17 @@ Public Class CAnaluus
         For i As Integer = 0 To KcalLoend.Length - 1
             koguvaartus += KcalLoend(i)
         Next
-
         Return koguvaartus
+    End Function
+
+    Public Function KuupaevIntegeriks(ByVal sisendKuupaev As DateTime) As Integer Implements IAnaluus.KuupaevIntegeriks
+        Dim unixAeg As New DateTime(1970, 1, 1)
+        Return (sisendKuupaev - unixAeg).Days
+    End Function
+
+    Public Function IntegerKuupaevaks(ByVal sisendInteger As Integer) As DateTime Implements IAnaluus.IntegerKuupaevaks
+        Dim unixAeg As New DateTime(1970, 1, 1)
+        Return (unixAeg.AddDays(sisendInteger))
     End Function
 
 End Class

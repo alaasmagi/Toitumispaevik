@@ -36,9 +36,10 @@ Public Class Pohiaken
         lblKasutajaPikkus.Text = profiil.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "height")
         lblKasutajaKaal.Text = profiil.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "weight")
         lblKasutajaVanus.Text = profiil.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "age")
-
         Dim AnaluusK As AnaluusiKomponent.IAnaluus
         AnaluusK = New AnaluusiKomponent.CAnaluus
+        txtKuupaev.Text = AnaluusK.KuupaevIntegeriks(Date.Now.Date)
+        txtKP.Text = AnaluusK.IntegerKuupaevaks(AnaluusK.KuupaevIntegeriks(Date.Now.Date))
 
         'sisendid 2 ja 3 KclParingAndmebaasist vajavad vahetamist (2 kuupäev mingis formaadis) (3 söögiaeg kas nii voi 0-3)
         HommikKcal = AnaluusK.ToidukordKokku(AnaluusK.KclParingAndmebaasist(_kasutaja_id, 100, "hommik"))
