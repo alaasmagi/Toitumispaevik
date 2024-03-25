@@ -193,7 +193,6 @@ Public Class Pohiaken
     End Sub
 
     Private Sub btnKodu_Click(sender As Object, e As EventArgs) Handles btnKodu.Click
-        KoduGraafik()
         pnlYlevaade.Visible = False
         pnlTreeningud.Visible = False
         pnlToidulaud.Visible = False
@@ -360,14 +359,14 @@ Public Class Pohiaken
         ProfiilK = New KasutajaProfiilKomponent.CKasutajaProfiil
         If (IsNumeric(txtKalorilimiit.Text)) Then
             ProfiilK.IntegerAndmeValjaSisestusKasutajaTabelisse(_kasutaja_id, txtKalorilimiit.Text, "calorie_limit")
+            Integer.TryParse(txtKalorilimiit.Text, kalorilimiit)
             txtKalorilimiit.Text = ""
             lblKaloriLimiitViga.Visible = False
-            KoduGraafik()
         Else
-            lblKaloriLimiitViga.ForeColor = Color.Red
             lblKaloriLimiitViga.Text = "Viga limiidi seadmisel!"
             lblKaloriLimiitViga.Visible = True
         End If
+        KoduGraafik()
     End Sub
 End Class
 
