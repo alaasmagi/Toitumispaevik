@@ -300,20 +300,25 @@ Public Class Pohiaken
 
         If IsNumeric(txtUueToiduaineKcal.Text) AndAlso IsNumeric(txtUueToiduaineSusivesikud.Text) AndAlso IsNumeric(txtUueToiduaineSuhkrud.Text) AndAlso
             IsNumeric(txtUueToiduaineRasvad.Text) AndAlso IsNumeric(txtUueToiduaineValgud.Text) Then
-            lblUueToiduaineLisamineViga.Visible = False
-            kalorid.LisaToiduaine(txtUueToiduaineNimi.Text, txtUueToiduaineKcal.Text, txtUueToiduaineValgud.Text, txtUueToiduaineSusivesikud.Text,
-                                  txtUueToiduaineRasvad.Text, txtUueToiduaineSuhkrud.Text)
-            txtUueToiduaineNimi.Text = ""
-            txtUueToiduaineKcal.Text = ""
-            txtUueToiduaineSusivesikud.Text = ""
-            txtUueToiduaineSuhkrud.Text = ""
-            txtUueToiduaineValgud.Text = ""
-            txtUueToiduaineRasvad.Text = ""
-            KiirLisamiseValikud()
+            If kalorid.ToiduAineNimiEksisteerib(txtUueToiduaineNimi.Text) > 0 Then
+                lblUueToiduaineLisamineViga.Text = "Viga toiduaine lisamisel!"
+                lblUueToiduaineLisamineViga.Visible = True
+            Else
+                lblUueToiduaineLisamineViga.Visible = False
+                kalorid.LisaToiduaine(txtUueToiduaineNimi.Text, txtUueToiduaineKcal.Text, txtUueToiduaineValgud.Text, txtUueToiduaineSusivesikud.Text,
+                                      txtUueToiduaineRasvad.Text, txtUueToiduaineSuhkrud.Text)
+                txtUueToiduaineNimi.Text = ""
+                txtUueToiduaineKcal.Text = ""
+                txtUueToiduaineSusivesikud.Text = ""
+                txtUueToiduaineSuhkrud.Text = ""
+                txtUueToiduaineValgud.Text = ""
+                txtUueToiduaineRasvad.Text = ""
+            End If
         Else
             lblUueToiduaineLisamineViga.Text = "Viga toiduaine lisamisel!"
             lblUueToiduaineLisamineViga.Visible = True
         End If
+        KiirLisamiseValikud()
     End Sub
 
     Private Sub btnToiduaineKiirvalikLisa_Click(sender As Object, e As EventArgs) Handles btnToiduaineKiirvalikLisa.Click
