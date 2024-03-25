@@ -1,22 +1,34 @@
-﻿Imports System.Data.SQLite
+﻿Imports System.Data.Entity.Core.Mapping
+Imports System.Data.SQLite
 Imports System.IO
+Imports System.Security.Authentication.ExtendedProtection
 Imports System.Windows.Forms.VisualStyles
+Imports KasutajaProfiilKomponent
 Imports ToidudRetseptidKomponent
 
 Public Class Pohiaken
 
     Private _kasutaja_id As Integer
+    Private kalorilimiit As Integer
     Private HommikKcal As Integer = 0
     Private LounaKcal As Integer = 0
     Private OhtuKcal As Integer = 0
     Private VahepKcal As Integer = 0
     Private ToidukorradKoos As Integer
 
+    Dim ProfiilK As KasutajaProfiilKomponent.IKasutajaProfiil
+    Dim AnaluusK As AnaluusiKomponent.IAnaluus
+    Dim ToidudRetseptidK As ToidudRetseptidKomponent.IToidudjaRetseptid
+
     Public Sub New(ByVal kasutaja_id As Integer)
         InitializeComponent()
         _kasutaja_id = kasutaja_id
+        Dim ProfiilK As New KasutajaProfiilKomponent.CKasutajaProfiil
+        kalorilimiit = ProfiilK.UheAndmevaljaParingKasutajaTabelist(_kasutaja_id, "calorie_limit")
     End Sub
     Public Sub ResetForm()
+        ProfiilK = New KasutajaProfiilKomponent.CKasutajaProfiil
+
         TuhjendaKonteiner(Me)
         pnlLogo.Visible = True
         pnlTopBar.Visible = True
@@ -28,50 +40,25 @@ Public Class Pohiaken
         pnlProfiiliSeaded.Visible = False
         pnlRakenduseInfo.Visible = False
         pnlKodu.Visible = True
-        Dim profiil As New CKasutajaProfiil.CKasutajaProfiil
-        lblEesnimi.Text = profiil.Dekrupteerimine(profiil.UheAndmevaljaParingKasutajaTabelist(_kasutaja_id, "firstname"))
+
+        lblEesnimi.Text = ProfiilK.Dekrupteerimine(ProfiilK.UheAndmevaljaParingKasutajaTabelist(_kasutaja_id, "firstname"))
         lblKoduEesnimi.Text = lblEesnimi.Text & "!"
         lblProfiiliSeadedEesnimi.Text = lblEesnimi.Text
-        lblProfiiliSeadedKasutajanimi.Text = profiil.Dekrupteerimine(profiil.UheAndmevaljaParingKasutajaTabelist(_kasutaja_id, "username"))
-        lblKasutajaPikkus.Text = profiil.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "height")
-        lblKasutajaKaal.Text = profiil.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "weight")
-        lblKasutajaVanus.Text = profiil.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "age")
-
-        Dim AnaluusK As AnaluusiKomponent.IAnaluus
-        AnaluusK = New AnaluusiKomponent.CAnaluus
-
-        'sisendid 2 ja 3 KclParingAndmebaasist vajavad vahetamist (2 kuupäev mingis formaadis) (3 söögiaeg kas nii voi 0-3)
-        HommikKcal = AnaluusK.ToidukordKokku(AnaluusK.KclParingAndmebaasist(_kasutaja_id, 100, "hommik"))
-        chrKoduPaneel.Series("Soogikorrad").Points.AddXY("Hommik", HommikKcal)
-
-        'sisendid 2 ja 3 KclParingAndmebaasist vajavad vahetamist (2 kuupäev mingis formaadis) (3 söögiaeg kas nii voi 0-3)
-        LounaKcal = AnaluusK.ToidukordKokku(AnaluusK.KclParingAndmebaasist(_kasutaja_id, 100, "louna"))
-        chrKoduPaneel.Series("Soogikorrad").Points.AddXY("Lõuna", LounaKcal)
-
-        'sisendid 2 ja 3 KclParingAndmebaasist vajavad vahetamist (2 kuupäev mingis formaadis) (3 söögiaeg kas nii voi 0-3)
-        OhtuKcal = AnaluusK.ToidukordKokku(AnaluusK.KclParingAndmebaasist(_kasutaja_id, 100, "ohtu"))
-        chrKoduPaneel.Series("Soogikorrad").Points.AddXY("Õhtu", OhtuKcal)
-
-        'sisendid 2 ja 3 KclParingAndmebaasist vajavad vahetamist (2 kuupäev mingis formaadis) (3 söögiaeg kas nii voi 0-3)
-        VahepKcal = AnaluusK.ToidukordKokku(AnaluusK.KclParingAndmebaasist(_kasutaja_id, 100, "vahep"))
-        chrKoduPaneel.Series("Soogikorrad").Points.AddXY("Vahepalad", VahepKcal)
-
-        'lisada muutuja soovitud kalori tarbimis koguseks "3000" asemel
-        ToidukorradKoos = AnaluusK.paevaneKcal(HommikKcal, LounaKcal, OhtuKcal, VahepKcal)
-        chrKoduPaneel.Series("Soogikorrad").Points.AddXY("Söömata", 3000 - ToidukorradKoos)
-
-        LblPaevaneTarbimine.Text = ToidukorradKoos & Environment.NewLine & "/" & Environment.NewLine & "3000"
+        lblProfiiliSeadedKasutajanimi.Text = ProfiilK.Dekrupteerimine(ProfiilK.UheAndmevaljaParingKasutajaTabelist(_kasutaja_id, "username"))
+        lblKasutajaPikkus.Text = ProfiilK.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "height")
+        lblKasutajaKaal.Text = ProfiilK.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "weight")
+        lblKasutajaVanus.Text = ProfiilK.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "age")
 
 
-
-        If profiil.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "sex") = 0 Then
+        If ProfiilK.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "sex") = 0 Then
             pbUlemineMees.Visible = True
             pbAlumineMees.Visible = True
-        ElseIf profiil.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "sex") = 1 Then
+        ElseIf ProfiilK.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "sex") = 1 Then
             pbUlemineNaine.Visible = True
             pbAlumineNaine.Visible = True
         End If
         KomboKastid()
+        KoduGraafik()
         KiirLisamiseValikud()
         cmbAjaluguGraafikuPeriood.Items.Add("Viimased 7 päeva")
         cmbAjaluguGraafikuPeriood.SelectedItem = "Viimased 7 päeva"
@@ -82,7 +69,27 @@ Public Class Pohiaken
         cmbAjaluguGraafikuPeriood.Items.Add("Kogu ajalugu")
     End Sub
 
+    Private Sub KoduGraafik()
+        chrKoduPaneel.Series("Soogikorrad").Points.Clear()
+        AnaluusK = New AnaluusiKomponent.CAnaluus
 
+        HommikKcal = AnaluusK.ToidukordKokku(AnaluusK.KclParingAndmebaasist(_kasutaja_id, AnaluusK.KuupaevIntegeriks(Date.Now.Date), 0))
+        chrKoduPaneel.Series("Soogikorrad").Points.AddXY("Hommik", HommikKcal)
+
+        LounaKcal = AnaluusK.ToidukordKokku(AnaluusK.KclParingAndmebaasist(_kasutaja_id, AnaluusK.KuupaevIntegeriks(Date.Now.Date), 1))
+        chrKoduPaneel.Series("Soogikorrad").Points.AddXY("Lõuna", LounaKcal)
+
+        OhtuKcal = AnaluusK.ToidukordKokku(AnaluusK.KclParingAndmebaasist(_kasutaja_id, AnaluusK.KuupaevIntegeriks(Date.Now.Date), 3))
+        chrKoduPaneel.Series("Soogikorrad").Points.AddXY("Õhtu", OhtuKcal)
+
+        VahepKcal = AnaluusK.ToidukordKokku(AnaluusK.KclParingAndmebaasist(_kasutaja_id, AnaluusK.KuupaevIntegeriks(Date.Now.Date), 2))
+        chrKoduPaneel.Series("Soogikorrad").Points.AddXY("Vahepalad", VahepKcal)
+
+        ToidukorradKoos = AnaluusK.paevaneKcal(HommikKcal, LounaKcal, OhtuKcal, VahepKcal)
+        chrKoduPaneel.Series("Soogikorrad").Points.AddXY("Söömata", kalorilimiit - ToidukorradKoos)
+
+        LblPaevaneTarbimine.Text = ToidukorradKoos & Environment.NewLine & "/" & Environment.NewLine & kalorilimiit
+    End Sub
     Private Sub pnlLogo_Click(sender As Object, e As EventArgs) Handles pnlLogo.Click
         pnlYlevaade.Visible = False
         pnlTreeningud.Visible = False
@@ -207,52 +214,52 @@ Public Class Pohiaken
 
     Sub KomboKastid()
 
-        Dim profiil As New CKasutajaProfiil.CKasutajaProfiil
+        ProfiilK = New KasutajaProfiilKomponent.CKasutajaProfiil
 
         For index = 140 To 210
             cmbMuudaPikkust.Items.Add(index)
         Next
-        cmbMuudaPikkust.SelectedItem = profiil.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "height")
+        cmbMuudaPikkust.SelectedItem = ProfiilK.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "height")
 
         For index = 30 To 150
             cmbMuudaKaalu.Items.Add(index)
         Next
-        cmbMuudaKaalu.SelectedItem = profiil.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "weight")
+        cmbMuudaKaalu.SelectedItem = ProfiilK.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "weight")
 
         For index = 12 To 100
             cmbMuudaVanust.Items.Add(index)
         Next
-        cmbMuudaVanust.SelectedItem = profiil.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "age")
+        cmbMuudaVanust.SelectedItem = ProfiilK.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "age")
 
 
     End Sub
 
     Private Sub btnMuudaVanust_Click(sender As Object, e As EventArgs) Handles btnMuudaVanust.Click
-        Dim profiil As New CKasutajaProfiil.CKasutajaProfiil
-        profiil.IntegerAndmeValjaSisestusKasutajaTabelisse(_kasutaja_id, cmbMuudaVanust.SelectedItem, "age")
-        lblKasutajaVanus.Text = profiil.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "age")
+        ProfiilK = New KasutajaProfiilKomponent.CKasutajaProfiil
+        ProfiilK.IntegerAndmeValjaSisestusKasutajaTabelisse(_kasutaja_id, cmbMuudaVanust.SelectedItem, "age")
+        lblKasutajaVanus.Text = ProfiilK.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "age")
         KomboKastid()
     End Sub
 
     Private Sub btnMuudaKaalu_Click(sender As Object, e As EventArgs) Handles btnMuudaKaalu.Click
-        Dim profiil As New CKasutajaProfiil.CKasutajaProfiil
-        profiil.IntegerAndmeValjaSisestusKasutajaTabelisse(_kasutaja_id, cmbMuudaKaalu.SelectedItem, "weight")
-        lblKasutajaKaal.Text = profiil.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "weight")
+        ProfiilK = New KasutajaProfiilKomponent.CKasutajaProfiil
+        ProfiilK.IntegerAndmeValjaSisestusKasutajaTabelisse(_kasutaja_id, cmbMuudaKaalu.SelectedItem, "weight")
+        lblKasutajaKaal.Text = ProfiilK.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "weight")
         KomboKastid()
     End Sub
 
     Private Sub btnMuudaPikkust_Click(sender As Object, e As EventArgs) Handles btnMuudaPikkust.Click
-        Dim profiil As New CKasutajaProfiil.CKasutajaProfiil
-        profiil.IntegerAndmeValjaSisestusKasutajaTabelisse(_kasutaja_id, cmbMuudaPikkust.SelectedItem, "height")
-        lblKasutajaPikkus.Text = profiil.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "height")
+        ProfiilK = New KasutajaProfiilKomponent.CKasutajaProfiil
+        ProfiilK.IntegerAndmeValjaSisestusKasutajaTabelisse(_kasutaja_id, cmbMuudaPikkust.SelectedItem, "height")
+        lblKasutajaPikkus.Text = ProfiilK.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "height")
         KomboKastid()
     End Sub
 
     Private Sub btnKinnitaUusSalasona_Click(sender As Object, e As EventArgs) Handles btnKinnitaUusSalasona.Click
         lblVahetaSalasonaViga.ForeColor = Color.Red
         lblVahetaSalasonaViga.Visible = False
-        Dim profiil As New CKasutajaProfiil.CKasutajaProfiil
-        If (profiil.ArvutaHash(txtKehtivSalasona.Text) = profiil.UheAndmevaljaParingKasutajaTabelist(_kasutaja_id, "password")) Then
+        ProfiilK = New KasutajaProfiilKomponent.CKasutajaProfiil
+        If (ProfiilK.ArvutaHash(txtKehtivSalasona.Text) = ProfiilK.UheAndmevaljaParingKasutajaTabelist(_kasutaja_id, "password")) Then
             If Len(txtVahetaSalasona.Text) < 8 Then
                 txtVahetaSalasona.Text = ""
                 lblVahetaSalasonaViga.Text = "Salasõna pikkus peab olema vähemalt 8 tähemärki!"
@@ -262,7 +269,7 @@ Public Class Pohiaken
                 lblVahetaSalasonaViga.Text = "Salasõnad ei ühti!"
                 lblVahetaSalasonaViga.Visible = True
             Else
-                profiil.VahetaSalasona(_kasutaja_id, txtVahetaSalasona.Text)
+                ProfiilK.VahetaSalasona(_kasutaja_id, txtVahetaSalasona.Text)
                 lblVahetaSalasonaViga.ForeColor = Color.Green
                 txtKehtivSalasona.Text = ""
                 txtKordaSalasona.Text = ""
@@ -283,26 +290,18 @@ Public Class Pohiaken
     Private Sub btnLisaUusToiduaine_Click(sender As Object, e As EventArgs) Handles btnLisaUusToiduaine.Click
         Dim kalorid As New CToidudJaRetseptid
 
-        Dim toiduaineNimi As String = txtUueToiduaineNimi.Text
-        Dim energia As Double
-        Dim valgud As Double
-        Dim susivesikud As Double
-        Dim rasvad As Double
-        Dim suhkrud As Double
-
-        If Double.TryParse(txtUueToiduaineKcal.Text, energia) AndAlso
-           Double.TryParse(txtUueToiduaineValgud.Text, valgud) AndAlso
-           Double.TryParse(txtUueToiduaineSusivesikud.Text, susivesikud) AndAlso
-           Double.TryParse(txtUueToiduaineRasvad.Text, rasvad) AndAlso
-           Double.TryParse(txtUueToiduaineSuhkrud.Text, suhkrud) Then
-
-            If kalorid.ToiduAineNimiEksisteerib(toiduaineNimi) > 0 Then
-                lblUueToiduaineLisamineViga.Text = "Viga toiduaine lisamisel!"
-                lblUueToiduaineLisamineViga.Visible = True
-            Else
-                lblUueToiduaineLisamineViga.Visible = False
-                kalorid.LisaToiduaine(toiduaineNimi, energia, valgud, susivesikud, rasvad, suhkrud)
-            End If
+        If IsNumeric(txtUueToiduaineKcal.Text) AndAlso IsNumeric(txtUueToiduaineSusivesikud.Text) AndAlso IsNumeric(txtUueToiduaineSuhkrud.Text) AndAlso
+            IsNumeric(txtUueToiduaineRasvad.Text) AndAlso IsNumeric(txtUueToiduaineValgud.Text) Then
+            lblUueToiduaineLisamineViga.Visible = False
+            kalorid.LisaToiduaine(txtUueToiduaineNimi.Text, txtUueToiduaineKcal.Text, txtUueToiduaineValgud.Text, txtUueToiduaineSusivesikud.Text,
+                                  txtUueToiduaineRasvad.Text, txtUueToiduaineSuhkrud.Text)
+            txtUueToiduaineNimi.Text = ""
+            txtUueToiduaineKcal.Text = ""
+            txtUueToiduaineSusivesikud.Text = ""
+            txtUueToiduaineSuhkrud.Text = ""
+            txtUueToiduaineValgud.Text = ""
+            txtUueToiduaineRasvad.Text = ""
+            KiirLisamiseValikud()
         Else
             lblUueToiduaineLisamineViga.Text = "Viga toiduaine lisamisel!"
             lblUueToiduaineLisamineViga.Visible = True
@@ -310,29 +309,56 @@ Public Class Pohiaken
     End Sub
 
     Private Sub btnToiduaineKiirvalikLisa_Click(sender As Object, e As EventArgs) Handles btnToiduaineKiirvalikLisa.Click
+        Dim toidukord As Integer = 0
+        ToidudRetseptidK = New ToidudRetseptidKomponent.CToidudJaRetseptid
+        AnaluusK = New AnaluusiKomponent.CAnaluus
+
+        If rdbHommik.Checked = True Then
+            toidukord = 0
+        ElseIf rdbLouna.Checked = True Then
+            toidukord = 1
+        ElseIf rdbVahepala.Checked = True Then
+            toidukord = 2
+        ElseIf rdbOhtu.Checked = True Then
+            toidukord = 3
+        Else
+            lblToiduAineRetseptiLisamineViga.Text = "Toidukorda pole valitud!"
+            lblToiduAineRetseptiLisamineViga.Visible = True
+        End If
+        If IsNumeric(txtToiduaineKiirvalikKogus.Text) Then
+            ToidudRetseptidK.KasutajaToiduaineVõiRetseptiLisamine(_kasutaja_id, AnaluusK.KuupaevIntegeriks(Date.Now.Date), toidukord, ToidudRetseptidK.ToiduAineNimiEksisteerib(cmbToiduaineKiirvalik.SelectedItem), txtToiduaineKiirvalikKogus.Text)
+            KoduGraafik()
+            lblToiduAineRetseptiLisamineViga.Visible = False
+            txtToiduaineKiirvalikKogus.Text = ""
+        Else
+            lblToiduAineRetseptiLisamineViga.Text = "Viga koguse sisestuses!"
+            lblToiduAineRetseptiLisamineViga.Visible = True
+        End If
 
     End Sub
 
-    Sub KiirLisamiseValikud()
-        Dim tabeli_asukoht As String = $"Data Source={Path.Combine(Path.GetFullPath(Path.Combine _
-            (AppDomain.CurrentDomain.BaseDirectory, "..\..\..\")), "Data", "database.db")};Version=3;"
-        Using connection As New SQLiteConnection(tabeli_asukoht)
-            connection.Open()
-            For index = 0 To 10000
-                Dim selectSql As String = "SELECT food_name FROM food_data WHERE food_id = @id"
+    Private Sub KiirLisamiseValikud()
+        ToidudRetseptidK = New ToidudRetseptidKomponent.CToidudJaRetseptid
+        cmbToiduaineKiirvalik.Items.Clear()
 
-                Using cmd As New SQLiteCommand(selectSql, connection)
-                    cmd.Parameters.AddWithValue("@id", index)
-
-                    Using reader As SQLiteDataReader = cmd.ExecuteReader()
-                        While reader.Read()
-                            cmbToiduaineKiirvalik.Items.Add(reader("food_name"))
-                        End While
-                    End Using
-                End Using
-            Next
-        End Using
+        Dim toiduaineteNimed As List(Of String) = ToidudRetseptidK.KiirlisamiseToiduaineNimed
+        For Each nimetus As String In toiduaineteNimed
+            cmbToiduaineKiirvalik.Items.Add(nimetus)
+        Next
         cmbToiduaineKiirvalik.SelectedIndex = 0
+    End Sub
+
+    Private Sub btnKaloriLimiit_Click(sender As Object, e As EventArgs) Handles btnKaloriLimiit.Click
+        ProfiilK = New KasutajaProfiilKomponent.CKasutajaProfiil
+        If (IsNumeric(txtKalorilimiit.Text)) Then
+            ProfiilK.IntegerAndmeValjaSisestusKasutajaTabelisse(_kasutaja_id, txtKalorilimiit.Text, "calorie_limit")
+            txtKalorilimiit.Text = ""
+            lblKaloriLimiitViga.Visible = False
+        Else
+            lblKaloriLimiitViga.ForeColor = Color.Red
+            lblKaloriLimiitViga.Text = "Viga limiidi seadmisel!"
+            lblKaloriLimiitViga.Visible = True
+        End If
     End Sub
 End Class
 
