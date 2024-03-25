@@ -86,15 +86,15 @@ Public Class Pohiaken
         VahepKcal = AnaluusK.ToidukordKokku(AnaluusK.KclParingAndmebaasist(_kasutaja_id, AnaluusK.KuupaevIntegeriks(Date.Now.Date), 2))
         chrKoduPaneel.Series("Soogikorrad").Points.AddXY("Vahepalad", VahepKcal)
 
+        ToidukorradKoos = AnaluusK.paevaneKcal(HommikKcal, LounaKcal, OhtuKcal, VahepKcal)
+
         If ToidukorradKoos > kalorilimiit Then
             kcalUlejaak = 0
         Else
             kcalUlejaak = kalorilimiit - ToidukorradKoos
         End If
 
-        ToidukorradKoos = AnaluusK.paevaneKcal(HommikKcal, LounaKcal, OhtuKcal, VahepKcal)
         chrKoduPaneel.Series("Soogikorrad").Points.AddXY("Söömata", kcalUlejaak)
-
         lblKcalPaev.Text = ToidukorradKoos & Environment.NewLine & "/" & Environment.NewLine & kalorilimiit & Environment.NewLine & "kCal"
     End Sub
     Private Sub pnlLogo_Click(sender As Object, e As EventArgs) Handles pnlLogo.Click
@@ -193,6 +193,7 @@ Public Class Pohiaken
     End Sub
 
     Private Sub btnKodu_Click(sender As Object, e As EventArgs) Handles btnKodu.Click
+        KoduGraafik()
         pnlYlevaade.Visible = False
         pnlTreeningud.Visible = False
         pnlToidulaud.Visible = False
@@ -200,6 +201,7 @@ Public Class Pohiaken
         pnlProfiiliSeaded.Visible = False
         pnlRakenduseInfo.Visible = False
         pnlKodu.Visible = True
+
     End Sub
     Private Sub TuhjendaKonteiner(ByVal parentControl As Control)
         For Each ctrl As Control In parentControl.Controls
@@ -334,14 +336,13 @@ Public Class Pohiaken
         End If
         If IsNumeric(txtToiduaineKiirvalikKogus.Text) Then
             ToidudRetseptidK.KasutajaToiduaineVõiRetseptiLisamine(_kasutaja_id, AnaluusK.KuupaevIntegeriks(Date.Now.Date), toidukord, ToidudRetseptidK.ToiduAineNimiEksisteerib(cmbToiduaineKiirvalik.SelectedItem), txtToiduaineKiirvalikKogus.Text)
-            KoduGraafik()
             lblToiduAineRetseptiLisamineViga.Visible = False
             txtToiduaineKiirvalikKogus.Text = ""
         Else
             lblToiduAineRetseptiLisamineViga.Text = "Viga koguse sisestuses!"
             lblToiduAineRetseptiLisamineViga.Visible = True
         End If
-
+        KoduGraafik()
     End Sub
 
     Private Sub KiirLisamiseValikud()
