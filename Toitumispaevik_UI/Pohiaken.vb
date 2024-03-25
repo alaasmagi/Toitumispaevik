@@ -10,11 +10,12 @@ Public Class Pohiaken
 
     Private _kasutaja_id As Integer
     Private kalorilimiit As Integer
-    Private HommikKcal As Integer = 0
-    Private LounaKcal As Integer = 0
-    Private OhtuKcal As Integer = 0
-    Private VahepKcal As Integer = 0
-    Private ToidukorradKoos As Integer
+    Private HommikKcal As Double = 0
+    Private LounaKcal As Double = 0
+    Private OhtuKcal As Double = 0
+    Private VahepKcal As Double = 0
+    Private ToidukorradKoos As Double = 0
+    Private kcalUlejaak As Double = 0
 
     Dim ProfiilK As KasutajaProfiilKomponent.IKasutajaProfiil
     Dim AnaluusK As AnaluusiKomponent.IAnaluus
@@ -85,8 +86,14 @@ Public Class Pohiaken
         VahepKcal = AnaluusK.ToidukordKokku(AnaluusK.KclParingAndmebaasist(_kasutaja_id, AnaluusK.KuupaevIntegeriks(Date.Now.Date), 2))
         chrKoduPaneel.Series("Soogikorrad").Points.AddXY("Vahepalad", VahepKcal)
 
+        If ToidukorradKoos > kalorilimiit Then
+            kcalUlejaak = 0
+        Else
+            kcalUlejaak = kalorilimiit - ToidukorradKoos
+        End If
+
         ToidukorradKoos = AnaluusK.paevaneKcal(HommikKcal, LounaKcal, OhtuKcal, VahepKcal)
-        chrKoduPaneel.Series("Soogikorrad").Points.AddXY("Söömata", kalorilimiit - ToidukorradKoos)
+        chrKoduPaneel.Series("Soogikorrad").Points.AddXY("Söömata", kcalUlejaak)
 
         LblPaevaneTarbimine.Text = ToidukorradKoos & Environment.NewLine & "/" & Environment.NewLine & kalorilimiit
     End Sub
@@ -354,6 +361,7 @@ Public Class Pohiaken
             ProfiilK.IntegerAndmeValjaSisestusKasutajaTabelisse(_kasutaja_id, txtKalorilimiit.Text, "calorie_limit")
             txtKalorilimiit.Text = ""
             lblKaloriLimiitViga.Visible = False
+            KoduGraafik()
         Else
             lblKaloriLimiitViga.ForeColor = Color.Red
             lblKaloriLimiitViga.Text = "Viga limiidi seadmisel!"

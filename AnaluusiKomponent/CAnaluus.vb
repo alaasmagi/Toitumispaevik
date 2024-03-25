@@ -6,12 +6,12 @@ Public Class CAnaluus
         Return kcalHommik + kcalLouna + kcalVahepala + kcalOhtu
     End Function
 
-    Public Function KclParingAndmebaasist(ByVal kasutaja_id As Integer, ByVal kuupaev As Integer, ByVal toidukord As Integer) As Integer() Implements IAnaluus.KclParingAndmebaasist
+    Public Function KclParingAndmebaasist(ByVal kasutaja_id As Integer, ByVal kuupaev As Integer, ByVal toidukord As Integer) As Double() Implements IAnaluus.KclParingAndmebaasist
         Dim tabeli_asukoht As String = $"Data Source={Path.Combine(Path.GetFullPath(Path.Combine _
         (AppDomain.CurrentDomain.BaseDirectory, "..\..\..\")), "Data", "database.db")};Version=3;"
 
         Dim paring As String = "SELECT energy_intake FROM user_food_history WHERE user_id = @kasutaja_id AND time = @kuupaev AND time_of_meal = @toidukord;"
-        Dim integerValues As New List(Of Integer)
+        Dim doubleValues As New List(Of Double)
 
         Using connection As New SQLiteConnection(tabeli_asukoht)
             Using command As New SQLiteCommand(paring, connection)
@@ -23,20 +23,20 @@ Public Class CAnaluus
 
                 Using reader As SQLiteDataReader = command.ExecuteReader()
                     While reader.Read()
-                        For i As Integer = 0 To reader.FieldCount - 1
-                            integerValues.Add(reader.GetInt32(i))
+                        For i As Double = 0 To reader.FieldCount - 1
+                            doubleValues.Add(reader.GetDouble(i))
                         Next
                     End While
                 End Using
 
             End Using
         End Using
-        Return integerValues.ToArray()
+        Return doubleValues.ToArray()
 
     End Function
 
-    Public Function ToidukordKokku(ByRef KcalLoend As Integer()) As Integer Implements IAnaluus.ToidukordKokku
-        Dim koguvaartus As Integer = 0
+    Public Function ToidukordKokku(ByRef KcalLoend As Double()) As Double Implements IAnaluus.ToidukordKokku
+        Dim koguvaartus As Double = 0
 
         For i As Integer = 0 To KcalLoend.Length - 1
             koguvaartus += KcalLoend(i)
