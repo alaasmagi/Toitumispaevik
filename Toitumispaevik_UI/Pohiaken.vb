@@ -95,7 +95,7 @@ Public Class Pohiaken
         ToidukorradKoos = AnaluusK.paevaneKcal(HommikKcal, LounaKcal, OhtuKcal, VahepKcal)
         chrKoduPaneel.Series("Soogikorrad").Points.AddXY("Söömata", kcalUlejaak)
 
-        LblPaevaneTarbimine.Text = ToidukorradKoos & Environment.NewLine & "/" & Environment.NewLine & kalorilimiit
+        lblKcalPaev.Text = ToidukorradKoos & Environment.NewLine & "/" & Environment.NewLine & kalorilimiit & Environment.NewLine & "kCal"
     End Sub
     Private Sub pnlLogo_Click(sender As Object, e As EventArgs) Handles pnlLogo.Click
         pnlYlevaade.Visible = False

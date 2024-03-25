@@ -158,6 +158,7 @@ Partial Class Pohiaken
         Me.txtKalorilimiit = New System.Windows.Forms.TextBox()
         Me.pbAlumineMees = New System.Windows.Forms.PictureBox()
         Me.pbAlumineNaine = New System.Windows.Forms.PictureBox()
+        Me.lblKcalPaev = New System.Windows.Forms.Label()
         Me.pnlLeftBar.SuspendLayout()
         Me.pnlTopBar.SuspendLayout()
         CType(Me.pbUlemineNaine, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -823,6 +824,7 @@ Partial Class Pohiaken
         '
         'pnlKodu
         '
+        Me.pnlKodu.Controls.Add(Me.lblKcalPaev)
         Me.pnlKodu.Controls.Add(Me.GroupBox8)
         Me.pnlKodu.Controls.Add(Me.chrKoduPaneel)
         Me.pnlKodu.Controls.Add(Me.lblKoduEesnimi)
@@ -1717,6 +1719,16 @@ Partial Class Pohiaken
         Me.pbAlumineNaine.TabStop = False
         Me.pbAlumineNaine.Visible = False
         '
+        'lblKcalPaev
+        '
+        Me.lblKcalPaev.AutoSize = True
+        Me.lblKcalPaev.Location = New System.Drawing.Point(217, 372)
+        Me.lblKcalPaev.Name = "lblKcalPaev"
+        Me.lblKcalPaev.Size = New System.Drawing.Size(103, 28)
+        Me.lblKcalPaev.TabIndex = 8
+        Me.lblKcalPaev.Text = "Label40"
+        Me.lblKcalPaev.TextAlign = System.Drawing.ContentAlignment.TopCenter
+        '
         'Pohiaken
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(144.0!, 144.0!)
@@ -1914,4 +1926,5 @@ Partial Class Pohiaken
     Friend WithEvents txtKalorilimiit As TextBox
     Friend WithEvents lblKaloriLimiitViga As Label
     Friend WithEvents lblToiduAineRetseptiLisamineViga As Label
+    Friend WithEvents lblKcalPaev As Label
 End Class
