@@ -86,15 +86,15 @@ Public Class Pohiaken
         VahepKcal = AnaluusK.ToidukordKokku(AnaluusK.KclParingAndmebaasist(_kasutaja_id, AnaluusK.KuupaevIntegeriks(Date.Now.Date), 2))
         chrKoduPaneel.Series("Soogikorrad").Points.AddXY("Vahepalad", VahepKcal)
 
+        ToidukorradKoos = AnaluusK.paevaneKcal(HommikKcal, LounaKcal, OhtuKcal, VahepKcal)
+
         If ToidukorradKoos > kalorilimiit Then
             kcalUlejaak = 0
         Else
             kcalUlejaak = kalorilimiit - ToidukorradKoos
         End If
 
-        ToidukorradKoos = AnaluusK.paevaneKcal(HommikKcal, LounaKcal, OhtuKcal, VahepKcal)
         chrKoduPaneel.Series("Soogikorrad").Points.AddXY("Söömata", kcalUlejaak)
-
         lblKcalPaev.Text = ToidukorradKoos & Environment.NewLine & "/" & Environment.NewLine & kalorilimiit & Environment.NewLine & "kCal"
     End Sub
     Private Sub pnlLogo_Click(sender As Object, e As EventArgs) Handles pnlLogo.Click
@@ -200,6 +200,7 @@ Public Class Pohiaken
         pnlProfiiliSeaded.Visible = False
         pnlRakenduseInfo.Visible = False
         pnlKodu.Visible = True
+
     End Sub
     Private Sub TuhjendaKonteiner(ByVal parentControl As Control)
         For Each ctrl As Control In parentControl.Controls
@@ -334,14 +335,13 @@ Public Class Pohiaken
         End If
         If IsNumeric(txtToiduaineKiirvalikKogus.Text) Then
             ToidudRetseptidK.KasutajaToiduaineVõiRetseptiLisamine(_kasutaja_id, AnaluusK.KuupaevIntegeriks(Date.Now.Date), toidukord, ToidudRetseptidK.ToiduAineNimiEksisteerib(cmbToiduaineKiirvalik.SelectedItem), txtToiduaineKiirvalikKogus.Text)
-            KoduGraafik()
             lblToiduAineRetseptiLisamineViga.Visible = False
             txtToiduaineKiirvalikKogus.Text = ""
         Else
             lblToiduAineRetseptiLisamineViga.Text = "Viga koguse sisestuses!"
             lblToiduAineRetseptiLisamineViga.Visible = True
         End If
-
+        KoduGraafik()
     End Sub
 
     Private Sub KiirLisamiseValikud()
@@ -359,14 +359,14 @@ Public Class Pohiaken
         ProfiilK = New KasutajaProfiilKomponent.CKasutajaProfiil
         If (IsNumeric(txtKalorilimiit.Text)) Then
             ProfiilK.IntegerAndmeValjaSisestusKasutajaTabelisse(_kasutaja_id, txtKalorilimiit.Text, "calorie_limit")
+            Integer.TryParse(txtKalorilimiit.Text, kalorilimiit)
             txtKalorilimiit.Text = ""
             lblKaloriLimiitViga.Visible = False
-            KoduGraafik()
         Else
-            lblKaloriLimiitViga.ForeColor = Color.Red
             lblKaloriLimiitViga.Text = "Viga limiidi seadmisel!"
             lblKaloriLimiitViga.Visible = True
         End If
+        KoduGraafik()
     End Sub
 End Class
 
