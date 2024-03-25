@@ -10,6 +10,8 @@ Public Class Login_aken
 
     Dim sugu As Integer
     Dim kasutaja_id As Integer = 0
+
+    Dim ProfiilK As KasutajaProfiilKomponent.IKasutajaProfiil
     Private Sub ResetForm()
         TuhjendaKonteiner(Me)
         pnlLogoLogiSisse.Visible = True
@@ -48,25 +50,14 @@ Public Class Login_aken
         turvaKusimused()
     End Sub
 
-    Sub turvaKusimused()
-        Dim tabeli_asukoht As String = $"Data Source={Path.Combine(Path.GetFullPath(Path.Combine _
-        (AppDomain.CurrentDomain.BaseDirectory, "..\..\..\")), "Data", "database.db")};Version=3;"
-        Using connection As New SQLiteConnection(tabeli_asukoht)
-            connection.Open()
-            For index = 0 To 10
-                Dim selectSql As String = "SELECT recovery_question FROM recovery_questions WHERE recovery_question_id = @id"
+    Private Sub turvaKusimused()
 
-                Using cmd As New SQLiteCommand(selectSql, connection)
-                    cmd.Parameters.AddWithValue("@id", index)
+        ProfiilK = New KasutajaProfiilKomponent.CKasutajaProfiil
 
-                    Using reader As SQLiteDataReader = cmd.ExecuteReader()
-                        While reader.Read()
-                            cmbTurvaKüsimus.Items.Add(reader("recovery_question"))
-                        End While
-                    End Using
-                End Using
-            Next
-        End Using
+        Dim kusimused As List(Of String) = ProfiilK.TurvaKusimused
+        For Each kusimus As String In kusimused
+            cmbTurvaKüsimus.Items.Add(kusimus)
+        Next
         cmbTurvaKüsimus.SelectedIndex = 0
     End Sub
     Private Sub Login_aken_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -83,15 +74,15 @@ Public Class Login_aken
     End Sub
 
     Private Sub btnLogiSisse_Click(sender As Object, e As EventArgs) Handles btnLogiSisse.Click
-        Dim profiil As New CKasutajaProfiil.CKasutajaProfiil
-        kasutaja_id = profiil.KontrolliKontoOlemasolu(txtLogiSisseKasutaja.Text)
+        ProfiilK = New KasutajaProfiilKomponent.CKasutajaProfiil
+        kasutaja_id = ProfiilK.KontrolliKontoOlemasolu(txtLogiSisseKasutaja.Text)
 
         If kasutaja_id = 0 Then
             lblLogiSisseViga.Text = "Sisestatud nimega kasutajat ei leitud!"
             lblLogiSisseViga.Visible = True
             txtLogiSisseSalasona.Text = ""
             txtLogiSisseKasutaja.Text = ""
-        ElseIf profiil.SisseLogimine(kasutaja_id, txtLogiSisseSalasona.Text) = 0 Then
+        ElseIf ProfiilK.SisseLogimine(kasutaja_id, txtLogiSisseSalasona.Text) = 0 Then
             lblLogiSisseViga.Text = "Sisestatud salasõna on vale!"
             lblLogiSisseViga.Visible = True
             txtLogiSisseSalasona.Text = ""
@@ -106,8 +97,8 @@ Public Class Login_aken
     End Sub
 
     Private Sub btnLooKontoEdasi_Click(sender As Object, e As EventArgs) Handles btnLooKontoEdasi.Click
-        Dim profiil As New CKasutajaProfiil.CKasutajaProfiil
-        kasutaja_id = profiil.KontrolliKontoOlemasolu(txtLooKontoKasutajanimi.Text)
+        ProfiilK = New KasutajaProfiilKomponent.CKasutajaProfiil
+        kasutaja_id = ProfiilK.KontrolliKontoOlemasolu(txtLooKontoKasutajanimi.Text)
         If txtEesnimi.Text = "" Then
             lblLooKontoViga.Text = "Eesnime lahter ei tohi jääda tühjaks!"
             lblLooKontoViga.Visible = True
@@ -127,6 +118,7 @@ Public Class Login_aken
         End If
     End Sub
     Private Sub btnLooKonto_Click(sender As Object, e As EventArgs) Handles btnLooKonto.Click
+        ProfiilK = New KasutajaProfiilKomponent.CKasutajaProfiil
         If txtTurvaVastus.Text = "" Then
             lblLooKontoEdasiViga.Text = "Parooli taasteküsimuse vastuse viga!"
             lblLooKontoEdasiViga.Visible = True
@@ -140,8 +132,7 @@ Public Class Login_aken
                 sugu = 0
             End If
             lblLooKontoEdasiViga.Visible = False
-            Dim profiil As New CKasutajaProfiil.CKasutajaProfiil()
-            kasutaja_id = profiil.LooKonto(txtLooKontoKasutajanimi.Text, txtLooKontoSalasona.Text, txtEesnimi.Text,
+            kasutaja_id = ProfiilK.LooKonto(txtLooKontoKasutajanimi.Text, txtLooKontoSalasona.Text, txtEesnimi.Text,
                                                               cmbTurvaKüsimus.SelectedIndex, txtTurvaVastus.Text, cmbPikkus.SelectedItem, cmbKehaKaal.SelectedItem, sugu,
                                                               cmbVanus.SelectedItem)
             If kasutaja_id > 0 Then
@@ -172,9 +163,9 @@ Public Class Login_aken
         pnlLogiSisse.Visible = True
     End Sub
     Private Sub btnEsitaTurvaKusimuseVastus_Click(sender As Object, e As EventArgs) Handles btnEsitaTurvaKusimuseVastus.Click
-        Dim profiil As New CKasutajaProfiil.CKasutajaProfiil
+        ProfiilK = New KasutajaProfiilKomponent.CKasutajaProfiil
 
-        If profiil.UheAndmevaljaParingKasutajaTabelist(kasutaja_id, "recovery_answer") = profiil.ArvutaHash(txtUnustasinSalasonaTurvaVastus.Text) Then
+        If ProfiilK.UheAndmevaljaParingKasutajaTabelist(kasutaja_id, "recovery_answer") = ProfiilK.ArvutaHash(txtUnustasinSalasonaTurvaVastus.Text) Then
             lblTurvaKusimusEdasiKasutajanimi.Text = txtUnustasinSalasonaKasutajanimi.Text
             lblTurvaKüsimuseVastuseViga.Visible = False
             lblTurvaKusimusEdasiKasutajanimi.Visible = True
@@ -191,6 +182,7 @@ Public Class Login_aken
         pnlLogiSisse.Visible = True
     End Sub
     Private Sub btnKinnitaUusSalasona_Click(sender As Object, e As EventArgs) Handles btnKinnitaUusSalasona.Click
+        ProfiilK = New KasutajaProfiilKomponent.CKasutajaProfiil
         If Len(txtUnustasinSalasonaEdasiUusSalasona.Text) < 8 Then
             lblUnustasinSalasonaEdasiViga.Text = "Salasõna pikkus peab olema vähemalt 8 tähemärki!"
             lblUnustasinSalasonaEdasiViga.Visible = True
@@ -198,8 +190,7 @@ Public Class Login_aken
             lblUnustasinSalasonaEdasiViga.Text = "Salasõnad ei ühti!"
             lblUnustasinSalasonaEdasiViga.Visible = True
         Else
-            Dim profiil As New CKasutajaProfiil.CKasutajaProfiil
-            profiil.VahetaSalasona(kasutaja_id, txtUnustasinSalasonaEdasiUusSalasona.Text)
+            ProfiilK.VahetaSalasona(kasutaja_id, txtUnustasinSalasonaEdasiUusSalasona.Text)
             lblUnustasinSalasonaEdasiViga.Visible = False
             pnlUnustasinSalasonaEdasi.Visible = False
             pnlLogiSisse.Visible = True
@@ -208,14 +199,14 @@ Public Class Login_aken
     End Sub
 
     Private Sub btnNaitaTurvakusimust_Click(sender As Object, e As EventArgs) Handles btnNaitaTurvakusimust.Click
-        Dim profiil As New CKasutajaProfiil.CKasutajaProfiil
-        kasutaja_id = profiil.KontrolliKontoOlemasolu(txtUnustasinSalasonaKasutajanimi.Text)
+        ProfiilK = New KasutajaProfiilKomponent.CKasutajaProfiil
+        kasutaja_id = ProfiilK.KontrolliKontoOlemasolu(txtUnustasinSalasonaKasutajanimi.Text)
         If kasutaja_id = 0 Then
             lblKontotEiEksisteeri.Text = "Sisestatud kasutajanimega kontot ei eksisteeri!"
             lblKontotEiEksisteeri.Visible = True
         Else
             lblKontotEiEksisteeri.Visible = False
-            lblTurvaKusimus.Text = profiil.TurvaKusimuseLeidmine(kasutaja_id)
+            lblTurvaKusimus.Text = ProfiilK.TurvaKusimuseLeidmine(kasutaja_id)
             lblTurvaKusimus.Visible = True
         End If
     End Sub
