@@ -1,5 +1,5 @@
 ﻿Imports System.IO
-
+Imports System.Data.SQLite
 Public Class CTreeningud
     Implements ITreeningud
     Public Function LisaTreening(treeninguNimi As String, energiakulu As Double) As Integer Implements ITreeningud.LisaTreening

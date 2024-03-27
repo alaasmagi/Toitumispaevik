@@ -59,6 +59,14 @@ Public Class Pohiaken
             pbUlemineNaine.Visible = True
             pbAlumineNaine.Visible = True
         End If
+
+        If ProfiilK.UheAndmevaljaParingKasutajaTabelist(_kasutaja_id, "calorie_limit") = 0 Then
+            lblKoduSoovitus.Visible = True
+            lblKoduSoovitus2.Visible = True
+        Else
+            lblKoduSoovitus.Visible = False
+            lblKoduSoovitus2.Visible = False
+        End If
         KomboKastid()
         KoduGraafik()
         KiirLisamiseValikud()
@@ -363,11 +371,13 @@ Public Class Pohiaken
 
     Private Sub btnKaloriLimiit_Click(sender As Object, e As EventArgs) Handles btnKaloriLimiit.Click
         ProfiilK = New KasutajaProfiilKomponent.CKasutajaProfiil
-        If (IsNumeric(txtKalorilimiit.Text)) Then
+        If IsNumeric(txtKalorilimiit.Text) AndAlso txtKalorilimiit.Text >= 0 Then
             ProfiilK.IntegerAndmeValjaSisestusKasutajaTabelisse(_kasutaja_id, txtKalorilimiit.Text, "calorie_limit")
             Integer.TryParse(txtKalorilimiit.Text, kalorilimiit)
             txtKalorilimiit.Text = ""
             lblKaloriLimiitViga.Visible = False
+            lblKoduSoovitus.Visible = False
+            lblKoduSoovitus2.Visible = False
         Else
             lblKaloriLimiitViga.Text = "Viga limiidi seadmisel!"
             lblKaloriLimiitViga.Visible = True
@@ -383,6 +393,10 @@ Public Class Pohiaken
 
 
         End If
+    End Sub
+
+    Private Sub Button5_Click(sender As Object, e As EventArgs) Handles Button5.Click
+
     End Sub
 End Class
 

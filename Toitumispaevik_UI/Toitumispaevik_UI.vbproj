@@ -231,6 +231,15 @@
   <ItemGroup>
     <None Include="Resources\icons8-double-left-64.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icons8-bulb-50.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icons8-bulb-25.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icons8-bulb-20.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
