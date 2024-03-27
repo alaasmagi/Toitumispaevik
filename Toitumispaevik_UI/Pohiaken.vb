@@ -3,6 +3,7 @@ Imports System.Data.SQLite
 Imports System.IO
 Imports System.Security.Authentication.ExtendedProtection
 Imports System.Windows.Forms.VisualStyles
+Imports AnaluusiKomponent
 Imports KasutajaProfiilKomponent
 Imports ToidudRetseptidKomponent
 
@@ -338,7 +339,7 @@ Public Class Pohiaken
             lblToiduAineRetseptiLisamineViga.Text = "Toidukorda pole valitud!"
             lblToiduAineRetseptiLisamineViga.Visible = True
         End If
-        If IsNumeric(txtToiduaineKiirvalikKogus.Text) Then
+        If IsNumeric(txtToiduaineKiirvalikKogus.Text) AndAlso txtToiduaineKiirvalikKogus.Text > 0 Then
             ToidudRetseptidK.KasutajaToiduaineVõiRetseptiLisamine(_kasutaja_id, AnaluusK.KuupaevIntegeriks(Date.Now.Date), toidukord, ToidudRetseptidK.ToiduAineNimiEksisteerib(cmbToiduaineKiirvalik.SelectedItem), txtToiduaineKiirvalikKogus.Text)
             lblToiduAineRetseptiLisamineViga.Visible = False
             txtToiduaineKiirvalikKogus.Text = ""
@@ -372,6 +373,16 @@ Public Class Pohiaken
             lblKaloriLimiitViga.Visible = True
         End If
         KoduGraafik()
+    End Sub
+
+    Private Sub btnTreeninguKiirvalikLisa_Click(sender As Object, e As EventArgs) Handles btnTreeninguKiirvalikLisa.Click
+        AnaluusK = New AnaluusiKomponent.CAnaluus
+
+        If IsNumeric(txtToiduaineKiirvalikKogus.Text) AndAlso txtTreeninguKiirvalikKestus.Text > 0 Then
+
+
+
+        End If
     End Sub
 End Class
 
