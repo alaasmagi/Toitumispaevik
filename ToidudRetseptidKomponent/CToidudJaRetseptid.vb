@@ -111,7 +111,7 @@ Public Class CToidudJaRetseptid
         (AppDomain.CurrentDomain.BaseDirectory, "..\..\..\")), "Data", "database.db")};Version=3;"
         Using connection As New SQLiteConnection(tabeli_asukoht)
             connection.Open()
-            Dim insertDataSql As String = "INSERT INTO user_food_history (user_id, time, time_of_meal, food_id, amount, energy_intake, total_c_hydrates, total_sugar, total_protein, total_lipid)
+            Dim insertDataSql As String = "INSERT INTO user_food_history (user_id, date, time_of_meal, food_id, amount, energy_intake, total_c_hydrates, total_sugar, total_protein, total_lipid)
           VALUES (@kasutaja_id, @kuupaev, @toidukord, @toiduaine_id, @kogus, @kalorid, @susivesikud, @suhkur, @valgud, @rasvad)"
             Using cmd As New SQLiteCommand(insertDataSql, connection)
                 cmd.Parameters.AddWithValue("@kasutaja_id", kasutaja_id)
