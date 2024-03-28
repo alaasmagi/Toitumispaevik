@@ -21,6 +21,7 @@ Public Class Pohiaken
     Dim ProfiilK As KasutajaProfiilKomponent.IKasutajaProfiil
     Dim AnaluusK As AnaluusiKomponent.IAnaluus
     Dim ToidudRetseptidK As ToidudRetseptidKomponent.IToidudjaRetseptid
+    Dim TreeningudK As TreeninguteKomponent.ITreeningud
 
     Public Sub New(ByVal kasutaja_id As Integer)
         InitializeComponent()
@@ -360,13 +361,21 @@ Public Class Pohiaken
 
     Private Sub KiirLisamiseValikud()
         ToidudRetseptidK = New ToidudRetseptidKomponent.CToidudJaRetseptid
+        TreeningudK = New TreeninguteKomponent.CTreeningud
         cmbToiduaineKiirvalik.Items.Clear()
+        cmbTreeninguteKiirvalik.Items.Clear()
 
         Dim toiduaineteNimed As List(Of String) = ToidudRetseptidK.KiirlisamiseToiduaineNimed
+        Dim treeninguteNimed As List(Of String) = TreeningudK.KiirlisamiseTreeninguNimed
         For Each nimetus As String In toiduaineteNimed
             cmbToiduaineKiirvalik.Items.Add(nimetus)
         Next
         cmbToiduaineKiirvalik.SelectedIndex = 0
+
+        For Each nimetus As String In treeninguteNimed
+            cmbTreeninguteKiirvalik.Items.Add(nimetus)
+        Next
+        cmbTreeninguteKiirvalik.SelectedIndex = 0
     End Sub
 
     Private Sub btnKaloriLimiit_Click(sender As Object, e As EventArgs) Handles btnKaloriLimiit.Click
@@ -393,10 +402,6 @@ Public Class Pohiaken
 
 
         End If
-    End Sub
-
-    Private Sub Button5_Click(sender As Object, e As EventArgs) Handles Button5.Click
-
     End Sub
 End Class
 

@@ -14,26 +14,26 @@ Public Class CTreeningud
     End Function
 
     Public Function KiirlisamiseTreeninguNimed() As List(Of String) Implements ITreeningud.KiirlisamiseTreeninguNimed
-        Dim toiduaineteNimed As New List(Of String)()
+        Dim treeninguteNimed As New List(Of String)()
         Dim tabeli_asukoht As String = $"Data Source={Path.Combine(Path.GetFullPath(Path.Combine _
                (AppDomain.CurrentDomain.BaseDirectory, "..\..\..\")), "Data", "database.db")};Version=3;"
         Using connection As New SQLiteConnection(tabeli_asukoht)
             connection.Open()
             For index = 0 To 250
-                Dim selectSql As String = "SELECT food_name FROM food_data WHERE food_id = @id"
+                Dim selectSql As String = "SELECT training_name FROM training_data WHERE training_id = @id"
 
                 Using cmd As New SQLiteCommand(selectSql, connection)
                     cmd.Parameters.AddWithValue("@id", index)
 
                     Using reader As SQLiteDataReader = cmd.ExecuteReader()
                         While reader.Read()
-                            toiduaineteNimed.Add(reader("food_name"))
+                            treeninguteNimed.Add(reader("training_name"))
                         End While
                     End Using
                 End Using
             Next
         End Using
-        Return toiduaineteNimed
+        Return treeninguteNimed
     End Function
 
     Public Function TreeninguNimiEksisteerib(treeninguNimi As String) As Integer Implements ITreeningud.TreeninguNimiEksisteerib
