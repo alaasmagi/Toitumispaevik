@@ -211,9 +211,6 @@
     <None Include="Resources\icons8-home-button-60.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\PXL_20240315_150251639.jpg" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\icons8-home-button-481.png" />
   </ItemGroup>
   <ItemGroup>
