@@ -35,6 +35,34 @@ Public Class CAnaluus
 
     End Function
 
+    Public Function KaaluParingAndmebaasist(ByVal kasutaja_id As Integer, ByVal kuupaev As Integer) As Double() Implements IAnaluus.KaaluParingAndmebaasist
+        Dim tabeli_asukoht As String = $"Data Source={Path.Combine(Path.GetFullPath(Path.Combine _
+        (AppDomain.CurrentDomain.BaseDirectory, "..\..\..\")), "Data", "database.db")};Version=3;"
+
+        Dim paring As String = "SELECT daily_weight FROM user_daily_data WHERE user_id = @kasutaja_id AND date = @kuupaev;"
+        Dim doubleValues As New List(Of Double)
+
+        Using connection As New SQLiteConnection(tabeli_asukoht)
+            Using command As New SQLiteCommand(paring, connection)
+                command.Parameters.AddWithValue("@kasutaja_id", kasutaja_id)
+                command.Parameters.AddWithValue("@kuupaev", kuupaev)
+
+                connection.Open()
+
+                Using reader As SQLiteDataReader = command.ExecuteReader()
+                    While reader.Read()
+                        For i As Double = kuupaev - 7 To kuupaev
+                            doubleValues.Add(reader.GetDouble(kuupaev - i))
+                        Next
+                    End While
+                End Using
+
+            End Using
+        End Using
+        Return doubleValues.ToArray()
+
+    End Function
+
     Public Function ToidukordKokku(ByRef KcalLoend As Double()) As Double Implements IAnaluus.ToidukordKokku
         Dim koguvaartus As Double = 0
 

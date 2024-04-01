@@ -17,6 +17,7 @@ Public Class Pohiaken
     Private VahepKcal As Double = 0
     Private ToidukorradKoos As Double = 0
     Private kcalUlejaak As Double = 0
+    Private kaal As Double()
 
     Dim ProfiilK As KasutajaProfiilKomponent.IKasutajaProfiil
     Dim AnaluusK As AnaluusiKomponent.IAnaluus
