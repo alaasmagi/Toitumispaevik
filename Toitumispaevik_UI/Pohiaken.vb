@@ -18,6 +18,9 @@ Public Class Pohiaken
     Private ToidukorradKoos As Double = 0
     Private kcalUlejaak As Double = 0
 
+    Dim retseptideKoostisosad As New List(Of Integer)
+    Dim retseptideKoostisosadeKogused As New List(Of Integer)
+
     Dim ProfiilK As KasutajaProfiilKomponent.IKasutajaProfiil
     Dim AnaluusK As AnaluusiKomponent.IAnaluus
     Dim ToidudRetseptidK As ToidudRetseptidKomponent.IToidudjaRetseptid
@@ -242,6 +245,7 @@ Public Class Pohiaken
         cmbTreeninguteKiirvalik.Items.Clear()
         cmbToiduaineValik.Items.Clear()
         cmbTreeningsessiooniLisamine.Items.Clear()
+        cmbRetseptiKoostisosad.Items.Clear()
 
         Dim toiduaineteNimed As List(Of String) = ToidudRetseptidK.KiirlisamiseToiduaineNimed
         Dim treeninguteNimed As List(Of String) = TreeningudK.KiirlisamiseTreeninguNimed
@@ -249,9 +253,11 @@ Public Class Pohiaken
         For Each nimetus As String In toiduaineteNimed
             cmbToiduaineKiirvalik.Items.Add(nimetus)
             cmbToiduaineValik.Items.Add(nimetus)
+            cmbRetseptiKoostisosad.Items.Add(nimetus)
         Next
         cmbToiduaineKiirvalik.SelectedIndex = 0
         cmbToiduaineValik.SelectedIndex = 0
+        cmbRetseptiKoostisosad.SelectedIndex = 0
 
         For Each nimetus As String In treeninguteNimed
             cmbTreeninguteKiirvalik.Items.Add(nimetus)
@@ -446,5 +452,28 @@ Public Class Pohiaken
         End If
     End Sub
 
+    Private Sub btnRetseptLisaKoostisosa_Click(sender As Object, e As EventArgs) Handles btnRetseptLisaKoostisosa.Click
+        ToidudRetseptidK = New ToidudRetseptidKomponent.CToidudJaRetseptid
+        lbRetseptiKoostisosad.Items.Add(cmbRetseptiKoostisosad.SelectedItem)
+
+        retseptideKoostisosad.Add(ToidudRetseptidK.ToiduAineNimiEksisteerib(cmbRetseptiKoostisosad.SelectedItem.ToString()))
+        retseptideKoostisosadeKogused.Add(txtRetseptiKoostisosaKogus.Text)
+        txtRetseptiKoostisosaKogus.Text = ""
+
+        KomboKastid()
+    End Sub
+
+    Private Sub btnKinnitaRetsept_Click(sender As Object, e As EventArgs) Handles btnKinnitaRetsept.Click
+        ToidudRetseptidK = New ToidudRetseptidKomponent.CToidudJaRetseptid
+        Dim retsepti_id = ToidudRetseptidK.LisaRetsept(txtRetseptiNimi.Text)
+        txtRetseptiNimi.Text = ""
+        For i As Integer = 0 To retseptideKoostisosad.Count - 1
+            Dim koostisosa As String = retseptideKoostisosad(i)
+            Dim kogus As String = retseptideKoostisosadeKogused(i)
+
+            ToidudRetseptidK.LisaRetseptiKoostisosadeTabelisse(retsepti_id, koostisosa, kogus)
+        Next
+        lbRetseptiKoostisosad.Items.Clear()
+    End Sub
 End Class
 
