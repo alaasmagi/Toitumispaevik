@@ -473,6 +473,8 @@ Public Class Pohiaken
 
             ToidudRetseptidK.LisaRetseptiKoostisosadeTabelisse(retsepti_id, koostisosa, kogus)
         Next
+        retseptideKoostisosad.Clear()
+        retseptideKoostisosadeKogused.Clear()
         lbRetseptiKoostisosad.Items.Clear()
     End Sub
 End Class
