@@ -445,5 +445,6 @@ Public Class Pohiaken
             lblTreeningsessiooniLisamineViga.Visible = True
         End If
     End Sub
+
 End Class
 
