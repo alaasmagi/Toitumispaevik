@@ -37,30 +37,31 @@ Public Class CAnaluus
 
     Public Function KaaluParingAndmebaasist(ByVal kasutaja_id As Integer, ByVal kuupaev As Integer) As Double() Implements IAnaluus.KaaluParingAndmebaasist
         Dim tabeli_asukoht As String = $"Data Source={Path.Combine(Path.GetFullPath(Path.Combine _
-        (AppDomain.CurrentDomain.BaseDirectory, "..\..\..\")), "Data", "database.db")};Version=3;"
+    (AppDomain.CurrentDomain.BaseDirectory, "..\..\..\")), "Data", "database.db")};Version=3;"
 
-        Dim paring As String = "SELECT daily_weight FROM user_daily_data WHERE user_id = @kasutaja_id AND date = @kuupaev;"
+        Dim paring As String = "SELECT daily_weight FROM user_daily_data WHERE user_id = @kasutaja_id AND date BETWEEN @startDate AND @endDate;"
         Dim doubleValues As New List(Of Double)
 
         Using connection As New SQLiteConnection(tabeli_asukoht)
             Using command As New SQLiteCommand(paring, connection)
                 command.Parameters.AddWithValue("@kasutaja_id", kasutaja_id)
-                command.Parameters.AddWithValue("@kuupaev", kuupaev)
+                ' Assuming you want to retrieve weights for a week before the specified date
+                Dim startDate As Integer = 1 'kuupaev - 7
+                Dim endDate As Integer = 7 'kuupaev
+                command.Parameters.AddWithValue("@startDate", startDate)
+                command.Parameters.AddWithValue("@endDate", endDate)
 
                 connection.Open()
 
                 Using reader As SQLiteDataReader = command.ExecuteReader()
                     While reader.Read()
-                        For i As Double = kuupaev - 7 To kuupaev
-                            doubleValues.Add(reader.GetDouble(kuupaev - i))
-                        Next
+                        doubleValues.Add(reader.GetDouble(0))
                     End While
                 End Using
 
             End Using
         End Using
         Return doubleValues.ToArray()
-
     End Function
 
     Public Function ToidukordKokku(ByRef KcalLoend As Double()) As Double Implements IAnaluus.ToidukordKokku

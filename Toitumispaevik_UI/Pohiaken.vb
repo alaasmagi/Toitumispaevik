@@ -18,6 +18,7 @@ Public Class Pohiaken
     Private ToidukorradKoos As Double = 0
     Private kcalUlejaak As Double = 0
     Private TabelKaalud As Double()
+    Private TabelSihtKaal = 60
 
     Dim retseptideKoostisosad As New List(Of Integer)
     Dim retseptideKoostisosadeKogused As New List(Of Integer)
@@ -81,13 +82,30 @@ Public Class Pohiaken
         cmbAjaluguGraafikuPeriood.Items.Add("Viimased 6 kuud")
         cmbAjaluguGraafikuPeriood.Items.Add("Viimane aasta")
         cmbAjaluguGraafikuPeriood.Items.Add("Kogu ajalugu")
+
+        'see on testimiseks kaalu tabelis
+
+        TabelKaalud = AnaluusK.KaaluParingAndmebaasist(_kasutaja_id, AnaluusK.KuupaevIntegeriks(Date.Now.Date))
+
+        chrKaaluMuutumine.Series("Kaal").Points.AddXY(AnaluusK.IntegerKuupaevaks(AnaluusK.KuupaevIntegeriks(Date.Now.Date) - 6), TabelKaalud(0))
+        chrKaaluMuutumine.Series("Siht Kaal").Points.AddXY(AnaluusK.IntegerKuupaevaks(AnaluusK.KuupaevIntegeriks(Date.Now.Date) - 6), TabelSihtKaal)
+        chrKaaluMuutumine.Series("Kaal").Points.AddXY(AnaluusK.IntegerKuupaevaks(AnaluusK.KuupaevIntegeriks(Date.Now.Date) - 5), TabelKaalud(1))
+        chrKaaluMuutumine.Series("Siht Kaal").Points.AddXY(AnaluusK.IntegerKuupaevaks(AnaluusK.KuupaevIntegeriks(Date.Now.Date) - 5), TabelSihtKaal)
+        chrKaaluMuutumine.Series("Kaal").Points.AddXY(AnaluusK.IntegerKuupaevaks(AnaluusK.KuupaevIntegeriks(Date.Now.Date) - 4), TabelKaalud(2))
+        chrKaaluMuutumine.Series("Siht Kaal").Points.AddXY(AnaluusK.IntegerKuupaevaks(AnaluusK.KuupaevIntegeriks(Date.Now.Date) - 4), TabelSihtKaal)
+        chrKaaluMuutumine.Series("Kaal").Points.AddXY(AnaluusK.IntegerKuupaevaks(AnaluusK.KuupaevIntegeriks(Date.Now.Date) - 3), TabelKaalud(3))
+        chrKaaluMuutumine.Series("Siht Kaal").Points.AddXY(AnaluusK.IntegerKuupaevaks(AnaluusK.KuupaevIntegeriks(Date.Now.Date) - 3), TabelSihtKaal)
+        chrKaaluMuutumine.Series("Kaal").Points.AddXY(AnaluusK.IntegerKuupaevaks(AnaluusK.KuupaevIntegeriks(Date.Now.Date) - 2), TabelKaalud(4))
+        chrKaaluMuutumine.Series("Siht Kaal").Points.AddXY(AnaluusK.IntegerKuupaevaks(AnaluusK.KuupaevIntegeriks(Date.Now.Date) - 2), TabelSihtKaal)
+        chrKaaluMuutumine.Series("Kaal").Points.AddXY(AnaluusK.IntegerKuupaevaks(AnaluusK.KuupaevIntegeriks(Date.Now.Date) - 1), TabelKaalud(5))
+        chrKaaluMuutumine.Series("Siht Kaal").Points.AddXY(AnaluusK.IntegerKuupaevaks(AnaluusK.KuupaevIntegeriks(Date.Now.Date) - 1), TabelSihtKaal)
+        chrKaaluMuutumine.Series("Kaal").Points.AddXY(Date.Now.Date, TabelKaalud(6))
+        chrKaaluMuutumine.Series("Siht Kaal").Points.AddXY(Date.Now.Date, TabelSihtKaal)
+
+
+        'see on testimiseks kaalu tabelis
+
     End Sub
-
-    'see on testimiseks kaalu tabelis
-
-
-
-    'see on testimiseks kaalu tabelis
 
     Private Sub KoduGraafik()
         chrKoduPaneel.Series("Soogikorrad").Points.Clear()
