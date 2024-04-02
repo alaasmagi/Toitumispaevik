@@ -1917,15 +1917,18 @@ Partial Class Pohiaken
         Me.chrKaaluMuutumine.Name = "chrKaaluMuutumine"
         Me.chrKaaluMuutumine.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.SeaGreen
         Me.chrKaaluMuutumine.RightToLeft = System.Windows.Forms.RightToLeft.No
+        Series2.BorderWidth = 3
         Series2.ChartArea = "ChartArea1"
         Series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line
+        Series2.Color = System.Drawing.Color.Blue
         Series2.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Series2.IsValueShownAsLabel = True
         Series2.Legend = "Legend1"
         Series2.Name = "Kaal"
         Series2.SmartLabelStyle.CalloutBackColor = System.Drawing.Color.White
+        Series3.BorderWidth = 3
         Series3.ChartArea = "ChartArea1"
         Series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line
+        Series3.Color = System.Drawing.Color.Lime
         Series3.Legend = "Legend1"
         Series3.Name = "Siht Kaal"
         Me.chrKaaluMuutumine.Series.Add(Series2)

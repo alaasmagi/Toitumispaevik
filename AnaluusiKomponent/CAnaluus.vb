@@ -39,7 +39,7 @@ Public Class CAnaluus
         Dim tabeli_asukoht As String = $"Data Source={Path.Combine(Path.GetFullPath(Path.Combine _
     (AppDomain.CurrentDomain.BaseDirectory, "..\..\..\")), "Data", "database.db")};Version=3;"
 
-        Dim paring As String = "SELECT daily_weight FROM user_daily_data WHERE user_id = @kasutaja_id AND date BETWEEN @startDate AND @endDate;"
+        Dim paring As String = "SELECT daily_weight FROM user_daily_data WHERE user_id = @kasutaja_id AND date BETWEEN @startDate AND @endDate ORDER BY date DESC;"
         Dim doubleValues As New List(Of Double)
 
         Using connection As New SQLiteConnection(tabeli_asukoht)
@@ -47,7 +47,7 @@ Public Class CAnaluus
                 command.Parameters.AddWithValue("@kasutaja_id", kasutaja_id)
                 ' Assuming you want to retrieve weights for a week before the specified date
                 Dim startDate As Integer = 1 'kuupaev - 7
-                Dim endDate As Integer = 7 'kuupaev
+                Dim endDate As Integer = 91 'kuupaev
                 command.Parameters.AddWithValue("@startDate", startDate)
                 command.Parameters.AddWithValue("@endDate", endDate)
 
