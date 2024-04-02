@@ -18,6 +18,17 @@ Public Class Pohiaken
     Private ToidukorradKoos As Double = 0
     Private kcalUlejaak As Double = 0
 
+    Private Kehakaal As Double = 0
+    Private TarbitudKalorid As Integer
+    Private KulutatudKalorid As Integer
+    Private TarbitudKcal As Integer
+    Private KaloriteBalanss As Integer
+    Private totalCHydrates As Integer
+    Private Suhkur As Integer
+    Private Valk As Integer
+    Private Rasv As Integer
+
+
     Dim ProfiilK As KasutajaProfiilKomponent.IKasutajaProfiil
     Dim AnaluusK As AnaluusiKomponent.IAnaluus
     Dim ToidudRetseptidK As ToidudRetseptidKomponent.IToidudjaRetseptid
@@ -451,7 +462,8 @@ Public Class Pohiaken
 
         If IsNumeric(txtPaevaneKaal.Text) AndAlso txtPaevaneKaal.Text > 0 Then
             lblKaaluError.Visible = False
-            AnaluusK.
+            AnaluusK.KaaluLisamine(_kasutaja_id, AnaluusK.KuupaevIntegeriks(Date.Now.Date), Kehakaal, TarbitudKcal,
+                KulutatudKalorid, KaloriteBalanss, totalCHydrates, Suhkur, Valk, Rasv)
             txtPaevaneKaal.Text = ""
         Else
             lblKaaluError.Visible = True

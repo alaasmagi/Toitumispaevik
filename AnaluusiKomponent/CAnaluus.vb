@@ -55,9 +55,9 @@ Public Class CAnaluus
     End Function
 
     ' muuda
-    Public Function KaaluLisamine(kasutaja_id As Integer, kuupaev As Integer, kaal As Integer, tarbitudKcal As Integer,
-                                  kulutatudKcal As Integer, kcalBalanss As Integer, totalCHydrates As Integer,
-                                  suhkur As Integer, valk As Integer, rasv As Integer) As Integer
+    Public Function KaaluLisamine(ByVal kasutaja_id As Integer, ByVal kuupaev As Integer, ByVal kaal As Double, ByVal tarbitudKcal As Integer,
+                                  ByVal kulutatudKcal As Integer, ByVal kcalBalanss As Integer, ByVal totalCHydrates As Integer,
+                                  ByVal suhkur As Integer, ByVal valk As Integer, ByVal rasv As Integer) As Integer Implements IAnaluus.KaaluLisamine
         Dim tabeli_asukoht As String = $"Data Source={Path.Combine(Path.GetFullPath(Path.Combine _
         (AppDomain.CurrentDomain.BaseDirectory, "..\..\..\")), "Data", "database.db")};Version=3;"
         Using connection As New SQLiteConnection(tabeli_asukoht)
