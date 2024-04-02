@@ -54,32 +54,20 @@ Public Class CAnaluus
         Return (unixAeg.AddDays(sisendInteger))
     End Function
 
-    ' muuda
-    Public Function KaaluLisamine(ByVal kasutaja_id As Integer, ByVal kuupaev As Integer, ByVal kaal As Double, ByVal tarbitudKcal As Integer,
-                                  ByVal kulutatudKcal As Integer, ByVal kcalBalanss As Integer, ByVal totalCHydrates As Integer,
-                                  ByVal suhkur As Integer, ByVal valk As Integer, ByVal rasv As Integer) As Integer Implements IAnaluus.KaaluLisamine
+
+    Public Function KaaluLisamine(ByVal kasutaja_id As Integer, ByVal uus_kaal As Double) As Double Implements IAnaluus.KaaluLisamine
         Dim tabeli_asukoht As String = $"Data Source={Path.Combine(Path.GetFullPath(Path.Combine _
         (AppDomain.CurrentDomain.BaseDirectory, "..\..\..\")), "Data", "database.db")};Version=3;"
         Using connection As New SQLiteConnection(tabeli_asukoht)
             connection.Open()
-            Dim insertDataSql As String = "INSERT INTO user_training_history (user_id, date, weight, energy_intake, energy_consumption, _
-                energy_balance, total_c_hydrates, total_sugar, total_protein, total_lipid)
-                VALUES (@user_id, @date, @weight, @energy_intake, @energy_consumption, _
-                @energy_balance, @total_c_hydrates, @total_sugar, @total_protein, @total_lipid)"
+            Dim insertDataSql As String = $"UPDATE user_daily_data SET wight = @kaal WHERE user_id = @kasutaja_id;"
+
             Using cmd As New SQLiteCommand(insertDataSql, connection)
-                cmd.Parameters.AddWithValue("@user_id", kasutaja_id)
-                cmd.Parameters.AddWithValue("@date", kuupaev)
-                cmd.Parameters.AddWithValue("@weight", kaal)
-                cmd.Parameters.AddWithValue("@energy_intake", tarbitudKcal)
-                cmd.Parameters.AddWithValue("@energy_consumption", kulutatudKcal)
-                cmd.Parameters.AddWithValue("@energy_balance", kcalBalanss)
-                cmd.Parameters.AddWithValue("@total_c_hydrates", totalCHydrates)
-                cmd.Parameters.AddWithValue("@total_sugar", suhkur)
-                cmd.Parameters.AddWithValue("@total_protein", valk)
-                cmd.Parameters.AddWithValue("@total_lipid", rasv)
-                cmd.ExecuteNonQuery()
+                cmd.Parameters.AddWithValue("@kasutaja_id", kasutaja_id)
+                cmd.Parameters.AddWithValue("@kaal", uus_kaal)
             End Using
         End Using
-        Return kaal
+        Return uus_kaal
     End Function
+
 End Class

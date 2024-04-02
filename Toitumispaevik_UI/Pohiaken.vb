@@ -462,8 +462,7 @@ Public Class Pohiaken
 
         If IsNumeric(txtPaevaneKaal.Text) AndAlso txtPaevaneKaal.Text > 0 Then
             lblKaaluError.Visible = False
-            AnaluusK.KaaluLisamine(_kasutaja_id, AnaluusK.KuupaevIntegeriks(Date.Now.Date), Kehakaal, TarbitudKcal,
-                KulutatudKalorid, KaloriteBalanss, totalCHydrates, Suhkur, Valk, Rasv)
+            AnaluusK.KaaluLisamine(_kasutaja_id, txtPaevaneKaal.Text)
             txtPaevaneKaal.Text = ""
         Else
             lblKaaluError.Visible = True
@@ -473,5 +472,7 @@ Public Class Pohiaken
     Private Sub Pohiaken_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         lblKaaluError.Visible = False
     End Sub
+
+
 End Class
 
