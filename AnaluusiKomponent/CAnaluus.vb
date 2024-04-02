@@ -35,7 +35,7 @@ Public Class CAnaluus
 
     End Function
 
-    Public Function KaaluParingAndmebaasist(ByVal kasutaja_id As Integer, ByVal kuupaev As Integer) As Double() Implements IAnaluus.KaaluParingAndmebaasist
+    Public Function KaaluParingAndmebaasist(ByVal kasutaja_id As Integer, ByVal kuupaev As Integer, ByVal graafikuPikkus As Integer) As Double() Implements IAnaluus.KaaluParingAndmebaasist
         Dim tabeli_asukoht As String = $"Data Source={Path.Combine(Path.GetFullPath(Path.Combine _
     (AppDomain.CurrentDomain.BaseDirectory, "..\..\..\")), "Data", "database.db")};Version=3;"
 
@@ -46,8 +46,8 @@ Public Class CAnaluus
             Using command As New SQLiteCommand(paring, connection)
                 command.Parameters.AddWithValue("@kasutaja_id", kasutaja_id)
                 ' Assuming you want to retrieve weights for a week before the specified date
-                Dim startDate As Integer = 1 'kuupaev - 7
-                Dim endDate As Integer = 91 'kuupaev
+                Dim startDate As Integer = kuupaev - graafikuPikkus
+                Dim endDate As Integer = kuupaev
                 command.Parameters.AddWithValue("@startDate", startDate)
                 command.Parameters.AddWithValue("@endDate", endDate)
 
