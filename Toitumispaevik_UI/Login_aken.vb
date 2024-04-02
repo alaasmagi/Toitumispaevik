@@ -5,7 +5,7 @@ Imports System.Collections.Generic
 
 Imports System.IO
 Imports System.Data.SQLite
-
+Imports System.Data.CommandType
 Public Class Login_aken
 
     Dim sugu As Integer
