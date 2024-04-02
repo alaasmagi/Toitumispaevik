@@ -85,7 +85,7 @@ Public Class Pohiaken
 
     'see on testimiseks kaalu tabelis
 
-    tabelkaalud = 
+
 
     'see on testimiseks kaalu tabelis
 
