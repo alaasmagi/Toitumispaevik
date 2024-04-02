@@ -454,28 +454,42 @@ Public Class Pohiaken
 
     Private Sub btnRetseptLisaKoostisosa_Click(sender As Object, e As EventArgs) Handles btnRetseptLisaKoostisosa.Click
         ToidudRetseptidK = New ToidudRetseptidKomponent.CToidudJaRetseptid
-        lbRetseptiKoostisosad.Items.Add(cmbRetseptiKoostisosad.SelectedItem)
 
-        retseptideKoostisosad.Add(ToidudRetseptidK.ToiduAineNimiEksisteerib(cmbRetseptiKoostisosad.SelectedItem.ToString()))
-        retseptideKoostisosadeKogused.Add(txtRetseptiKoostisosaKogus.Text)
-        txtRetseptiKoostisosaKogus.Text = ""
+        If IsNumeric(txtRetseptiKoostisosaKogus.Text) AndAlso txtRetseptiKoostisosaKogus.Text > 0 Then
+            lbRetseptiKoostisosad.Items.Add(cmbRetseptiKoostisosad.SelectedItem)
+            retseptideKoostisosad.Add(ToidudRetseptidK.ToiduAineNimiEksisteerib(cmbRetseptiKoostisosad.SelectedItem.ToString()))
+            retseptideKoostisosadeKogused.Add(txtRetseptiKoostisosaKogus.Text)
+            txtRetseptiKoostisosaKogus.Text = ""
+            lblRetseptiLisamineViga.Visible = False
+        Else
+            lblRetseptiLisamineViga.Text = "Viga koostisosa koguses!"
+            lblRetseptiLisamineViga.Visible = True
+        End If
 
         KomboKastid()
     End Sub
 
     Private Sub btnKinnitaRetsept_Click(sender As Object, e As EventArgs) Handles btnKinnitaRetsept.Click
         ToidudRetseptidK = New ToidudRetseptidKomponent.CToidudJaRetseptid
-        Dim retsepti_id = ToidudRetseptidK.LisaRetsept(txtRetseptiNimi.Text)
-        txtRetseptiNimi.Text = ""
-        For i As Integer = 0 To retseptideKoostisosad.Count - 1
-            Dim koostisosa As String = retseptideKoostisosad(i)
-            Dim kogus As String = retseptideKoostisosadeKogused(i)
 
-            ToidudRetseptidK.LisaRetseptiKoostisosadeTabelisse(retsepti_id, koostisosa, kogus)
-        Next
-        retseptideKoostisosad.Clear()
-        retseptideKoostisosadeKogused.Clear()
-        lbRetseptiKoostisosad.Items.Clear()
+        If ToidudRetseptidK.RetseptiNimiEksisteerib(txtRetseptiNimi.Text) > 0 Then
+            lblRetseptiLisamineViga.Text = "Nimi juba kasutusel!"
+            lblRetseptiLisamineViga.Visible = True
+        Else
+            lblRetseptiLisamineViga.Visible = False
+            Dim retsepti_id = ToidudRetseptidK.LisaRetsept(txtRetseptiNimi.Text)
+            txtRetseptiNimi.Text = ""
+            For i As Integer = 0 To retseptideKoostisosad.Count - 1
+                Dim koostisosa As String = retseptideKoostisosad(i)
+                Dim kogus As String = retseptideKoostisosadeKogused(i)
+
+                ToidudRetseptidK.LisaRetseptiKoostisosadeTabelisse(retsepti_id, koostisosa, kogus)
+            Next
+            retseptideKoostisosad.Clear()
+            retseptideKoostisosadeKogused.Clear()
+            lbRetseptiKoostisosad.Items.Clear()
+        End If
+
     End Sub
 End Class
 
