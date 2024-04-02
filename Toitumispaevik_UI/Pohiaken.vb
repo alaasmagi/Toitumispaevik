@@ -17,7 +17,7 @@ Public Class Pohiaken
     Private VahepKcal As Double = 0
     Private ToidukorradKoos As Double = 0
     Private kcalUlejaak As Double = 0
-    Private kaal As Double()
+    Private TabelKaalud As Double()
 
     Dim retseptideKoostisosad As New List(Of Integer)
     Dim retseptideKoostisosadeKogused As New List(Of Integer)
@@ -82,6 +82,12 @@ Public Class Pohiaken
         cmbAjaluguGraafikuPeriood.Items.Add("Viimane aasta")
         cmbAjaluguGraafikuPeriood.Items.Add("Kogu ajalugu")
     End Sub
+
+    'see on testimiseks kaalu tabelis
+
+    tabelkaalud = 
+
+    'see on testimiseks kaalu tabelis
 
     Private Sub KoduGraafik()
         chrKoduPaneel.Series("Soogikorrad").Points.Clear()
