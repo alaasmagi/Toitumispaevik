@@ -4,4 +4,5 @@
     Function ToidukordKokku(ByRef KcalLoend() As Double) As Double
     Function KuupaevIntegeriks(ByVal sisendKuupaev As DateTime) As Integer
     Function IntegerKuupaevaks(ByVal sisendInteger As Integer) As DateTime
+    Function RetseptiToiduaineToitevaartuseArvutus(ByVal toitevaartus100gKohta As Integer, ByVal kogus As Integer) As Integer
 End Interface

@@ -31,16 +31,23 @@ Public Class CToidudJaRetseptid
         Return toiduaine_id
     End Function
 
-    Public Function LisaRetsept(ByVal retsepti_nimi As String) As Integer Implements IToidudjaRetseptid.LisaRetsept
+    Public Function LisaRetsept(ByVal retsepti_nimi As String, ByVal retsepti_kcal As Integer, ByVal retsepti_susivesikud As Integer, ByVal retsepti_suhkur As Integer,
+                                ByVal retsepti_valgud As Integer, ByVal retsepti_lipiidid As Integer) As Integer Implements IToidudjaRetseptid.LisaRetsept
         Dim retsepti_id As Integer = GenereeriId()
         Dim tabeli_asukoht As String = $"Data Source={Path.Combine(Path.GetFullPath(Path.Combine _
         (AppDomain.CurrentDomain.BaseDirectory, "..\..\..\")), "Data", "database.db")};Version=3;"
         Using connection As New SQLiteConnection(tabeli_asukoht)
             connection.Open()
-            Dim insertDataSql As String = "INSERT INTO recipe_data (recipe_id, recipe_name) VALUES (@retsepti_id, @retsepti_nimi)"
+            Dim insertDataSql As String = "INSERT INTO recipe_data (recipe_id, recipe_name, energy, c_hydrates, sugar, proteins, lipids) VALUES (@retsepti_id, @retsepti_nimi, @energia, @susivesikud, 
+                                            @suhkur, @valgud, @lipiidid)"
             Using cmd As New SQLiteCommand(insertDataSql, connection)
                 cmd.Parameters.AddWithValue("@retsepti_id", retsepti_id)
                 cmd.Parameters.AddWithValue("@retsepti_nimi", retsepti_nimi)
+                cmd.Parameters.AddWithValue("@energia", retsepti_kcal)
+                cmd.Parameters.AddWithValue("@susivesikud", retsepti_susivesikud)
+                cmd.Parameters.AddWithValue("@suhkur", retsepti_suhkur)
+                cmd.Parameters.AddWithValue("@valgud", retsepti_valgud)
+                cmd.Parameters.AddWithValue("@lipiidid", retsepti_lipiidid)
                 cmd.ExecuteNonQuery()
             End Using
         End Using

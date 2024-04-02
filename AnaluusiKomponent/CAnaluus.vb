@@ -53,5 +53,7 @@ Public Class CAnaluus
         Dim unixAeg As New DateTime(1970, 1, 1)
         Return (unixAeg.AddDays(sisendInteger))
     End Function
-
+    Public Function RetseptiToiduaineToitevaartuseArvutus(ByVal toitevaartus100gKohta As Integer, ByVal kogus As Integer) As Integer Implements IAnaluus.RetseptiToiduaineToitevaartuseArvutus
+        Return (toitevaartus100gKohta / 100) * kogus
+    End Function
 End Class

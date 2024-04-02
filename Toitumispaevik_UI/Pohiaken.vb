@@ -21,6 +21,12 @@ Public Class Pohiaken
     Dim retseptideKoostisosad As New List(Of Integer)
     Dim retseptideKoostisosadeKogused As New List(Of Integer)
 
+    Dim retseptiKcal As Integer = 0
+    Dim retseptiSusivesikud As Integer = 0
+    Dim retseptiSuhkur As Integer = 0
+    Dim retseptiValgud As Integer = 0
+    Dim retseptiLipiidid As Integer = 0
+
     Dim ProfiilK As KasutajaProfiilKomponent.IKasutajaProfiil
     Dim AnaluusK As AnaluusiKomponent.IAnaluus
     Dim ToidudRetseptidK As ToidudRetseptidKomponent.IToidudjaRetseptid
@@ -457,8 +463,14 @@ Public Class Pohiaken
 
     Private Sub btnRetseptLisaKoostisosa_Click(sender As Object, e As EventArgs) Handles btnRetseptLisaKoostisosa.Click
         ToidudRetseptidK = New ToidudRetseptidKomponent.CToidudJaRetseptid
+        AnaluusK = New AnaluusiKomponent.CAnaluus
 
         If IsNumeric(txtRetseptiKoostisosaKogus.Text) AndAlso txtRetseptiKoostisosaKogus.Text > 0 Then
+            retseptiKcal = retseptiKcal + AnaluusK.RetseptiToiduaineToitevaartuseArvutus(ToidudRetseptidK.ToiteVaartuseParing(ToidudRetseptidK.ToiduAineNimiEksisteerib(cmbRetseptiKoostisosad.SelectedItem), "energy"), txtRetseptiKoostisosaKogus.Text)
+            retseptiSusivesikud = retseptiSusivesikud + AnaluusK.RetseptiToiduaineToitevaartuseArvutus(ToidudRetseptidK.ToiteVaartuseParing(ToidudRetseptidK.ToiduAineNimiEksisteerib(cmbRetseptiKoostisosad.SelectedItem), "c_hydrates"), txtRetseptiKoostisosaKogus.Text)
+            retseptiSuhkur = retseptiSuhkur + AnaluusK.RetseptiToiduaineToitevaartuseArvutus(ToidudRetseptidK.ToiteVaartuseParing(ToidudRetseptidK.ToiduAineNimiEksisteerib(cmbRetseptiKoostisosad.SelectedItem), "sugar"), txtRetseptiKoostisosaKogus.Text)
+            retseptiValgud = retseptiValgud + AnaluusK.RetseptiToiduaineToitevaartuseArvutus(ToidudRetseptidK.ToiteVaartuseParing(ToidudRetseptidK.ToiduAineNimiEksisteerib(cmbRetseptiKoostisosad.SelectedItem), "protein"), txtRetseptiKoostisosaKogus.Text)
+            retseptiLipiidid = retseptiLipiidid + AnaluusK.RetseptiToiduaineToitevaartuseArvutus(ToidudRetseptidK.ToiteVaartuseParing(ToidudRetseptidK.ToiduAineNimiEksisteerib(cmbRetseptiKoostisosad.SelectedItem), "lipid"), txtRetseptiKoostisosaKogus.Text)
             lbRetseptiKoostisosad.Items.Add(cmbRetseptiKoostisosad.SelectedItem)
             retseptideKoostisosad.Add(ToidudRetseptidK.ToiduAineNimiEksisteerib(cmbRetseptiKoostisosad.SelectedItem.ToString()))
             retseptideKoostisosadeKogused.Add(txtRetseptiKoostisosaKogus.Text)
@@ -480,7 +492,12 @@ Public Class Pohiaken
             lblRetseptiLisamineViga.Visible = True
         Else
             lblRetseptiLisamineViga.Visible = False
-            Dim retsepti_id = ToidudRetseptidK.LisaRetsept(txtRetseptiNimi.Text)
+            Dim retsepti_id = ToidudRetseptidK.LisaRetsept(txtRetseptiNimi.Text, retseptiKcal, retseptiSusivesikud, retseptiSuhkur, retseptiValgud, retseptiLipiidid)
+            retseptiKcal = 0
+            retseptiSusivesikud = 0
+            retseptiSuhkur = 0
+            retseptiValgud = 0
+            retseptiLipiidid = 0
             txtRetseptiNimi.Text = ""
             For i As Integer = 0 To retseptideKoostisosad.Count - 1
                 Dim koostisosa As String = retseptideKoostisosad(i)
