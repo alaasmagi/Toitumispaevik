@@ -246,6 +246,7 @@ Public Class Pohiaken
         cmbToiduaineValik.Items.Clear()
         cmbTreeningsessiooniLisamine.Items.Clear()
         cmbRetseptiKoostisosad.Items.Clear()
+        cmbTreeninguKustutamine.Items.Clear()
 
         Dim toiduaineteNimed As List(Of String) = ToidudRetseptidK.KiirlisamiseToiduaineNimed
         Dim treeninguteNimed As List(Of String) = TreeningudK.KiirlisamiseTreeninguNimed
@@ -262,7 +263,9 @@ Public Class Pohiaken
         For Each nimetus As String In treeninguteNimed
             cmbTreeninguteKiirvalik.Items.Add(nimetus)
             cmbTreeningsessiooniLisamine.Items.Add(nimetus)
+            cmbTreeninguKustutamine.Items.Add(nimetus)
         Next
+        cmbTreeninguKustutamine.SelectedIndex = 0
         cmbTreeninguteKiirvalik.SelectedIndex = 0
         cmbTreeningsessiooniLisamine.SelectedIndex = 0
 
@@ -490,6 +493,24 @@ Public Class Pohiaken
             lbRetseptiKoostisosad.Items.Clear()
         End If
 
+    End Sub
+
+    Private Sub btnKustutaTreening_Click(sender As Object, e As EventArgs) Handles btnKustutaTreening.Click
+        TreeningudK = New TreeninguteKomponent.CTreeningud
+
+        Dim treeningu_id = TreeningudK.TreeninguNimiEksisteerib(cmbTreeninguKustutamine.SelectedItem)
+        If treeningu_id < 250 Then
+            lblKustutaTreeningViga.Text = "Baastreeningut ei saa kustutada!"
+            lblKustutaTreeningViga.Visible = True
+        Else
+            If TreeningudK.KustutaTreening(TreeningudK.TreeninguNimiEksisteerib(cmbTreeninguKustutamine.SelectedItem)) = 0 Then
+                lblKustutaTreeningViga.Text = "Treeningu kustutamine ebaõnnestus!"
+                lblKustutaTreeningViga.Visible = True
+            Else
+                lblKustutaTreeningViga.Visible = False
+                KomboKastid()
+            End If
+        End If
     End Sub
 End Class
 
