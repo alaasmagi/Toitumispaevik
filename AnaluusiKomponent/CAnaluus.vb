@@ -54,4 +54,25 @@ Public Class CAnaluus
         Return (unixAeg.AddDays(sisendInteger))
     End Function
 
+    ' muuda
+    Public Function KaaluLisamine(kasutaja_id As String, kuupaev As Integer, treeningu_id As Integer, kestus As Integer) As Integer Implements ITreeningud.KasutajaTreeninguLisamine
+        Dim energiakulu = kestus * (TreeninguEnergiakuluParing(treeningu_id, "consumption") / 60)
+
+        Dim tabeli_asukoht As String = $"Data Source={Path.Combine(Path.GetFullPath(Path.Combine _
+        (AppDomain.CurrentDomain.BaseDirectory, "..\..\..\")), "Data", "database.db")};Version=3;"
+        Using connection As New SQLiteConnection(tabeli_asukoht)
+            connection.Open()
+            Dim insertDataSql As String = "INSERT INTO user_training_history (user_id, date, training_id, total_consumption, duration)
+          VALUES (@kasutaja_id, @kuupaev, @treeningu_id, @energiakulu, @kestus)"
+            Using cmd As New SQLiteCommand(insertDataSql, connection)
+                cmd.Parameters.AddWithValue("@kasutaja_id", kasutaja_id)
+                cmd.Parameters.AddWithValue("@kuupaev", kuupaev)
+                cmd.Parameters.AddWithValue("@treeningu_id", treeningu_id)
+                cmd.Parameters.AddWithValue("@energiakulu", energiakulu)
+                cmd.Parameters.AddWithValue("@kestus", kestus)
+                cmd.ExecuteNonQuery()
+            End Using
+        End Using
+        Return treeningu_id
+    End Function
 End Class

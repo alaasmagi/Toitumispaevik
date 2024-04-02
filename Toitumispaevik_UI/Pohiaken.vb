@@ -446,5 +446,20 @@ Public Class Pohiaken
         End If
     End Sub
 
+    Private Sub btnPaevaneKaal_Click(sender As Object, e As EventArgs) Handles btnPaevaneKaal.Click
+        AnaluusK = New AnaluusiKomponent.CAnaluus
+
+        If IsNumeric(txtPaevaneKaal.Text) AndAlso txtPaevaneKaal.Text > 0 Then
+            lblKaaluError.Visible = False
+            AnaluusK.
+            txtPaevaneKaal.Text = ""
+        Else
+            lblKaaluError.Visible = True
+        End If
+    End Sub
+
+    Private Sub Pohiaken_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        lblKaaluError.Visible = False
+    End Sub
 End Class
 
