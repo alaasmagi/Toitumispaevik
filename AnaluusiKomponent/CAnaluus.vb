@@ -8,12 +8,36 @@ Public Class CAnaluus
     Private hommik
     Private louna
     Private ohtu
-    Private vaheP
+    Private vahepala
 
-    Public Function PariKcalPaveaHetkest(kuupaev As Integer, kasutaja_id As Integer, toidukord As String) As Integer Implements IAnaluus.PariKcalPaveaHetkest
+    Public Function PariTabelKaalud(kasutaja_id As Integer, )
 
-        Return ToidukordKokku(KclParingAndmebaasist(kasutaja_id, kuupaev, toidukord))
+    End Function
 
+    Public Function PariKaloriUlejaak(tarbitudKcal As Integer, KcalLimiit As Integer) As Integer Implements IAnaluus.PariKaloriUlejaak
+        If tarbitudKcal > KcalLimiit Then
+            Return 0
+        Else
+            Return KcalLimiit - tarbitudKcal
+        End If
+        Return 0
+    End Function
+
+    Public Function PariKcalPaveaHetkest(kuupaev As Integer, kasutaja_id As Integer, toidukord As Integer) As Integer Implements IAnaluus.PariKcalPaveaHetkest
+        Select Case toidukord
+            Case 0
+                hommik = ToidukordKokku(KclParingAndmebaasist(kasutaja_id, kuupaev, toidukord))
+                Return hommik
+            Case 1
+                louna = ToidukordKokku(KclParingAndmebaasist(kasutaja_id, kuupaev, toidukord))
+                Return louna
+            Case 2
+                vahepala = ToidukordKokku(KclParingAndmebaasist(kasutaja_id, kuupaev, toidukord))
+                Return vahepala
+            Case 3
+                ohtu = ToidukordKokku(KclParingAndmebaasist(kasutaja_id, kuupaev, toidukord))
+                Return ohtu
+        End Select
     End Function
 
     Public Function PariValueMap(keyStr As String) As Integer Implements IAnaluus.PariValueMap
@@ -28,11 +52,11 @@ Public Class CAnaluus
         End If
     End Sub
 
-    Public Function paevaneKcal(kcalHommik, kcalLouna, kcalOhtu, kcalVahepala) As Integer Implements IAnaluus.paevaneKcal
-        Return kcalHommik + kcalLouna + kcalVahepala + kcalOhtu
+    Public Function PaevaneKcal() As Integer Implements IAnaluus.PaevaneKcal
+        Return hommik + louna + vahepala + ohtu
     End Function
 
-    Public Function KclParingAndmebaasist(ByVal kasutaja_id As Integer, ByVal kuupaev As Integer, ByVal toidukord As Integer) As Double() Implements IAnaluus.KclParingAndmebaasist
+    Private Function KclParingAndmebaasist(ByVal kasutaja_id As Integer, ByVal kuupaev As Integer, ByVal toidukord As Integer) As Double() Implements IAnaluus.KclParingAndmebaasist
         Dim tabeli_asukoht As String = $"Data Source={Path.Combine(Path.GetFullPath(Path.Combine _
         (AppDomain.CurrentDomain.BaseDirectory, "..\..\..\")), "Data", "database.db")};Version=3;"
 
@@ -89,7 +113,7 @@ Public Class CAnaluus
         Return doubleValues.ToArray()
     End Function
 
-    Public Function ToidukordKokku(ByRef KcalLoend As Double()) As Double Implements IAnaluus.ToidukordKokku
+    Private Function ToidukordKokku(ByRef KcalLoend As Double()) As Double Implements IAnaluus.ToidukordKokku
         Dim koguvaartus As Double = 0
 
         For i As Integer = 0 To KcalLoend.Length - 1
