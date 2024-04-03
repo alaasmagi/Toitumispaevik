@@ -63,7 +63,9 @@ Public Class CAnaluus
         End Using
         Return doubleValues.ToArray()
     End Function
-    Public Function KaaluLisamine(ByVal kasutaja_id As Integer, ByVal uus_kaal As Double) As Double Implements IAnaluus.KaaluLisamine
+    Public Function KaaluLisamine(ByVal kasutaja_id As Integer, ByVal kuupaev As Integer, ByVal uus_kaal As Double, ByVal tarbitudKcal As Integer,
+                                  ByVal kulutatudKcal As Integer, ByVal kcalBalanss As Integer, ByVal totalCHyd As Integer, ByVal suhkur As Integer,
+                                  ByVal valk As Integer, ByVal rasv As Integer) As Double Implements IAnaluus.KaaluLisamine
         Dim tabeli_asukoht As String = $"Data Source={Path.Combine(Path.GetFullPath(Path.Combine _
         (AppDomain.CurrentDomain.BaseDirectory, "..\..\..\")), "Data", "database.db")};Version=3;"
 
@@ -89,10 +91,21 @@ Public Class CAnaluus
                     cmdUpdateData.ExecuteNonQuery()
                 End Using
             Else
-                Dim insertDataSql As String = $"INSERT INTO user_daily_data (user_id, daily_weight) VALUES (@kasutaja_id, @kaal);"
+                Dim insertDataSql As String = $"INSERT INTO user_daily_data (user_id, data, daily_weight, energy_intake, energy_consumption, energy_balance, _
+                    total_c_hydrates, total_sugar, total_protein, total_lipid) _
+                    VALUES (@kasutaja_id, @kuupaev, @uus_kaal, @tarbitudKcal, @kulutatudKcal, @kcalBalanss, @totalCHyd, @suhkur, @valk, @rasv);"
                 Using cmdInsertData As New SQLiteCommand(insertDataSql, connection)
                     cmdInsertData.Parameters.AddWithValue("@kasutaja_id", kasutaja_id)
+                    cmdInsertData.Parameters.AddWithValue("@data", kuupaev)
                     cmdInsertData.Parameters.AddWithValue("@kaal", uus_kaal)
+                    cmdInsertData.Parameters.AddWithValue("@tarbitudKcal", tarbitudKcal)
+                    cmdInsertData.Parameters.AddWithValue("@kulutatudKcal", kulutatudKcal)
+                    cmdInsertData.Parameters.AddWithValue("@kcalBalanss", kcalBalanss)
+                    cmdInsertData.Parameters.AddWithValue("@totalCHyd", totalCHyd)
+                    cmdInsertData.Parameters.AddWithValue("@suhkur", suhkur)
+                    cmdInsertData.Parameters.AddWithValue("@valk", valk)
+                    cmdInsertData.Parameters.AddWithValue("@rasv", rasv)
+
                     cmdInsertData.ExecuteNonQuery()
                 End Using
             End If
