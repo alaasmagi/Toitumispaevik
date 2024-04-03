@@ -11,12 +11,6 @@ Public Class Pohiaken
 
     Private _kasutaja_id As Integer
     Private kalorilimiit As Integer
-    Private HommikKcal As Double = 0
-    Private LounaKcal As Double = 0
-    Private OhtuKcal As Double = 0
-    Private VahepKcal As Double = 0
-    Private ToidukorradKoos As Double = 0
-    Private kcalUlejaak As Double = 0
     Private TabelKaalud As Double()
     Private tabelSihtKaal As Double
 
@@ -82,6 +76,7 @@ Public Class Pohiaken
         End If
         KomboKastid()
         KoduGraafik()
+        GraafikuSeadmed()
         cmbAjaluguGraafikuPeriood.Items.Add("Viimased 7 päeva")
         cmbAjaluguGraafikuPeriood.SelectedItem = "Viimased 7 päeva"
         cmbAjaluguGraafikuPeriood.Items.Add("Viimane kuu")
@@ -92,44 +87,40 @@ Public Class Pohiaken
 
         'see on testimiseks kaalu tabelis
 
-        TabelKaalud = AnaluusK.KaaluParingAndmebaasist(_kasutaja_id, AnaluusK.KuupaevIntegeriks(Date.Now.Date), 1) 'Siia (x asemele) lisab eeva varem leitud koguse päevi palju graafik ajalukku kuvab, mille leiab ta "graafiku seaded" combo boxist
-        ' max comboboxis valitav väärtus võiks olla 91 päeva (13 nädalat / ca. 3 kuud) ja miinimumi pole testind a vast 7 päevast (1 nädal) ei tasu väiksemat lasta valida.
+        TabelKaalud = AnaluusK.KaaluParingAndmebaasist(_kasutaja_id, AnaluusK.KuupaevIntegeriks(Date.Now.Date), AnaluusK.PariValueMap(cmbAjaluguGraafikuPeriood.SelectedText))
 
         For muutuja As Integer = 0 To TabelKaalud.Length - 1 Step +1
             chrKaaluMuutumine.Series("Kaal").Points.AddXY(AnaluusK.IntegerKuupaevaks((AnaluusK.KuupaevIntegeriks(Date.Now.Date) - (TabelKaalud.Length - 1)) + muutuja), TabelKaalud(muutuja))
-            chrKaaluMuutumine.Series("Siht Kaal").Points.AddXY(AnaluusK.IntegerKuupaevaks((AnaluusK.KuupaevIntegeriks(Date.Now.Date) - (TabelKaalud.Length - 1)) + muutuja), TabelSihtKaal)
+            chrKaaluMuutumine.Series("Siht Kaal").Points.AddXY(AnaluusK.IntegerKuupaevaks((AnaluusK.KuupaevIntegeriks(Date.Now.Date) - (TabelKaalud.Length - 1)) + muutuja), tabelSihtKaal)
         Next
 
         'see on testimiseks kaalu tabelis
 
     End Sub
 
+    Private Sub GraafikuSeadmed()
+        AnaluusK.LisaToValueMap("Viimased 7 päeva", 7)
+        AnaluusK.LisaToValueMap("Viimane kuu", 30)
+        AnaluusK.LisaToValueMap("Viimased 3 kuud", 91)
+        AnaluusK.LisaToValueMap("Viimased 6 kuud", 182)
+        AnaluusK.LisaToValueMap("Viimane aasta", 365)
+        AnaluusK.LisaToValueMap("Kogu ajalugu", 1)
+    End Sub
+
     Private Sub KoduGraafik()
         chrKoduPaneel.Series("Soogikorrad").Points.Clear()
         AnaluusK = New AnaluusiKomponent.CAnaluus
 
-        HommikKcal = AnaluusK.ToidukordKokku(AnaluusK.KclParingAndmebaasist(_kasutaja_id, AnaluusK.KuupaevIntegeriks(Date.Now.Date), 0))
-        chrKoduPaneel.Series("Soogikorrad").Points.AddXY("Hommik", HommikKcal)
+        chrKoduPaneel.Series("Soogikorrad").Points.AddXY("Hommik", AnaluusK.PariKcalPaveaHetkest(AnaluusK.KuupaevIntegeriks(Date.Now.Date), _kasutaja_id, 0))
 
-        LounaKcal = AnaluusK.ToidukordKokku(AnaluusK.KclParingAndmebaasist(_kasutaja_id, AnaluusK.KuupaevIntegeriks(Date.Now.Date), 1))
-        chrKoduPaneel.Series("Soogikorrad").Points.AddXY("Lõuna", LounaKcal)
+        chrKoduPaneel.Series("Soogikorrad").Points.AddXY("Lõuna", AnaluusK.PariKcalPaveaHetkest(AnaluusK.KuupaevIntegeriks(Date.Now.Date), _kasutaja_id, 1))
 
-        OhtuKcal = AnaluusK.ToidukordKokku(AnaluusK.KclParingAndmebaasist(_kasutaja_id, AnaluusK.KuupaevIntegeriks(Date.Now.Date), 3))
-        chrKoduPaneel.Series("Soogikorrad").Points.AddXY("Õhtu", OhtuKcal)
+        chrKoduPaneel.Series("Soogikorrad").Points.AddXY("Õhtu", AnaluusK.PariKcalPaveaHetkest(AnaluusK.KuupaevIntegeriks(Date.Now.Date), _kasutaja_id, 3))
 
-        VahepKcal = AnaluusK.ToidukordKokku(AnaluusK.KclParingAndmebaasist(_kasutaja_id, AnaluusK.KuupaevIntegeriks(Date.Now.Date), 2))
-        chrKoduPaneel.Series("Soogikorrad").Points.AddXY("Vahepalad", VahepKcal)
+        chrKoduPaneel.Series("Soogikorrad").Points.AddXY("Vahepalad", AnaluusK.PariKcalPaveaHetkest(AnaluusK.KuupaevIntegeriks(Date.Now.Date), _kasutaja_id, 2))
 
-        ToidukorradKoos = AnaluusK.paevaneKcal(HommikKcal, LounaKcal, OhtuKcal, VahepKcal)
-
-        If ToidukorradKoos > kalorilimiit Then
-            kcalUlejaak = 0
-        Else
-            kcalUlejaak = kalorilimiit - ToidukorradKoos
-        End If
-
-        chrKoduPaneel.Series("Soogikorrad").Points.AddXY("Söömata", kcalUlejaak)
-        lblKcalPaev.Text = ToidukorradKoos & Environment.NewLine & "/" & Environment.NewLine & kalorilimiit & Environment.NewLine & "kCal"
+        chrKoduPaneel.Series("Soogikorrad").Points.AddXY("Söömata", AnaluusK.PariKaloriUlejaak(AnaluusK.PaevaneKcal(), kalorilimiit))
+        lblKcalPaev.Text = AnaluusK.paevaneKcal() & Environment.NewLine & "/" & Environment.NewLine & kalorilimiit & Environment.NewLine & "kCal"
     End Sub
     Private Sub pnlLogo_Click(sender As Object, e As EventArgs) Handles pnlLogo.Click
         pnlYlevaade.Visible = False

@@ -1,12 +1,62 @@
 ﻿Imports System.Data.SQLite
 Imports System.IO
 Public Class CAnaluus
+
     Implements IAnaluus
-    Public Function paevaneKcal(kcalHommik, kcalLouna, kcalOhtu, kcalVahepala) As Integer Implements IAnaluus.paevaneKcal
-        Return kcalHommik + kcalLouna + kcalVahepala + kcalOhtu
+
+    Private valueMap As New Dictionary(Of String, Integer)()
+    Private hommik
+    Private louna
+    Private ohtu
+    Private vahepala
+
+    Public Function PariTabelKaalud(kasutaja_id As Integer, )
+
     End Function
 
-    Public Function KclParingAndmebaasist(ByVal kasutaja_id As Integer, ByVal kuupaev As Integer, ByVal toidukord As Integer) As Double() Implements IAnaluus.KclParingAndmebaasist
+    Public Function PariKaloriUlejaak(tarbitudKcal As Integer, KcalLimiit As Integer) As Integer Implements IAnaluus.PariKaloriUlejaak
+        If tarbitudKcal > KcalLimiit Then
+            Return 0
+        Else
+            Return KcalLimiit - tarbitudKcal
+        End If
+        Return 0
+    End Function
+
+    Public Function PariKcalPaveaHetkest(kuupaev As Integer, kasutaja_id As Integer, toidukord As Integer) As Integer Implements IAnaluus.PariKcalPaveaHetkest
+        Select Case toidukord
+            Case 0
+                hommik = ToidukordKokku(KclParingAndmebaasist(kasutaja_id, kuupaev, toidukord))
+                Return hommik
+            Case 1
+                louna = ToidukordKokku(KclParingAndmebaasist(kasutaja_id, kuupaev, toidukord))
+                Return louna
+            Case 2
+                vahepala = ToidukordKokku(KclParingAndmebaasist(kasutaja_id, kuupaev, toidukord))
+                Return vahepala
+            Case 3
+                ohtu = ToidukordKokku(KclParingAndmebaasist(kasutaja_id, kuupaev, toidukord))
+                Return ohtu
+        End Select
+    End Function
+
+    Public Function PariValueMap(keyStr As String) As Integer Implements IAnaluus.PariValueMap
+        If valueMap.ContainsKey(keyStr) Then
+            Return valueMap(keyStr)
+        End If
+    End Function
+
+    Public Sub LisaValueMap(newKeyStr As String, newValue As Integer) Implements IAnaluus.LisaToValueMap
+        If Not valueMap.ContainsKey(newKeyStr) Then
+            valueMap.Add(newKeyStr, newValue)
+        End If
+    End Sub
+
+    Public Function PaevaneKcal() As Integer Implements IAnaluus.PaevaneKcal
+        Return hommik + louna + vahepala + ohtu
+    End Function
+
+    Private Function KclParingAndmebaasist(ByVal kasutaja_id As Integer, ByVal kuupaev As Integer, ByVal toidukord As Integer) As Double() Implements IAnaluus.KclParingAndmebaasist
         Dim tabeli_asukoht As String = $"Data Source={Path.Combine(Path.GetFullPath(Path.Combine _
         (AppDomain.CurrentDomain.BaseDirectory, "..\..\..\")), "Data", "database.db")};Version=3;"
 
@@ -45,7 +95,6 @@ Public Class CAnaluus
         Using connection As New SQLiteConnection(tabeli_asukoht)
             Using command As New SQLiteCommand(paring, connection)
                 command.Parameters.AddWithValue("@kasutaja_id", kasutaja_id)
-                ' Assuming you want to retrieve weights for a week before the specified date
                 Dim startDate As Integer = kuupaev - graafikuPikkus
                 Dim endDate As Integer = kuupaev
                 command.Parameters.AddWithValue("@startDate", startDate)
@@ -101,7 +150,7 @@ Public Class CAnaluus
         Return uus_kaal
     End Function
 
-    Public Function ToidukordKokku(ByRef KcalLoend As Double()) As Double Implements IAnaluus.ToidukordKokku
+    Private Function ToidukordKokku(ByRef KcalLoend As Double()) As Double Implements IAnaluus.ToidukordKokku
         Dim koguvaartus As Double = 0
 
         For i As Integer = 0 To KcalLoend.Length - 1
