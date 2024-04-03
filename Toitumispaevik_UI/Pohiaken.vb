@@ -17,6 +17,8 @@ Public Class Pohiaken
     Private VahepKcal As Double = 0
     Private ToidukorradKoos As Double = 0
     Private kcalUlejaak As Double = 0
+    Private TabelKaalud As Double()
+    Private tabelSihtKaal As Double
 
     Dim retseptideKoostisosad As New List(Of Integer)
     Dim retseptideKoostisosadeKogused As New List(Of Integer)
@@ -37,6 +39,7 @@ Public Class Pohiaken
         _kasutaja_id = kasutaja_id
         Dim ProfiilK As New KasutajaProfiilKomponent.CKasutajaProfiil
         kalorilimiit = ProfiilK.UheAndmevaljaParingKasutajaTabelist(_kasutaja_id, "calorie_limit")
+        tabelSihtKaal = ProfiilK.UheAndmevaljaParingKasutajaTabelist(_kasutaja_id, "weight_goal")
     End Sub
     Public Sub ResetForm()
         ProfiilK = New KasutajaProfiilKomponent.CKasutajaProfiil
@@ -86,6 +89,19 @@ Public Class Pohiaken
         cmbAjaluguGraafikuPeriood.Items.Add("Viimased 6 kuud")
         cmbAjaluguGraafikuPeriood.Items.Add("Viimane aasta")
         cmbAjaluguGraafikuPeriood.Items.Add("Kogu ajalugu")
+
+        'see on testimiseks kaalu tabelis
+
+        TabelKaalud = AnaluusK.KaaluParingAndmebaasist(_kasutaja_id, AnaluusK.KuupaevIntegeriks(Date.Now.Date), x) 'Siia (x asemele) lisab eeva varem leitud koguse päevi palju graafik ajalukku kuvab, mille leiab ta "graafiku seaded" combo boxist
+        ' max comboboxis valitav väärtus võiks olla 91 päeva (13 nädalat / ca. 3 kuud) ja miinimumi pole testind a vast 7 päevast (1 nädal) ei tasu väiksemat lasta valida.
+
+        For muutuja As Integer = 0 To TabelKaalud.Length - 1 Step +1
+            chrKaaluMuutumine.Series("Kaal").Points.AddXY(AnaluusK.IntegerKuupaevaks((AnaluusK.KuupaevIntegeriks(Date.Now.Date) - (TabelKaalud.Length - 1)) + muutuja), TabelKaalud(muutuja))
+            chrKaaluMuutumine.Series("Siht Kaal").Points.AddXY(AnaluusK.IntegerKuupaevaks((AnaluusK.KuupaevIntegeriks(Date.Now.Date) - (TabelKaalud.Length - 1)) + muutuja), TabelSihtKaal)
+        Next
+
+        'see on testimiseks kaalu tabelis
+
     End Sub
 
     Private Sub KoduGraafik()
