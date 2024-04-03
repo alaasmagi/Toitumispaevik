@@ -65,20 +65,42 @@ Public Class CAnaluus
     End Function
     Public Function KaaluLisamine(ByVal kasutaja_id As Integer, ByVal uus_kaal As Double) As Double Implements IAnaluus.KaaluLisamine
         Dim tabeli_asukoht As String = $"Data Source={Path.Combine(Path.GetFullPath(Path.Combine _
-    (AppDomain.CurrentDomain.BaseDirectory, "..\..\..\")), "Data", "database.db")};Version=3;"
+        (AppDomain.CurrentDomain.BaseDirectory, "..\..\..\")), "Data", "database.db")};Version=3;"
+
+        Dim kasutaja_olemas As Boolean = False
+
         Using connection As New SQLiteConnection(tabeli_asukoht)
             connection.Open()
-            Dim insertDataSql As String = $"UPDATE user_daily_data SET daily_weight = @kaal WHERE user_id = @kasutaja_id;"
 
-            Using cmd As New SQLiteCommand(insertDataSql, connection)
-                cmd.Parameters.AddWithValue("@kasutaja_id", kasutaja_id)
-                cmd.Parameters.AddWithValue("@kaal", uus_kaal)
-
-                cmd.ExecuteNonQuery()
+            Dim checkUserSql As String = $"SELECT COUNT(*) FROM user_daily_data WHERE user_id = @kasutaja_id;"
+            Using cmdCheckUser As New SQLiteCommand(checkUserSql, connection)
+                cmdCheckUser.Parameters.AddWithValue("@kasutaja_id", kasutaja_id)
+                Dim kasutaja_olemas_tulemus As Integer = CInt(cmdCheckUser.ExecuteScalar())
+                If kasutaja_olemas_tulemus > 0 Then
+                    kasutaja_olemas = True
+                End If
             End Using
+
+            If kasutaja_olemas Then
+                Dim updateDataSql As String = $"UPDATE user_daily_data SET daily_weight = @kaal WHERE user_id = @kasutaja_id;"
+                Using cmdUpdateData As New SQLiteCommand(updateDataSql, connection)
+                    cmdUpdateData.Parameters.AddWithValue("@kasutaja_id", kasutaja_id)
+                    cmdUpdateData.Parameters.AddWithValue("@kaal", uus_kaal)
+                    cmdUpdateData.ExecuteNonQuery()
+                End Using
+            Else
+                Dim insertDataSql As String = $"INSERT INTO user_daily_data (user_id, daily_weight) VALUES (@kasutaja_id, @kaal);"
+                Using cmdInsertData As New SQLiteCommand(insertDataSql, connection)
+                    cmdInsertData.Parameters.AddWithValue("@kasutaja_id", kasutaja_id)
+                    cmdInsertData.Parameters.AddWithValue("@kaal", uus_kaal)
+                    cmdInsertData.ExecuteNonQuery()
+                End Using
+            End If
         End Using
+
         Return uus_kaal
     End Function
+
     Public Function ToidukordKokku(ByRef KcalLoend As Double()) As Double Implements IAnaluus.ToidukordKokku
         Dim koguvaartus As Double = 0
 
