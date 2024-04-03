@@ -545,5 +545,10 @@ Public Class Pohiaken
             End If
         End If
     End Sub
+
+    Private Sub btnPaevaneKaal_Click(sender As Object, e As EventArgs) Handles btnPaevaneKaal.Click
+        AnaluusK = New AnaluusiKomponent.CAnaluus
+        AnaluusK.KaaluLisamine(_kasutaja_id, txtPaevaneKaal.Text)
+    End Sub
 End Class
 
