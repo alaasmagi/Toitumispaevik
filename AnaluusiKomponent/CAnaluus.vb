@@ -60,11 +60,13 @@ Public Class CAnaluus
         (AppDomain.CurrentDomain.BaseDirectory, "..\..\..\")), "Data", "database.db")};Version=3;"
         Using connection As New SQLiteConnection(tabeli_asukoht)
             connection.Open()
-            Dim insertDataSql As String = $"UPDATE user_daily_data SET wight = @kaal WHERE user_id = @kasutaja_id;"
+            Dim insertDataSql As String = $"UPDATE user_daily_data SET daily_weight = @kaal WHERE user_id = @kasutaja_id;"
 
             Using cmd As New SQLiteCommand(insertDataSql, connection)
                 cmd.Parameters.AddWithValue("@kasutaja_id", kasutaja_id)
                 cmd.Parameters.AddWithValue("@kaal", uus_kaal)
+
+                cmd.ExecuteNonQuery()
             End Using
         End Using
         Return uus_kaal
