@@ -45,7 +45,6 @@ Public Class CAnaluus
         Using connection As New SQLiteConnection(tabeli_asukoht)
             Using command As New SQLiteCommand(paring, connection)
                 command.Parameters.AddWithValue("@kasutaja_id", kasutaja_id)
-                ' Assuming you want to retrieve weights for a week before the specified date
                 Dim startDate As Integer = kuupaev - graafikuPikkus
                 Dim endDate As Integer = kuupaev
                 command.Parameters.AddWithValue("@startDate", startDate)
