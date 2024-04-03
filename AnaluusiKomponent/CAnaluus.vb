@@ -63,7 +63,22 @@ Public Class CAnaluus
         End Using
         Return doubleValues.ToArray()
     End Function
+    Public Function KaaluLisamine(ByVal kasutaja_id As Integer, ByVal uus_kaal As Double) As Double Implements IAnaluus.KaaluLisamine
+        Dim tabeli_asukoht As String = $"Data Source={Path.Combine(Path.GetFullPath(Path.Combine _
+    (AppDomain.CurrentDomain.BaseDirectory, "..\..\..\")), "Data", "database.db")};Version=3;"
+        Using connection As New SQLiteConnection(tabeli_asukoht)
+            connection.Open()
+            Dim insertDataSql As String = $"UPDATE user_daily_data SET daily_weight = @kaal WHERE user_id = @kasutaja_id;"
 
+            Using cmd As New SQLiteCommand(insertDataSql, connection)
+                cmd.Parameters.AddWithValue("@kasutaja_id", kasutaja_id)
+                cmd.Parameters.AddWithValue("@kaal", uus_kaal)
+
+                cmd.ExecuteNonQuery()
+            End Using
+        End Using
+        Return uus_kaal
+    End Function
     Public Function ToidukordKokku(ByRef KcalLoend As Double()) As Double Implements IAnaluus.ToidukordKokku
         Dim koguvaartus As Double = 0
 
