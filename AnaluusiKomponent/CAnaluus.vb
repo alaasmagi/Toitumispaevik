@@ -10,9 +10,6 @@ Public Class CAnaluus
     Private ohtu
     Private vahepala
 
-    Public Function PariTabelKaalud(kasutaja_id As Integer, )
-
-    End Function
 
     Public Function PariKaloriUlejaak(tarbitudKcal As Integer, KcalLimiit As Integer) As Integer Implements IAnaluus.PariKaloriUlejaak
         If tarbitudKcal > KcalLimiit Then
@@ -38,12 +35,14 @@ Public Class CAnaluus
                 ohtu = ToidukordKokku(KclParingAndmebaasist(kasutaja_id, kuupaev, toidukord))
                 Return ohtu
         End Select
+        Return 0
     End Function
 
     Public Function PariValueMap(keyStr As String) As Integer Implements IAnaluus.PariValueMap
         If valueMap.ContainsKey(keyStr) Then
             Return valueMap(keyStr)
         End If
+        Return 0
     End Function
 
     Public Sub LisaValueMap(newKeyStr As String, newValue As Integer) Implements IAnaluus.LisaToValueMap

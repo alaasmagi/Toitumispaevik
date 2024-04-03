@@ -120,7 +120,7 @@ Public Class Pohiaken
         chrKoduPaneel.Series("Soogikorrad").Points.AddXY("Vahepalad", AnaluusK.PariKcalPaveaHetkest(AnaluusK.KuupaevIntegeriks(Date.Now.Date), _kasutaja_id, 2))
 
         chrKoduPaneel.Series("Soogikorrad").Points.AddXY("Söömata", AnaluusK.PariKaloriUlejaak(AnaluusK.PaevaneKcal(), kalorilimiit))
-        lblKcalPaev.Text = AnaluusK.paevaneKcal() & Environment.NewLine & "/" & Environment.NewLine & kalorilimiit & Environment.NewLine & "kCal"
+        lblKcalPaev.Text = AnaluusK.PaevaneKcal() & Environment.NewLine & "/" & Environment.NewLine & kalorilimiit & Environment.NewLine & "kCal"
     End Sub
     Private Sub pnlLogo_Click(sender As Object, e As EventArgs) Handles pnlLogo.Click
         pnlYlevaade.Visible = False
