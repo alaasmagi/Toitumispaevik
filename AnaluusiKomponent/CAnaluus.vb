@@ -35,6 +35,35 @@ Public Class CAnaluus
 
     End Function
 
+    Public Function KaaluParingAndmebaasist(ByVal kasutaja_id As Integer, ByVal kuupaev As Integer, ByVal graafikuPikkus As Integer) As Double() Implements IAnaluus.KaaluParingAndmebaasist
+        Dim tabeli_asukoht As String = $"Data Source={Path.Combine(Path.GetFullPath(Path.Combine _
+    (AppDomain.CurrentDomain.BaseDirectory, "..\..\..\")), "Data", "database.db")};Version=3;"
+
+        Dim paring As String = "SELECT daily_weight FROM user_daily_data WHERE user_id = @kasutaja_id AND date BETWEEN @startDate AND @endDate ORDER BY date DESC;"
+        Dim doubleValues As New List(Of Double)
+
+        Using connection As New SQLiteConnection(tabeli_asukoht)
+            Using command As New SQLiteCommand(paring, connection)
+                command.Parameters.AddWithValue("@kasutaja_id", kasutaja_id)
+                ' Assuming you want to retrieve weights for a week before the specified date
+                Dim startDate As Integer = kuupaev - graafikuPikkus
+                Dim endDate As Integer = kuupaev
+                command.Parameters.AddWithValue("@startDate", startDate)
+                command.Parameters.AddWithValue("@endDate", endDate)
+
+                connection.Open()
+
+                Using reader As SQLiteDataReader = command.ExecuteReader()
+                    While reader.Read()
+                        doubleValues.Add(reader.GetDouble(0))
+                    End While
+                End Using
+
+            End Using
+        End Using
+        Return doubleValues.ToArray()
+    End Function
+
     Public Function ToidukordKokku(ByRef KcalLoend As Double()) As Double Implements IAnaluus.ToidukordKokku
         Dim koguvaartus As Double = 0
 
@@ -72,4 +101,7 @@ Public Class CAnaluus
         Return uus_kaal
     End Function
 
+    Public Function RetseptiToiduaineToitevaartuseArvutus(ByVal toitevaartus100gKohta As Integer, ByVal kogus As Integer) As Integer Implements IAnaluus.RetseptiToiduaineToitevaartuseArvutus
+        Return (toitevaartus100gKohta / 100) * kogus
+    End Function
 End Class

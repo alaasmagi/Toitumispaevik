@@ -35,7 +35,7 @@ Public Class CTreeningud
                (AppDomain.CurrentDomain.BaseDirectory, "..\..\..\")), "Data", "database.db")};Version=3;"
         Using connection As New SQLiteConnection(tabeli_asukoht)
             connection.Open()
-            For index = 250 To 500
+            For index = 245 To 500
                 Dim selectSql As String = "SELECT training_name FROM training_data WHERE training_id = @id"
 
                 Using cmd As New SQLiteCommand(selectSql, connection)
@@ -109,4 +109,23 @@ Public Class CTreeningud
         End Using
         Return treeningu_id
     End Function
+
+    Public Function KustutaTreening(treeningu_id As Integer) As Integer Implements ITreeningud.KustutaTreening
+        Dim tulemus As Integer = 0
+        Dim tabeli_asukoht As String = $"Data Source={Path.Combine(Path.GetFullPath(Path.Combine _
+        (AppDomain.CurrentDomain.BaseDirectory, "..\..\..\")), "Data", "database.db")};Version=3;"
+        Using connection As New SQLiteConnection(tabeli_asukoht)
+            connection.Open()
+            Dim deleteSql As String = $"DELETE FROM training_data WHERE training_id = @treeningu_id"
+            Using cmd As New SQLiteCommand(deleteSql, connection)
+                cmd.Parameters.AddWithValue("@treeningu_id", treeningu_id)
+                Dim rowsAffected As Integer = cmd.ExecuteNonQuery() ' Execute the deletion
+                If rowsAffected > 0 Then
+                    tulemus = 1
+                End If
+            End Using
+        End Using
+        Return tulemus
+    End Function
+
 End Class
