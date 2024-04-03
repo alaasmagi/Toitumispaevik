@@ -246,6 +246,7 @@ Partial Class Pohiaken
         Me.GroupBox9.SuspendLayout()
         CType(Me.pbAlumineMees, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.pbAlumineNaine, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.GroupBox16.SuspendLayout()
         Me.SuspendLayout()
         '
         'pnlLeftBar
@@ -477,6 +478,8 @@ Partial Class Pohiaken
         '
         'GroupBox14
         '
+        Me.GroupBox14.Controls.Add(Me.lblRetseptiLisamineViga)
+        Me.GroupBox14.Controls.Add(Me.Label56)
         Me.GroupBox14.Controls.Add(Me.Label53)
         Me.GroupBox14.Controls.Add(Me.lbRetseptiKoostisosad)
         Me.GroupBox14.Controls.Add(Me.txtRetseptiKoostisosaKogus)
@@ -513,12 +516,13 @@ Partial Class Pohiaken
         Me.lbRetseptiKoostisosad.Location = New System.Drawing.Point(246, 40)
         Me.lbRetseptiKoostisosad.Margin = New System.Windows.Forms.Padding(2)
         Me.lbRetseptiKoostisosad.Name = "lbRetseptiKoostisosad"
-        Me.lbRetseptiKoostisosad.Size = New System.Drawing.Size(182, 118)
+        Me.lbRetseptiKoostisosad.SelectionMode = System.Windows.Forms.SelectionMode.None
+        Me.lbRetseptiKoostisosad.Size = New System.Drawing.Size(182, 137)
         Me.lbRetseptiKoostisosad.TabIndex = 40
         '
         'txtRetseptiKoostisosaKogus
         '
-        Me.txtRetseptiKoostisosaKogus.Location = New System.Drawing.Point(54, 131)
+        Me.txtRetseptiKoostisosaKogus.Location = New System.Drawing.Point(72, 133)
         Me.txtRetseptiKoostisosaKogus.Margin = New System.Windows.Forms.Padding(6, 4, 6, 4)
         Me.txtRetseptiKoostisosaKogus.Name = "txtRetseptiKoostisosaKogus"
         Me.txtRetseptiKoostisosaKogus.Size = New System.Drawing.Size(64, 27)
@@ -528,7 +532,7 @@ Partial Class Pohiaken
         '
         Me.Label40.AutoSize = True
         Me.Label40.ForeColor = System.Drawing.Color.Black
-        Me.Label40.Location = New System.Drawing.Point(40, 79)
+        Me.Label40.Location = New System.Drawing.Point(48, 73)
         Me.Label40.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label40.Name = "Label40"
         Me.Label40.Size = New System.Drawing.Size(158, 19)
@@ -551,7 +555,7 @@ Partial Class Pohiaken
         Me.txtRetseptiNimi.Location = New System.Drawing.Point(61, 31)
         Me.txtRetseptiNimi.Margin = New System.Windows.Forms.Padding(6, 4, 6, 4)
         Me.txtRetseptiNimi.Name = "txtRetseptiNimi"
-        Me.txtRetseptiNimi.Size = New System.Drawing.Size(168, 27)
+        Me.txtRetseptiNimi.Size = New System.Drawing.Size(177, 27)
         Me.txtRetseptiNimi.TabIndex = 36
         '
         'cmbRetseptiKoostisosad
@@ -565,7 +569,7 @@ Partial Class Pohiaken
         Me.cmbRetseptiKoostisosad.Location = New System.Drawing.Point(12, 100)
         Me.cmbRetseptiKoostisosad.Margin = New System.Windows.Forms.Padding(2)
         Me.cmbRetseptiKoostisosad.Name = "cmbRetseptiKoostisosad"
-        Me.cmbRetseptiKoostisosad.Size = New System.Drawing.Size(217, 26)
+        Me.cmbRetseptiKoostisosad.Size = New System.Drawing.Size(225, 26)
         Me.cmbRetseptiKoostisosad.TabIndex = 32
         '
         'btnRetseptLisaKoostisosa
@@ -576,7 +580,7 @@ Partial Class Pohiaken
         Me.btnRetseptLisaKoostisosa.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.btnRetseptLisaKoostisosa.Font = New System.Drawing.Font("Century Gothic", 12.0!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Italic), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnRetseptLisaKoostisosa.ForeColor = System.Drawing.SystemColors.Window
-        Me.btnRetseptLisaKoostisosa.Location = New System.Drawing.Point(153, 130)
+        Me.btnRetseptLisaKoostisosa.Location = New System.Drawing.Point(161, 133)
         Me.btnRetseptLisaKoostisosa.Margin = New System.Windows.Forms.Padding(6, 4, 6, 4)
         Me.btnRetseptLisaKoostisosa.Name = "btnRetseptLisaKoostisosa"
         Me.btnRetseptLisaKoostisosa.Size = New System.Drawing.Size(76, 28)
@@ -592,10 +596,10 @@ Partial Class Pohiaken
         Me.btnKinnitaRetsept.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.btnKinnitaRetsept.Font = New System.Drawing.Font("Century Gothic", 12.0!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Italic), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnKinnitaRetsept.ForeColor = System.Drawing.SystemColors.Window
-        Me.btnKinnitaRetsept.Location = New System.Drawing.Point(246, 175)
+        Me.btnKinnitaRetsept.Location = New System.Drawing.Point(254, 170)
         Me.btnKinnitaRetsept.Margin = New System.Windows.Forms.Padding(6, 4, 6, 4)
         Me.btnKinnitaRetsept.Name = "btnKinnitaRetsept"
-        Me.btnKinnitaRetsept.Size = New System.Drawing.Size(180, 28)
+        Me.btnKinnitaRetsept.Size = New System.Drawing.Size(182, 28)
         Me.btnKinnitaRetsept.TabIndex = 30
         Me.btnKinnitaRetsept.Text = "Kinnita retsept"
         Me.btnKinnitaRetsept.UseVisualStyleBackColor = False
@@ -1590,6 +1594,7 @@ Partial Class Pohiaken
         '
         'pnlTreeningud
         '
+        Me.pnlTreeningud.Controls.Add(Me.GroupBox16)
         Me.pnlTreeningud.Controls.Add(Me.GroupBox12)
         Me.pnlTreeningud.Controls.Add(Me.GroupBox11)
         Me.pnlTreeningud.Controls.Add(Me.Label16)
@@ -1622,7 +1627,7 @@ Partial Class Pohiaken
         '
         Me.Label48.AutoSize = True
         Me.Label48.ForeColor = System.Drawing.Color.Black
-        Me.Label48.Location = New System.Drawing.Point(626, 50)
+        Me.Label48.Location = New System.Drawing.Point(171, 98)
         Me.Label48.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label48.Name = "Label48"
         Me.Label48.Size = New System.Drawing.Size(39, 19)
@@ -1634,7 +1639,7 @@ Partial Class Pohiaken
         Me.lblTreeningsessiooniLisamineViga.AutoSize = True
         Me.lblTreeningsessiooniLisamineViga.Font = New System.Drawing.Font("Century Gothic", 12.0!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Italic), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblTreeningsessiooniLisamineViga.ForeColor = System.Drawing.Color.Red
-        Me.lblTreeningsessiooniLisamineViga.Location = New System.Drawing.Point(394, 138)
+        Me.lblTreeningsessiooniLisamineViga.Location = New System.Drawing.Point(181, 140)
         Me.lblTreeningsessiooniLisamineViga.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.lblTreeningsessiooniLisamineViga.Name = "lblTreeningsessiooniLisamineViga"
         Me.lblTreeningsessiooniLisamineViga.Size = New System.Drawing.Size(50, 21)
@@ -1646,7 +1651,7 @@ Partial Class Pohiaken
         '
         Me.Label43.AutoSize = True
         Me.Label43.ForeColor = System.Drawing.Color.Black
-        Me.Label43.Location = New System.Drawing.Point(502, 52)
+        Me.Label43.Location = New System.Drawing.Point(47, 98)
         Me.Label43.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label43.Name = "Label43"
         Me.Label43.Size = New System.Drawing.Size(62, 19)
@@ -1657,7 +1662,7 @@ Partial Class Pohiaken
         '
         Me.Label44.AutoSize = True
         Me.Label44.ForeColor = System.Drawing.Color.Black
-        Me.Label44.Location = New System.Drawing.Point(38, 44)
+        Me.Label44.Location = New System.Drawing.Point(30, 47)
         Me.Label44.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label44.Name = "Label44"
         Me.Label44.Size = New System.Drawing.Size(79, 19)
@@ -1672,10 +1677,10 @@ Partial Class Pohiaken
         Me.btnTreeningsessiooniLisamine.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.btnTreeningsessiooniLisamine.Font = New System.Drawing.Font("Century Gothic", 12.0!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Italic), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnTreeningsessiooniLisamine.ForeColor = System.Drawing.SystemColors.Window
-        Me.btnTreeningsessiooniLisamine.Location = New System.Drawing.Point(280, 90)
+        Me.btnTreeningsessiooniLisamine.Location = New System.Drawing.Point(229, 89)
         Me.btnTreeningsessiooniLisamine.Margin = New System.Windows.Forms.Padding(6, 4, 6, 4)
         Me.btnTreeningsessiooniLisamine.Name = "btnTreeningsessiooniLisamine"
-        Me.btnTreeningsessiooniLisamine.Size = New System.Drawing.Size(276, 34)
+        Me.btnTreeningsessiooniLisamine.Size = New System.Drawing.Size(72, 34)
         Me.btnTreeningsessiooniLisamine.TabIndex = 29
         Me.btnTreeningsessiooniLisamine.Text = "Lisa"
         Me.btnTreeningsessiooniLisamine.UseVisualStyleBackColor = False
@@ -1699,7 +1704,7 @@ Partial Class Pohiaken
         Me.cmbTreeningsessiooniLisamine.Location = New System.Drawing.Point(118, 42)
         Me.cmbTreeningsessiooniLisamine.Margin = New System.Windows.Forms.Padding(2)
         Me.cmbTreeningsessiooniLisamine.Name = "cmbTreeningsessiooniLisamine"
-        Me.cmbTreeningsessiooniLisamine.Size = New System.Drawing.Size(260, 26)
+        Me.cmbTreeningsessiooniLisamine.Size = New System.Drawing.Size(188, 26)
         Me.cmbTreeningsessiooniLisamine.TabIndex = 24
         '
         'GroupBox11
@@ -2652,6 +2657,8 @@ Partial Class Pohiaken
         Me.GroupBox9.PerformLayout()
         CType(Me.pbAlumineMees, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.pbAlumineNaine, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.GroupBox16.ResumeLayout(False)
+        Me.GroupBox16.PerformLayout()
         Me.ResumeLayout(False)
 
     End Sub
@@ -2832,4 +2839,10 @@ Partial Class Pohiaken
     Friend WithEvents txtRetseptiKoostisosaKogus As TextBox
     Friend WithEvents lbRetseptiKoostisosad As ListBox
     Friend WithEvents Label53 As Label
+    Friend WithEvents Label56 As Label
+    Friend WithEvents lblRetseptiLisamineViga As Label
+    Friend WithEvents GroupBox16 As GroupBox
+    Friend WithEvents btnKustutaTreening As Button
+    Friend WithEvents cmbTreeninguKustutamine As ComboBox
+    Friend WithEvents lblKustutaTreeningViga As Label
 End Class
