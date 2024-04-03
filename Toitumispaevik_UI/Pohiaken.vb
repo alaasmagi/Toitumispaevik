@@ -86,7 +86,7 @@ Public Class Pohiaken
 
         'see on testimiseks kaalu tabelis
 
-        TabelKaalud = AnaluusK.KaaluParingAndmebaasist(_kasutaja_id, AnaluusK.KuupaevIntegeriks(Date.Now.Date), x) 'Siia (x asemele) lisab eeva varem leitud koguse päevi palju graafik ajalukku kuvab, mille leiab ta "graafiku seaded" combo boxist
+        TabelKaalud = AnaluusK.KaaluParingAndmebaasist(_kasutaja_id, AnaluusK.KuupaevIntegeriks(Date.Now.Date), 7) 'Siia (7 asemele) lisab eeva varem leitud koguse päevi palju graafik ajalukku kuvab, mille leiab ta "graafiku seaded" combo boxist
         ' max comboboxis valitav väärtus võiks olla 91 päeva (13 nädalat / ca. 3 kuud) ja miinimumi pole testind a vast 7 päevast (1 nädal) ei tasu väiksemat lasta valida.
 
         For muutuja As Integer = 0 To TabelKaalud.Length - 1 Step +1
