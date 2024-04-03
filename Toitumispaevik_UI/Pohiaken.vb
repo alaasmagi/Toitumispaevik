@@ -539,7 +539,10 @@ Public Class Pohiaken
 
     Private Sub btnPaevaneKaal_Click(sender As Object, e As EventArgs) Handles btnPaevaneKaal.Click
         AnaluusK = New AnaluusiKomponent.CAnaluus
-        AnaluusK.KaaluLisamine(_kasutaja_id, AnaluusK.KuupaevIntegeriks(Date.Now.Date), txtPaevaneKaal.Text, 0, 0, 0, 0, 0, 0, 0)
+        If IsNumeric(txtPaevaneKaal.Text) AndAlso txtPaevaneKaal.Text > 0 Then
+            AnaluusK.KaaluLisamine(_kasutaja_id, AnaluusK.KuupaevIntegeriks(Date.Now.Date), txtPaevaneKaal.Text, AnaluusK.PaevaneKcal, 0, 0, 0, 0, 0, 0)
+            txtPaevaneKaal.Text = ""
+        End If
     End Sub
 End Class
 
