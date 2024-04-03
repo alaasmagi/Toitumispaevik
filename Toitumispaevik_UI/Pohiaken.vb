@@ -23,6 +23,12 @@ Public Class Pohiaken
     Dim retseptideKoostisosad As New List(Of Integer)
     Dim retseptideKoostisosadeKogused As New List(Of Integer)
 
+    Dim retseptiKcal As Integer = 0
+    Dim retseptiSusivesikud As Integer = 0
+    Dim retseptiSuhkur As Integer = 0
+    Dim retseptiValgud As Integer = 0
+    Dim retseptiLipiidid As Integer = 0
+
     Dim ProfiilK As KasutajaProfiilKomponent.IKasutajaProfiil
     Dim AnaluusK As AnaluusiKomponent.IAnaluus
     Dim ToidudRetseptidK As ToidudRetseptidKomponent.IToidudjaRetseptid
@@ -86,7 +92,7 @@ Public Class Pohiaken
 
         'see on testimiseks kaalu tabelis
 
-        TabelKaalud = AnaluusK.KaaluParingAndmebaasist(_kasutaja_id, AnaluusK.KuupaevIntegeriks(Date.Now.Date), x) 'Siia (x asemele) lisab eeva varem leitud koguse päevi palju graafik ajalukku kuvab, mille leiab ta "graafiku seaded" combo boxist
+        TabelKaalud = AnaluusK.KaaluParingAndmebaasist(_kasutaja_id, AnaluusK.KuupaevIntegeriks(Date.Now.Date), 1) 'Siia (x asemele) lisab eeva varem leitud koguse päevi palju graafik ajalukku kuvab, mille leiab ta "graafiku seaded" combo boxist
         ' max comboboxis valitav väärtus võiks olla 91 päeva (13 nädalat / ca. 3 kuud) ja miinimumi pole testind a vast 7 päevast (1 nädal) ei tasu väiksemat lasta valida.
 
         For muutuja As Integer = 0 To TabelKaalud.Length - 1 Step +1
@@ -262,6 +268,7 @@ Public Class Pohiaken
         cmbToiduaineValik.Items.Clear()
         cmbTreeningsessiooniLisamine.Items.Clear()
         cmbRetseptiKoostisosad.Items.Clear()
+        cmbTreeninguKustutamine.Items.Clear()
 
         Dim toiduaineteNimed As List(Of String) = ToidudRetseptidK.KiirlisamiseToiduaineNimed
         Dim treeninguteNimed As List(Of String) = TreeningudK.KiirlisamiseTreeninguNimed
@@ -278,7 +285,9 @@ Public Class Pohiaken
         For Each nimetus As String In treeninguteNimed
             cmbTreeninguteKiirvalik.Items.Add(nimetus)
             cmbTreeningsessiooniLisamine.Items.Add(nimetus)
+            cmbTreeninguKustutamine.Items.Add(nimetus)
         Next
+        cmbTreeninguKustutamine.SelectedIndex = 0
         cmbTreeninguteKiirvalik.SelectedIndex = 0
         cmbTreeningsessiooniLisamine.SelectedIndex = 0
 
@@ -470,26 +479,71 @@ Public Class Pohiaken
 
     Private Sub btnRetseptLisaKoostisosa_Click(sender As Object, e As EventArgs) Handles btnRetseptLisaKoostisosa.Click
         ToidudRetseptidK = New ToidudRetseptidKomponent.CToidudJaRetseptid
-        lbRetseptiKoostisosad.Items.Add(cmbRetseptiKoostisosad.SelectedItem)
+        AnaluusK = New AnaluusiKomponent.CAnaluus
 
-        retseptideKoostisosad.Add(ToidudRetseptidK.ToiduAineNimiEksisteerib(cmbRetseptiKoostisosad.SelectedItem.ToString()))
-        retseptideKoostisosadeKogused.Add(txtRetseptiKoostisosaKogus.Text)
-        txtRetseptiKoostisosaKogus.Text = ""
+        If IsNumeric(txtRetseptiKoostisosaKogus.Text) AndAlso txtRetseptiKoostisosaKogus.Text > 0 Then
+            retseptiKcal = retseptiKcal + AnaluusK.RetseptiToiduaineToitevaartuseArvutus(ToidudRetseptidK.ToiteVaartuseParing(ToidudRetseptidK.ToiduAineNimiEksisteerib(cmbRetseptiKoostisosad.SelectedItem), "energy"), txtRetseptiKoostisosaKogus.Text)
+            retseptiSusivesikud = retseptiSusivesikud + AnaluusK.RetseptiToiduaineToitevaartuseArvutus(ToidudRetseptidK.ToiteVaartuseParing(ToidudRetseptidK.ToiduAineNimiEksisteerib(cmbRetseptiKoostisosad.SelectedItem), "c_hydrates"), txtRetseptiKoostisosaKogus.Text)
+            retseptiSuhkur = retseptiSuhkur + AnaluusK.RetseptiToiduaineToitevaartuseArvutus(ToidudRetseptidK.ToiteVaartuseParing(ToidudRetseptidK.ToiduAineNimiEksisteerib(cmbRetseptiKoostisosad.SelectedItem), "sugar"), txtRetseptiKoostisosaKogus.Text)
+            retseptiValgud = retseptiValgud + AnaluusK.RetseptiToiduaineToitevaartuseArvutus(ToidudRetseptidK.ToiteVaartuseParing(ToidudRetseptidK.ToiduAineNimiEksisteerib(cmbRetseptiKoostisosad.SelectedItem), "protein"), txtRetseptiKoostisosaKogus.Text)
+            retseptiLipiidid = retseptiLipiidid + AnaluusK.RetseptiToiduaineToitevaartuseArvutus(ToidudRetseptidK.ToiteVaartuseParing(ToidudRetseptidK.ToiduAineNimiEksisteerib(cmbRetseptiKoostisosad.SelectedItem), "lipid"), txtRetseptiKoostisosaKogus.Text)
+            lbRetseptiKoostisosad.Items.Add(cmbRetseptiKoostisosad.SelectedItem)
+            retseptideKoostisosad.Add(ToidudRetseptidK.ToiduAineNimiEksisteerib(cmbRetseptiKoostisosad.SelectedItem.ToString()))
+            retseptideKoostisosadeKogused.Add(txtRetseptiKoostisosaKogus.Text)
+            txtRetseptiKoostisosaKogus.Text = ""
+            lblRetseptiLisamineViga.Visible = False
+        Else
+            lblRetseptiLisamineViga.Text = "Viga koostisosa koguses!"
+            lblRetseptiLisamineViga.Visible = True
+        End If
 
         KomboKastid()
     End Sub
 
     Private Sub btnKinnitaRetsept_Click(sender As Object, e As EventArgs) Handles btnKinnitaRetsept.Click
         ToidudRetseptidK = New ToidudRetseptidKomponent.CToidudJaRetseptid
-        Dim retsepti_id = ToidudRetseptidK.LisaRetsept(txtRetseptiNimi.Text)
-        txtRetseptiNimi.Text = ""
-        For i As Integer = 0 To retseptideKoostisosad.Count - 1
-            Dim koostisosa As String = retseptideKoostisosad(i)
-            Dim kogus As String = retseptideKoostisosadeKogused(i)
 
-            ToidudRetseptidK.LisaRetseptiKoostisosadeTabelisse(retsepti_id, koostisosa, kogus)
-        Next
-        lbRetseptiKoostisosad.Items.Clear()
+        If ToidudRetseptidK.RetseptiNimiEksisteerib(txtRetseptiNimi.Text) > 0 Then
+            lblRetseptiLisamineViga.Text = "Nimi juba kasutusel!"
+            lblRetseptiLisamineViga.Visible = True
+        Else
+            lblRetseptiLisamineViga.Visible = False
+            Dim retsepti_id = ToidudRetseptidK.LisaRetsept(txtRetseptiNimi.Text, retseptiKcal, retseptiSusivesikud, retseptiSuhkur, retseptiValgud, retseptiLipiidid)
+            retseptiKcal = 0
+            retseptiSusivesikud = 0
+            retseptiSuhkur = 0
+            retseptiValgud = 0
+            retseptiLipiidid = 0
+            txtRetseptiNimi.Text = ""
+            For i As Integer = 0 To retseptideKoostisosad.Count - 1
+                Dim koostisosa As String = retseptideKoostisosad(i)
+                Dim kogus As String = retseptideKoostisosadeKogused(i)
+
+                ToidudRetseptidK.LisaRetseptiKoostisosadeTabelisse(retsepti_id, koostisosa, kogus)
+            Next
+            retseptideKoostisosad.Clear()
+            retseptideKoostisosadeKogused.Clear()
+            lbRetseptiKoostisosad.Items.Clear()
+        End If
+
+    End Sub
+
+    Private Sub btnKustutaTreening_Click(sender As Object, e As EventArgs) Handles btnKustutaTreening.Click
+        TreeningudK = New TreeninguteKomponent.CTreeningud
+
+        Dim treeningu_id = TreeningudK.TreeninguNimiEksisteerib(cmbTreeninguKustutamine.SelectedItem)
+        If treeningu_id < 250 Then
+            lblKustutaTreeningViga.Text = "Baastreeningut ei saa kustutada!"
+            lblKustutaTreeningViga.Visible = True
+        Else
+            If TreeningudK.KustutaTreening(TreeningudK.TreeninguNimiEksisteerib(cmbTreeninguKustutamine.SelectedItem)) = 0 Then
+                lblKustutaTreeningViga.Text = "Treeningu kustutamine ebaõnnestus!"
+                lblKustutaTreeningViga.Visible = True
+            Else
+                lblKustutaTreeningViga.Visible = False
+                KomboKastid()
+            End If
+        End If
     End Sub
 End Class
 
