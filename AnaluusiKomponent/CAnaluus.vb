@@ -34,6 +34,7 @@ Public Class CAnaluus
                 ohtu = ToidukordKokku(KclParingAndmebaasist(kasutaja_id, kuupaev, toidukord))
                 Return ohtu
         End Select
+        Return 0
     End Function
 
     Public Function PariValueMap(keyStr As String) As Integer Implements IAnaluus.PariValueMap
