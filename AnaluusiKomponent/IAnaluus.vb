@@ -1,4 +1,7 @@
 ﻿Public Interface IAnaluus
+    Function PariKcalPaveaHetkest(kuupaev As Integer, kasutaja_id As Integer, PaevaAeg As String) As Integer
+    Function PariValueMap(keyStr As String) As Integer
+    Sub LisaToValueMap(newKeyStr As String, newValue As Integer)
     Function paevaneKcal(kcalHommik, kcalLouna, kcalOhtu, kcalVahepala) As Integer
     Function KclParingAndmebaasist(kasutajaId As Integer, kuupaev As Integer, toidukord As Integer) As Double()
     Function ToidukordKokku(ByRef KcalLoend() As Double) As Double

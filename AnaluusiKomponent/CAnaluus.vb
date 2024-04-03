@@ -1,7 +1,33 @@
 ﻿Imports System.Data.SQLite
 Imports System.IO
 Public Class CAnaluus
+
     Implements IAnaluus
+
+    Private valueMap As New Dictionary(Of String, Integer)()
+    Private hommik
+    Private louna
+    Private ohtu
+    Private vaheP
+
+    Public Function PariKcalPaveaHetkest(kuupaev As Integer, kasutaja_id As Integer, toidukord As String) As Integer Implements IAnaluus.PariKcalPaveaHetkest
+
+        Return ToidukordKokku(KclParingAndmebaasist(kasutaja_id, kuupaev, toidukord))
+
+    End Function
+
+    Public Function PariValueMap(keyStr As String) As Integer Implements IAnaluus.PariValueMap
+        If valueMap.ContainsKey(keyStr) Then
+            Return valueMap(keyStr)
+        End If
+    End Function
+
+    Public Sub LisaValueMap(newKeyStr As String, newValue As Integer) Implements IAnaluus.LisaToValueMap
+        If Not valueMap.ContainsKey(newKeyStr) Then
+            valueMap.Add(newKeyStr, newValue)
+        End If
+    End Sub
+
     Public Function paevaneKcal(kcalHommik, kcalLouna, kcalOhtu, kcalVahepala) As Integer Implements IAnaluus.paevaneKcal
         Return kcalHommik + kcalLouna + kcalVahepala + kcalOhtu
     End Function
