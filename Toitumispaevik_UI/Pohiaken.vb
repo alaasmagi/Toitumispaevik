@@ -96,7 +96,7 @@ Public Class Pohiaken
     End Sub
 
     Private Sub UlevaatusCmbBox()
-        AnaluusK.LisaToValueMap("Viimased 7 päeva", 80)
+        AnaluusK.LisaToValueMap("Viimased 7 päeva", 7)
         AnaluusK.LisaToValueMap("Viimane kuu", 30)
         AnaluusK.LisaToValueMap("Viimased 3 kuud", 91)
         AnaluusK.LisaToValueMap("Viimased 6 kuud", 182)
