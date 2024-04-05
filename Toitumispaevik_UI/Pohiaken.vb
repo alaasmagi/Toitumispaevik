@@ -37,6 +37,11 @@ Public Class Pohiaken
     End Sub
     Public Sub ResetForm()
         ProfiilK = New KasutajaProfiilKomponent.CKasutajaProfiil
+        AnaluusK = New AnaluusiKomponent.CAnaluus
+
+        If AnaluusK.PaevaseAndmereaParing(_kasutaja_id, AnaluusK.KuupaevIntegeriks(Date.Now.Date)) = -1 Then
+            AnaluusK.TuhjaPaevaseAndmereaSisestus(_kasutaja_id, AnaluusK.KuupaevIntegeriks(Date.Now.Date))
+        End If
 
         TuhjendaKonteiner(Me)
         pnlLogo.Visible = True
@@ -86,7 +91,7 @@ Public Class Pohiaken
 
     End Sub
 
-    Private Sub GraafikuSeadmed()
+    Private Sub GraafikuSeaded()
         TabelKaalud = AnaluusK.KaaluParingAndmebaasist(_kasutaja_id, AnaluusK.KuupaevIntegeriks(Date.Now.Date), AnaluusK.PariValueMap(cmbAjaluguGraafikuPeriood.SelectedItem))
 
         For muutuja As Integer = 0 To TabelKaalud.Length - 1 Step +1
@@ -536,13 +541,32 @@ Public Class Pohiaken
 
     Private Sub btnPaevaneKaal_Click(sender As Object, e As EventArgs) Handles btnPaevaneKaal.Click
         AnaluusK = New AnaluusiKomponent.CAnaluus
-        AnaluusK.KaaluLisamine(_kasutaja_id, txtPaevaneKaal.Text)
+        ProfiilK = New KasutajaProfiilKomponent.CKasutajaProfiil
+
+        If IsNumeric(txtPaevaneKaal.Text) AndAlso txtPaevaneKaal.Text > 0 Then
+            AnaluusK.KaaluLisamine(_kasutaja_id, txtPaevaneKaal.Text)
+            ProfiilK.IntegerAndmeValjaSisestusKasutajaTabelisse(_kasutaja_id, cmbMuudaKaalu.SelectedItem, "weight")
+            lblKasutajaKaal.Text = ProfiilK.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "weight")
+            KomboKastid()
+        Else
+
+        End If
+
     End Sub
 
     Private Sub btnNaitaYlevaadet_Click(sender As Object, e As EventArgs) Handles btnNaitaYlevaadet.Click
         chrKaaluMuutumine.Series("Kaal").Points.Clear()
         chrKaaluMuutumine.Series("Siht Kaal").Points.Clear()
-        GraafikuSeadmed()
+        GraafikuSeaded()
+    End Sub
+
+    Private Sub btnEesmargiKinnitamine_Click(sender As Object, e As EventArgs) Handles btnEesmargiKinnitamine.Click
+        ProfiilK = New KasutajaProfiilKomponent.CKasutajaProfiil
+        If IsNumeric(txtKaaluEesmärk.Text) AndAlso txtKaaluEesmärk.Text > 0 Then
+            ProfiilK.IntegerAndmeValjaSisestusKasutajaTabelisse(_kasutaja_id, txtKaaluEesmärk.Text, "weight_goal")
+        Else
+
+        End If
     End Sub
 End Class
 

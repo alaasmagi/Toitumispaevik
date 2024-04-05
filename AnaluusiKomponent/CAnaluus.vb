@@ -10,6 +10,41 @@ Public Class CAnaluus
     Private ohtu
     Private vahepala
 
+    Public Function PaevaseAndmereaParing(ByVal kasutaja_id As Integer, ByVal kuupaev As Integer) As Integer Implements IAnaluus.PaevaseAndmereaParing
+        Dim paevaneKcal As Integer = -1
+        Dim tabeli_asukoht As String = $"Data Source={Path.Combine(Path.GetFullPath(Path.Combine _
+        (AppDomain.CurrentDomain.BaseDirectory, "..\..\..\")), "Data", "database.db")};Version=3;"
+        Using connection As New SQLiteConnection(tabeli_asukoht)
+            connection.Open()
+            Dim selectSql As String = "SELECT energy_intake FROM user_daily_data WHERE user_id = @kasutaja_id AND date = @kuupaev"
+            Using cmd As New SQLiteCommand(selectSql, connection)
+                cmd.Parameters.AddWithValue("@kasutaja_id", kasutaja_id)
+                cmd.Parameters.AddWithValue("@kuupaev", kuupaev)
+                Dim result As Object = cmd.ExecuteScalar()
+                If result IsNot Nothing AndAlso Not DBNull.Value.Equals(result) Then
+                    paevaneKcal = Convert.ToInt32(result)
+                End If
+            End Using
+        End Using
+        Return paevaneKcal
+    End Function
+
+    Public Function TuhjaPaevaseAndmereaSisestus(ByVal kasutaja_id As Integer, ByVal kuupaev As Integer) As Integer Implements IAnaluus.TuhjaPaevaseAndmereaSisestus
+        Dim tabeli_asukoht As String = $"Data Source={Path.Combine(Path.GetFullPath(Path.Combine _
+       (AppDomain.CurrentDomain.BaseDirectory, "..\..\..\")), "Data", "database.db")};Version=3;"
+        Using connection As New SQLiteConnection(tabeli_asukoht)
+            connection.Open()
+            Dim selectSql As String = "INSERT INTO user_daily_data (user_id, date, daily_weight, energy_intake, energy_consumption, energy_balance, total_c_hydrates, total_sugar,
+                                        total_protein, total_lipid) VALUES (@kasutaja_id, @kuupaev, 0, 0, 0, 0, 0, 0, 0, 0)"
+            Using cmd As New SQLiteCommand(selectSql, connection)
+                cmd.Parameters.AddWithValue("@kasutaja_id", kasutaja_id)
+                cmd.Parameters.AddWithValue("@kuupaev", kuupaev)
+                cmd.ExecuteNonQuery()
+            End Using
+        End Using
+        Return kasutaja_id
+    End Function
+
     Public Function PariKaloriUlejaak(tarbitudKcal As Integer, KcalLimiit As Integer) As Integer Implements IAnaluus.PariKaloriUlejaak
         If tarbitudKcal > KcalLimiit Then
             Return 0
@@ -110,41 +145,18 @@ Public Class CAnaluus
         End Using
         Return doubleValues.ToArray()
     End Function
-    Public Function KaaluLisamine(ByVal kasutaja_id As Integer, ByVal uus_kaal As Double) As Double Implements IAnaluus.KaaluLisamine
+    Public Function KaaluUuendamine(ByVal kasutaja_id As Integer, ByVal uus_kaal As Double) As Double Implements IAnaluus.KaaluLisamine
         Dim tabeli_asukoht As String = $"Data Source={Path.Combine(Path.GetFullPath(Path.Combine _
         (AppDomain.CurrentDomain.BaseDirectory, "..\..\..\")), "Data", "database.db")};Version=3;"
-
-        Dim kasutaja_olemas As Boolean = False
-
         Using connection As New SQLiteConnection(tabeli_asukoht)
             connection.Open()
-
-            Dim checkUserSql As String = $"SELECT COUNT(*) FROM user_daily_data WHERE user_id = @kasutaja_id;"
-            Using cmdCheckUser As New SQLiteCommand(checkUserSql, connection)
-                cmdCheckUser.Parameters.AddWithValue("@kasutaja_id", kasutaja_id)
-                Dim kasutaja_olemas_tulemus As Integer = CInt(cmdCheckUser.ExecuteScalar())
-                If kasutaja_olemas_tulemus > 0 Then
-                    kasutaja_olemas = True
-                End If
+            Dim updateDataSql As String = $"UPDATE user_daily_data SET daily_weight = @kaal WHERE user_id = @kasutaja_id;"
+            Using cmdUpdateData As New SQLiteCommand(updateDataSql, connection)
+                cmdUpdateData.Parameters.AddWithValue("@kasutaja_id", kasutaja_id)
+                cmdUpdateData.Parameters.AddWithValue("@kaal", uus_kaal)
+                cmdUpdateData.ExecuteNonQuery()
             End Using
-
-            If kasutaja_olemas Then
-                Dim updateDataSql As String = $"UPDATE user_daily_data SET daily_weight = @kaal WHERE user_id = @kasutaja_id;"
-                Using cmdUpdateData As New SQLiteCommand(updateDataSql, connection)
-                    cmdUpdateData.Parameters.AddWithValue("@kasutaja_id", kasutaja_id)
-                    cmdUpdateData.Parameters.AddWithValue("@kaal", uus_kaal)
-                    cmdUpdateData.ExecuteNonQuery()
-                End Using
-            Else
-                Dim insertDataSql As String = $"INSERT INTO user_daily_data (user_id, daily_weight) VALUES (@kasutaja_id, @kaal);"
-                Using cmdInsertData As New SQLiteCommand(insertDataSql, connection)
-                    cmdInsertData.Parameters.AddWithValue("@kasutaja_id", kasutaja_id)
-                    cmdInsertData.Parameters.AddWithValue("@kaal", uus_kaal)
-                    cmdInsertData.ExecuteNonQuery()
-                End Using
-            End If
         End Using
-
         Return uus_kaal
     End Function
 

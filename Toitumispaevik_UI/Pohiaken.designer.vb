@@ -1910,7 +1910,7 @@ Partial Class Pohiaken
         Me.pnlYlevaade.Location = New System.Drawing.Point(232, 100)
         Me.pnlYlevaade.Margin = New System.Windows.Forms.Padding(2)
         Me.pnlYlevaade.Name = "pnlYlevaade"
-        Me.pnlYlevaade.Size = New System.Drawing.Size(840, 481)
+        Me.pnlYlevaade.Size = New System.Drawing.Size(838, 481)
         Me.pnlYlevaade.TabIndex = 4
         '
         'Kaal
@@ -2665,9 +2665,9 @@ Partial Class Pohiaken
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(241, Byte), Integer), CType(CType(239, Byte), Integer))
         Me.ClientSize = New System.Drawing.Size(1070, 581)
         Me.Controls.Add(Me.pnlYlevaade)
-        Me.Controls.Add(Me.pnlAjalugu)
-        Me.Controls.Add(Me.pnlRakenduseInfo)
         Me.Controls.Add(Me.pnlProfiiliSeaded)
+        Me.Controls.Add(Me.pnlRakenduseInfo)
+        Me.Controls.Add(Me.pnlAjalugu)
         Me.Controls.Add(Me.pnlKodu)
         Me.Controls.Add(Me.pnlTreeningud)
         Me.Controls.Add(Me.pnlToidulaud)
