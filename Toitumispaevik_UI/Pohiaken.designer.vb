@@ -1559,9 +1559,6 @@ Partial Class Pohiaken
         Me.chrKoduPaneel.BorderlineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid
         Me.chrKoduPaneel.BorderSkin.BackColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(241, Byte), Integer), CType(CType(239, Byte), Integer))
         Me.chrKoduPaneel.BorderSkin.PageColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(241, Byte), Integer), CType(CType(239, Byte), Integer))
-        Dim Series1 As New System.Windows.Forms.DataVisualization.Charting.Series()
-        Dim ChartArea1 As New System.Windows.Forms.DataVisualization.Charting.ChartArea()
-        Dim Legend1 As New System.Windows.Forms.DataVisualization.Charting.Legend()
         ChartArea1.BackColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(241, Byte), Integer), CType(CType(239, Byte), Integer))
         ChartArea1.Name = "ChartArea1"
         Me.chrKoduPaneel.ChartAreas.Add(ChartArea1)
@@ -1997,10 +1994,6 @@ Partial Class Pohiaken
         Me.chrKaaluMuutumine.BorderlineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid
         Me.chrKaaluMuutumine.BorderSkin.BackColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(241, Byte), Integer), CType(CType(239, Byte), Integer))
         Me.chrKaaluMuutumine.BorderSkin.PageColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(241, Byte), Integer), CType(CType(239, Byte), Integer))
-        Dim ChartArea2 As New System.Windows.Forms.DataVisualization.Charting.ChartArea()
-        Dim Legend2 As New System.Windows.Forms.DataVisualization.Charting.Legend()
-        Dim Series2 As New System.Windows.Forms.DataVisualization.Charting.Series()
-        Dim Series3 As New System.Windows.Forms.DataVisualization.Charting.Series()
         ChartArea2.BackColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(241, Byte), Integer), CType(CType(239, Byte), Integer))
         ChartArea2.Name = "ChartArea1"
         Me.chrKaaluMuutumine.ChartAreas.Add(ChartArea2)
