@@ -13,6 +13,7 @@ Public Class Pohiaken
     Private kalorilimiit As Integer
     Private TabelKaalud As Double()
     Private tabelSihtKaal As Double
+    Private valueMap As New Dictionary(Of String, Integer)()
 
     Dim retseptideKoostisosad As New List(Of Integer)
     Dim retseptideKoostisosadeKogused As New List(Of Integer)
@@ -92,23 +93,26 @@ Public Class Pohiaken
     End Sub
 
     Private Sub GraafikuSeaded()
-        TabelKaalud = AnaluusK.KaaluParingAndmebaasist(_kasutaja_id, AnaluusK.KuupaevIntegeriks(Date.Now.Date), AnaluusK.PariValueMap(cmbAjaluguGraafikuPeriood.SelectedItem))
+        AnaluusK = New AnaluusiKomponent.CAnaluus
+        Dim mingivarginevark As String = cmbAjaluguGraafikuPeriood.SelectedItem
+        Dim valuemapVal = AnaluusK.PariValueMap(mingivarginevark, valueMap)
+        TabelKaalud = AnaluusK.KaaluParingAndmebaasist(_kasutaja_id, AnaluusK.KuupaevIntegeriks(Date.Now.Date), valuemapVal)
 
         chrKaaluMuutumine.Series("Kaal").Points.Clear()
         chrKaaluMuutumine.Series("Siht Kaal").Points.Clear()
         For muutuja As Integer = 0 To TabelKaalud.Length - 1 Step +1
-            chrKaaluMuutumine.Series("Kaal").Points.AddXY(AnaluusK.IntegerKuupaevaks((AnaluusK.KuupaevIntegeriks(Date.Now.Date) - (TabelKaalud.Length - 1)) + muutuja), TabelKaalud(muutuja))
-            chrKaaluMuutumine.Series("Siht Kaal").Points.AddXY(AnaluusK.IntegerKuupaevaks((AnaluusK.KuupaevIntegeriks(Date.Now.Date) - (TabelKaalud.Length - 1)) + muutuja), tabelSihtKaal)
+            chrKaaluMuutumine.Series("Kaal").Points.AddXY(AnaluusK.IntegerKuupaevaks(AnaluusK.KuupaevIntegeriks(Date.Now.Date) - (TabelKaalud.Length - 1) + muutuja), TabelKaalud(muutuja))
+            chrKaaluMuutumine.Series("Siht Kaal").Points.AddXY(AnaluusK.IntegerKuupaevaks(AnaluusK.KuupaevIntegeriks(Date.Now.Date) - (TabelKaalud.Length - 1) + muutuja), tabelSihtKaal)
         Next
     End Sub
 
     Private Sub UlevaatusCmbBox()
-        AnaluusK.LisaToValueMap("Viimased 7 päeva", 7)
-        AnaluusK.LisaToValueMap("Viimane kuu", 30)
-        AnaluusK.LisaToValueMap("Viimased 3 kuud", 91)
-        AnaluusK.LisaToValueMap("Viimased 6 kuud", 182)
-        AnaluusK.LisaToValueMap("Viimane aasta", 365)
-        AnaluusK.LisaToValueMap("Kogu ajalugu", 1)
+        AnaluusK = New AnaluusiKomponent.CAnaluus
+        AnaluusK.LisaValueMap("Viimased 7 päeva", 7, valueMap)
+        AnaluusK.LisaValueMap("Viimane kuu", 30, valueMap)
+        AnaluusK.LisaValueMap("Viimased 3 kuud", 91, valueMap)
+        AnaluusK.LisaValueMap("Viimased 6 kuud", 182, valueMap)
+        AnaluusK.LisaValueMap("Viimane aasta", 365, valueMap)
     End Sub
 
     Private Sub KoduGraafik()
@@ -574,10 +578,10 @@ Public Class Pohiaken
         If IsNumeric(txtKaaluEesmärk.Text) AndAlso txtKaaluEesmärk.Text > 0 Then
             ProfiilK.IntegerAndmeValjaSisestusKasutajaTabelisse(_kasutaja_id, txtKaaluEesmärk.Text, "weight_goal")
             tabelSihtKaal = txtKaaluEesmärk.Text
+            GraafikuSeaded()
         Else
 
         End If
-        GraafikuSeaded()
     End Sub
 
     Private Sub btnToidukorraLisamine_Click(sender As Object, e As EventArgs) Handles btnToidukorraLisamine.Click

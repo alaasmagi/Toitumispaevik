@@ -4,7 +4,7 @@ Public Class CAnaluus
 
     Implements IAnaluus
 
-    Private valueMap As New Dictionary(Of String, Integer)()
+    'Private valueMap As New Dictionary(Of String, Integer)()
     Private hommik
     Private louna
     Private ohtu
@@ -72,20 +72,20 @@ Public Class CAnaluus
         Return 0
     End Function
 
-    Public Function PariValueMap(keyStr As String) As Integer Implements IAnaluus.PariValueMap
+    Public Function PariValueMap(keyStr As String, ByVal valueMap As Dictionary(Of String, Integer)) As Integer Implements IAnaluus.PariValueMap
         If valueMap.ContainsKey(keyStr) Then
             Return valueMap(keyStr)
         End If
         Return 0
     End Function
 
-    Public Sub LisaValueMap(newKeyStr As String, newValue As Integer) Implements IAnaluus.LisaToValueMap
+    Public Sub LisaValueMap(newKeyStr As String, newValue As Integer, ByVal valueMap As Dictionary(Of String, Integer)) Implements IAnaluus.LisaValueMap
         If Not valueMap.ContainsKey(newKeyStr) Then
             valueMap.Add(newKeyStr, newValue)
         End If
     End Sub
 
-    Public Function PaevaneKcal() As Integer Implements IAnaluus.paevaneKcal
+    Public Function PaevaneKcal() As Integer Implements IAnaluus.PaevaneKcal
         Return hommik + louna + vahepala + ohtu
     End Function
 
@@ -122,7 +122,7 @@ Public Class CAnaluus
         Dim tabeli_asukoht As String = $"Data Source={Path.Combine(Path.GetFullPath(Path.Combine _
     (AppDomain.CurrentDomain.BaseDirectory, "..\..\..\")), "Data", "database.db")};Version=3;"
 
-        Dim paring As String = "SELECT daily_weight FROM user_daily_data WHERE user_id = @kasutaja_id AND date BETWEEN @startDate AND @endDate ORDER BY date DESC;"
+        Dim paring As String = "SELECT daily_weight FROM user_daily_data WHERE user_id = @kasutaja_id AND date BETWEEN @startDate AND @endDate ORDER BY date ASC;"
         Dim doubleValues As New List(Of Double)
 
         Using connection As New SQLiteConnection(tabeli_asukoht)
@@ -145,15 +145,17 @@ Public Class CAnaluus
         End Using
         Return doubleValues.ToArray()
     End Function
-    Public Function KaaluUuendamine(ByVal kasutaja_id As Integer, ByVal uus_kaal As Double) As Double Implements IAnaluus.KaaluLisamine
+    Public Function KaaluLisamine(ByVal kasutaja_id As Integer, ByVal uus_kaal As Double) As Double Implements IAnaluus.KaaluLisamine
+        Dim kuupaev As Integer = KuupaevIntegeriks(Date.Now.Date)
         Dim tabeli_asukoht As String = $"Data Source={Path.Combine(Path.GetFullPath(Path.Combine _
         (AppDomain.CurrentDomain.BaseDirectory, "..\..\..\")), "Data", "database.db")};Version=3;"
         Using connection As New SQLiteConnection(tabeli_asukoht)
             connection.Open()
-            Dim updateDataSql As String = $"UPDATE user_daily_data SET daily_weight = @kaal WHERE user_id = @kasutaja_id;"
+            Dim updateDataSql As String = $"UPDATE user_daily_data SET daily_weight = @kaal WHERE user_id = @kasutaja_id AND date = @kuupaev;"
             Using cmdUpdateData As New SQLiteCommand(updateDataSql, connection)
                 cmdUpdateData.Parameters.AddWithValue("@kasutaja_id", kasutaja_id)
                 cmdUpdateData.Parameters.AddWithValue("@kaal", uus_kaal)
+                cmdUpdateData.Parameters.AddWithValue("@kuupaev", kuupaev)
                 cmdUpdateData.ExecuteNonQuery()
             End Using
         End Using
