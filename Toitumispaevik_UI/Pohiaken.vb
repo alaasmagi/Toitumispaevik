@@ -409,9 +409,9 @@ Public Class Pohiaken
                 ToidudRetseptidK.KasutajaToiduaineVõiRetseptiLisamine(_kasutaja_id, AnaluusK.KuupaevIntegeriks(Date.Now.Date), toidukord, ToidudRetseptidK.RetseptiNimiEksisteerib(cmbToiduaineKiirvalik.SelectedItem), txtToiduaineKiirvalikKogus.Text)
             End If
             lblToiduAineRetseptiLisamineViga.Visible = False
-                txtToiduaineKiirvalikKogus.Text = ""
-            Else
-                lblToiduAineRetseptiLisamineViga.Text = "Viga koguse sisestuses!"
+            txtToiduaineKiirvalikKogus.Text = ""
+        Else
+            lblToiduAineRetseptiLisamineViga.Text = "Viga koguse sisestuses!"
             lblToiduAineRetseptiLisamineViga.Visible = True
         End If
         KoduGraafik()
@@ -573,6 +573,7 @@ Public Class Pohiaken
         ProfiilK = New KasutajaProfiilKomponent.CKasutajaProfiil
         If IsNumeric(txtKaaluEesmärk.Text) AndAlso txtKaaluEesmärk.Text > 0 Then
             ProfiilK.IntegerAndmeValjaSisestusKasutajaTabelisse(_kasutaja_id, txtKaaluEesmärk.Text, "weight_goal")
+            tabelSihtKaal = txtKaaluEesmärk.Text
         Else
 
         End If
