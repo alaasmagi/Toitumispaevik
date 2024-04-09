@@ -66,15 +66,15 @@ Partial Class Pohiaken
         Me.btnKinnitaRetsept = New System.Windows.Forms.Button()
         Me.GroupBox13 = New System.Windows.Forms.GroupBox()
         Me.Label49 = New System.Windows.Forms.Label()
-        Me.Label50 = New System.Windows.Forms.Label()
-        Me.RadioButton1 = New System.Windows.Forms.RadioButton()
-        Me.RadioButton2 = New System.Windows.Forms.RadioButton()
-        Me.RadioButton3 = New System.Windows.Forms.RadioButton()
-        Me.RadioButton4 = New System.Windows.Forms.RadioButton()
+        Me.lblToidukorraLisamineViga = New System.Windows.Forms.Label()
+        Me.rdbOhtu_ = New System.Windows.Forms.RadioButton()
+        Me.rdbVahepala_ = New System.Windows.Forms.RadioButton()
+        Me.rdbLouna_ = New System.Windows.Forms.RadioButton()
+        Me.rdbHommik_ = New System.Windows.Forms.RadioButton()
         Me.Label54 = New System.Windows.Forms.Label()
         Me.Label55 = New System.Windows.Forms.Label()
-        Me.Button5 = New System.Windows.Forms.Button()
-        Me.TextBox2 = New System.Windows.Forms.TextBox()
+        Me.btnToidukorraLisamine = New System.Windows.Forms.Button()
+        Me.txtToidukorraLisamineKogus = New System.Windows.Forms.TextBox()
         Me.cmbToiduaineValik = New System.Windows.Forms.ComboBox()
         Me.GroupBox7 = New System.Windows.Forms.GroupBox()
         Me.Label39 = New System.Windows.Forms.Label()
@@ -166,9 +166,11 @@ Partial Class Pohiaken
         Me.Label16 = New System.Windows.Forms.Label()
         Me.pnlYlevaade = New System.Windows.Forms.Panel()
         Me.Kaal = New System.Windows.Forms.GroupBox()
+        Me.Label58 = New System.Windows.Forms.Label()
         Me.txtKaaluEesmärk = New System.Windows.Forms.TextBox()
         Me.btnEesmargiKinnitamine = New System.Windows.Forms.Button()
         Me.GroupBox15 = New System.Windows.Forms.GroupBox()
+        Me.Label57 = New System.Windows.Forms.Label()
         Me.txtPaevaneKaal = New System.Windows.Forms.TextBox()
         Me.btnPaevaneKaal = New System.Windows.Forms.Button()
         Me.chrKaaluMuutumine = New System.Windows.Forms.DataVisualization.Charting.Chart()
@@ -219,8 +221,6 @@ Partial Class Pohiaken
         Me.txtKalorilimiit = New System.Windows.Forms.TextBox()
         Me.pbAlumineMees = New System.Windows.Forms.PictureBox()
         Me.pbAlumineNaine = New System.Windows.Forms.PictureBox()
-        Me.Label57 = New System.Windows.Forms.Label()
-        Me.Label58 = New System.Windows.Forms.Label()
         Me.pnlLeftBar.SuspendLayout()
         Me.pnlTopBar.SuspendLayout()
         CType(Me.pbUlemineNaine, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -639,15 +639,15 @@ Partial Class Pohiaken
         'GroupBox13
         '
         Me.GroupBox13.Controls.Add(Me.Label49)
-        Me.GroupBox13.Controls.Add(Me.Label50)
-        Me.GroupBox13.Controls.Add(Me.RadioButton1)
-        Me.GroupBox13.Controls.Add(Me.RadioButton2)
-        Me.GroupBox13.Controls.Add(Me.RadioButton3)
-        Me.GroupBox13.Controls.Add(Me.RadioButton4)
+        Me.GroupBox13.Controls.Add(Me.lblToidukorraLisamineViga)
+        Me.GroupBox13.Controls.Add(Me.rdbOhtu_)
+        Me.GroupBox13.Controls.Add(Me.rdbVahepala_)
+        Me.GroupBox13.Controls.Add(Me.rdbLouna_)
+        Me.GroupBox13.Controls.Add(Me.rdbHommik_)
         Me.GroupBox13.Controls.Add(Me.Label54)
         Me.GroupBox13.Controls.Add(Me.Label55)
-        Me.GroupBox13.Controls.Add(Me.Button5)
-        Me.GroupBox13.Controls.Add(Me.TextBox2)
+        Me.GroupBox13.Controls.Add(Me.btnToidukorraLisamine)
+        Me.GroupBox13.Controls.Add(Me.txtToidukorraLisamineKogus)
         Me.GroupBox13.Controls.Add(Me.cmbToiduaineValik)
         Me.GroupBox13.Location = New System.Drawing.Point(472, 362)
         Me.GroupBox13.Margin = New System.Windows.Forms.Padding(2)
@@ -669,70 +669,70 @@ Partial Class Pohiaken
         Me.Label49.TabIndex = 37
         Me.Label49.Text = "g"
         '
-        'Label50
+        'lblToidukorraLisamineViga
         '
-        Me.Label50.AutoSize = True
-        Me.Label50.Font = New System.Drawing.Font("Century Gothic", 12.0!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Italic), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label50.ForeColor = System.Drawing.Color.Red
-        Me.Label50.Location = New System.Drawing.Point(91, 198)
-        Me.Label50.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
-        Me.Label50.Name = "Label50"
-        Me.Label50.Size = New System.Drawing.Size(62, 23)
-        Me.Label50.TabIndex = 36
-        Me.Label50.Text = "VIGA"
-        Me.Label50.Visible = False
+        Me.lblToidukorraLisamineViga.AutoSize = True
+        Me.lblToidukorraLisamineViga.Font = New System.Drawing.Font("Century Gothic", 12.0!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Italic), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblToidukorraLisamineViga.ForeColor = System.Drawing.Color.Red
+        Me.lblToidukorraLisamineViga.Location = New System.Drawing.Point(91, 198)
+        Me.lblToidukorraLisamineViga.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.lblToidukorraLisamineViga.Name = "lblToidukorraLisamineViga"
+        Me.lblToidukorraLisamineViga.Size = New System.Drawing.Size(62, 23)
+        Me.lblToidukorraLisamineViga.TabIndex = 36
+        Me.lblToidukorraLisamineViga.Text = "VIGA"
+        Me.lblToidukorraLisamineViga.Visible = False
         '
-        'RadioButton1
+        'rdbOhtu_
         '
-        Me.RadioButton1.AutoSize = True
-        Me.RadioButton1.ForeColor = System.Drawing.Color.Black
-        Me.RadioButton1.Location = New System.Drawing.Point(412, 162)
-        Me.RadioButton1.Margin = New System.Windows.Forms.Padding(2)
-        Me.RadioButton1.Name = "RadioButton1"
-        Me.RadioButton1.Size = New System.Drawing.Size(79, 27)
-        Me.RadioButton1.TabIndex = 35
-        Me.RadioButton1.TabStop = True
-        Me.RadioButton1.Text = "Õhtu"
-        Me.RadioButton1.UseVisualStyleBackColor = True
+        Me.rdbOhtu_.AutoSize = True
+        Me.rdbOhtu_.ForeColor = System.Drawing.Color.Black
+        Me.rdbOhtu_.Location = New System.Drawing.Point(412, 162)
+        Me.rdbOhtu_.Margin = New System.Windows.Forms.Padding(2)
+        Me.rdbOhtu_.Name = "rdbOhtu_"
+        Me.rdbOhtu_.Size = New System.Drawing.Size(79, 27)
+        Me.rdbOhtu_.TabIndex = 35
+        Me.rdbOhtu_.TabStop = True
+        Me.rdbOhtu_.Text = "Õhtu"
+        Me.rdbOhtu_.UseVisualStyleBackColor = True
         '
-        'RadioButton2
+        'rdbVahepala_
         '
-        Me.RadioButton2.AutoSize = True
-        Me.RadioButton2.ForeColor = System.Drawing.Color.Black
-        Me.RadioButton2.Location = New System.Drawing.Point(272, 162)
-        Me.RadioButton2.Margin = New System.Windows.Forms.Padding(2)
-        Me.RadioButton2.Name = "RadioButton2"
-        Me.RadioButton2.Size = New System.Drawing.Size(130, 27)
-        Me.RadioButton2.TabIndex = 34
-        Me.RadioButton2.TabStop = True
-        Me.RadioButton2.Text = "Vahepala"
-        Me.RadioButton2.UseVisualStyleBackColor = True
+        Me.rdbVahepala_.AutoSize = True
+        Me.rdbVahepala_.ForeColor = System.Drawing.Color.Black
+        Me.rdbVahepala_.Location = New System.Drawing.Point(272, 162)
+        Me.rdbVahepala_.Margin = New System.Windows.Forms.Padding(2)
+        Me.rdbVahepala_.Name = "rdbVahepala_"
+        Me.rdbVahepala_.Size = New System.Drawing.Size(130, 27)
+        Me.rdbVahepala_.TabIndex = 34
+        Me.rdbVahepala_.TabStop = True
+        Me.rdbVahepala_.Text = "Vahepala"
+        Me.rdbVahepala_.UseVisualStyleBackColor = True
         '
-        'RadioButton3
+        'rdbLouna_
         '
-        Me.RadioButton3.AutoSize = True
-        Me.RadioButton3.ForeColor = System.Drawing.Color.Black
-        Me.RadioButton3.Location = New System.Drawing.Point(178, 162)
-        Me.RadioButton3.Margin = New System.Windows.Forms.Padding(2)
-        Me.RadioButton3.Name = "RadioButton3"
-        Me.RadioButton3.Size = New System.Drawing.Size(90, 27)
-        Me.RadioButton3.TabIndex = 33
-        Me.RadioButton3.TabStop = True
-        Me.RadioButton3.Text = "Lõuna"
-        Me.RadioButton3.UseVisualStyleBackColor = True
+        Me.rdbLouna_.AutoSize = True
+        Me.rdbLouna_.ForeColor = System.Drawing.Color.Black
+        Me.rdbLouna_.Location = New System.Drawing.Point(178, 162)
+        Me.rdbLouna_.Margin = New System.Windows.Forms.Padding(2)
+        Me.rdbLouna_.Name = "rdbLouna_"
+        Me.rdbLouna_.Size = New System.Drawing.Size(90, 27)
+        Me.rdbLouna_.TabIndex = 33
+        Me.rdbLouna_.TabStop = True
+        Me.rdbLouna_.Text = "Lõuna"
+        Me.rdbLouna_.UseVisualStyleBackColor = True
         '
-        'RadioButton4
+        'rdbHommik_
         '
-        Me.RadioButton4.AutoSize = True
-        Me.RadioButton4.ForeColor = System.Drawing.Color.Black
-        Me.RadioButton4.Location = New System.Drawing.Point(62, 162)
-        Me.RadioButton4.Margin = New System.Windows.Forms.Padding(2)
-        Me.RadioButton4.Name = "RadioButton4"
-        Me.RadioButton4.Size = New System.Drawing.Size(108, 27)
-        Me.RadioButton4.TabIndex = 32
-        Me.RadioButton4.TabStop = True
-        Me.RadioButton4.Text = "Hommik"
-        Me.RadioButton4.UseVisualStyleBackColor = True
+        Me.rdbHommik_.AutoSize = True
+        Me.rdbHommik_.ForeColor = System.Drawing.Color.Black
+        Me.rdbHommik_.Location = New System.Drawing.Point(62, 162)
+        Me.rdbHommik_.Margin = New System.Windows.Forms.Padding(2)
+        Me.rdbHommik_.Name = "rdbHommik_"
+        Me.rdbHommik_.Size = New System.Drawing.Size(108, 27)
+        Me.rdbHommik_.TabIndex = 32
+        Me.rdbHommik_.TabStop = True
+        Me.rdbHommik_.Text = "Hommik"
+        Me.rdbHommik_.UseVisualStyleBackColor = True
         '
         'Label54
         '
@@ -756,29 +756,29 @@ Partial Class Pohiaken
         Me.Label55.TabIndex = 30
         Me.Label55.Text = "Nimetus:"
         '
-        'Button5
+        'btnToidukorraLisamine
         '
-        Me.Button5.BackColor = System.Drawing.Color.FromArgb(CType(CType(80, Byte), Integer), CType(CType(168, Byte), Integer), CType(CType(160, Byte), Integer))
-        Me.Button5.FlatAppearance.BorderSize = 0
-        Me.Button5.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(CType(CType(62, Byte), Integer), CType(CType(130, Byte), Integer), CType(CType(124, Byte), Integer))
-        Me.Button5.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button5.Font = New System.Drawing.Font("Century Gothic", 12.0!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Italic), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button5.ForeColor = System.Drawing.SystemColors.Window
-        Me.Button5.Location = New System.Drawing.Point(272, 105)
-        Me.Button5.Margin = New System.Windows.Forms.Padding(8, 5, 8, 5)
-        Me.Button5.Name = "Button5"
-        Me.Button5.Size = New System.Drawing.Size(225, 35)
-        Me.Button5.TabIndex = 29
-        Me.Button5.Text = "Lisa"
-        Me.Button5.UseVisualStyleBackColor = False
+        Me.btnToidukorraLisamine.BackColor = System.Drawing.Color.FromArgb(CType(CType(80, Byte), Integer), CType(CType(168, Byte), Integer), CType(CType(160, Byte), Integer))
+        Me.btnToidukorraLisamine.FlatAppearance.BorderSize = 0
+        Me.btnToidukorraLisamine.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(CType(CType(62, Byte), Integer), CType(CType(130, Byte), Integer), CType(CType(124, Byte), Integer))
+        Me.btnToidukorraLisamine.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnToidukorraLisamine.Font = New System.Drawing.Font("Century Gothic", 12.0!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Italic), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnToidukorraLisamine.ForeColor = System.Drawing.SystemColors.Window
+        Me.btnToidukorraLisamine.Location = New System.Drawing.Point(272, 105)
+        Me.btnToidukorraLisamine.Margin = New System.Windows.Forms.Padding(8, 5, 8, 5)
+        Me.btnToidukorraLisamine.Name = "btnToidukorraLisamine"
+        Me.btnToidukorraLisamine.Size = New System.Drawing.Size(225, 35)
+        Me.btnToidukorraLisamine.TabIndex = 29
+        Me.btnToidukorraLisamine.Text = "Lisa"
+        Me.btnToidukorraLisamine.UseVisualStyleBackColor = False
         '
-        'TextBox2
+        'txtToidukorraLisamineKogus
         '
-        Me.TextBox2.Location = New System.Drawing.Point(148, 108)
-        Me.TextBox2.Margin = New System.Windows.Forms.Padding(2)
-        Me.TextBox2.Name = "TextBox2"
-        Me.TextBox2.Size = New System.Drawing.Size(64, 32)
-        Me.TextBox2.TabIndex = 25
+        Me.txtToidukorraLisamineKogus.Location = New System.Drawing.Point(148, 108)
+        Me.txtToidukorraLisamineKogus.Margin = New System.Windows.Forms.Padding(2)
+        Me.txtToidukorraLisamineKogus.Name = "txtToidukorraLisamineKogus"
+        Me.txtToidukorraLisamineKogus.Size = New System.Drawing.Size(64, 32)
+        Me.txtToidukorraLisamineKogus.TabIndex = 25
         '
         'cmbToiduaineValik
         '
@@ -1643,9 +1643,9 @@ Partial Class Pohiaken
         Me.GroupBox16.Controls.Add(Me.btnKustutaTreening)
         Me.GroupBox16.Controls.Add(Me.cmbTreeninguKustutamine)
         Me.GroupBox16.Location = New System.Drawing.Point(558, 362)
-        Me.GroupBox16.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.GroupBox16.Margin = New System.Windows.Forms.Padding(4)
         Me.GroupBox16.Name = "GroupBox16"
-        Me.GroupBox16.Padding = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.GroupBox16.Padding = New System.Windows.Forms.Padding(4)
         Me.GroupBox16.Size = New System.Drawing.Size(475, 228)
         Me.GroupBox16.TabIndex = 39
         Me.GroupBox16.TabStop = False
@@ -1914,7 +1914,7 @@ Partial Class Pohiaken
         Me.pnlYlevaade.Location = New System.Drawing.Point(290, 125)
         Me.pnlYlevaade.Margin = New System.Windows.Forms.Padding(2)
         Me.pnlYlevaade.Name = "pnlYlevaade"
-        Me.pnlYlevaade.Size = New System.Drawing.Size(1048, 601)
+        Me.pnlYlevaade.Size = New System.Drawing.Size(1048, 620)
         Me.pnlYlevaade.TabIndex = 4
         '
         'Kaal
@@ -1930,6 +1930,17 @@ Partial Class Pohiaken
         Me.Kaal.TabIndex = 24
         Me.Kaal.TabStop = False
         Me.Kaal.Text = "Kaalu eesmärgi seadmine"
+        '
+        'Label58
+        '
+        Me.Label58.AutoSize = True
+        Me.Label58.ForeColor = System.Drawing.Color.Black
+        Me.Label58.Location = New System.Drawing.Point(258, 57)
+        Me.Label58.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.Label58.Name = "Label58"
+        Me.Label58.Size = New System.Drawing.Size(33, 23)
+        Me.Label58.TabIndex = 25
+        Me.Label58.Text = "kg"
         '
         'txtKaaluEesmärk
         '
@@ -1968,6 +1979,17 @@ Partial Class Pohiaken
         Me.GroupBox15.TabIndex = 23
         Me.GroupBox15.TabStop = False
         Me.GroupBox15.Text = "Päevase kehakaalu lisamine"
+        '
+        'Label57
+        '
+        Me.Label57.AutoSize = True
+        Me.Label57.ForeColor = System.Drawing.Color.Black
+        Me.Label57.Location = New System.Drawing.Point(258, 49)
+        Me.Label57.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.Label57.Name = "Label57"
+        Me.Label57.Size = New System.Drawing.Size(33, 23)
+        Me.Label57.TabIndex = 24
+        Me.Label57.Text = "kg"
         '
         'txtPaevaneKaal
         '
@@ -2663,41 +2685,19 @@ Partial Class Pohiaken
         Me.pbAlumineNaine.TabStop = False
         Me.pbAlumineNaine.Visible = False
         '
-        'Label57
-        '
-        Me.Label57.AutoSize = True
-        Me.Label57.ForeColor = System.Drawing.Color.Black
-        Me.Label57.Location = New System.Drawing.Point(258, 49)
-        Me.Label57.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
-        Me.Label57.Name = "Label57"
-        Me.Label57.Size = New System.Drawing.Size(33, 23)
-        Me.Label57.TabIndex = 24
-        Me.Label57.Text = "kg"
-        '
-        'Label58
-        '
-        Me.Label58.AutoSize = True
-        Me.Label58.ForeColor = System.Drawing.Color.Black
-        Me.Label58.Location = New System.Drawing.Point(258, 57)
-        Me.Label58.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
-        Me.Label58.Name = "Label58"
-        Me.Label58.Size = New System.Drawing.Size(33, 23)
-        Me.Label58.TabIndex = 25
-        Me.Label58.Text = "kg"
-        '
         'Pohiaken
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(120.0!, 120.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(241, Byte), Integer), CType(CType(239, Byte), Integer))
         Me.ClientSize = New System.Drawing.Size(1335, 716)
+        Me.Controls.Add(Me.pnlToidulaud)
+        Me.Controls.Add(Me.pnlKodu)
         Me.Controls.Add(Me.pnlYlevaade)
         Me.Controls.Add(Me.pnlProfiiliSeaded)
         Me.Controls.Add(Me.pnlRakenduseInfo)
         Me.Controls.Add(Me.pnlAjalugu)
-        Me.Controls.Add(Me.pnlKodu)
         Me.Controls.Add(Me.pnlTreeningud)
-        Me.Controls.Add(Me.pnlToidulaud)
         Me.Controls.Add(Me.pnlTopBar)
         Me.Controls.Add(Me.pnlLeftBar)
         Me.Font = New System.Drawing.Font("Century Gothic", 12.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -2925,15 +2925,15 @@ Partial Class Pohiaken
     Friend WithEvents Label48 As Label
     Friend WithEvents GroupBox13 As GroupBox
     Friend WithEvents Label49 As Label
-    Friend WithEvents Label50 As Label
-    Friend WithEvents RadioButton1 As RadioButton
-    Friend WithEvents RadioButton2 As RadioButton
-    Friend WithEvents RadioButton3 As RadioButton
-    Friend WithEvents RadioButton4 As RadioButton
+    Friend WithEvents lblToidukorraLisamineViga As Label
+    Friend WithEvents rdbOhtu_ As RadioButton
+    Friend WithEvents rdbVahepala_ As RadioButton
+    Friend WithEvents rdbLouna_ As RadioButton
+    Friend WithEvents rdbHommik_ As RadioButton
     Friend WithEvents Label54 As Label
     Friend WithEvents Label55 As Label
-    Friend WithEvents Button5 As Button
-    Friend WithEvents TextBox2 As TextBox
+    Friend WithEvents btnToidukorraLisamine As Button
+    Friend WithEvents txtToidukorraLisamineKogus As TextBox
     Friend WithEvents cmbToiduaineValik As ComboBox
     Friend WithEvents GroupBox14 As GroupBox
     Friend WithEvents GroupBox15 As GroupBox

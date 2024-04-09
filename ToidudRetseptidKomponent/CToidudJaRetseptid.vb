@@ -190,4 +190,27 @@ Public Class CToidudJaRetseptid
         End Using
         Return retsepti_id
     End Function
+
+    Public Function KiirlisamiseRetseptideNimed() As List(Of String) Implements IToidudjaRetseptid.KiirlisamiseRetseptideNimed
+        Dim retseptideNimed As New List(Of String)()
+        Dim tabeli_asukoht As String = $"Data Source={Path.Combine(Path.GetFullPath(Path.Combine _
+               (AppDomain.CurrentDomain.BaseDirectory, "..\..\..\")), "Data", "database.db")};Version=3;"
+        Using connection As New SQLiteConnection(tabeli_asukoht)
+            connection.Open()
+            For index = 0 To 250
+                Dim selectSql As String = "SELECT recipe_name FROM recipe_data WHERE recipe_id = @id"
+
+                Using cmd As New SQLiteCommand(selectSql, connection)
+                    cmd.Parameters.AddWithValue("@id", index)
+
+                    Using reader As SQLiteDataReader = cmd.ExecuteReader()
+                        While reader.Read()
+                            retseptideNimed.Add(reader("recipe_name"))
+                        End While
+                    End Using
+                End Using
+            Next
+        End Using
+        Return retseptideNimed
+    End Function
 End Class

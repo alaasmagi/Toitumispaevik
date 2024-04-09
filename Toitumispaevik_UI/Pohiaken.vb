@@ -94,6 +94,8 @@ Public Class Pohiaken
     Private Sub GraafikuSeaded()
         TabelKaalud = AnaluusK.KaaluParingAndmebaasist(_kasutaja_id, AnaluusK.KuupaevIntegeriks(Date.Now.Date), AnaluusK.PariValueMap(cmbAjaluguGraafikuPeriood.SelectedItem))
 
+        chrKaaluMuutumine.Series("Kaal").Points.Clear()
+        chrKaaluMuutumine.Series("Siht Kaal").Points.Clear()
         For muutuja As Integer = 0 To TabelKaalud.Length - 1 Step +1
             chrKaaluMuutumine.Series("Kaal").Points.AddXY(AnaluusK.IntegerKuupaevaks((AnaluusK.KuupaevIntegeriks(Date.Now.Date) - (TabelKaalud.Length - 1)) + muutuja), TabelKaalud(muutuja))
             chrKaaluMuutumine.Series("Siht Kaal").Points.AddXY(AnaluusK.IntegerKuupaevaks((AnaluusK.KuupaevIntegeriks(Date.Now.Date) - (TabelKaalud.Length - 1)) + muutuja), tabelSihtKaal)
@@ -265,11 +267,16 @@ Public Class Pohiaken
 
         Dim toiduaineteNimed As List(Of String) = ToidudRetseptidK.KiirlisamiseToiduaineNimed
         Dim treeninguteNimed As List(Of String) = TreeningudK.KiirlisamiseTreeninguNimed
+        Dim retseptideNimed As List(Of String) = ToidudRetseptidK.KiirlisamiseRetseptideNimed
 
         For Each nimetus As String In toiduaineteNimed
             cmbToiduaineKiirvalik.Items.Add(nimetus)
             cmbToiduaineValik.Items.Add(nimetus)
             cmbRetseptiKoostisosad.Items.Add(nimetus)
+        Next
+        For Each nimetus As String In retseptideNimed
+            cmbToiduaineKiirvalik.Items.Add(nimetus)
+            cmbToiduaineValik.Items.Add(nimetus)
         Next
         cmbToiduaineKiirvalik.SelectedIndex = 0
         cmbToiduaineValik.SelectedIndex = 0
@@ -396,11 +403,15 @@ Public Class Pohiaken
             lblToiduAineRetseptiLisamineViga.Visible = True
         End If
         If IsNumeric(txtToiduaineKiirvalikKogus.Text) AndAlso txtToiduaineKiirvalikKogus.Text > 0 Then
-            ToidudRetseptidK.KasutajaToiduaineVõiRetseptiLisamine(_kasutaja_id, AnaluusK.KuupaevIntegeriks(Date.Now.Date), toidukord, ToidudRetseptidK.ToiduAineNimiEksisteerib(cmbToiduaineKiirvalik.SelectedItem), txtToiduaineKiirvalikKogus.Text)
+            If ToidudRetseptidK.ToiduAineNimiEksisteerib(cmbToiduaineKiirvalik.SelectedItem) > 0 Then
+                ToidudRetseptidK.KasutajaToiduaineVõiRetseptiLisamine(_kasutaja_id, AnaluusK.KuupaevIntegeriks(Date.Now.Date), toidukord, ToidudRetseptidK.ToiduAineNimiEksisteerib(cmbToiduaineKiirvalik.SelectedItem), txtToiduaineKiirvalikKogus.Text)
+            ElseIf ToidudRetseptidK.RetseptiNimiEksisteerib(cmbToiduaineKiirvalik.SelectedItem) > 0 Then
+                ToidudRetseptidK.KasutajaToiduaineVõiRetseptiLisamine(_kasutaja_id, AnaluusK.KuupaevIntegeriks(Date.Now.Date), toidukord, ToidudRetseptidK.RetseptiNimiEksisteerib(cmbToiduaineKiirvalik.SelectedItem), txtToiduaineKiirvalikKogus.Text)
+            End If
             lblToiduAineRetseptiLisamineViga.Visible = False
-            txtToiduaineKiirvalikKogus.Text = ""
-        Else
-            lblToiduAineRetseptiLisamineViga.Text = "Viga koguse sisestuses!"
+                txtToiduaineKiirvalikKogus.Text = ""
+            Else
+                lblToiduAineRetseptiLisamineViga.Text = "Viga koguse sisestuses!"
             lblToiduAineRetseptiLisamineViga.Visible = True
         End If
         KoduGraafik()
@@ -555,8 +566,6 @@ Public Class Pohiaken
     End Sub
 
     Private Sub btnNaitaYlevaadet_Click(sender As Object, e As EventArgs) Handles btnNaitaYlevaadet.Click
-        chrKaaluMuutumine.Series("Kaal").Points.Clear()
-        chrKaaluMuutumine.Series("Siht Kaal").Points.Clear()
         GraafikuSeaded()
     End Sub
 
@@ -567,6 +576,39 @@ Public Class Pohiaken
         Else
 
         End If
+        GraafikuSeaded()
+    End Sub
+
+    Private Sub btnToidukorraLisamine_Click(sender As Object, e As EventArgs) Handles btnToidukorraLisamine.Click
+        Dim toidukord As Integer = 0
+        ToidudRetseptidK = New ToidudRetseptidKomponent.CToidudJaRetseptid
+        AnaluusK = New AnaluusiKomponent.CAnaluus
+
+        If rdbHommik_.Checked = True Then
+            toidukord = 0
+        ElseIf rdbLouna_.Checked = True Then
+            toidukord = 1
+        ElseIf rdbVahepala_.Checked = True Then
+            toidukord = 2
+        ElseIf rdbOhtu_.Checked = True Then
+            toidukord = 3
+        Else
+            lblToidukorraLisamineViga.Text = "Toidukorda pole valitud!"
+            lblToidukorraLisamineViga.Visible = True
+        End If
+        If IsNumeric(txtToidukorraLisamineKogus.Text) AndAlso txtToidukorraLisamineKogus.Text > 0 Then
+            If ToidudRetseptidK.ToiduAineNimiEksisteerib(cmbToiduaineValik.SelectedItem) > 0 Then
+                ToidudRetseptidK.KasutajaToiduaineVõiRetseptiLisamine(_kasutaja_id, AnaluusK.KuupaevIntegeriks(Date.Now.Date), toidukord, ToidudRetseptidK.ToiduAineNimiEksisteerib(cmbToiduaineValik.SelectedItem), txtToidukorraLisamineKogus.Text)
+            ElseIf ToidudRetseptidK.RetseptiNimiEksisteerib(cmbToiduaineValik.SelectedItem) > 0 Then
+                ToidudRetseptidK.KasutajaToiduaineVõiRetseptiLisamine(_kasutaja_id, AnaluusK.KuupaevIntegeriks(Date.Now.Date), toidukord, ToidudRetseptidK.RetseptiNimiEksisteerib(cmbToiduaineValik.SelectedItem), txtToidukorraLisamineKogus.Text)
+            End If
+            lblToidukorraLisamineViga.Visible = False
+            txtToidukorraLisamineKogus.Text = ""
+        Else
+            lblToidukorraLisamineViga.Text = "Viga koguse sisestuses!"
+            lblToidukorraLisamineViga.Visible = True
+        End If
+        KoduGraafik()
     End Sub
 End Class
 
