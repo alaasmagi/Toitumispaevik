@@ -12,6 +12,7 @@ Public Class Pohiaken
     Private _kasutaja_id As Integer
     Private kalorilimiit As Integer
     Private TabelKaalud As Double()
+    Private DateTabelKaalud As Integer()
     Private tabelSihtKaal As Double
     Private valueMap As New Dictionary(Of String, Integer)()
 
@@ -95,12 +96,20 @@ Public Class Pohiaken
     Private Sub GraafikuSeaded()
         AnaluusK = New AnaluusiKomponent.CAnaluus
         TabelKaalud = AnaluusK.KaaluParingAndmebaasist(_kasutaja_id, AnaluusK.KuupaevIntegeriks(Date.Now.Date), AnaluusK.PariValueMap(cmbAjaluguGraafikuPeriood.SelectedItem, valueMap))
+        DateTabelKaalud = AnaluusK.KaaluDateParingAndmebaasist(_kasutaja_id, AnaluusK.KuupaevIntegeriks(Date.Now.Date), AnaluusK.PariValueMap(cmbAjaluguGraafikuPeriood.SelectedItem, valueMap))
 
         chrKaaluMuutumine.Series("Kaal").Points.Clear()
         chrKaaluMuutumine.Series("Siht Kaal").Points.Clear()
         For muutuja As Integer = 0 To TabelKaalud.Length - 1 Step +1
-            chrKaaluMuutumine.Series("Kaal").Points.AddXY(AnaluusK.IntegerKuupaevaks(AnaluusK.KuupaevIntegeriks(Date.Now.Date) - (TabelKaalud.Length - 1) + muutuja), TabelKaalud(muutuja))
-            chrKaaluMuutumine.Series("Siht Kaal").Points.AddXY(AnaluusK.IntegerKuupaevaks(AnaluusK.KuupaevIntegeriks(Date.Now.Date) - (TabelKaalud.Length - 1) + muutuja), tabelSihtKaal)
+            If muutuja > 0 AndAlso (DateTabelKaalud(muutuja - 1) + 1) < DateTabelKaalud(muutuja) Then
+                DateTabelKaalud(muutuja - 1) = DateTabelKaalud(muutuja - 1) + 1
+                chrKaaluMuutumine.Series("Kaal").Points.AddXY(AnaluusK.IntegerKuupaevaks(DateTabelKaalud(muutuja - 1)), TabelKaalud(muutuja - 1))
+                chrKaaluMuutumine.Series("Siht Kaal").Points.AddXY(AnaluusK.IntegerKuupaevaks(DateTabelKaalud(muutuja - 1)), tabelSihtKaal)
+                muutuja -= 1
+            Else
+                chrKaaluMuutumine.Series("Kaal").Points.AddXY(AnaluusK.IntegerKuupaevaks(DateTabelKaalud(muutuja)), TabelKaalud(muutuja))
+                chrKaaluMuutumine.Series("Siht Kaal").Points.AddXY(AnaluusK.IntegerKuupaevaks(DateTabelKaalud(muutuja)), tabelSihtKaal)
+            End If
         Next
     End Sub
 
@@ -568,9 +577,7 @@ Public Class Pohiaken
     End Sub
 
     Private Sub btnNaitaYlevaadet_Click(sender As Object, e As EventArgs) Handles btnNaitaYlevaadet.Click
-        chrKaaluMuutumine.Series("Kaal").Points.Clear()
-        chrKaaluMuutumine.Series("Siht Kaal").Points.Clear()
-        GraafikuSeadmed()
+        GraafikuSeaded()
     End Sub
 End Class
 

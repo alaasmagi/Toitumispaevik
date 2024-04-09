@@ -144,6 +144,35 @@ Public Class CAnaluus
         End Using
         Return doubleValues.ToArray()
     End Function
+
+    Public Function KaaluDateParingAndmebaasist(ByVal kasutaja_id As Integer, ByVal kuupaev As Integer, ByVal graafikuPikkus As Integer) As Integer() Implements IAnaluus.KaaluDateParingAndmebaasist
+        Dim tabeli_asukoht As String = $"Data Source={Path.Combine(Path.GetFullPath(Path.Combine _
+    (AppDomain.CurrentDomain.BaseDirectory, "..\..\..\")), "Data", "database.db")};Version=3;"
+
+        Dim paring As String = "SELECT date FROM user_daily_data WHERE user_id = @kasutaja_id AND date BETWEEN @startDate AND @endDate ORDER BY date ASC;"
+        Dim intValues As New List(Of Integer)
+
+        Using connection As New SQLiteConnection(tabeli_asukoht)
+            Using command As New SQLiteCommand(paring, connection)
+                command.Parameters.AddWithValue("@kasutaja_id", kasutaja_id)
+                Dim startDate As Integer = kuupaev - graafikuPikkus
+                Dim endDate As Integer = kuupaev
+                command.Parameters.AddWithValue("@startDate", startDate)
+                command.Parameters.AddWithValue("@endDate", endDate)
+
+                connection.Open()
+
+                Using reader As SQLiteDataReader = command.ExecuteReader()
+                    While reader.Read()
+                        intValues.Add(reader.GetDouble(0))
+                    End While
+                End Using
+
+            End Using
+        End Using
+        Return intValues.ToArray()
+    End Function
+
     Public Function KaaluLisamine(ByVal kasutaja_id As Integer, ByVal uus_kaal As Double) As Double Implements IAnaluus.KaaluLisamine
         Dim kuupaev As Integer = KuupaevIntegeriks(Date.Now.Date)
         Dim tabeli_asukoht As String = $"Data Source={Path.Combine(Path.GetFullPath(Path.Combine _
