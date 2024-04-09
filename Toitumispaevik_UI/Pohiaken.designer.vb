@@ -1942,7 +1942,7 @@ Partial Class Pohiaken
         '
         'txtKaaluEesmärk
         '
-        Me.txtKaaluEesmärk.Location = New System.Drawing.Point(14, 38)
+        Me.txtKaaluEesmärk.Location = New System.Drawing.Point(14, 37)
         Me.txtKaaluEesmärk.Margin = New System.Windows.Forms.Padding(6, 4, 6, 4)
         Me.txtKaaluEesmärk.Name = "txtKaaluEesmärk"
         Me.txtKaaluEesmärk.Size = New System.Drawing.Size(190, 27)
@@ -1991,7 +1991,7 @@ Partial Class Pohiaken
         '
         'txtPaevaneKaal
         '
-        Me.txtPaevaneKaal.Location = New System.Drawing.Point(10, 31)
+        Me.txtPaevaneKaal.Location = New System.Drawing.Point(10, 30)
         Me.txtPaevaneKaal.Margin = New System.Windows.Forms.Padding(6, 4, 6, 4)
         Me.txtPaevaneKaal.Name = "txtPaevaneKaal"
         Me.txtPaevaneKaal.Size = New System.Drawing.Size(194, 27)
