@@ -94,9 +94,7 @@ Public Class Pohiaken
 
     Private Sub GraafikuSeaded()
         AnaluusK = New AnaluusiKomponent.CAnaluus
-        Dim mingivarginevark As String = cmbAjaluguGraafikuPeriood.SelectedItem
-        Dim valuemapVal = AnaluusK.PariValueMap(mingivarginevark, valueMap)
-        TabelKaalud = AnaluusK.KaaluParingAndmebaasist(_kasutaja_id, AnaluusK.KuupaevIntegeriks(Date.Now.Date), valuemapVal)
+        TabelKaalud = AnaluusK.KaaluParingAndmebaasist(_kasutaja_id, AnaluusK.KuupaevIntegeriks(Date.Now.Date), AnaluusK.PariValueMap(cmbAjaluguGraafikuPeriood.SelectedItem, valueMap))
 
         chrKaaluMuutumine.Series("Kaal").Points.Clear()
         chrKaaluMuutumine.Series("Siht Kaal").Points.Clear()
