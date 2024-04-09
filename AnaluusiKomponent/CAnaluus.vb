@@ -4,7 +4,6 @@ Public Class CAnaluus
 
     Implements IAnaluus
 
-    'Private valueMap As New Dictionary(Of String, Integer)()
     Private hommik
     Private louna
     Private ohtu
