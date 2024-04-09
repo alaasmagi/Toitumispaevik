@@ -85,7 +85,7 @@ Public Class CAnaluus
         End If
     End Sub
 
-    Public Function PaevaneKcal() As Integer Implements IAnaluus.PaevaneKcal
+    Public Function PaevaneKcal() As Integer Implements IAnaluus.paevaneKcal
         Return hommik + louna + vahepala + ohtu
     End Function
 
