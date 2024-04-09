@@ -9,5 +9,6 @@
     Function KasutajaToiduaineVõiRetseptiLisamine(ByVal kasutaja_id As String, ByVal kuupaev As Integer, ByVal toidukord As Integer, ByVal toiduaine_id As Integer, ByVal kogus As Integer) As Integer
     Function LisaRetsept(ByVal retsepti_nimi As String, ByVal retsepti_kcal As Integer, ByVal retsepti_susivesikud As Integer, ByVal retsepti_suhkur As Integer,
                                 ByVal retsepti_valgud As Integer, ByVal retsepti_lipiidid As Integer) As Integer
+    Function KiirlisamiseRetseptideNimed() As List(Of String)
     Function LisaRetseptiKoostisosadeTabelisse(ByVal retsepti_id As Integer, ByVal toiduaine_id As Integer, ByVal kogus As Integer) As Integer
 End Interface

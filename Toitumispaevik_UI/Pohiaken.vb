@@ -13,6 +13,7 @@ Public Class Pohiaken
     Private kalorilimiit As Integer
     Private TabelKaalud As Double()
     Private tabelSihtKaal As Double
+    Private valueMap As New Dictionary(Of String, Integer)()
 
     Dim retseptideKoostisosad As New List(Of Integer)
     Dim retseptideKoostisosadeKogused As New List(Of Integer)
@@ -37,6 +38,11 @@ Public Class Pohiaken
     End Sub
     Public Sub ResetForm()
         ProfiilK = New KasutajaProfiilKomponent.CKasutajaProfiil
+        AnaluusK = New AnaluusiKomponent.CAnaluus
+
+        If AnaluusK.PaevaseAndmereaParing(_kasutaja_id, AnaluusK.KuupaevIntegeriks(Date.Now.Date)) = -1 Then
+            AnaluusK.TuhjaPaevaseAndmereaSisestus(_kasutaja_id, AnaluusK.KuupaevIntegeriks(Date.Now.Date))
+        End If
 
         TuhjendaKonteiner(Me)
         pnlLogo.Visible = True
@@ -86,26 +92,25 @@ Public Class Pohiaken
 
     End Sub
 
-    Private Sub GraafikuSeadmed()
+    Private Sub GraafikuSeaded()
+        AnaluusK = New AnaluusiKomponent.CAnaluus
+        TabelKaalud = AnaluusK.KaaluParingAndmebaasist(_kasutaja_id, AnaluusK.KuupaevIntegeriks(Date.Now.Date), AnaluusK.PariValueMap(cmbAjaluguGraafikuPeriood.SelectedItem, valueMap))
+
         chrKaaluMuutumine.Series("Kaal").Points.Clear()
         chrKaaluMuutumine.Series("Siht Kaal").Points.Clear()
-        TabelKaalud = AnaluusK.KaaluParingAndmebaasist(_kasutaja_id, AnaluusK.KuupaevIntegeriks(Date.Now.Date), AnaluusK.PariValueMap(cmbAjaluguGraafikuPeriood.SelectedItem))
-        TabelKaalud = AnaluusK.KaaluParingAndmebaasist(_kasutaja_id, AnaluusK.KuupaevIntegeriks(Date.Now.Date), 7) 'Siia (7 asemele) lisab eeva varem leitud koguse päevi palju graafik ajalukku kuvab, mille leiab ta "graafiku seaded" combo boxist
-        ' max comboboxis valitav väärtus võiks olla 91 päeva (13 nädalat / ca. 3 kuud) ja miinimumi pole testind a vast 7 päevast (1 nädal) ei tasu väiksemat lasta valida.
-
         For muutuja As Integer = 0 To TabelKaalud.Length - 1 Step +1
-            chrKaaluMuutumine.Series("Kaal").Points.AddXY(AnaluusK.IntegerKuupaevaks((AnaluusK.KuupaevIntegeriks(Date.Now.Date) - (TabelKaalud.Length - 1)) + muutuja), TabelKaalud(muutuja))
-            chrKaaluMuutumine.Series("Siht Kaal").Points.AddXY(AnaluusK.IntegerKuupaevaks((AnaluusK.KuupaevIntegeriks(Date.Now.Date) - (TabelKaalud.Length - 1)) + muutuja), tabelSihtKaal)
+            chrKaaluMuutumine.Series("Kaal").Points.AddXY(AnaluusK.IntegerKuupaevaks(AnaluusK.KuupaevIntegeriks(Date.Now.Date) - (TabelKaalud.Length - 1) + muutuja), TabelKaalud(muutuja))
+            chrKaaluMuutumine.Series("Siht Kaal").Points.AddXY(AnaluusK.IntegerKuupaevaks(AnaluusK.KuupaevIntegeriks(Date.Now.Date) - (TabelKaalud.Length - 1) + muutuja), tabelSihtKaal)
         Next
     End Sub
 
     Private Sub UlevaatusCmbBox()
-        AnaluusK.LisaToValueMap("Viimased 7 päeva", 7)
-        AnaluusK.LisaToValueMap("Viimane kuu", 30)
-        AnaluusK.LisaToValueMap("Viimased 3 kuud", 91)
-        AnaluusK.LisaToValueMap("Viimased 6 kuud", 182)
-        AnaluusK.LisaToValueMap("Viimane aasta", 365)
-        AnaluusK.LisaToValueMap("Kogu ajalugu", 1)
+        AnaluusK = New AnaluusiKomponent.CAnaluus
+        AnaluusK.LisaValueMap("Viimased 7 päeva", 7, valueMap)
+        AnaluusK.LisaValueMap("Viimane kuu", 30, valueMap)
+        AnaluusK.LisaValueMap("Viimased 3 kuud", 91, valueMap)
+        AnaluusK.LisaValueMap("Viimased 6 kuud", 182, valueMap)
+        AnaluusK.LisaValueMap("Viimane aasta", 365, valueMap)
     End Sub
 
     Private Sub KoduGraafik()
@@ -264,11 +269,16 @@ Public Class Pohiaken
 
         Dim toiduaineteNimed As List(Of String) = ToidudRetseptidK.KiirlisamiseToiduaineNimed
         Dim treeninguteNimed As List(Of String) = TreeningudK.KiirlisamiseTreeninguNimed
+        Dim retseptideNimed As List(Of String) = ToidudRetseptidK.KiirlisamiseRetseptideNimed
 
         For Each nimetus As String In toiduaineteNimed
             cmbToiduaineKiirvalik.Items.Add(nimetus)
             cmbToiduaineValik.Items.Add(nimetus)
             cmbRetseptiKoostisosad.Items.Add(nimetus)
+        Next
+        For Each nimetus As String In retseptideNimed
+            cmbToiduaineKiirvalik.Items.Add(nimetus)
+            cmbToiduaineValik.Items.Add(nimetus)
         Next
         cmbToiduaineKiirvalik.SelectedIndex = 0
         cmbToiduaineValik.SelectedIndex = 0
@@ -395,7 +405,11 @@ Public Class Pohiaken
             lblToiduAineRetseptiLisamineViga.Visible = True
         End If
         If IsNumeric(txtToiduaineKiirvalikKogus.Text) AndAlso txtToiduaineKiirvalikKogus.Text > 0 Then
-            ToidudRetseptidK.KasutajaToiduaineVõiRetseptiLisamine(_kasutaja_id, AnaluusK.KuupaevIntegeriks(Date.Now.Date), toidukord, ToidudRetseptidK.ToiduAineNimiEksisteerib(cmbToiduaineKiirvalik.SelectedItem), txtToiduaineKiirvalikKogus.Text)
+            If ToidudRetseptidK.ToiduAineNimiEksisteerib(cmbToiduaineKiirvalik.SelectedItem) > 0 Then
+                ToidudRetseptidK.KasutajaToiduaineVõiRetseptiLisamine(_kasutaja_id, AnaluusK.KuupaevIntegeriks(Date.Now.Date), toidukord, ToidudRetseptidK.ToiduAineNimiEksisteerib(cmbToiduaineKiirvalik.SelectedItem), txtToiduaineKiirvalikKogus.Text)
+            ElseIf ToidudRetseptidK.RetseptiNimiEksisteerib(cmbToiduaineKiirvalik.SelectedItem) > 0 Then
+                ToidudRetseptidK.KasutajaToiduaineVõiRetseptiLisamine(_kasutaja_id, AnaluusK.KuupaevIntegeriks(Date.Now.Date), toidukord, ToidudRetseptidK.RetseptiNimiEksisteerib(cmbToiduaineKiirvalik.SelectedItem), txtToiduaineKiirvalikKogus.Text)
+            End If
             lblToiduAineRetseptiLisamineViga.Visible = False
             txtToiduaineKiirvalikKogus.Text = ""
         Else
@@ -538,7 +552,24 @@ Public Class Pohiaken
         End If
     End Sub
 
+    Private Sub btnPaevaneKaal_Click(sender As Object, e As EventArgs) Handles btnPaevaneKaal.Click
+        AnaluusK = New AnaluusiKomponent.CAnaluus
+        ProfiilK = New KasutajaProfiilKomponent.CKasutajaProfiil
+
+        If IsNumeric(txtPaevaneKaal.Text) AndAlso txtPaevaneKaal.Text > 0 Then
+            AnaluusK.KaaluLisamine(_kasutaja_id, txtPaevaneKaal.Text)
+            ProfiilK.IntegerAndmeValjaSisestusKasutajaTabelisse(_kasutaja_id, cmbMuudaKaalu.SelectedItem, "weight")
+            lblKasutajaKaal.Text = ProfiilK.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "weight")
+            KomboKastid()
+        Else
+
+        End If
+
+    End Sub
+
     Private Sub btnNaitaYlevaadet_Click(sender As Object, e As EventArgs) Handles btnNaitaYlevaadet.Click
+        chrKaaluMuutumine.Series("Kaal").Points.Clear()
+        chrKaaluMuutumine.Series("Siht Kaal").Points.Clear()
         GraafikuSeadmed()
     End Sub
 End Class
