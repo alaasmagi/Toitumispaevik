@@ -2509,12 +2509,12 @@ Partial Class Pohiaken
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(241, Byte), Integer), CType(CType(239, Byte), Integer))
         Me.ClientSize = New System.Drawing.Size(1068, 573)
+        Me.Controls.Add(Me.pnlKodu)
         Me.Controls.Add(Me.pnlTreeningud)
         Me.Controls.Add(Me.pnlRakenduseInfo)
         Me.Controls.Add(Me.pnlProfiiliSeaded)
         Me.Controls.Add(Me.pnlYlevaade)
         Me.Controls.Add(Me.pnlAjalugu)
-        Me.Controls.Add(Me.pnlKodu)
         Me.Controls.Add(Me.pnlToidulaud)
         Me.Controls.Add(Me.pnlTopBar)
         Me.Controls.Add(Me.pnlLeftBar)

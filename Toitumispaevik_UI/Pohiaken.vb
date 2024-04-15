@@ -268,30 +268,34 @@ Public Class Pohiaken
         ToidudRetseptidK = New ToidudRetseptidKomponent.CToidudJaRetseptid
         TreeningudK = New TreeninguteKomponent.CTreeningud
 
+        Dim mukbangFlag As Integer = 0
+
         cmbMuudaVanust.Items.Clear()
         cmbMuudaKaalu.Items.Clear()
         cmbMuudaPikkust.Items.Clear()
         cmbToiduaineKiirvalik.Items.Clear()
         cmbTreeninguteKiirvalik.Items.Clear()
-        cmbToiduaineValik.Items.Clear()
         cmbRetseptiKoostisosad.Items.Clear()
         cmbTreeninguKustutamine.Items.Clear()
 
-        Dim toiduaineteNimed As List(Of String) = ToidudRetseptidK.KiirlisamiseToiduaineNimed
+        If chbMukbangFilter.Checked = True Then
+            mukbangFlag = 1
+        Else
+            mukbangFlag = 0
+        End If
+
+        Dim toiduaineteNimed As List(Of String) = ToidudRetseptidK.KiirlisamiseToiduaineNimed(mukbangFlag)
+        Dim retseptideNimed As List(Of String) = ToidudRetseptidK.KiirlisamiseRetseptideNimed(mukbangFlag)
         Dim treeninguteNimed As List(Of String) = TreeningudK.KiirlisamiseTreeninguNimed
-        Dim retseptideNimed As List(Of String) = ToidudRetseptidK.KiirlisamiseRetseptideNimed
 
         For Each nimetus As String In toiduaineteNimed
             cmbToiduaineKiirvalik.Items.Add(nimetus)
-            cmbToiduaineValik.Items.Add(nimetus)
             cmbRetseptiKoostisosad.Items.Add(nimetus)
         Next
         For Each nimetus As String In retseptideNimed
             cmbToiduaineKiirvalik.Items.Add(nimetus)
-            cmbToiduaineValik.Items.Add(nimetus)
         Next
         cmbToiduaineKiirvalik.SelectedIndex = 0
-        cmbToiduaineValik.SelectedIndex = 0
         cmbRetseptiKoostisosad.SelectedIndex = 0
 
         For Each nimetus As String In treeninguteNimed
@@ -557,6 +561,7 @@ Public Class Pohiaken
             ProfiilK.IntegerAndmeValjaSisestusKasutajaTabelisse(_kasutaja_id, cmbMuudaKaalu.SelectedItem, "weight")
             lblKasutajaKaal.Text = ProfiilK.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "weight")
             KomboKastid()
+            GraafikuSeaded()
             txtPaevaneKaal.Text = ""
         Else
 
@@ -580,6 +585,8 @@ Public Class Pohiaken
         End If
     End Sub
 
-
+    Private Sub chbMukbangFilter_CheckedChanged(sender As Object, e As EventArgs) Handles chbMukbangFilter.CheckedChanged
+        KomboKastid()
+    End Sub
 End Class
 
