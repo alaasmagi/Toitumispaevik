@@ -274,7 +274,6 @@ Public Class Pohiaken
         cmbToiduaineKiirvalik.Items.Clear()
         cmbTreeninguteKiirvalik.Items.Clear()
         cmbToiduaineValik.Items.Clear()
-        cmbTreeningsessiooniLisamine.Items.Clear()
         cmbRetseptiKoostisosad.Items.Clear()
         cmbTreeninguKustutamine.Items.Clear()
 
@@ -297,12 +296,10 @@ Public Class Pohiaken
 
         For Each nimetus As String In treeninguteNimed
             cmbTreeninguteKiirvalik.Items.Add(nimetus)
-            cmbTreeningsessiooniLisamine.Items.Add(nimetus)
             cmbTreeninguKustutamine.Items.Add(nimetus)
         Next
         cmbTreeninguKustutamine.SelectedIndex = 0
         cmbTreeninguteKiirvalik.SelectedIndex = 0
-        cmbTreeningsessiooniLisamine.SelectedIndex = 0
 
         For index = 140 To 210
             cmbMuudaPikkust.Items.Add(index)
@@ -480,19 +477,7 @@ Public Class Pohiaken
         KomboKastid()
     End Sub
 
-    Private Sub btnTreeningsessiooniLisamine_Click(sender As Object, e As EventArgs)
-        TreeningudK = New TreeninguteKomponent.CTreeningud
-        AnaluusK = New AnaluusiKomponent.CAnaluus
 
-        If IsNumeric(txtTreeningsessiooniLisamineKestus.Text) AndAlso txtTreeningsessiooniLisamineKestus.Text > 0 Then
-            lblTreeningsessiooniLisamineViga.Visible = False
-            TreeningudK.KasutajaTreeninguLisamine(_kasutaja_id, AnaluusK.KuupaevIntegeriks(Date.Now.Date), TreeningudK.TreeninguNimiEksisteerib(cmbTreeningsessiooniLisamine.SelectedItem()), txtTreeningsessiooniLisamineKestus.Text)
-            txtTreeningsessiooniLisamineKestus.Text = ""
-        Else
-            lblTreeningsessiooniLisamineViga.Text = "Viga kestuse sisestuses!"
-            lblTreeningsessiooniLisamineViga.Visible = True
-        End If
-    End Sub
 
     Private Sub btnRetseptLisaKoostisosa_Click(sender As Object, e As EventArgs) Handles btnRetseptLisaKoostisosa.Click
         ToidudRetseptidK = New ToidudRetseptidKomponent.CToidudJaRetseptid
@@ -595,37 +580,6 @@ Public Class Pohiaken
         End If
     End Sub
 
-    Private Sub btnToidukorraLisamine_Click(sender As Object, e As EventArgs) Handles btnToidukorraLisamine.Click
-        Dim toidukord As Integer = 0
-        ToidudRetseptidK = New ToidudRetseptidKomponent.CToidudJaRetseptid
-        AnaluusK = New AnaluusiKomponent.CAnaluus
-
-        If rdbHommik_.Checked = True Then
-            toidukord = 0
-        ElseIf rdbLouna_.Checked = True Then
-            toidukord = 1
-        ElseIf rdbVahepala_.Checked = True Then
-            toidukord = 2
-        ElseIf rdbOhtu_.Checked = True Then
-            toidukord = 3
-        Else
-            lblToidukorraLisamineViga.Text = "Toidukorda pole valitud!"
-            lblToidukorraLisamineViga.Visible = True
-        End If
-        If IsNumeric(txtToidukorraLisamineKogus.Text) AndAlso txtToidukorraLisamineKogus.Text > 0 Then
-            If ToidudRetseptidK.ToiduAineNimiEksisteerib(cmbToiduaineValik.SelectedItem) > 0 Then
-                ToidudRetseptidK.KasutajaToiduaineVõiRetseptiLisamine(_kasutaja_id, AnaluusK.KuupaevIntegeriks(Date.Now.Date), toidukord, ToidudRetseptidK.ToiduAineNimiEksisteerib(cmbToiduaineValik.SelectedItem), txtToidukorraLisamineKogus.Text)
-            ElseIf ToidudRetseptidK.RetseptiNimiEksisteerib(cmbToiduaineValik.SelectedItem) > 0 Then
-                ToidudRetseptidK.KasutajaToiduaineVõiRetseptiLisamine(_kasutaja_id, AnaluusK.KuupaevIntegeriks(Date.Now.Date), toidukord, ToidudRetseptidK.RetseptiNimiEksisteerib(cmbToiduaineValik.SelectedItem), txtToidukorraLisamineKogus.Text)
-            End If
-            lblToidukorraLisamineViga.Visible = False
-            txtToidukorraLisamineKogus.Text = ""
-        Else
-            lblToidukorraLisamineViga.Text = "Viga koguse sisestuses!"
-            lblToidukorraLisamineViga.Visible = True
-        End If
-        KoduGraafik()
-    End Sub
 
 End Class
 
