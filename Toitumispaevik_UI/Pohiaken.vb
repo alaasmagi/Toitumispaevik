@@ -90,6 +90,8 @@ Public Class Pohiaken
         cmbAjaluguGraafikuPeriood.Items.Add("Viimased 6 kuud")
         cmbAjaluguGraafikuPeriood.Items.Add("Viimane aasta")
 
+        lblAjaluguKuupaev.Text = Date.Now.Date()
+
     End Sub
 
     Private Sub GraafikuSeaded()
@@ -469,7 +471,7 @@ Public Class Pohiaken
         KomboKastid()
     End Sub
 
-    Private Sub btnTreeningsessiooniLisamine_Click(sender As Object, e As EventArgs) Handles btnTreeningsessiooniLisamine.Click
+    Private Sub btnTreeningsessiooniLisamine_Click(sender As Object, e As EventArgs)
         TreeningudK = New TreeninguteKomponent.CTreeningud
         AnaluusK = New AnaluusiKomponent.CAnaluus
 
@@ -561,6 +563,7 @@ Public Class Pohiaken
             ProfiilK.IntegerAndmeValjaSisestusKasutajaTabelisse(_kasutaja_id, cmbMuudaKaalu.SelectedItem, "weight")
             lblKasutajaKaal.Text = ProfiilK.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "weight")
             KomboKastid()
+            txtPaevaneKaal.Text = ""
         Else
 
         End If
@@ -577,6 +580,7 @@ Public Class Pohiaken
             ProfiilK.IntegerAndmeValjaSisestusKasutajaTabelisse(_kasutaja_id, txtKaaluEesmärk.Text, "weight_goal")
             tabelSihtKaal = txtKaaluEesmärk.Text
             GraafikuSeaded()
+            txtKaaluEesmärk.Text = ""
         Else
 
         End If
@@ -613,5 +617,6 @@ Public Class Pohiaken
         End If
         KoduGraafik()
     End Sub
+
 End Class
 
