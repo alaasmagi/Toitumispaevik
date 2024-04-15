@@ -183,4 +183,43 @@ Public Class CAnaluus
     Public Function RetseptiToiduaineToitevaartuseArvutus(ByVal toitevaartus100gKohta As Integer, ByVal kogus As Integer) As Integer Implements IAnaluus.RetseptiToiduaineToitevaartuseArvutus
         Return (toitevaartus100gKohta / 100) * kogus
     End Function
+
+    Public Function DBParingBMR(ByVal kasutaja_id As Integer, ByVal sugu As Integer,
+                                ByVal kaal As Double, ByVal pikkus As Integer, ByVal vanus As Integer,
+                                ByVal kcal_limiit As Integer) As Integer Implements IAnaluus.DBParingBMR
+        kcal_limiit = 0
+        Dim tabeli_asukoht As String = $"Data Source={Path.Combine(Path.GetFullPath(Path.Combine _
+        (AppDomain.CurrentDomain.BaseDirectory, "..\..\..\")), "Data", "database.db")};Version=3;"
+        Dim paring As String = "SELECT height, weight, age, sex FROM user_data WHERE user_id = @kasutaja_id;"
+
+        Using connection As New SQLiteConnection(tabeli_asukoht)
+
+            Using command As New SQLiteCommand(paring, connection)
+                command.Parameters.AddWithValue("@kasutaja_id", kasutaja_id)
+                command.Parameters.AddWithValue("@sugu", sugu)
+                command.Parameters.AddWithValue("@kaal", kaal)
+                command.Parameters.AddWithValue("@pikkus", pikkus)
+                command.Parameters.AddWithValue("@vanus", vanus)
+
+                ' Arvutame BMR vastavalt soole
+                If sugu = 0 Then
+                    ' Mees
+                    kcal_limiit = 10 * kaal + 6.25 * pikkus - 5 * vanus + 5
+                Else
+                    ' Naine
+                    kcal_limiit = 10 * kaal + 6.25 * pikkus - 5 * vanus - 161
+                End If
+
+                Dim updateDataSql As String = $"UPDATE user_data SET calorie_limit = @kcal_limiit WHERE user_id = @kasutaja_id;"
+                Using cmdUpdateData As New SQLiteCommand(updateDataSql, connection)
+                    cmdUpdateData.Parameters.AddWithValue("@kasutaja_id", kasutaja_id)
+                    cmdUpdateData.Parameters.AddWithValue("@kcal_limiit", kcal_limiit)
+                    cmdUpdateData.ExecuteNonQuery()
+                End Using
+            End Using
+        End Using
+
+        Return kcal_limiit
+    End Function
+
 End Class

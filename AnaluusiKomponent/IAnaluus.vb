@@ -1,4 +1,6 @@
-﻿Public Interface IAnaluus
+﻿Imports System.IO
+
+Public Interface IAnaluus
     Function PariKaloriUlejaak(tarbitudKcal As Integer, kcalLimiit As Integer) As Integer
     Function PariKcalPaveaHetkest(kuupaev As Integer, kasutaja_id As Integer, toidukord As Integer) As Integer
     Function PariValueMap(keyStr As String) As Integer
@@ -13,4 +15,7 @@
     Function KaaluLisamine(ByVal kasutaja_id As Integer, ByVal kuupaev As Integer, ByVal uus_kaal As Double, ByVal tarbitudKcal As Integer,
                                   ByVal kulutatudKcal As Integer, ByVal kcalBalanss As Integer, ByVal totalCHyd As Integer, ByVal suhkur As Integer,
                                   ByVal valk As Integer, ByVal rasv As Integer) As Double
+    Public Function DBParingBMR(ByVal kasutaja_id As Integer, ByVal sugu As Integer,
+                                ByVal kaal As Double, ByVal pikkus As Integer, ByVal vanus As Integer,
+                                ByVal kcal_limiit As Integer) As Integer
 End Interface
