@@ -76,29 +76,26 @@ Public Class Pohiaken
         End If
         KomboKastid()
         KoduGraafik()
-        GraafikuSeadmed()
+        UlevaatusCmbBox()
         cmbAjaluguGraafikuPeriood.Items.Add("Viimased 7 päeva")
         cmbAjaluguGraafikuPeriood.SelectedItem = "Viimased 7 päeva"
         cmbAjaluguGraafikuPeriood.Items.Add("Viimane kuu")
         cmbAjaluguGraafikuPeriood.Items.Add("Viimased 3 kuud")
         cmbAjaluguGraafikuPeriood.Items.Add("Viimased 6 kuud")
         cmbAjaluguGraafikuPeriood.Items.Add("Viimane aasta")
-        cmbAjaluguGraafikuPeriood.Items.Add("Kogu ajalugu")
 
-        'see on testimiseks kaalu tabelis
+    End Sub
 
-        TabelKaalud = AnaluusK.KaaluParingAndmebaasist(_kasutaja_id, AnaluusK.KuupaevIntegeriks(Date.Now.Date), AnaluusK.PariValueMap(cmbAjaluguGraafikuPeriood.SelectedText))
+    Private Sub GraafikuSeadmed()
+        TabelKaalud = AnaluusK.KaaluParingAndmebaasist(_kasutaja_id, AnaluusK.KuupaevIntegeriks(Date.Now.Date), AnaluusK.PariValueMap(cmbAjaluguGraafikuPeriood.SelectedItem))
 
         For muutuja As Integer = 0 To TabelKaalud.Length - 1 Step +1
             chrKaaluMuutumine.Series("Kaal").Points.AddXY(AnaluusK.IntegerKuupaevaks((AnaluusK.KuupaevIntegeriks(Date.Now.Date) - (TabelKaalud.Length - 1)) + muutuja), TabelKaalud(muutuja))
             chrKaaluMuutumine.Series("Siht Kaal").Points.AddXY(AnaluusK.IntegerKuupaevaks((AnaluusK.KuupaevIntegeriks(Date.Now.Date) - (TabelKaalud.Length - 1)) + muutuja), tabelSihtKaal)
         Next
-
-        'see on testimiseks kaalu tabelis
-
     End Sub
 
-    Private Sub GraafikuSeadmed()
+    Private Sub UlevaatusCmbBox()
         AnaluusK.LisaToValueMap("Viimased 7 päeva", 7)
         AnaluusK.LisaToValueMap("Viimane kuu", 30)
         AnaluusK.LisaToValueMap("Viimased 3 kuud", 91)
@@ -543,6 +540,12 @@ Public Class Pohiaken
             AnaluusK.KaaluLisamine(_kasutaja_id, AnaluusK.KuupaevIntegeriks(Date.Now.Date), txtPaevaneKaal.Text, AnaluusK.PaevaneKcal, 0, 0, 0, 0, 0, 0)
             txtPaevaneKaal.Text = ""
         End If
+    End Sub
+
+    Private Sub btnNaitaYlevaadet_Click(sender As Object, e As EventArgs) Handles btnNaitaYlevaadet.Click
+        chrKaaluMuutumine.Series("Kaal").Points.Clear()
+        chrKaaluMuutumine.Series("Siht Kaal").Points.Clear()
+        GraafikuSeadmed()
     End Sub
 End Class
 

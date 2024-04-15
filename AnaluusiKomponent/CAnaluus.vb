@@ -10,7 +10,6 @@ Public Class CAnaluus
     Private ohtu
     Private vahepala
 
-
     Public Function PariKaloriUlejaak(tarbitudKcal As Integer, KcalLimiit As Integer) As Integer Implements IAnaluus.PariKaloriUlejaak
         If tarbitudKcal > KcalLimiit Then
             Return 0
