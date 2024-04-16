@@ -11,4 +11,5 @@
                                 ByVal retsepti_valgud As Integer, ByVal retsepti_lipiidid As Integer) As Integer
     Function KiirlisamiseRetseptideNimed(ByVal mukbangFlag As Integer) As List(Of String)
     Function LisaRetseptiKoostisosadeTabelisse(ByVal retsepti_id As Integer, ByVal toiduaine_id As Integer, ByVal kogus As Integer) As Integer
+    Function ToiduaineVoiRetseptiKustutamine(ByVal toiduaine_retsepti_id As Integer, ByVal toiduaineFlag As Integer) As Integer
 End Interface

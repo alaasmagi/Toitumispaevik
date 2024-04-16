@@ -24,7 +24,7 @@ Public Class CTreeningud
 
     Public Function GenereeriId() As Integer Implements ITreeningud.GenereeriId
         Dim random As New Random()
-        Dim genereeritudId As Integer = random.Next(1006, 5000)
+        Dim genereeritudId As Integer = random.Next(4006, 4500)
 
         Return genereeritudId
     End Function
@@ -35,7 +35,7 @@ Public Class CTreeningud
                (AppDomain.CurrentDomain.BaseDirectory, "..\..\..\")), "Data", "database.db")};Version=3;"
         Using connection As New SQLiteConnection(tabeli_asukoht)
             connection.Open()
-            For index = 1000 To 5000
+            For index = 4000 To 4500
                 Dim selectSql As String = "SELECT training_name FROM training_data WHERE training_id = @id"
 
                 Using cmd As New SQLiteCommand(selectSql, connection)

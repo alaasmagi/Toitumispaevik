@@ -277,6 +277,7 @@ Public Class Pohiaken
         cmbTreeninguteKiirvalik.Items.Clear()
         cmbRetseptiKoostisosad.Items.Clear()
         cmbTreeninguKustutamine.Items.Clear()
+        cmbToiduaineKustutamine.Items.Clear()
 
         If chbMukbangFilter.Checked = True Then
             mukbangFlag = 1
@@ -290,13 +291,16 @@ Public Class Pohiaken
 
         For Each nimetus As String In toiduaineteNimed
             cmbToiduaineKiirvalik.Items.Add(nimetus)
+            cmbToiduaineKustutamine.Items.Add(nimetus)
             cmbRetseptiKoostisosad.Items.Add(nimetus)
         Next
         For Each nimetus As String In retseptideNimed
             cmbToiduaineKiirvalik.Items.Add(nimetus)
+            cmbToiduaineKustutamine.Items.Add(nimetus)
         Next
         cmbToiduaineKiirvalik.SelectedIndex = 0
         cmbRetseptiKoostisosad.SelectedIndex = 0
+        cmbToiduaineKustutamine.SelectedIndex = 0
 
         For Each nimetus As String In treeninguteNimed
             cmbTreeninguteKiirvalik.Items.Add(nimetus)
@@ -538,7 +542,7 @@ Public Class Pohiaken
         TreeningudK = New TreeninguteKomponent.CTreeningud
 
         Dim treeningu_id = TreeningudK.TreeninguNimiEksisteerib(cmbTreeninguKustutamine.SelectedItem)
-        If treeningu_id < 250 Then
+        If treeningu_id < 4006 Then
             lblKustutaTreeningViga.Text = "Baastreeningut ei saa kustutada!"
             lblKustutaTreeningViga.Visible = True
         Else
@@ -587,6 +591,29 @@ Public Class Pohiaken
 
     Private Sub chbMukbangFilter_CheckedChanged(sender As Object, e As EventArgs) Handles chbMukbangFilter.CheckedChanged
         KomboKastid()
+    End Sub
+
+    Private Sub btnToiduaineKustutamine_Click(sender As Object, e As EventArgs) Handles btnToiduaineKustutamine.Click
+        ToidudRetseptidK = New ToidudRetseptidKomponent.CToidudJaRetseptid
+
+        Dim toiduaine_retsepti_id As Integer?
+        toiduaine_retsepti_id = ToidudRetseptidK.ToiduAineNimiEksisteerib(cmbToiduaineKustutamine.SelectedItem)
+
+        If toiduaine_retsepti_id.HasValue Then
+            If toiduaine_retsepti_id < 2006 Then
+                lblToiduaineKustutamineViga.Text = "Baastoiduainet ei saa kustutada!"
+                lblToiduaineKustutamineViga.Visible = True
+            Else
+                lblToiduaineKustutamineViga.Visible = False
+                ToidudRetseptidK.ToiduaineVoiRetseptiKustutamine(toiduaine_retsepti_id, 1)
+                KomboKastid()
+            End If
+        Else
+            lblToiduaineKustutamineViga.Visible =
+            toiduaine_retsepti_id = ToidudRetseptidK.RetseptiNimiEksisteerib(cmbToiduaineKustutamine.SelectedItem)
+            ToidudRetseptidK.ToiduaineVoiRetseptiKustutamine(toiduaine_retsepti_id, 0)
+            KomboKastid()
+        End If
     End Sub
 End Class
 

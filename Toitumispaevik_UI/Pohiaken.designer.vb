@@ -65,10 +65,10 @@ Partial Class Pohiaken
         Me.btnRetseptLisaKoostisosa = New System.Windows.Forms.Button()
         Me.btnKinnitaRetsept = New System.Windows.Forms.Button()
         Me.GroupBox13 = New System.Windows.Forms.GroupBox()
-        Me.lblToidukorraLisamineViga = New System.Windows.Forms.Label()
+        Me.lblToiduaineKustutamineViga = New System.Windows.Forms.Label()
         Me.Label55 = New System.Windows.Forms.Label()
-        Me.btnToidukorraLisamine = New System.Windows.Forms.Button()
-        Me.cmbToiduaineValik = New System.Windows.Forms.ComboBox()
+        Me.btnToiduaineKustutamine = New System.Windows.Forms.Button()
+        Me.cmbToiduaineKustutamine = New System.Windows.Forms.ComboBox()
         Me.GroupBox7 = New System.Windows.Forms.GroupBox()
         Me.Label39 = New System.Windows.Forms.Label()
         Me.Label38 = New System.Windows.Forms.Label()
@@ -624,10 +624,10 @@ Partial Class Pohiaken
         '
         'GroupBox13
         '
-        Me.GroupBox13.Controls.Add(Me.lblToidukorraLisamineViga)
+        Me.GroupBox13.Controls.Add(Me.lblToiduaineKustutamineViga)
         Me.GroupBox13.Controls.Add(Me.Label55)
-        Me.GroupBox13.Controls.Add(Me.btnToidukorraLisamine)
-        Me.GroupBox13.Controls.Add(Me.cmbToiduaineValik)
+        Me.GroupBox13.Controls.Add(Me.btnToiduaineKustutamine)
+        Me.GroupBox13.Controls.Add(Me.cmbToiduaineKustutamine)
         Me.GroupBox13.Location = New System.Drawing.Point(378, 286)
         Me.GroupBox13.Margin = New System.Windows.Forms.Padding(2)
         Me.GroupBox13.Name = "GroupBox13"
@@ -637,18 +637,18 @@ Partial Class Pohiaken
         Me.GroupBox13.TabStop = False
         Me.GroupBox13.Text = "Toiduaine/retsepti kustutamine andmebaasist"
         '
-        'lblToidukorraLisamineViga
+        'lblToiduaineKustutamineViga
         '
-        Me.lblToidukorraLisamineViga.AutoSize = True
-        Me.lblToidukorraLisamineViga.Font = New System.Drawing.Font("Century Gothic", 12.0!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Italic), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblToidukorraLisamineViga.ForeColor = System.Drawing.Color.Red
-        Me.lblToidukorraLisamineViga.Location = New System.Drawing.Point(42, 145)
-        Me.lblToidukorraLisamineViga.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
-        Me.lblToidukorraLisamineViga.Name = "lblToidukorraLisamineViga"
-        Me.lblToidukorraLisamineViga.Size = New System.Drawing.Size(50, 21)
-        Me.lblToidukorraLisamineViga.TabIndex = 36
-        Me.lblToidukorraLisamineViga.Text = "VIGA"
-        Me.lblToidukorraLisamineViga.Visible = False
+        Me.lblToiduaineKustutamineViga.AutoSize = True
+        Me.lblToiduaineKustutamineViga.Font = New System.Drawing.Font("Century Gothic", 12.0!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Italic), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblToiduaineKustutamineViga.ForeColor = System.Drawing.Color.Red
+        Me.lblToiduaineKustutamineViga.Location = New System.Drawing.Point(42, 145)
+        Me.lblToiduaineKustutamineViga.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.lblToiduaineKustutamineViga.Name = "lblToiduaineKustutamineViga"
+        Me.lblToiduaineKustutamineViga.Size = New System.Drawing.Size(50, 21)
+        Me.lblToiduaineKustutamineViga.TabIndex = 36
+        Me.lblToiduaineKustutamineViga.Text = "VIGA"
+        Me.lblToiduaineKustutamineViga.Visible = False
         '
         'Label55
         '
@@ -661,35 +661,35 @@ Partial Class Pohiaken
         Me.Label55.TabIndex = 30
         Me.Label55.Text = "Nimetus:"
         '
-        'btnToidukorraLisamine
+        'btnToiduaineKustutamine
         '
-        Me.btnToidukorraLisamine.BackColor = System.Drawing.Color.FromArgb(CType(CType(80, Byte), Integer), CType(CType(168, Byte), Integer), CType(CType(160, Byte), Integer))
-        Me.btnToidukorraLisamine.FlatAppearance.BorderSize = 0
-        Me.btnToidukorraLisamine.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(CType(CType(62, Byte), Integer), CType(CType(130, Byte), Integer), CType(CType(124, Byte), Integer))
-        Me.btnToidukorraLisamine.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnToidukorraLisamine.Font = New System.Drawing.Font("Century Gothic", 12.0!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Italic), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnToidukorraLisamine.ForeColor = System.Drawing.SystemColors.Window
-        Me.btnToidukorraLisamine.Location = New System.Drawing.Point(45, 99)
-        Me.btnToidukorraLisamine.Margin = New System.Windows.Forms.Padding(6, 4, 6, 4)
-        Me.btnToidukorraLisamine.Name = "btnToidukorraLisamine"
-        Me.btnToidukorraLisamine.Size = New System.Drawing.Size(355, 35)
-        Me.btnToidukorraLisamine.TabIndex = 29
-        Me.btnToidukorraLisamine.Text = "Kustuta toiduaine/retsept"
-        Me.btnToidukorraLisamine.UseVisualStyleBackColor = False
+        Me.btnToiduaineKustutamine.BackColor = System.Drawing.Color.FromArgb(CType(CType(80, Byte), Integer), CType(CType(168, Byte), Integer), CType(CType(160, Byte), Integer))
+        Me.btnToiduaineKustutamine.FlatAppearance.BorderSize = 0
+        Me.btnToiduaineKustutamine.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(CType(CType(62, Byte), Integer), CType(CType(130, Byte), Integer), CType(CType(124, Byte), Integer))
+        Me.btnToiduaineKustutamine.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnToiduaineKustutamine.Font = New System.Drawing.Font("Century Gothic", 12.0!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Italic), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnToiduaineKustutamine.ForeColor = System.Drawing.SystemColors.Window
+        Me.btnToiduaineKustutamine.Location = New System.Drawing.Point(45, 99)
+        Me.btnToiduaineKustutamine.Margin = New System.Windows.Forms.Padding(6, 4, 6, 4)
+        Me.btnToiduaineKustutamine.Name = "btnToiduaineKustutamine"
+        Me.btnToiduaineKustutamine.Size = New System.Drawing.Size(355, 35)
+        Me.btnToiduaineKustutamine.TabIndex = 29
+        Me.btnToiduaineKustutamine.Text = "Kustuta toiduaine/retsept"
+        Me.btnToiduaineKustutamine.UseVisualStyleBackColor = False
         '
-        'cmbToiduaineValik
+        'cmbToiduaineKustutamine
         '
-        Me.cmbToiduaineValik.DropDownHeight = 100
-        Me.cmbToiduaineValik.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cmbToiduaineValik.Font = New System.Drawing.Font("Century Gothic", 11.25!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.cmbToiduaineValik.FormattingEnabled = True
-        Me.cmbToiduaineValik.IntegralHeight = False
-        Me.cmbToiduaineValik.ItemHeight = 18
-        Me.cmbToiduaineValik.Location = New System.Drawing.Point(122, 60)
-        Me.cmbToiduaineValik.Margin = New System.Windows.Forms.Padding(2)
-        Me.cmbToiduaineValik.Name = "cmbToiduaineValik"
-        Me.cmbToiduaineValik.Size = New System.Drawing.Size(278, 26)
-        Me.cmbToiduaineValik.TabIndex = 24
+        Me.cmbToiduaineKustutamine.DropDownHeight = 100
+        Me.cmbToiduaineKustutamine.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cmbToiduaineKustutamine.Font = New System.Drawing.Font("Century Gothic", 11.25!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmbToiduaineKustutamine.FormattingEnabled = True
+        Me.cmbToiduaineKustutamine.IntegralHeight = False
+        Me.cmbToiduaineKustutamine.ItemHeight = 18
+        Me.cmbToiduaineKustutamine.Location = New System.Drawing.Point(122, 60)
+        Me.cmbToiduaineKustutamine.Margin = New System.Windows.Forms.Padding(2)
+        Me.cmbToiduaineKustutamine.Name = "cmbToiduaineKustutamine"
+        Me.cmbToiduaineKustutamine.Size = New System.Drawing.Size(278, 26)
+        Me.cmbToiduaineKustutamine.TabIndex = 24
         '
         'GroupBox7
         '
@@ -1574,7 +1574,7 @@ Partial Class Pohiaken
         Me.lblKustutaTreeningViga.AutoSize = True
         Me.lblKustutaTreeningViga.Font = New System.Drawing.Font("Century Gothic", 12.0!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Italic), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblKustutaTreeningViga.ForeColor = System.Drawing.Color.Red
-        Me.lblKustutaTreeningViga.Location = New System.Drawing.Point(386, 138)
+        Me.lblKustutaTreeningViga.Location = New System.Drawing.Point(276, 143)
         Me.lblKustutaTreeningViga.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.lblKustutaTreeningViga.Name = "lblKustutaTreeningViga"
         Me.lblKustutaTreeningViga.Size = New System.Drawing.Size(50, 21)
@@ -2509,13 +2509,13 @@ Partial Class Pohiaken
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(241, Byte), Integer), CType(CType(239, Byte), Integer))
         Me.ClientSize = New System.Drawing.Size(1068, 573)
-        Me.Controls.Add(Me.pnlKodu)
+        Me.Controls.Add(Me.pnlToidulaud)
         Me.Controls.Add(Me.pnlTreeningud)
+        Me.Controls.Add(Me.pnlKodu)
         Me.Controls.Add(Me.pnlRakenduseInfo)
         Me.Controls.Add(Me.pnlProfiiliSeaded)
         Me.Controls.Add(Me.pnlYlevaade)
         Me.Controls.Add(Me.pnlAjalugu)
-        Me.Controls.Add(Me.pnlToidulaud)
         Me.Controls.Add(Me.pnlTopBar)
         Me.Controls.Add(Me.pnlLeftBar)
         Me.Font = New System.Drawing.Font("Century Gothic", 12.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -2732,10 +2732,10 @@ Partial Class Pohiaken
     Friend WithEvents Label47 As Label
     Friend WithEvents Label45 As Label
     Friend WithEvents GroupBox13 As GroupBox
-    Friend WithEvents lblToidukorraLisamineViga As Label
+    Friend WithEvents lblToiduaineKustutamineViga As Label
     Friend WithEvents Label55 As Label
-    Friend WithEvents btnToidukorraLisamine As Button
-    Friend WithEvents cmbToiduaineValik As ComboBox
+    Friend WithEvents btnToiduaineKustutamine As Button
+    Friend WithEvents cmbToiduaineKustutamine As ComboBox
     Friend WithEvents GroupBox14 As GroupBox
     Friend WithEvents GroupBox15 As GroupBox
     Friend WithEvents btnPaevaneKaal As Button
