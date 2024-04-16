@@ -85,13 +85,14 @@ Public Class Pohiaken
         KoduGraafik()
         UlevaatusCmbBox()
         cmbAjaluguGraafikuPeriood.Items.Add("Viimased 7 päeva")
-        cmbAjaluguGraafikuPeriood.SelectedItem = "Viimased 7 päeva"
         cmbAjaluguGraafikuPeriood.Items.Add("Viimane kuu")
         cmbAjaluguGraafikuPeriood.Items.Add("Viimased 3 kuud")
         cmbAjaluguGraafikuPeriood.Items.Add("Viimased 6 kuud")
         cmbAjaluguGraafikuPeriood.Items.Add("Viimane aasta")
-
+        cmbAjaluguGraafikuPeriood.SelectedIndex = 0
         lblAjaluguKuupaev.Text = Date.Now.Date()
+
+        GraafikuSeaded()
 
     End Sub
 
@@ -562,7 +563,7 @@ Public Class Pohiaken
 
         If IsNumeric(txtPaevaneKaal.Text) AndAlso txtPaevaneKaal.Text > 0 Then
             AnaluusK.KaaluLisamine(_kasutaja_id, txtPaevaneKaal.Text)
-            ProfiilK.IntegerAndmeValjaSisestusKasutajaTabelisse(_kasutaja_id, cmbMuudaKaalu.SelectedItem, "weight")
+            ProfiilK.IntegerAndmeValjaSisestusKasutajaTabelisse(_kasutaja_id, txtPaevaneKaal.Text, "weight")
             lblKasutajaKaal.Text = ProfiilK.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "weight")
             KomboKastid()
             GraafikuSeaded()
