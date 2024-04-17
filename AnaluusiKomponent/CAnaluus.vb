@@ -211,4 +211,8 @@ Public Class CAnaluus
     Public Function RetseptiToiduaineToitevaartuseArvutus(ByVal toitevaartus100gKohta As Integer, ByVal kogus As Integer) As Integer Implements IAnaluus.RetseptiToiduaineToitevaartuseArvutus
         Return (toitevaartus100gKohta / 100) * kogus
     End Function
+
+    Public Function PaevaseReaUuendamine(ByVal kasutaja_id As Integer, ByVal kuupaev As Integer) As Integer
+        Return 0
+    End Function
 End Class

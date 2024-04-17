@@ -90,6 +90,12 @@ Public Class Pohiaken
         cmbAjaluguGraafikuPeriood.Items.Add("Viimased 6 kuud")
         cmbAjaluguGraafikuPeriood.Items.Add("Viimane aasta")
         cmbAjaluguGraafikuPeriood.SelectedIndex = 0
+
+        cmbKaaluTrend.Items.Add("Kaalu langus")
+        cmbKaaluTrend.Items.Add("Kaalu hoidmine")
+        cmbKaaluTrend.Items.Add("Kaalu tõus")
+        cmbKaaluTrend.SelectedIndex = 1
+
         lblAjaluguKuupaev.Text = Date.Now.Date()
 
         GraafikuSeaded()
@@ -269,7 +275,7 @@ Public Class Pohiaken
         ToidudRetseptidK = New ToidudRetseptidKomponent.CToidudJaRetseptid
         TreeningudK = New TreeninguteKomponent.CTreeningud
 
-        Dim mukbangFlag As Integer = 0
+        Dim mukbangFlag As Integer
 
         cmbMuudaVanust.Items.Clear()
         cmbMuudaKaalu.Items.Clear()
@@ -432,22 +438,6 @@ Public Class Pohiaken
         Else
             lblToiduAineRetseptiLisamineViga.Text = "Viga koguse sisestuses!"
             lblToiduAineRetseptiLisamineViga.Visible = True
-        End If
-        KoduGraafik()
-    End Sub
-
-    Private Sub btnKaloriLimiit_Click(sender As Object, e As EventArgs) Handles btnKaloriLimiit.Click
-        ProfiilK = New KasutajaProfiilKomponent.CKasutajaProfiil
-        If IsNumeric(txtKalorilimiit.Text) AndAlso txtKalorilimiit.Text >= 0 Then
-            ProfiilK.IntegerAndmeValjaSisestusKasutajaTabelisse(_kasutaja_id, txtKalorilimiit.Text, "calorie_limit")
-            Integer.TryParse(txtKalorilimiit.Text, kalorilimiit)
-            txtKalorilimiit.Text = ""
-            lblKaloriLimiitViga.Visible = False
-            lblKoduSoovitus.Visible = False
-            lblKoduSoovitus2.Visible = False
-        Else
-            lblKaloriLimiitViga.Text = "Viga limiidi seadmisel!"
-            lblKaloriLimiitViga.Visible = True
         End If
         KoduGraafik()
     End Sub
