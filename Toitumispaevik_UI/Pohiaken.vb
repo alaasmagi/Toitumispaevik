@@ -219,6 +219,7 @@ Public Class Pohiaken
         pnlProfiiliSeaded.Visible = False
         pnlRakenduseInfo.Visible = False
         pnlAjalugu.Visible = True
+        MakroGraafik()
     End Sub
 
     Private Sub btnTulevik_Click(sender As Object, e As EventArgs)
@@ -621,6 +622,20 @@ Public Class Pohiaken
             ToidudRetseptidK.ToiduaineVoiRetseptiKustutamine(toiduaine_retsepti_id, 0)
             KomboKastid()
         End If
+    End Sub
+
+    Private Sub MakroGraafik()
+        chrAjalooPaneel.Series("Makrod").Points.Clear()
+        AnaluusK = New AnaluusiKomponent.CAnaluus
+
+        chrAjalooPaneel.Series("Makrod").Points.AddXY("Süsivesikud", AnaluusK.PariMakroaineKogus(AnaluusK.KuupaevIntegeriks(Date.Now.Date), _kasutaja_id, "total_c_hydrates"))
+
+        chrAjalooPaneel.Series("Makrod").Points.AddXY("Suhkrud", AnaluusK.PariMakroaineKogus(AnaluusK.KuupaevIntegeriks(Date.Now.Date), _kasutaja_id, "total_sugar"))
+
+        chrAjalooPaneel.Series("Makrod").Points.AddXY("Valgud", AnaluusK.PariMakroaineKogus(AnaluusK.KuupaevIntegeriks(Date.Now.Date), _kasutaja_id, "total_protein"))
+
+        chrAjalooPaneel.Series("Makrod").Points.AddXY("Rasvad", AnaluusK.PariMakroaineKogus(AnaluusK.KuupaevIntegeriks(Date.Now.Date), _kasutaja_id, "total_lipid"))
+
     End Sub
 End Class
 

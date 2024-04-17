@@ -246,11 +246,11 @@ Public Class CToidudJaRetseptid
             Using cmd As New SQLiteCommand(deleteSql, connection)
                 cmd.Parameters.AddWithValue("@toiduaine_retsepti_id", toiduaine_retsepti_id)
                 Dim rowsAffected As Integer = cmd.ExecuteNonQuery()
-                    If rowsAffected > 0 Then
-                        tulemus = 1
-                    End If
-                End Using
+                If rowsAffected > 0 Then
+                    tulemus = 1
+                End If
             End Using
+        End Using
         Return tulemus
     End Function
 End Class
