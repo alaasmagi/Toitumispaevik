@@ -4,11 +4,45 @@ Public Class CAnaluus
 
     Implements IAnaluus
 
-    Private valueMap As New Dictionary(Of String, Integer)()
     Private hommik
     Private louna
     Private ohtu
     Private vahepala
+
+    Public Function PaevaseAndmereaParing(ByVal kasutaja_id As Integer, ByVal kuupaev As Integer) As Integer Implements IAnaluus.PaevaseAndmereaParing
+        Dim paevaneKcal As Integer = -1
+        Dim tabeli_asukoht As String = $"Data Source={Path.Combine(Path.GetFullPath(Path.Combine _
+        (AppDomain.CurrentDomain.BaseDirectory, "..\..\..\")), "Data", "database.db")};Version=3;"
+        Using connection As New SQLiteConnection(tabeli_asukoht)
+            connection.Open()
+            Dim selectSql As String = "SELECT energy_intake FROM user_daily_data WHERE user_id = @kasutaja_id AND date = @kuupaev"
+            Using cmd As New SQLiteCommand(selectSql, connection)
+                cmd.Parameters.AddWithValue("@kasutaja_id", kasutaja_id)
+                cmd.Parameters.AddWithValue("@kuupaev", kuupaev)
+                Dim result As Object = cmd.ExecuteScalar()
+                If result IsNot Nothing AndAlso Not DBNull.Value.Equals(result) Then
+                    paevaneKcal = Convert.ToInt32(result)
+                End If
+            End Using
+        End Using
+        Return paevaneKcal
+    End Function
+
+    Public Function TuhjaPaevaseAndmereaSisestus(ByVal kasutaja_id As Integer, ByVal kuupaev As Integer) As Integer Implements IAnaluus.TuhjaPaevaseAndmereaSisestus
+        Dim tabeli_asukoht As String = $"Data Source={Path.Combine(Path.GetFullPath(Path.Combine _
+       (AppDomain.CurrentDomain.BaseDirectory, "..\..\..\")), "Data", "database.db")};Version=3;"
+        Using connection As New SQLiteConnection(tabeli_asukoht)
+            connection.Open()
+            Dim selectSql As String = "INSERT INTO user_daily_data (user_id, date, daily_weight, energy_intake, energy_consumption, energy_balance, total_c_hydrates, total_sugar,
+                                        total_protein, total_lipid) VALUES (@kasutaja_id, @kuupaev, 0, 0, 0, 0, 0, 0, 0, 0)"
+            Using cmd As New SQLiteCommand(selectSql, connection)
+                cmd.Parameters.AddWithValue("@kasutaja_id", kasutaja_id)
+                cmd.Parameters.AddWithValue("@kuupaev", kuupaev)
+                cmd.ExecuteNonQuery()
+            End Using
+        End Using
+        Return kasutaja_id
+    End Function
 
     Public Function PariKaloriUlejaak(tarbitudKcal As Integer, KcalLimiit As Integer) As Integer Implements IAnaluus.PariKaloriUlejaak
         If tarbitudKcal > KcalLimiit Then
@@ -37,14 +71,14 @@ Public Class CAnaluus
         Return 0
     End Function
 
-    Public Function PariValueMap(keyStr As String) As Integer Implements IAnaluus.PariValueMap
+    Public Function PariValueMap(keyStr As String, ByVal valueMap As Dictionary(Of String, Integer)) As Integer Implements IAnaluus.PariValueMap
         If valueMap.ContainsKey(keyStr) Then
             Return valueMap(keyStr)
         End If
         Return 0
     End Function
 
-    Public Sub LisaValueMap(newKeyStr As String, newValue As Integer) Implements IAnaluus.LisaToValueMap
+    Public Sub LisaValueMap(newKeyStr As String, newValue As Integer, ByVal valueMap As Dictionary(Of String, Integer)) Implements IAnaluus.LisaValueMap
         If Not valueMap.ContainsKey(newKeyStr) Then
             valueMap.Add(newKeyStr, newValue)
         End If
@@ -87,7 +121,7 @@ Public Class CAnaluus
         Dim tabeli_asukoht As String = $"Data Source={Path.Combine(Path.GetFullPath(Path.Combine _
     (AppDomain.CurrentDomain.BaseDirectory, "..\..\..\")), "Data", "database.db")};Version=3;"
 
-        Dim paring As String = "SELECT daily_weight FROM user_daily_data WHERE user_id = @kasutaja_id AND date BETWEEN @startDate AND @endDate ORDER BY date DESC;"
+        Dim paring As String = "SELECT daily_weight FROM user_daily_data WHERE user_id = @kasutaja_id AND date BETWEEN @startDate AND @endDate ORDER BY date ASC;"
         Dim doubleValues As New List(Of Double)
 
         Using connection As New SQLiteConnection(tabeli_asukoht)
@@ -113,22 +147,34 @@ Public Class CAnaluus
     Public Function KaaluLisamine(ByVal kasutaja_id As Integer, ByVal kuupaev As Integer, ByVal uus_kaal As Double, ByVal tarbitudKcal As Integer,
                                   ByVal kulutatudKcal As Integer, ByVal kcalBalanss As Integer, ByVal totalCHyd As Integer, ByVal suhkur As Integer,
                                   ByVal valk As Integer, ByVal rasv As Integer) As Double Implements IAnaluus.KaaluLisamine
-        Dim tabeli_asukoht As String = $"Data Source={Path.Combine(Path.GetFullPath(Path.Combine _
-        (AppDomain.CurrentDomain.BaseDirectory, "..\..\..\")), "Data", "database.db")};Version=3;"
 
-        Dim kasutaja_olemas As Boolean = False
+    Public Function KaaluDateParingAndmebaasist(ByVal kasutaja_id As Integer, ByVal kuupaev As Integer, ByVal graafikuPikkus As Integer) As Integer() Implements IAnaluus.KaaluDateParingAndmebaasist
+        Dim tabeli_asukoht As String = $"Data Source={Path.Combine(Path.GetFullPath(Path.Combine _
+    (AppDomain.CurrentDomain.BaseDirectory, "..\..\..\")), "Data", "database.db")};Version=3;"
+
+        Dim paring As String = "SELECT date FROM user_daily_data WHERE user_id = @kasutaja_id AND date BETWEEN @startDate AND @endDate ORDER BY date ASC;"
+        Dim intValues As New List(Of Integer)
 
         Using connection As New SQLiteConnection(tabeli_asukoht)
-            connection.Open()
+            Using command As New SQLiteCommand(paring, connection)
+                command.Parameters.AddWithValue("@kasutaja_id", kasutaja_id)
+                Dim startDate As Integer = kuupaev - graafikuPikkus
+                Dim endDate As Integer = kuupaev
+                command.Parameters.AddWithValue("@startDate", startDate)
+                command.Parameters.AddWithValue("@endDate", endDate)
 
-            Dim checkUserSql As String = $"SELECT COUNT(*) FROM user_daily_data WHERE user_id = @kasutaja_id;"
-            Using cmdCheckUser As New SQLiteCommand(checkUserSql, connection)
-                cmdCheckUser.Parameters.AddWithValue("@kasutaja_id", kasutaja_id)
-                Dim kasutaja_olemas_tulemus As Integer = CInt(cmdCheckUser.ExecuteScalar())
-                If kasutaja_olemas_tulemus > 0 Then
-                    kasutaja_olemas = True
-                End If
+                connection.Open()
+
+                Using reader As SQLiteDataReader = command.ExecuteReader()
+                    While reader.Read()
+                        intValues.Add(reader.GetDouble(0))
+                    End While
+                End Using
+
             End Using
+        End Using
+        Return intValues.ToArray()
+    End Function
 
             If kasutaja_olemas Then
                 Dim updateDataSql As String = $"UPDATE user_daily_data SET daily_weight = @kaal WHERE user_id = @kasutaja_id;"
@@ -156,8 +202,20 @@ Public Class CAnaluus
                     cmdInsertData.ExecuteNonQuery()
                 End Using
             End If
+    Public Function KaaluLisamine(ByVal kasutaja_id As Integer, ByVal uus_kaal As Double) As Double Implements IAnaluus.KaaluLisamine
+        Dim kuupaev As Integer = KuupaevIntegeriks(Date.Now.Date)
+        Dim tabeli_asukoht As String = $"Data Source={Path.Combine(Path.GetFullPath(Path.Combine _
+        (AppDomain.CurrentDomain.BaseDirectory, "..\..\..\")), "Data", "database.db")};Version=3;"
+        Using connection As New SQLiteConnection(tabeli_asukoht)
+            connection.Open()
+            Dim updateDataSql As String = $"UPDATE user_daily_data SET daily_weight = @kaal WHERE user_id = @kasutaja_id AND date = @kuupaev;"
+            Using cmdUpdateData As New SQLiteCommand(updateDataSql, connection)
+                cmdUpdateData.Parameters.AddWithValue("@kasutaja_id", kasutaja_id)
+                cmdUpdateData.Parameters.AddWithValue("@kaal", uus_kaal)
+                cmdUpdateData.Parameters.AddWithValue("@kuupaev", kuupaev)
+                cmdUpdateData.ExecuteNonQuery()
+            End Using
         End Using
-
         Return uus_kaal
     End Function
 
