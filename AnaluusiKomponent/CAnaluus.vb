@@ -229,14 +229,14 @@ Public Class CAnaluus
                     kulutatudKcal = Convert.ToInt32(result)
                 End If
             End Using
-            ' Kaalu tõstmine
+            ' Kaalu tõstmine (u 0,5 kg nädalas)
             If (kaal < kaaluEesmark) Then
                 If sugu = 0 Then
                     kcal_limiit = 10 * kaal + 6.25 * pikkus - 5 * vanus + 5 + kulutatudKcal + 500
                 Else
                     kcal_limiit = 10 * kaal + 6.25 * pikkus - 5 * vanus - 161 + kulutatudKcal + 500
                 End If
-                ' Kaalu langetamine
+                ' Kaalu langetamine (u 0,5 kg nädalas)
             ElseIf (kaal > kaaluEesmark) Then
                 If sugu = 0 Then
                     kcal_limiit = 10 * kaal + 6.25 * pikkus - 5 * vanus + 5 + kulutatudKcal - 500
