@@ -14,6 +14,8 @@
     Function PaevaseAndmereaParing(ByVal kasutaja_id As Integer, ByVal kuupaev As Integer) As Integer
     Function TuhjaPaevaseAndmereaSisestus(ByVal kasutaja_id As Integer, ByVal kuupaev As Integer) As Integer
     Function KaaluDateParingAndmebaasist(ByVal kasutaja_id As Integer, ByVal kuupaev As Integer, ByVal graafikuPikkus As Integer) As Integer()
+    Function MakroaineParingAndmebaasist(ByVal kasutaja_id As Integer, ByVal kuupaev As Integer, ByVal makroaine As String) As Double()
+    Function PariMakroaineKogus(kuupaev As Integer, kasutaja_id As Integer, makroaine As String) As Integer
 End Interface
 
 
