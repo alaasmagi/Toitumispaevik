@@ -1,5 +1,6 @@
 ﻿Imports System.Data.Entity.Core.Mapping
 Imports System.Data.SQLite
+Imports System.Drawing.Text
 Imports System.IO
 Imports System.Security.Authentication.ExtendedProtection
 Imports System.Windows.Forms.VisualStyles
@@ -44,6 +45,10 @@ Public Class Pohiaken
         If AnaluusK.PaevaseAndmereaParing(_kasutaja_id, AnaluusK.KuupaevIntegeriks(Date.Now.Date)) = -1 Then
             AnaluusK.TuhjaPaevaseAndmereaSisestus(_kasutaja_id, AnaluusK.KuupaevIntegeriks(Date.Now.Date))
         End If
+
+        AnaluusK.DBParingBMR(_kasutaja_id, ProfiilK.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "sex"), ProfiilK.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "weight"),
+                             ProfiilK.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "height"), ProfiilK.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "age"),
+                             ProfiilK.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "calorie_limit"), AnaluusK.KuupaevIntegeriks(Date.Now.Date))
 
         TuhjendaKonteiner(Me)
         pnlLogo.Visible = True
@@ -110,9 +115,14 @@ Public Class Pohiaken
                 chrKaaluMuutumine.Series("Siht Kaal").Points.AddXY(AnaluusK.IntegerKuupaevaks(DateTabelKaalud(muutuja - 1)), tabelSihtKaal)
                 muutuja -= 1
             Else
-                chrKaaluMuutumine.Series("Kaal").Points.AddXY(AnaluusK.IntegerKuupaevaks(DateTabelKaalud(muutuja)), TabelKaalud(muutuja))
+                If muutuja = TabelKaalud.Length - 1 AndAlso TabelKaalud(muutuja) = 0 Then
+                    chrKaaluMuutumine.Series("Kaal").Points.AddXY(AnaluusK.IntegerKuupaevaks(DateTabelKaalud(muutuja)), TabelKaalud(muutuja - 1))
+                Else
+                    chrKaaluMuutumine.Series("Kaal").Points.AddXY(AnaluusK.IntegerKuupaevaks(DateTabelKaalud(muutuja)), TabelKaalud(muutuja))
+                End If
                 chrKaaluMuutumine.Series("Siht Kaal").Points.AddXY(AnaluusK.IntegerKuupaevaks(DateTabelKaalud(muutuja)), tabelSihtKaal)
             End If
+
         Next
     End Sub
 
@@ -629,6 +639,10 @@ Public Class Pohiaken
         chrAjalooPaneel.Series("Makrod").Points.AddXY("Valgud", AnaluusK.PariMakroaineKogus(AnaluusK.KuupaevIntegeriks(Date.Now.Date), _kasutaja_id, "total_protein"))
 
         chrAjalooPaneel.Series("Makrod").Points.AddXY("Rasvad", AnaluusK.PariMakroaineKogus(AnaluusK.KuupaevIntegeriks(Date.Now.Date), _kasutaja_id, "total_lipid"))
+
+    End Sub
+
+    Private Sub GroupBox12_Enter(sender As Object, e As EventArgs) Handles GroupBox12.Enter
 
     End Sub
 End Class
