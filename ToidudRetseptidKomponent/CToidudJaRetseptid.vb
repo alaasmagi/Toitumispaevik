@@ -8,7 +8,7 @@ Public Class CToidudJaRetseptid
     Public Function LisaToiduaine(ByVal toiduainenimi As String, ByVal energia As Double, ByVal valgud As Double,
                                    ByVal susivesikud As Double, ByVal rasvad As Double, ByVal suhkrud As Double) As Integer Implements IToidudjaRetseptid.LisaToiduaine
 
-        Dim toiduaine_id As Integer = GenereeriId()
+        Dim toiduaine_id As Integer = GenereeriId(1)
 
         Dim tabeli_asukoht As String = $"Data Source={Path.Combine(Path.GetFullPath(Path.Combine _
         (AppDomain.CurrentDomain.BaseDirectory, "..\..\..\")), "Data", "database.db")};Version=3;"
@@ -33,7 +33,7 @@ Public Class CToidudJaRetseptid
 
     Public Function LisaRetsept(ByVal retsepti_nimi As String, ByVal retsepti_kcal As Integer, ByVal retsepti_susivesikud As Integer, ByVal retsepti_suhkur As Integer,
                                 ByVal retsepti_valgud As Integer, ByVal retsepti_lipiidid As Integer) As Integer Implements IToidudjaRetseptid.LisaRetsept
-        Dim retsepti_id As Integer = GenereeriId()
+        Dim retsepti_id As Integer = GenereeriId(0)
         Dim tabeli_asukoht As String = $"Data Source={Path.Combine(Path.GetFullPath(Path.Combine _
         (AppDomain.CurrentDomain.BaseDirectory, "..\..\..\")), "Data", "database.db")};Version=3;"
         Using connection As New SQLiteConnection(tabeli_asukoht)
@@ -55,21 +55,31 @@ Public Class CToidudJaRetseptid
         Return retsepti_id
     End Function
 
-    Private Function GenereeriId() As Integer Implements IToidudjaRetseptid.GenereeriId
+    Private Function GenereeriId(ByVal toiduaineFlag As Integer) As Integer Implements IToidudjaRetseptid.GenereeriId
         Dim random As New Random()
-        Dim genereeritudId As Integer = random.Next(0, 250)
+        Dim genereeritudId As Integer
+        If toiduaineFlag = 1 Then
+            genereeritudId = random.Next(2006, 2500)
+        Else
+            genereeritudId = random.Next(3000, 4000)
+        End If
 
         Return genereeritudId
     End Function
 
-    Public Function KiirlisamiseToiduaineNimed() As List(Of String) Implements IToidudjaRetseptid.KiirlisamiseToiduaineNimed
+    Public Function KiirlisamiseToiduaineNimed(ByVal mukbangFlag As Integer) As List(Of String) Implements IToidudjaRetseptid.KiirlisamiseToiduaineNimed
         Dim toiduaineteNimed As New List(Of String)()
         Dim tabeli_asukoht As String = $"Data Source={Path.Combine(Path.GetFullPath(Path.Combine _
                (AppDomain.CurrentDomain.BaseDirectory, "..\..\..\")), "Data", "database.db")};Version=3;"
         Using connection As New SQLiteConnection(tabeli_asukoht)
             connection.Open()
-            For index = 0 To 250
-                Dim selectSql As String = "SELECT food_name FROM food_data WHERE food_id = @id"
+            Dim selectSql As String
+            For index = 2000 To 2500
+                If mukbangFlag = 1 Then
+                    selectSql = "SELECT food_name FROM food_data WHERE food_id = @id ORDER BY energy DESC"
+                Else
+                    selectSql = "SELECT food_name FROM food_data WHERE food_id = @id"
+                End If
 
                 Using cmd As New SQLiteCommand(selectSql, connection)
                     cmd.Parameters.AddWithValue("@id", index)

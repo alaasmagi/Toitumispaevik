@@ -24,7 +24,7 @@ Public Class CTreeningud
 
     Public Function GenereeriId() As Integer Implements ITreeningud.GenereeriId
         Dim random As New Random()
-        Dim genereeritudId As Integer = random.Next(250, 500)
+        Dim genereeritudId As Integer = random.Next(4006, 4500)
 
         Return genereeritudId
     End Function
@@ -35,7 +35,7 @@ Public Class CTreeningud
                (AppDomain.CurrentDomain.BaseDirectory, "..\..\..\")), "Data", "database.db")};Version=3;"
         Using connection As New SQLiteConnection(tabeli_asukoht)
             connection.Open()
-            For index = 245 To 500
+            For index = 4000 To 4500
                 Dim selectSql As String = "SELECT training_name FROM training_data WHERE training_id = @id"
 
                 Using cmd As New SQLiteCommand(selectSql, connection)
@@ -119,7 +119,7 @@ Public Class CTreeningud
             Dim deleteSql As String = $"DELETE FROM training_data WHERE training_id = @treeningu_id"
             Using cmd As New SQLiteCommand(deleteSql, connection)
                 cmd.Parameters.AddWithValue("@treeningu_id", treeningu_id)
-                Dim rowsAffected As Integer = cmd.ExecuteNonQuery() ' Execute the deletion
+                Dim rowsAffected As Integer = cmd.ExecuteNonQuery()
                 If rowsAffected > 0 Then
                     tulemus = 1
                 End If
