@@ -144,10 +144,22 @@ Public Class CAnaluus
         End Using
         Return doubleValues.ToArray()
     End Function
-    Public Function KaaluLisamine(ByVal kasutaja_id As Integer, ByVal kuupaev As Integer, ByVal uus_kaal As Double, ByVal tarbitudKcal As Integer,
-                                  ByVal kulutatudKcal As Integer, ByVal kcalBalanss As Integer, ByVal totalCHyd As Integer, ByVal suhkur As Integer,
-                                  ByVal valk As Integer, ByVal rasv As Integer) As Double Implements IAnaluus.KaaluLisamine
-
+    Public Function KaaluLisamine(ByVal kasutaja_id As Integer, ByVal uus_kaal As Double) As Double Implements IAnaluus.KaaluLisamine
+        Dim kuupaev As Integer = KuupaevIntegeriks(Date.Now.Date)
+        Dim tabeli_asukoht As String = $"Data Source={Path.Combine(Path.GetFullPath(Path.Combine _
+        (AppDomain.CurrentDomain.BaseDirectory, "..\..\..\")), "Data", "database.db")};Version=3;"
+        Using connection As New SQLiteConnection(tabeli_asukoht)
+            connection.Open()
+            Dim updateDataSql As String = $"UPDATE user_daily_data SET daily_weight = @kaal WHERE user_id = @kasutaja_id AND date = @kuupaev;"
+            Using cmdUpdateData As New SQLiteCommand(updateDataSql, connection)
+                cmdUpdateData.Parameters.AddWithValue("@kasutaja_id", kasutaja_id)
+                cmdUpdateData.Parameters.AddWithValue("@kaal", uus_kaal)
+                cmdUpdateData.Parameters.AddWithValue("@kuupaev", kuupaev)
+                cmdUpdateData.ExecuteNonQuery()
+            End Using
+        End Using
+        Return uus_kaal
+    End Function
     Public Function KaaluDateParingAndmebaasist(ByVal kasutaja_id As Integer, ByVal kuupaev As Integer, ByVal graafikuPikkus As Integer) As Integer() Implements IAnaluus.KaaluDateParingAndmebaasist
         Dim tabeli_asukoht As String = $"Data Source={Path.Combine(Path.GetFullPath(Path.Combine _
     (AppDomain.CurrentDomain.BaseDirectory, "..\..\..\")), "Data", "database.db")};Version=3;"
@@ -174,49 +186,6 @@ Public Class CAnaluus
             End Using
         End Using
         Return intValues.ToArray()
-    End Function
-
-            If kasutaja_olemas Then
-                Dim updateDataSql As String = $"UPDATE user_daily_data SET daily_weight = @kaal WHERE user_id = @kasutaja_id;"
-                Using cmdUpdateData As New SQLiteCommand(updateDataSql, connection)
-                    cmdUpdateData.Parameters.AddWithValue("@kasutaja_id", kasutaja_id)
-                    cmdUpdateData.Parameters.AddWithValue("@kaal", uus_kaal)
-                    cmdUpdateData.ExecuteNonQuery()
-                End Using
-            Else
-                Dim insertDataSql As String = $"INSERT INTO user_daily_data (user_id, data, daily_weight, energy_intake, energy_consumption, energy_balance, _
-                    total_c_hydrates, total_sugar, total_protein, total_lipid) _
-                    VALUES (@kasutaja_id, @kuupaev, @uus_kaal, @tarbitudKcal, @kulutatudKcal, @kcalBalanss, @totalCHyd, @suhkur, @valk, @rasv);"
-                Using cmdInsertData As New SQLiteCommand(insertDataSql, connection)
-                    cmdInsertData.Parameters.AddWithValue("@kasutaja_id", kasutaja_id)
-                    cmdInsertData.Parameters.AddWithValue("@data", kuupaev)
-                    cmdInsertData.Parameters.AddWithValue("@kaal", uus_kaal)
-                    cmdInsertData.Parameters.AddWithValue("@tarbitudKcal", tarbitudKcal)
-                    cmdInsertData.Parameters.AddWithValue("@kulutatudKcal", kulutatudKcal)
-                    cmdInsertData.Parameters.AddWithValue("@kcalBalanss", kcalBalanss)
-                    cmdInsertData.Parameters.AddWithValue("@totalCHyd", totalCHyd)
-                    cmdInsertData.Parameters.AddWithValue("@suhkur", suhkur)
-                    cmdInsertData.Parameters.AddWithValue("@valk", valk)
-                    cmdInsertData.Parameters.AddWithValue("@rasv", rasv)
-
-                    cmdInsertData.ExecuteNonQuery()
-                End Using
-            End If
-    Public Function KaaluLisamine(ByVal kasutaja_id As Integer, ByVal uus_kaal As Double) As Double Implements IAnaluus.KaaluLisamine
-        Dim kuupaev As Integer = KuupaevIntegeriks(Date.Now.Date)
-        Dim tabeli_asukoht As String = $"Data Source={Path.Combine(Path.GetFullPath(Path.Combine _
-        (AppDomain.CurrentDomain.BaseDirectory, "..\..\..\")), "Data", "database.db")};Version=3;"
-        Using connection As New SQLiteConnection(tabeli_asukoht)
-            connection.Open()
-            Dim updateDataSql As String = $"UPDATE user_daily_data SET daily_weight = @kaal WHERE user_id = @kasutaja_id AND date = @kuupaev;"
-            Using cmdUpdateData As New SQLiteCommand(updateDataSql, connection)
-                cmdUpdateData.Parameters.AddWithValue("@kasutaja_id", kasutaja_id)
-                cmdUpdateData.Parameters.AddWithValue("@kaal", uus_kaal)
-                cmdUpdateData.Parameters.AddWithValue("@kuupaev", kuupaev)
-                cmdUpdateData.ExecuteNonQuery()
-            End Using
-        End Using
-        Return uus_kaal
     End Function
 
     Private Function ToidukordKokku(ByRef KcalLoend As Double()) As Double Implements IAnaluus.ToidukordKokku
@@ -280,5 +249,6 @@ Public Class CAnaluus
 
         Return kcal_limiit
     End Function
+
 
 End Class
