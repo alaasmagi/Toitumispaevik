@@ -211,49 +211,55 @@ Public Class CAnaluus
         Return (toitevaartus100gKohta / 100) * kogus
     End Function
 
-    Public Function DBParingBMR(ByVal kasutaja_id As Integer, ByVal sugu As Integer,
-                                ByVal kaal As Double, ByVal pikkus As Integer, ByVal vanus As Integer,
-                                ByVal kcal_limiit As Integer, ByVal kuupaev As Integer, ByVal kulutatudKcal As Integer) As Integer Implements IAnaluus.DBParingBMR
-        kcal_limiit = 0
+    Public Function DBParingBMR(ByVal kasutaja_id As Integer, ByVal sugu As Integer, ByVal vanus As Integer, ByVal kaal As Double, ByVal kaaluEesmark As Double, ByVal pikkus As Integer,
+                                ByVal kuupaev As Integer) As Integer Implements IAnaluus.DBParingBMR
+        Dim kcal_limiit As Integer = 0
+        Dim kulutatudKcal As Integer = 0
         Dim tabeli_asukoht As String = $"Data Source={Path.Combine(Path.GetFullPath(Path.Combine _
         (AppDomain.CurrentDomain.BaseDirectory, "..\..\..\")), "Data", "database.db")};Version=3;"
-        Dim paringUData As String = "SELECT height, weight, age, sex FROM user_data WHERE user_id = @kasutaja_id;"
-        Dim paringTraining As String = "SELECT AVG(total_consumption) AS average_total_consumption
+        Dim paring As String = "SELECT AVG(total_consumption) AS average_total_consumption
                                         FROM user_training_history
                                         WHERE user_id = @kasutaja_id AND date >= date('now', '-7 days');"
 
-        Using connectionUData As New SQLiteConnection(tabeli_asukoht)
-            Using command1 As New SQLiteCommand(paringTraining, connectionUData)
-                command1.Parameters.AddWithValue("@kasutaja_id", kasutaja_id)
-                command1.Parameters.AddWithValue("@kuupaev", kuupaev)
-                command1.Parameters.AddWithValue("@kulutatudKcal", kulutatudKcal)
+        Using connection As New SQLiteConnection(tabeli_asukoht)
+            Using cmd As New SQLiteCommand(paring, connection)
+                cmd.Parameters.AddWithValue("@kasutaja_id", kasutaja_id)
+                Dim result As Object = cmd.ExecuteScalar()
+                If result IsNot Nothing AndAlso Not DBNull.Value.Equals(result) Then
+                    kulutatudKcal = Convert.ToInt32(result)
+                End If
+            End Using
+            ' Kaalu tõstmine
+            If (kaal < kaaluEesmark) Then
+                If sugu = 0 Then
+                    kcal_limiit = 10 * kaal + 6.25 * pikkus - 5 * vanus + 5 + kulutatudKcal + 500
+                Else
+                    kcal_limiit = 10 * kaal + 6.25 * pikkus - 5 * vanus - 161 + kulutatudKcal + 500
+                End If
+                ' Kaalu langetamine
+            ElseIf (kaal > kaaluEesmark) Then
+                If sugu = 0 Then
+                    kcal_limiit = 10 * kaal + 6.25 * pikkus - 5 * vanus + 5 + kulutatudKcal - 500
+                Else
+                    kcal_limiit = 10 * kaal + 6.25 * pikkus - 5 * vanus - 161 + kulutatudKcal - 500
+                End If
+                ' Kaalu hoidmine
+            Else
+                If sugu = 0 Then
+                    kcal_limiit = 10 * kaal + 6.25 * pikkus - 5 * vanus + 5 + kulutatudKcal
+                Else
+                    kcal_limiit = 10 * kaal + 6.25 * pikkus - 5 * vanus - 161 + kulutatudKcal
+                End If
+            End If
 
-                Using command2 As New SQLiteCommand(paringUData, connectionUData)
-                    command2.Parameters.AddWithValue("@kasutaja_id", kasutaja_id)
-                    command2.Parameters.AddWithValue("@sugu", sugu)
-                    command2.Parameters.AddWithValue("@kaal", kaal)
-                    command2.Parameters.AddWithValue("@pikkus", pikkus)
-                    command2.Parameters.AddWithValue("@vanus", vanus)
-
-                    ' Hetkel langetab kaalu (tervislik langetus 500-1000 kcal -> u 0,5 - 1kg langus nädalas)
-                    ' Arvutame BMR vastavalt soole
-                    If sugu = 0 Then
-                        ' Mees
-                        kcal_limiit = 10 * kaal + 6.25 * pikkus - 5 * vanus + 5 + kulutatudKcal - 500
-                    Else
-                        ' Naine
-                        kcal_limiit = 10 * kaal + 6.25 * pikkus - 5 * vanus - 161 + kulutatudKcal - 500
-                    End If
-
-                    Dim updateDataSql As String = $"UPDATE user_data SET calorie_limit = @kcal_limiit WHERE user_id = @kasutaja_id;"
-                    Using cmdUpdateData As New SQLiteCommand(updateDataSql, connectionUData)
-                        cmdUpdateData.Parameters.AddWithValue("@kasutaja_id", kasutaja_id)
-                        cmdUpdateData.Parameters.AddWithValue("@kcal_limiit", kcal_limiit)
-                        cmdUpdateData.ExecuteNonQuery()
-                    End Using
-                End Using
+            Dim updateDataSql As String = $"UPDATE user_data SET calorie_limit = @kcal_limiit WHERE user_id = @kasutaja_id;"
+            Using cmdUpdateData As New SQLiteCommand(updateDataSql, connection)
+                cmdUpdateData.Parameters.AddWithValue("@kasutaja_id", kasutaja_id)
+                cmdUpdateData.Parameters.AddWithValue("@kcal_limiit", kcal_limiit)
+                cmdUpdateData.ExecuteNonQuery()
             End Using
         End Using
+
         Return kcal_limiit
     End Function
 
