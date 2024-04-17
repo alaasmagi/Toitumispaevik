@@ -190,4 +190,57 @@ Public Class CToidudJaRetseptid
         End Using
         Return retsepti_id
     End Function
+
+    Public Function KiirlisamiseRetseptideNimed(ByVal mukbangFlag As Integer) As List(Of String) Implements IToidudjaRetseptid.KiirlisamiseRetseptideNimed
+        Dim retseptideNimed As New List(Of String)()
+        Dim tabeli_asukoht As String = $"Data Source={Path.Combine(Path.GetFullPath(Path.Combine _
+               (AppDomain.CurrentDomain.BaseDirectory, "..\..\..\")), "Data", "database.db")};Version=3;"
+        Using connection As New SQLiteConnection(tabeli_asukoht)
+            connection.Open()
+            Dim selectSql As String
+            For index = 3000 To 4000
+                If mukbangFlag = 1 Then
+                    selectSql = "SELECT recipe_name FROM recipe_data WHERE recipe_id = @id ORDER BY energy DESC"
+                Else
+                    selectSql = "SELECT recipe_name FROM recipe_data WHERE recipe_id = @id"
+                End If
+
+                Using cmd As New SQLiteCommand(selectSql, connection)
+                    cmd.Parameters.AddWithValue("@id", index)
+
+                    Using reader As SQLiteDataReader = cmd.ExecuteReader()
+                        While reader.Read()
+                            retseptideNimed.Add(reader("recipe_name"))
+                        End While
+                    End Using
+                End Using
+            Next
+        End Using
+        Return retseptideNimed
+    End Function
+
+    Public Function ToiduaineVoiRetseptiKustutamine(ByVal toiduaine_retsepti_id As Integer, ByVal toiduaineFlag As Integer) As Integer Implements IToidudjaRetseptid.ToiduaineVoiRetseptiKustutamine
+
+        Dim tulemus As Integer = 0
+        Dim tabeli_asukoht As String = $"Data Source={Path.Combine(Path.GetFullPath(Path.Combine _
+         (AppDomain.CurrentDomain.BaseDirectory, "..\..\..\")), "Data", "database.db")};Version=3;"
+        Using connection As New SQLiteConnection(tabeli_asukoht)
+            connection.Open()
+            Dim deleteSql As String
+
+            If toiduaineFlag = 1 Then
+                deleteSql = $"DELETE FROM food_data WHERE food_id = @toiduaine_retsepti_id"
+            Else
+                deleteSql = $"DELETE FROM recipe_data WHERE recipe_id = @toiduaine_retsepti_id"
+            End If
+            Using cmd As New SQLiteCommand(deleteSql, connection)
+                cmd.Parameters.AddWithValue("@toiduaine_retsepti_id", toiduaine_retsepti_id)
+                Dim rowsAffected As Integer = cmd.ExecuteNonQuery()
+                If rowsAffected > 0 Then
+                    tulemus = 1
+                End If
+            End Using
+        End Using
+        Return tulemus
+    End Function
 End Class
