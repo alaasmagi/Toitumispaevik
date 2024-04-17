@@ -228,6 +228,9 @@ Public Class CAnaluus
         Using connection As New SQLiteConnection(tabeli_asukoht)
             Using cmd As New SQLiteCommand(paring, connection)
                 cmd.Parameters.AddWithValue("@kasutaja_id", kasutaja_id)
+
+                connection.Open()
+
                 Dim result As Object = cmd.ExecuteScalar()
                 If result IsNot Nothing AndAlso Not DBNull.Value.Equals(result) Then
                     kulutatudKcal = Convert.ToInt32(result)
