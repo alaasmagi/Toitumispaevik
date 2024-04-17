@@ -201,6 +201,7 @@ Public Class CAnaluus
                 command.Parameters.AddWithValue("@pikkus", pikkus)
                 command.Parameters.AddWithValue("@vanus", vanus)
 
+                ' Hetkel hoiab kaalu (tervislik langetus 500-100 kcal -> u 0,5 - 1kg langus nädalas)
                 ' Arvutame BMR vastavalt soole
                 If sugu = 0 Then
                     ' Mees
