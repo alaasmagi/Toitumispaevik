@@ -216,7 +216,7 @@ Public Class CAnaluus
         Dim tabeli_asukoht As String = $"Data Source={Path.Combine(Path.GetFullPath(Path.Combine _
         (AppDomain.CurrentDomain.BaseDirectory, "..\..\..\")), "Data", "database.db")};Version=3;"
 
-        Dim paring As String = "SELECT " & makroaine & " FROM user_daily_data WHERE user_id = @kasutaja_id AND date = @kuupaev"
+        Dim paring As String = "SELECT " & makroaine & " FROM user_food_history WHERE user_id = @kasutaja_id AND date = @kuupaev"
         Dim doubleValues As New List(Of Double)
 
         Using connection As New SQLiteConnection(tabeli_asukoht)
