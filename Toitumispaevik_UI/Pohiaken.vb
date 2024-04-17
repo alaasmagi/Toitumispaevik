@@ -1,5 +1,6 @@
 ﻿Imports System.Data.Entity.Core.Mapping
 Imports System.Data.SQLite
+Imports System.Drawing.Text
 Imports System.IO
 Imports System.Security.Authentication.ExtendedProtection
 Imports System.Windows.Forms.VisualStyles
@@ -110,9 +111,14 @@ Public Class Pohiaken
                 chrKaaluMuutumine.Series("Siht Kaal").Points.AddXY(AnaluusK.IntegerKuupaevaks(DateTabelKaalud(muutuja - 1)), tabelSihtKaal)
                 muutuja -= 1
             Else
-                chrKaaluMuutumine.Series("Kaal").Points.AddXY(AnaluusK.IntegerKuupaevaks(DateTabelKaalud(muutuja)), TabelKaalud(muutuja))
+                If muutuja = TabelKaalud.Length - 1 AndAlso TabelKaalud(muutuja) = 0 Then
+                    chrKaaluMuutumine.Series("Kaal").Points.AddXY(AnaluusK.IntegerKuupaevaks(DateTabelKaalud(muutuja)), TabelKaalud(muutuja - 1))
+                Else
+                    chrKaaluMuutumine.Series("Kaal").Points.AddXY(AnaluusK.IntegerKuupaevaks(DateTabelKaalud(muutuja)), TabelKaalud(muutuja))
+                End If
                 chrKaaluMuutumine.Series("Siht Kaal").Points.AddXY(AnaluusK.IntegerKuupaevaks(DateTabelKaalud(muutuja)), tabelSihtKaal)
             End If
+
         Next
     End Sub
 
