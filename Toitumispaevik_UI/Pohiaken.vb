@@ -96,11 +96,6 @@ Public Class Pohiaken
         cmbAjaluguGraafikuPeriood.Items.Add("Viimane aasta")
         cmbAjaluguGraafikuPeriood.SelectedIndex = 0
 
-        cmbKaaluTrend.Items.Add("Kaalu langus")
-        cmbKaaluTrend.Items.Add("Kaalu hoidmine")
-        cmbKaaluTrend.Items.Add("Kaalu tõus")
-        cmbKaaluTrend.SelectedIndex = 1
-
         lblAjaluguKuupaev.Text = Date.Now.Date()
 
         GraafikuSeaded()
