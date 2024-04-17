@@ -85,11 +85,14 @@ Public Class Pohiaken
         KoduGraafik()
         UlevaatusCmbBox()
         cmbAjaluguGraafikuPeriood.Items.Add("Viimased 7 päeva")
-        cmbAjaluguGraafikuPeriood.SelectedItem = "Viimased 7 päeva"
         cmbAjaluguGraafikuPeriood.Items.Add("Viimane kuu")
         cmbAjaluguGraafikuPeriood.Items.Add("Viimased 3 kuud")
         cmbAjaluguGraafikuPeriood.Items.Add("Viimased 6 kuud")
         cmbAjaluguGraafikuPeriood.Items.Add("Viimane aasta")
+        cmbAjaluguGraafikuPeriood.SelectedIndex = 0
+        lblAjaluguKuupaev.Text = Date.Now.Date()
+
+        GraafikuSeaded()
 
     End Sub
 
@@ -266,41 +269,46 @@ Public Class Pohiaken
         ToidudRetseptidK = New ToidudRetseptidKomponent.CToidudJaRetseptid
         TreeningudK = New TreeninguteKomponent.CTreeningud
 
+        Dim mukbangFlag As Integer = 0
+
         cmbMuudaVanust.Items.Clear()
         cmbMuudaKaalu.Items.Clear()
         cmbMuudaPikkust.Items.Clear()
         cmbToiduaineKiirvalik.Items.Clear()
         cmbTreeninguteKiirvalik.Items.Clear()
-        cmbToiduaineValik.Items.Clear()
-        cmbTreeningsessiooniLisamine.Items.Clear()
         cmbRetseptiKoostisosad.Items.Clear()
         cmbTreeninguKustutamine.Items.Clear()
+        cmbToiduaineKustutamine.Items.Clear()
 
-        Dim toiduaineteNimed As List(Of String) = ToidudRetseptidK.KiirlisamiseToiduaineNimed
+        If chbMukbangFilter.Checked = True Then
+            mukbangFlag = 1
+        Else
+            mukbangFlag = 0
+        End If
+
+        Dim toiduaineteNimed As List(Of String) = ToidudRetseptidK.KiirlisamiseToiduaineNimed(mukbangFlag)
+        Dim retseptideNimed As List(Of String) = ToidudRetseptidK.KiirlisamiseRetseptideNimed(mukbangFlag)
         Dim treeninguteNimed As List(Of String) = TreeningudK.KiirlisamiseTreeninguNimed
-        Dim retseptideNimed As List(Of String) = ToidudRetseptidK.KiirlisamiseRetseptideNimed
 
         For Each nimetus As String In toiduaineteNimed
             cmbToiduaineKiirvalik.Items.Add(nimetus)
-            cmbToiduaineValik.Items.Add(nimetus)
+            cmbToiduaineKustutamine.Items.Add(nimetus)
             cmbRetseptiKoostisosad.Items.Add(nimetus)
         Next
         For Each nimetus As String In retseptideNimed
             cmbToiduaineKiirvalik.Items.Add(nimetus)
-            cmbToiduaineValik.Items.Add(nimetus)
+            cmbToiduaineKustutamine.Items.Add(nimetus)
         Next
         cmbToiduaineKiirvalik.SelectedIndex = 0
-        cmbToiduaineValik.SelectedIndex = 0
         cmbRetseptiKoostisosad.SelectedIndex = 0
+        cmbToiduaineKustutamine.SelectedIndex = 0
 
         For Each nimetus As String In treeninguteNimed
             cmbTreeninguteKiirvalik.Items.Add(nimetus)
-            cmbTreeningsessiooniLisamine.Items.Add(nimetus)
             cmbTreeninguKustutamine.Items.Add(nimetus)
         Next
         cmbTreeninguKustutamine.SelectedIndex = 0
         cmbTreeninguteKiirvalik.SelectedIndex = 0
-        cmbTreeningsessiooniLisamine.SelectedIndex = 0
 
         For index = 140 To 210
             cmbMuudaPikkust.Items.Add(index)
@@ -478,19 +486,7 @@ Public Class Pohiaken
         KomboKastid()
     End Sub
 
-    Private Sub btnTreeningsessiooniLisamine_Click(sender As Object, e As EventArgs) Handles btnTreeningsessiooniLisamine.Click
-        TreeningudK = New TreeninguteKomponent.CTreeningud
-        AnaluusK = New AnaluusiKomponent.CAnaluus
 
-        If IsNumeric(txtTreeningsessiooniLisamineKestus.Text) AndAlso txtTreeningsessiooniLisamineKestus.Text > 0 Then
-            lblTreeningsessiooniLisamineViga.Visible = False
-            TreeningudK.KasutajaTreeninguLisamine(_kasutaja_id, AnaluusK.KuupaevIntegeriks(Date.Now.Date), TreeningudK.TreeninguNimiEksisteerib(cmbTreeningsessiooniLisamine.SelectedItem()), txtTreeningsessiooniLisamineKestus.Text)
-            txtTreeningsessiooniLisamineKestus.Text = ""
-        Else
-            lblTreeningsessiooniLisamineViga.Text = "Viga kestuse sisestuses!"
-            lblTreeningsessiooniLisamineViga.Visible = True
-        End If
-    End Sub
 
     Private Sub btnRetseptLisaKoostisosa_Click(sender As Object, e As EventArgs) Handles btnRetseptLisaKoostisosa.Click
         ToidudRetseptidK = New ToidudRetseptidKomponent.CToidudJaRetseptid
@@ -547,7 +543,7 @@ Public Class Pohiaken
         TreeningudK = New TreeninguteKomponent.CTreeningud
 
         Dim treeningu_id = TreeningudK.TreeninguNimiEksisteerib(cmbTreeninguKustutamine.SelectedItem)
-        If treeningu_id < 250 Then
+        If treeningu_id < 4006 Then
             lblKustutaTreeningViga.Text = "Baastreeningut ei saa kustutada!"
             lblKustutaTreeningViga.Visible = True
         Else
@@ -567,9 +563,11 @@ Public Class Pohiaken
 
         If IsNumeric(txtPaevaneKaal.Text) AndAlso txtPaevaneKaal.Text > 0 Then
             AnaluusK.KaaluLisamine(_kasutaja_id, txtPaevaneKaal.Text)
-            ProfiilK.IntegerAndmeValjaSisestusKasutajaTabelisse(_kasutaja_id, cmbMuudaKaalu.SelectedItem, "weight")
+            ProfiilK.IntegerAndmeValjaSisestusKasutajaTabelisse(_kasutaja_id, txtPaevaneKaal.Text, "weight")
             lblKasutajaKaal.Text = ProfiilK.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "weight")
             KomboKastid()
+            GraafikuSeaded()
+            txtPaevaneKaal.Text = ""
         Else
 
         End If
@@ -578,6 +576,45 @@ Public Class Pohiaken
 
     Private Sub btnNaitaYlevaadet_Click(sender As Object, e As EventArgs) Handles btnNaitaYlevaadet.Click
         GraafikuSeaded()
+    End Sub
+
+    Private Sub btnEesmargiKinnitamine_Click(sender As Object, e As EventArgs) Handles btnEesmargiKinnitamine.Click
+        ProfiilK = New KasutajaProfiilKomponent.CKasutajaProfiil
+        If IsNumeric(txtKaaluEesmärk.Text) AndAlso txtKaaluEesmärk.Text > 0 Then
+            ProfiilK.IntegerAndmeValjaSisestusKasutajaTabelisse(_kasutaja_id, txtKaaluEesmärk.Text, "weight_goal")
+            tabelSihtKaal = txtKaaluEesmärk.Text
+            GraafikuSeaded()
+            txtKaaluEesmärk.Text = ""
+        Else
+
+        End If
+    End Sub
+
+    Private Sub chbMukbangFilter_CheckedChanged(sender As Object, e As EventArgs) Handles chbMukbangFilter.CheckedChanged
+        KomboKastid()
+    End Sub
+
+    Private Sub btnToiduaineKustutamine_Click(sender As Object, e As EventArgs) Handles btnToiduaineKustutamine.Click
+        ToidudRetseptidK = New ToidudRetseptidKomponent.CToidudJaRetseptid
+
+        Dim toiduaine_retsepti_id As Integer?
+        toiduaine_retsepti_id = ToidudRetseptidK.ToiduAineNimiEksisteerib(cmbToiduaineKustutamine.SelectedItem)
+
+        If toiduaine_retsepti_id.HasValue Then
+            If toiduaine_retsepti_id < 2006 Then
+                lblToiduaineKustutamineViga.Text = "Baastoiduainet ei saa kustutada!"
+                lblToiduaineKustutamineViga.Visible = True
+            Else
+                lblToiduaineKustutamineViga.Visible = False
+                ToidudRetseptidK.ToiduaineVoiRetseptiKustutamine(toiduaine_retsepti_id, 1)
+                KomboKastid()
+            End If
+        Else
+            lblToiduaineKustutamineViga.Visible =
+            toiduaine_retsepti_id = ToidudRetseptidK.RetseptiNimiEksisteerib(cmbToiduaineKustutamine.SelectedItem)
+            ToidudRetseptidK.ToiduaineVoiRetseptiKustutamine(toiduaine_retsepti_id, 0)
+            KomboKastid()
+        End If
     End Sub
 End Class
 

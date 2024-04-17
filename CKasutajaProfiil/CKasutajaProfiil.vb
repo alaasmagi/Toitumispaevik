@@ -124,7 +124,7 @@ Public Class CKasutajaProfiil
     End Function
     Private Function GenereeriId() As Integer Implements IKasutajaProfiil.GenereeriId
         Dim random As New Random()
-        Dim genereeritudId As Integer = random.Next(1002, 10000)
+        Dim genereeritudId As Integer = random.Next(1002, 1200)
 
         Return genereeritudId
     End Function
