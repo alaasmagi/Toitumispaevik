@@ -613,6 +613,10 @@ Public Class Pohiaken
             KomboKastid()
         End If
     End Sub
+    Private Sub AjalooInfo()
+        lvPaevasedToidud
+        lvPaevasedTreeningud
+    End Sub
 
     Private Sub MakroGraafik()
         chrAjalooPaneel.Series("Makrod").Points.Clear()
@@ -647,6 +651,7 @@ Public Class Pohiaken
         lblAjaluguKuupaev.Text = AnaluusK.IntegerKuupaevaks(ajalooKuupaev)
         lblAjaluguNadalaPaev.Text = AnaluusK.IntegerKuupaevaks(ajalooKuupaev).ToString("ddd", kultuur) + ","
 
+        AjalooInfo()
         MakroGraafik()
     End Sub
 End Class
