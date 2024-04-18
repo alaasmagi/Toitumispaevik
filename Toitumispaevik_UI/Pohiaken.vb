@@ -78,14 +78,6 @@ Public Class Pohiaken
             pbUlemineNaine.Visible = True
             pbAlumineNaine.Visible = True
         End If
-
-        If ProfiilK.UheAndmevaljaParingKasutajaTabelist(_kasutaja_id, "calorie_limit") = 0 Then
-            lblKoduSoovitus.Visible = True
-            lblKoduSoovitus2.Visible = True
-        Else
-            lblKoduSoovitus.Visible = False
-            lblKoduSoovitus2.Visible = False
-        End If
         KomboKastid()
         KoduGraafik()
         UlevaatusCmbBox()
@@ -148,8 +140,8 @@ Public Class Pohiaken
 
         chrKoduPaneel.Series("Soogikorrad").Points.AddXY("Vahepalad", AnaluusK.PariKcalPaveaHetkest(AnaluusK.KuupaevIntegeriks(Date.Now.Date), _kasutaja_id, 2))
 
-        chrKoduPaneel.Series("Soogikorrad").Points.AddXY("Söömata", AnaluusK.PariKaloriUlejaak(AnaluusK.PaevaneKcal(), kalorilimiit))
-        lblKcalPaev.Text = AnaluusK.PaevaneKcal() & Environment.NewLine & "/" & Environment.NewLine & kalorilimiit & Environment.NewLine & "kCal"
+        chrKoduPaneel.Series("Soogikorrad").Points.AddXY("Söömata", AnaluusK.PariKaloriUlejaak(AnaluusK.PaevaneKcal(_kasutaja_id, AnaluusK.KuupaevIntegeriks(Date.Now.Date)), kalorilimiit))
+        lblKcalPaev.Text = AnaluusK.PaevaneKcal(_kasutaja_id, AnaluusK.KuupaevIntegeriks(Date.Now.Date)) & Environment.NewLine & "/" & Environment.NewLine & kalorilimiit & Environment.NewLine & "kCal"
     End Sub
     Private Sub pnlLogo_Click(sender As Object, e As EventArgs) Handles pnlLogo.Click
         pnlYlevaade.Visible = False
@@ -455,6 +447,7 @@ Public Class Pohiaken
         If IsNumeric(txtTreeninguKiirvalikKestus.Text) AndAlso txtTreeninguKiirvalikKestus.Text > 0 Then
             lblTreeninguKiirvalikViga.Visible = False
             TreeningudK.KasutajaTreeninguLisamine(_kasutaja_id, AnaluusK.KuupaevIntegeriks(Date.Now.Date), TreeningudK.TreeninguNimiEksisteerib(cmbTreeninguteKiirvalik.SelectedItem()), txtTreeninguKiirvalikKestus.Text)
+            AnaluusK.PaevaneKcal(_kasutaja_id, AnaluusK.KuupaevIntegeriks(Date.Now.Date))
             txtTreeninguKiirvalikKestus.Text = ""
         Else
             lblTreeninguKiirvalikViga.Text = "Viga kestuse sisestuses!"
