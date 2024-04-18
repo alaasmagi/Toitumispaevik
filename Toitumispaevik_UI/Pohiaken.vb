@@ -525,7 +525,7 @@ Public Class Pohiaken
             retseptideKoostisosadeKogused.Clear()
             lbRetseptiKoostisosad.Items.Clear()
         End If
-
+        KomboKastid()
     End Sub
 
     Private Sub btnKustutaTreening_Click(sender As Object, e As EventArgs) Handles btnKustutaTreening.Click
