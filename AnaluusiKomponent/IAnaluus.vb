@@ -5,9 +5,9 @@ Public Interface IAnaluus
     Function PariKcalPaveaHetkest(kuupaev As Integer, kasutaja_id As Integer, toidukord As Integer) As Integer
     Function PariValueMap(keyStr As String, ByVal valueMap As Dictionary(Of String, Integer)) As Integer
     Sub LisaValueMap(newKeyStr As String, newValue As Integer, ByVal valueMap As Dictionary(Of String, Integer))
-    Function PaevaneKcal() As Integer
+    Function PaevaneKcal(ByVal kasutaja_id As Integer, ByVal kuupaev As Integer) As Integer
     Function KclParingAndmebaasist(kasutajaId As Integer, kuupaev As Integer, toidukord As Integer) As Double()
-    Function ToidukordKokku(ByRef KcalLoend() As Double) As Double
+    Function KaloridKokku(ByRef KcalLoend() As Double) As Double
     Function KuupaevIntegeriks(ByVal sisendKuupaev As DateTime) As Integer
     Function IntegerKuupaevaks(ByVal sisendInteger As Integer) As DateTime
     Function KaaluParingAndmebaasist(ByVal kasutaja_id As Integer, ByVal kuupaev As Integer, ByVal graafikuPikkus As Integer) As Double()
@@ -20,6 +20,7 @@ Public Interface IAnaluus
     Function KaaluDateParingAndmebaasist(ByVal kasutaja_id As Integer, ByVal kuupaev As Integer, ByVal graafikuPikkus As Integer) As Integer()
     Function MakroaineParingAndmebaasist(ByVal kasutaja_id As Integer, ByVal kuupaev As Integer, ByVal makroaine As String) As Double()
     Function PariMakroaineKogus(kuupaev As Integer, kasutaja_id As Integer, makroaine As String) As Integer
+    Function PaevasedTreeninguKalorid(ByVal kasutaja_id As Integer, ByVal kuupaev As Integer) As Double()
 End Interface
 
 
