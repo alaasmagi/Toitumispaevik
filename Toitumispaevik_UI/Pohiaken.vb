@@ -614,6 +614,19 @@ Public Class Pohiaken
         KomboKastid()
     End Sub
     Private Sub AjalooInfo()
+        AnaluusK = New AnaluusiKomponent.CAnaluus
+        TreeningudK = New TreeninguteKomponent.CTreeningud
+
+        lvPaevasedToidud.Items.Clear()
+        lvPaevasedTreeningud.Items.Clear()
+
+        Dim paevasteTreeninguteNimed As Double() = AnaluusK.PaevasedTreeningud(_kasutaja_id, ajalooKuupaev, "training_id")
+        Dim paevasteTreeninguteKcal As Double() = AnaluusK.PaevasedTreeningud(_kasutaja_id, ajalooKuupaev, "total_consumption")
+        Dim paevasteTreeninguteKestus As Double() = AnaluusK.PaevasedTreeningud(_kasutaja_id, ajalooKuupaev, "duration")
+
+        For index = 0 To paevasteTreeninguteNimed.Count - 1
+            lvPaevasedTreeningud.Items.Add(New ListViewItem({TreeningudK.TreeninguNimeLeidmine(paevasteTreeninguteNimed(index)), paevasteTreeninguteKcal(index) & "kcal", paevasteTreeninguteKestus(index) & "min"}))
+        Next
 
     End Sub
 

@@ -87,7 +87,11 @@ Public Class CAnaluus
     Public Function PaevaneKcal(ByVal kasutaja_id As Integer, ByVal kuupaev As Integer) As Integer Implements IAnaluus.PaevaneKcal
         Dim soodudKalorid As Integer = hommik + louna + vahepala + ohtu
 
-        Dim treeninguKaloridKokku As Integer = KaloridKokku(PaevasedTreeninguKalorid(kasutaja_id, kuupaev))
+        Dim treeninguKalorid As Double() = PaevasedTreeningud(kasutaja_id, kuupaev, "total_consumption")
+        Dim treeninguKaloridKokku As Integer = 0
+        For index = 0 To treeninguKalorid.Count - 1
+            treeninguKaloridKokku = treeninguKaloridKokku + treeninguKalorid(index)
+        Next
         Dim kaloriteVahe As Integer = soodudKalorid - treeninguKaloridKokku
         Dim tabeli_asukoht As String = $"Data Source={Path.Combine(Path.GetFullPath(Path.Combine _
         (AppDomain.CurrentDomain.BaseDirectory, "..\..\..\")), "Data", "database.db")};Version= 3;"
@@ -330,11 +334,11 @@ Public Class CAnaluus
         End Select
         Return 0
     End Function
-    Public Function PaevasedTreeninguKalorid(ByVal kasutaja_id As Integer, ByVal kuupaev As Integer) As Double() Implements IAnaluus.PaevasedTreeninguKalorid
+    Public Function PaevasedTreeningud(ByVal kasutaja_id As Integer, ByVal kuupaev As Integer, ByVal otsitavSuurus As String) As Double() Implements IAnaluus.PaevasedTreeningud
         Dim tabeli_asukoht As String = $"Data Source={Path.Combine(Path.GetFullPath(Path.Combine _
         (AppDomain.CurrentDomain.BaseDirectory, "..\..\..\")), "Data", "database.db")};Version=3;"
 
-        Dim paring As String = "SELECT total_consumption FROM user_training_history WHERE user_id = @kasutaja_id AND date = @kuupaev"
+        Dim paring As String = $"SELECT {otsitavSuurus} FROM user_training_history WHERE user_id = @kasutaja_id AND date = @kuupaev"
         Dim doubleValues As New List(Of Double)
 
         Using connection As New SQLiteConnection(tabeli_asukoht)
@@ -351,7 +355,6 @@ Public Class CAnaluus
                         Next
                     End While
                 End Using
-
             End Using
         End Using
         Return doubleValues.ToArray()

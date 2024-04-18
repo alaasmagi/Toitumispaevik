@@ -20,7 +20,7 @@ Public Interface IAnaluus
     Function KaaluDateParingAndmebaasist(ByVal kasutaja_id As Integer, ByVal kuupaev As Integer, ByVal graafikuPikkus As Integer) As Integer()
     Function MakroaineParingAndmebaasist(ByVal kasutaja_id As Integer, ByVal kuupaev As Integer, ByVal makroaine As String) As Double()
     Function PariMakroaineKogus(kuupaev As Integer, kasutaja_id As Integer, makroaine As String) As Integer
-    Function PaevasedTreeninguKalorid(ByVal kasutaja_id As Integer, ByVal kuupaev As Integer) As Double()
+    Function PaevasedTreeningud(ByVal kasutaja_id As Integer, ByVal kuupaev As Integer, ByVal otsitavSuurus As String) As Double()
 End Interface
 
 

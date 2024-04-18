@@ -35,19 +35,16 @@ Public Class CTreeningud
                (AppDomain.CurrentDomain.BaseDirectory, "..\..\..\")), "Data", "database.db")};Version=3;"
         Using connection As New SQLiteConnection(tabeli_asukoht)
             connection.Open()
-            For index = 4000 To 4500
-                Dim selectSql As String = "SELECT training_name FROM training_data WHERE training_id = @id"
+            Dim selectSql As String = "SELECT training_name FROM training_data"
 
-                Using cmd As New SQLiteCommand(selectSql, connection)
-                    cmd.Parameters.AddWithValue("@id", index)
+            Using cmd As New SQLiteCommand(selectSql, connection)
 
-                    Using reader As SQLiteDataReader = cmd.ExecuteReader()
-                        While reader.Read()
-                            treeninguteNimed.Add(reader("training_name"))
-                        End While
-                    End Using
+                Using reader As SQLiteDataReader = cmd.ExecuteReader()
+                    While reader.Read()
+                        treeninguteNimed.Add(reader("training_name"))
+                    End While
                 End Using
-            Next
+            End Using
         End Using
         Return treeninguteNimed
     End Function
@@ -128,4 +125,22 @@ Public Class CTreeningud
         Return tulemus
     End Function
 
+    Public Function TreeninguNimeLeidmine(treeningu_id As Integer) As String Implements ITreeningud.TreeninguNimeLeidmine
+        Dim treeninguNimi As String = ""
+        Dim tabeli_asukoht As String = $"Data Source={Path.Combine(Path.GetFullPath(Path.Combine _
+        (AppDomain.CurrentDomain.BaseDirectory, "..\..\..\")), "Data", "database.db")};Version=3;"
+        Using connection As New SQLiteConnection(tabeli_asukoht)
+            connection.Open()
+            Dim selectSql As String = "SELECT training_name FROM training_data WHERE training_id = @treeningu_id"
+            Using cmd As New SQLiteCommand(selectSql, connection)
+                cmd.Parameters.AddWithValue("@treeningu_id", treeningu_id)
+
+                Dim result As Object = cmd.ExecuteScalar()
+                If result IsNot Nothing AndAlso Not DBNull.Value.Equals(result) Then
+                    treeninguNimi = Convert.ToString(result)
+                End If
+            End Using
+        End Using
+        Return treeninguNimi
+    End Function
 End Class
