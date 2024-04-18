@@ -3,6 +3,7 @@ Imports System.Data.SQLite
 Imports System.Drawing.Text
 Imports System.Globalization
 Imports System.IO
+Imports System.Reflection
 Imports System.Security.Authentication.ExtendedProtection
 Imports System.Windows.Forms.VisualStyles
 Imports AnaluusiKomponent
@@ -616,17 +617,51 @@ Public Class Pohiaken
     Private Sub AjalooInfo()
         AnaluusK = New AnaluusiKomponent.CAnaluus
         TreeningudK = New TreeninguteKomponent.CTreeningud
+        ToidudRetseptidK = New ToidudRetseptidKomponent.CToidudJaRetseptid
 
         lvPaevasedToidud.Items.Clear()
         lvPaevasedTreeningud.Items.Clear()
 
-        Dim paevasteTreeninguteNimed As Double() = AnaluusK.PaevasedTreeningud(_kasutaja_id, ajalooKuupaev, "training_id")
+        Dim paevasteToitudeId As Double() = AnaluusK.PaevasedToidud(_kasutaja_id, ajalooKuupaev, "food_id")
+        Dim paevasteToitudeKcal As Double() = AnaluusK.PaevasedToidud(_kasutaja_id, ajalooKuupaev, "energy_intake")
+        Dim paevasteToitudeToidukord As Double() = AnaluusK.PaevasedToidud(_kasutaja_id, ajalooKuupaev, "time_of_meal")
+
+        For index_ = 0 To paevasteToitudeId.Count - 1
+            If paevasteToitudeId(index_) < 3000 Then
+                Select Case (paevasteToitudeToidukord(index_))
+                    Case 0
+                        lvPaevasedToidud.Items.Add(New ListViewItem({"Hommik", ToidudRetseptidK.ToiduaineVoiRetseptiNimi(paevasteToitudeId(index_), 0), paevasteToitudeKcal(index_) & "kcal"}))
+                    Case 1
+                        lvPaevasedToidud.Items.Add(New ListViewItem({"Lõuna", ToidudRetseptidK.ToiduaineVoiRetseptiNimi(paevasteToitudeId(index_), 0), paevasteToitudeKcal(index_) & "kcal"}))
+                    Case 2
+                        lvPaevasedToidud.Items.Add(New ListViewItem({"Vahepala", ToidudRetseptidK.ToiduaineVoiRetseptiNimi(paevasteToitudeId(index_), 0), paevasteToitudeKcal(index_) & "kcal"}))
+                    Case 3
+                        lvPaevasedToidud.Items.Add(New ListViewItem({"Õhtu", ToidudRetseptidK.ToiduaineVoiRetseptiNimi(paevasteToitudeId(index_), 0), paevasteToitudeKcal(index_) & "kcal"}))
+                End Select
+            Else
+                Select Case (paevasteToitudeToidukord(index_))
+                    Case 0
+                        lvPaevasedToidud.Items.Add(New ListViewItem({"Hommik", ToidudRetseptidK.ToiduaineVoiRetseptiNimi(paevasteToitudeId(index_), 1), paevasteToitudeKcal(index_) & "kcal"}))
+                    Case 1
+                        lvPaevasedToidud.Items.Add(New ListViewItem({"Lõuna", ToidudRetseptidK.ToiduaineVoiRetseptiNimi(paevasteToitudeId(index_), 1), paevasteToitudeKcal(index_) & "kcal"}))
+                    Case 2
+                        lvPaevasedToidud.Items.Add(New ListViewItem({"Vahepala", ToidudRetseptidK.ToiduaineVoiRetseptiNimi(paevasteToitudeId(index_), 1), paevasteToitudeKcal(index_) & "kcal"}))
+                    Case 3
+                        lvPaevasedToidud.Items.Add(New ListViewItem({"Õhtu", ToidudRetseptidK.ToiduaineVoiRetseptiNimi(paevasteToitudeId(index_), 1), paevasteToitudeKcal(index_) & "kcal"}))
+                End Select
+            End If
+
+
+        Next
+        Dim paevasteTreeninguteId As Double() = AnaluusK.PaevasedTreeningud(_kasutaja_id, ajalooKuupaev, "training_id")
         Dim paevasteTreeninguteKcal As Double() = AnaluusK.PaevasedTreeningud(_kasutaja_id, ajalooKuupaev, "total_consumption")
         Dim paevasteTreeninguteKestus As Double() = AnaluusK.PaevasedTreeningud(_kasutaja_id, ajalooKuupaev, "duration")
 
-        For index = 0 To paevasteTreeninguteNimed.Count - 1
-            lvPaevasedTreeningud.Items.Add(New ListViewItem({TreeningudK.TreeninguNimeLeidmine(paevasteTreeninguteNimed(index)), paevasteTreeninguteKcal(index) & "kcal", paevasteTreeninguteKestus(index) & "min"}))
+        For index = 0 To paevasteTreeninguteId.Count - 1
+            lvPaevasedTreeningud.Items.Add(New ListViewItem({TreeningudK.TreeninguNimeLeidmine(paevasteTreeninguteId(index)), paevasteTreeninguteKcal(index) & "kcal", paevasteTreeninguteKestus(index) & "min"}))
         Next
+
+
 
     End Sub
 

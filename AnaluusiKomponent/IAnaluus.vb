@@ -21,6 +21,7 @@ Public Interface IAnaluus
     Function MakroaineParingAndmebaasist(ByVal kasutaja_id As Integer, ByVal kuupaev As Integer, ByVal makroaine As String) As Double()
     Function PariMakroaineKogus(kuupaev As Integer, kasutaja_id As Integer, makroaine As String) As Integer
     Function PaevasedTreeningud(ByVal kasutaja_id As Integer, ByVal kuupaev As Integer, ByVal otsitavSuurus As String) As Double()
+    Function PaevasedToidud(ByVal kasutaja_id As Integer, ByVal kuupaev As Integer, ByVal otsitavSuurus As String) As Double()
 End Interface
 
 

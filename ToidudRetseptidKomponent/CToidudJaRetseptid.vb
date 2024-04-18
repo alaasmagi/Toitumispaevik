@@ -244,5 +244,29 @@ Public Class CToidudJaRetseptid
         Return tulemus
     End Function
 
+    Public Function ToiduaineVoiRetseptiNimi(ByVal toiduaineVoiRetseptiId As Integer, ByVal retseptFlag As Integer) As String Implements IToidudjaRetseptid.ToiduaineVoiRetseptiNimi
+        Dim toiduaineVoiRetseptiNimetus As String = ""
+        Dim tabeli_asukoht As String = $"Data Source={Path.Combine(Path.GetFullPath(Path.Combine _
+        (AppDomain.CurrentDomain.BaseDirectory, "..\..\..\")), "Data", "database.db")};Version=3;"
+        Using connection As New SQLiteConnection(tabeli_asukoht)
+            connection.Open()
+            Dim selectSql As String
+            If retseptFlag = 1 Then
+                selectSql = "SELECT recipe_name FROM recipe_data WHERE recipe_id = @toiduaineVoiRetseptiId"
+            Else
+                selectSql = "SELECT food_name FROM food_data WHERE food_id = @toiduaineVoiRetseptiId"
+            End If
+
+            Using cmd As New SQLiteCommand(selectSql, connection)
+                cmd.Parameters.AddWithValue("@toiduaineVoiRetseptiId", toiduaineVoiRetseptiId)
+
+                Dim result As Object = cmd.ExecuteScalar()
+                If result IsNot Nothing AndAlso Not DBNull.Value.Equals(result) Then
+                    toiduaineVoiRetseptiNimetus = Convert.ToString(result)
+                End If
+            End Using
+        End Using
+        Return toiduaineVoiRetseptiNimetus
+    End Function
 
 End Class

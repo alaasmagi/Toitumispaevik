@@ -359,4 +359,28 @@ Public Class CAnaluus
         End Using
         Return doubleValues.ToArray()
     End Function
+    Public Function PaevasedToidud(ByVal kasutaja_id As Integer, ByVal kuupaev As Integer, ByVal otsitavSuurus As String) As Double() Implements IAnaluus.PaevasedToidud
+        Dim tabeli_asukoht As String = $"Data Source={Path.Combine(Path.GetFullPath(Path.Combine _
+        (AppDomain.CurrentDomain.BaseDirectory, "..\..\..\")), "Data", "database.db")};Version=3;"
+
+        Dim paring As String = $"SELECT {otsitavSuurus} FROM user_food_history WHERE user_id = @kasutaja_id AND date = @kuupaev"
+        Dim doubleValues As New List(Of Double)
+        Using connection As New SQLiteConnection(tabeli_asukoht)
+            Using command As New SQLiteCommand(paring, connection)
+                command.Parameters.AddWithValue("@kasutaja_id", kasutaja_id)
+                command.Parameters.AddWithValue("@kuupaev", kuupaev)
+
+                connection.Open()
+
+                Using reader As SQLiteDataReader = command.ExecuteReader()
+                    While reader.Read()
+                        For i As Double = 0 To reader.FieldCount - 1
+                            doubleValues.Add(reader.GetDouble(i))
+                        Next
+                    End While
+                End Using
+            End Using
+        End Using
+        Return doubleValues.ToArray()
+    End Function
 End Class
