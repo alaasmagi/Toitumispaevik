@@ -1,6 +1,7 @@
 ﻿Imports System.Data.Entity.Core.Mapping
 Imports System.Data.SQLite
 Imports System.Drawing.Text
+Imports System.Globalization
 Imports System.IO
 Imports System.Security.Authentication.ExtendedProtection
 Imports System.Windows.Forms.VisualStyles
@@ -14,8 +15,11 @@ Public Class Pohiaken
     Private kalorilimiit As Integer
     Private TabelKaalud As Double()
     Private DateTabelKaalud As Integer()
+    Private ajalooKuupaev As Integer
     Private tabelSihtKaal As Double
     Private valueMap As New Dictionary(Of String, Integer)()
+    Dim kultuur As New CultureInfo("et-EE")
+
 
     Dim retseptideKoostisosad As New List(Of Integer)
     Dim retseptideKoostisosadeKogused As New List(Of Integer)
@@ -41,6 +45,10 @@ Public Class Pohiaken
     Public Sub ResetForm()
         ProfiilK = New KasutajaProfiilKomponent.CKasutajaProfiil
         AnaluusK = New AnaluusiKomponent.CAnaluus
+
+        ajalooKuupaev = AnaluusK.KuupaevIntegeriks(Date.Now.Date)
+        lblAjaluguKuupaev.Text = AnaluusK.IntegerKuupaevaks(ajalooKuupaev)
+        lblAjaluguNadalaPaev.Text = AnaluusK.IntegerKuupaevaks(ajalooKuupaev).ToString("ddd", kultuur) + ","
 
         If AnaluusK.PaevaseAndmereaParing(_kasutaja_id, AnaluusK.KuupaevIntegeriks(Date.Now.Date)) = -1 Then
             AnaluusK.TuhjaPaevaseAndmereaSisestus(_kasutaja_id, AnaluusK.KuupaevIntegeriks(Date.Now.Date))
@@ -87,8 +95,6 @@ Public Class Pohiaken
         cmbAjaluguGraafikuPeriood.Items.Add("Viimased 6 kuud")
         cmbAjaluguGraafikuPeriood.Items.Add("Viimane aasta")
         cmbAjaluguGraafikuPeriood.SelectedIndex = 0
-
-        lblAjaluguKuupaev.Text = Date.Now.Date()
 
         GraafikuSeaded()
 
@@ -266,7 +272,9 @@ Public Class Pohiaken
             End If
         Next
     End Sub
+    Sub AjalooVaade()
 
+    End Sub
     Sub KomboKastid()
 
         ProfiilK = New KasutajaProfiilKomponent.CKasutajaProfiil
@@ -610,18 +618,36 @@ Public Class Pohiaken
         chrAjalooPaneel.Series("Makrod").Points.Clear()
         AnaluusK = New AnaluusiKomponent.CAnaluus
 
-        chrAjalooPaneel.Series("Makrod").Points.AddXY("Süsivesikud", AnaluusK.PariMakroaineKogus(AnaluusK.KuupaevIntegeriks(Date.Now.Date), _kasutaja_id, "total_c_hydrates"))
+        chrAjalooPaneel.Series("Makrod").Points.AddXY("Süsivesikud", AnaluusK.PariMakroaineKogus(ajalooKuupaev, _kasutaja_id, "total_c_hydrates"))
 
-        chrAjalooPaneel.Series("Makrod").Points.AddXY("Suhkrud", AnaluusK.PariMakroaineKogus(AnaluusK.KuupaevIntegeriks(Date.Now.Date), _kasutaja_id, "total_sugar"))
+        chrAjalooPaneel.Series("Makrod").Points.AddXY("Suhkrud", AnaluusK.PariMakroaineKogus(ajalooKuupaev, _kasutaja_id, "total_sugar"))
 
-        chrAjalooPaneel.Series("Makrod").Points.AddXY("Valgud", AnaluusK.PariMakroaineKogus(AnaluusK.KuupaevIntegeriks(Date.Now.Date), _kasutaja_id, "total_protein"))
+        chrAjalooPaneel.Series("Makrod").Points.AddXY("Valgud", AnaluusK.PariMakroaineKogus(ajalooKuupaev, _kasutaja_id, "total_protein"))
 
-        chrAjalooPaneel.Series("Makrod").Points.AddXY("Rasvad", AnaluusK.PariMakroaineKogus(AnaluusK.KuupaevIntegeriks(Date.Now.Date), _kasutaja_id, "total_lipid"))
+        chrAjalooPaneel.Series("Makrod").Points.AddXY("Rasvad", AnaluusK.PariMakroaineKogus(ajalooKuupaev, _kasutaja_id, "total_lipid"))
 
     End Sub
 
-    Private Sub GroupBox12_Enter(sender As Object, e As EventArgs) Handles GroupBox12.Enter
+    Private Sub bntAjalooKuupaevEdasi_Click(sender As Object, e As EventArgs) Handles bntAjalooKuupaevEdasi.Click
+        AnaluusK = New AnaluusiKomponent.CAnaluus
+        If ajalooKuupaev < AnaluusK.KuupaevIntegeriks(Date.Now.Date) Then
+            ajalooKuupaev = ajalooKuupaev + 1
+            AjalooAken()
+        End If
+    End Sub
 
+    Private Sub btnAjalooKuupaevTagasi_Click(sender As Object, e As EventArgs) Handles btnAjalooKuupaevTagasi.Click
+        AnaluusK = New AnaluusiKomponent.CAnaluus
+        ajalooKuupaev = ajalooKuupaev - 1
+        AjalooAken()
+    End Sub
+
+    Private Sub AjalooAken()
+        AnaluusK = New AnaluusiKomponent.CAnaluus
+        lblAjaluguKuupaev.Text = AnaluusK.IntegerKuupaevaks(ajalooKuupaev)
+        lblAjaluguNadalaPaev.Text = AnaluusK.IntegerKuupaevaks(ajalooKuupaev).ToString("ddd", kultuur) + ","
+
+        MakroGraafik()
     End Sub
 End Class
 
