@@ -74,23 +74,18 @@ Public Class CToidudJaRetseptid
         Using connection As New SQLiteConnection(tabeli_asukoht)
             connection.Open()
             Dim selectSql As String
-            For index = 2000 To 2500
-                If mukbangFlag = 1 Then
-                    selectSql = "SELECT food_name FROM food_data WHERE food_id = @id ORDER BY energy DESC"
-                Else
-                    selectSql = "SELECT food_name FROM food_data WHERE food_id = @id"
-                End If
-
-                Using cmd As New SQLiteCommand(selectSql, connection)
-                    cmd.Parameters.AddWithValue("@id", index)
-
-                    Using reader As SQLiteDataReader = cmd.ExecuteReader()
-                        While reader.Read()
-                            toiduaineteNimed.Add(reader("food_name"))
-                        End While
-                    End Using
+            If mukbangFlag = 1 Then
+                selectSql = "SELECT food_name FROM food_data ORDER BY energy DESC"
+            Else
+                selectSql = "SELECT food_name FROM food_data"
+            End If
+            Using cmd As New SQLiteCommand(selectSql, connection)
+                Using reader As SQLiteDataReader = cmd.ExecuteReader()
+                    While reader.Read()
+                        toiduaineteNimed.Add(reader("food_name"))
+                    End While
                 End Using
-            Next
+            End Using
         End Using
         Return toiduaineteNimed
     End Function
@@ -208,23 +203,18 @@ Public Class CToidudJaRetseptid
         Using connection As New SQLiteConnection(tabeli_asukoht)
             connection.Open()
             Dim selectSql As String
-            For index = 3000 To 4000
-                If mukbangFlag = 1 Then
-                    selectSql = "SELECT recipe_name FROM recipe_data WHERE recipe_id = @id ORDER BY energy DESC"
-                Else
-                    selectSql = "SELECT recipe_name FROM recipe_data WHERE recipe_id = @id"
-                End If
-
-                Using cmd As New SQLiteCommand(selectSql, connection)
-                    cmd.Parameters.AddWithValue("@id", index)
-
-                    Using reader As SQLiteDataReader = cmd.ExecuteReader()
-                        While reader.Read()
-                            retseptideNimed.Add(reader("recipe_name"))
-                        End While
-                    End Using
+            If mukbangFlag = 1 Then
+                selectSql = "SELECT recipe_name FROM recipe_data ORDER BY energy DESC"
+            Else
+                selectSql = "SELECT recipe_name FROM recipe_data"
+            End If
+            Using cmd As New SQLiteCommand(selectSql, connection)
+                Using reader As SQLiteDataReader = cmd.ExecuteReader()
+                    While reader.Read()
+                        retseptideNimed.Add(reader("recipe_name"))
+                    End While
                 End Using
-            Next
+            End Using
         End Using
         Return retseptideNimed
     End Function

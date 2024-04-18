@@ -281,8 +281,6 @@ Public Class Pohiaken
         ToidudRetseptidK = New ToidudRetseptidKomponent.CToidudJaRetseptid
         TreeningudK = New TreeninguteKomponent.CTreeningud
 
-        Dim mukbangFlag As Integer
-
         cmbMuudaVanust.Items.Clear()
         cmbMuudaKaalu.Items.Clear()
         cmbMuudaPikkust.Items.Clear()
@@ -292,7 +290,9 @@ Public Class Pohiaken
         cmbTreeninguKustutamine.Items.Clear()
         cmbToiduaineKustutamine.Items.Clear()
 
-        If chbMukbangFilter.Checked = True Then
+        Dim mukbangFlag As Integer = 0
+
+        If chbMukbangFilter.Checked Then
             mukbangFlag = 1
         Else
             mukbangFlag = 0
@@ -587,9 +587,6 @@ Public Class Pohiaken
         End If
     End Sub
 
-    Private Sub chbMukbangFilter_CheckedChanged(sender As Object, e As EventArgs) Handles chbMukbangFilter.CheckedChanged
-        KomboKastid()
-    End Sub
 
     Private Sub btnToiduaineKustutamine_Click(sender As Object, e As EventArgs) Handles btnToiduaineKustutamine.Click
         ToidudRetseptidK = New ToidudRetseptidKomponent.CToidudJaRetseptid
@@ -613,9 +610,11 @@ Public Class Pohiaken
             KomboKastid()
         End If
     End Sub
+    Private Sub chbMukbangFilter_CheckedChanged(sender As Object, e As EventArgs) Handles chbMukbangFilter.CheckedChanged
+        KomboKastid()
+    End Sub
     Private Sub AjalooInfo()
-        lvPaevasedToidud
-        lvPaevasedTreeningud
+
     End Sub
 
     Private Sub MakroGraafik()
@@ -654,5 +653,6 @@ Public Class Pohiaken
         AjalooInfo()
         MakroGraafik()
     End Sub
+
 End Class
 

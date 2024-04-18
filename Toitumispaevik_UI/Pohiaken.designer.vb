@@ -2591,8 +2591,8 @@ Partial Class Pohiaken
         Me.AutoSize = True
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(241, Byte), Integer), CType(CType(239, Byte), Integer))
         Me.ClientSize = New System.Drawing.Size(1065, 563)
-        Me.Controls.Add(Me.pnlAjalugu)
         Me.Controls.Add(Me.pnlKodu)
+        Me.Controls.Add(Me.pnlAjalugu)
         Me.Controls.Add(Me.pnlToidulaud)
         Me.Controls.Add(Me.pnlYlevaade)
         Me.Controls.Add(Me.pnlTreeningud)
