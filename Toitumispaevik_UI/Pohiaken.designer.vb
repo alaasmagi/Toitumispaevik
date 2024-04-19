@@ -160,10 +160,12 @@ Partial Class Pohiaken
         Me.Label16 = New System.Windows.Forms.Label()
         Me.pnlYlevaade = New System.Windows.Forms.Panel()
         Me.Kaal = New System.Windows.Forms.GroupBox()
+        Me.lblKaaluEesmargiSeadmineViga = New System.Windows.Forms.Label()
         Me.Label58 = New System.Windows.Forms.Label()
         Me.txtKaaluEesmärk = New System.Windows.Forms.TextBox()
         Me.btnEesmargiKinnitamine = New System.Windows.Forms.Button()
         Me.GroupBox15 = New System.Windows.Forms.GroupBox()
+        Me.lblPaevaseKehakaaluLisamineViga = New System.Windows.Forms.Label()
         Me.Label57 = New System.Windows.Forms.Label()
         Me.txtPaevaneKaal = New System.Windows.Forms.TextBox()
         Me.btnPaevaneKaal = New System.Windows.Forms.Button()
@@ -226,12 +228,10 @@ Partial Class Pohiaken
         Me.txtVahetaSalasona = New System.Windows.Forms.TextBox()
         Me.txtKordaSalasona = New System.Windows.Forms.TextBox()
         Me.pnlProfiiliSeaded = New System.Windows.Forms.Panel()
-        Me.Label59 = New System.Windows.Forms.Label()
+        Me.lblKaloriLimiit = New System.Windows.Forms.Label()
         Me.Label54 = New System.Windows.Forms.Label()
         Me.pbAlumineMees = New System.Windows.Forms.PictureBox()
         Me.pbAlumineNaine = New System.Windows.Forms.PictureBox()
-        Me.lblPaevaseKehakaaluLisamineViga = New System.Windows.Forms.Label()
-        Me.lblKaaluEesmargiSeadmineViga = New System.Windows.Forms.Label()
         Me.pnlLeftBar.SuspendLayout()
         Me.pnlTopBar.SuspendLayout()
         CType(Me.pbUlemineNaine, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -1870,6 +1870,19 @@ Partial Class Pohiaken
         Me.Kaal.TabStop = False
         Me.Kaal.Text = "Kaalu eesmärgi seadmine"
         '
+        'lblKaaluEesmargiSeadmineViga
+        '
+        Me.lblKaaluEesmargiSeadmineViga.AutoSize = True
+        Me.lblKaaluEesmargiSeadmineViga.Font = New System.Drawing.Font("Century Gothic", 12.0!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Italic), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblKaaluEesmargiSeadmineViga.ForeColor = System.Drawing.Color.Red
+        Me.lblKaaluEesmargiSeadmineViga.Location = New System.Drawing.Point(14, 119)
+        Me.lblKaaluEesmargiSeadmineViga.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.lblKaaluEesmargiSeadmineViga.Name = "lblKaaluEesmargiSeadmineViga"
+        Me.lblKaaluEesmargiSeadmineViga.Size = New System.Drawing.Size(50, 21)
+        Me.lblKaaluEesmargiSeadmineViga.TabIndex = 38
+        Me.lblKaaluEesmargiSeadmineViga.Text = "VIGA"
+        Me.lblKaaluEesmargiSeadmineViga.Visible = False
+        '
         'Label58
         '
         Me.Label58.AutoSize = True
@@ -1922,6 +1935,19 @@ Partial Class Pohiaken
         Me.GroupBox15.TabIndex = 23
         Me.GroupBox15.TabStop = False
         Me.GroupBox15.Text = "Päevase kehakaalu lisamine"
+        '
+        'lblPaevaseKehakaaluLisamineViga
+        '
+        Me.lblPaevaseKehakaaluLisamineViga.AutoSize = True
+        Me.lblPaevaseKehakaaluLisamineViga.Font = New System.Drawing.Font("Century Gothic", 12.0!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Italic), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblPaevaseKehakaaluLisamineViga.ForeColor = System.Drawing.Color.Red
+        Me.lblPaevaseKehakaaluLisamineViga.Location = New System.Drawing.Point(14, 113)
+        Me.lblPaevaseKehakaaluLisamineViga.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.lblPaevaseKehakaaluLisamineViga.Name = "lblPaevaseKehakaaluLisamineViga"
+        Me.lblPaevaseKehakaaluLisamineViga.Size = New System.Drawing.Size(50, 21)
+        Me.lblPaevaseKehakaaluLisamineViga.TabIndex = 37
+        Me.lblPaevaseKehakaaluLisamineViga.Text = "VIGA"
+        Me.lblPaevaseKehakaaluLisamineViga.Visible = False
         '
         'Label57
         '
@@ -2758,7 +2784,7 @@ Partial Class Pohiaken
         '
         'pnlProfiiliSeaded
         '
-        Me.pnlProfiiliSeaded.Controls.Add(Me.Label59)
+        Me.pnlProfiiliSeaded.Controls.Add(Me.lblKaloriLimiit)
         Me.pnlProfiiliSeaded.Controls.Add(Me.Label54)
         Me.pnlProfiiliSeaded.Controls.Add(Me.pbAlumineMees)
         Me.pnlProfiiliSeaded.Controls.Add(Me.GroupBox6)
@@ -2775,17 +2801,17 @@ Partial Class Pohiaken
         Me.pnlProfiiliSeaded.Size = New System.Drawing.Size(852, 481)
         Me.pnlProfiiliSeaded.TabIndex = 4
         '
-        'Label59
+        'lblKaloriLimiit
         '
-        Me.Label59.AutoSize = True
-        Me.Label59.Font = New System.Drawing.Font("Century Gothic", 12.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label59.ForeColor = System.Drawing.Color.Black
-        Me.Label59.Location = New System.Drawing.Point(165, 94)
-        Me.Label59.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
-        Me.Label59.Name = "Label59"
-        Me.Label59.Size = New System.Drawing.Size(137, 19)
-        Me.Label59.TabIndex = 29
-        Me.Label59.Text = "Kehtiv salasõna:"
+        Me.lblKaloriLimiit.AutoSize = True
+        Me.lblKaloriLimiit.Font = New System.Drawing.Font("Century Gothic", 12.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblKaloriLimiit.ForeColor = System.Drawing.Color.Black
+        Me.lblKaloriLimiit.Location = New System.Drawing.Point(223, 93)
+        Me.lblKaloriLimiit.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.lblKaloriLimiit.Name = "lblKaloriLimiit"
+        Me.lblKaloriLimiit.Size = New System.Drawing.Size(137, 19)
+        Me.lblKaloriLimiit.TabIndex = 29
+        Me.lblKaloriLimiit.Text = "Kehtiv salasõna:"
         '
         'Label54
         '
@@ -2795,9 +2821,9 @@ Partial Class Pohiaken
         Me.Label54.Location = New System.Drawing.Point(24, 92)
         Me.Label54.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label54.Name = "Label54"
-        Me.Label54.Size = New System.Drawing.Size(137, 21)
+        Me.Label54.Size = New System.Drawing.Size(196, 21)
         Me.Label54.TabIndex = 28
-        Me.Label54.Text = "Kehtiv salasõna:"
+        Me.Label54.Text = "Automaatne kalorilimiit:"
         '
         'pbAlumineMees
         '
@@ -2822,32 +2848,6 @@ Partial Class Pohiaken
         Me.pbAlumineNaine.TabIndex = 4
         Me.pbAlumineNaine.TabStop = False
         Me.pbAlumineNaine.Visible = False
-        '
-        'lblPaevaseKehakaaluLisamineViga
-        '
-        Me.lblPaevaseKehakaaluLisamineViga.AutoSize = True
-        Me.lblPaevaseKehakaaluLisamineViga.Font = New System.Drawing.Font("Century Gothic", 12.0!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Italic), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblPaevaseKehakaaluLisamineViga.ForeColor = System.Drawing.Color.Red
-        Me.lblPaevaseKehakaaluLisamineViga.Location = New System.Drawing.Point(14, 113)
-        Me.lblPaevaseKehakaaluLisamineViga.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
-        Me.lblPaevaseKehakaaluLisamineViga.Name = "lblPaevaseKehakaaluLisamineViga"
-        Me.lblPaevaseKehakaaluLisamineViga.Size = New System.Drawing.Size(50, 21)
-        Me.lblPaevaseKehakaaluLisamineViga.TabIndex = 37
-        Me.lblPaevaseKehakaaluLisamineViga.Text = "VIGA"
-        Me.lblPaevaseKehakaaluLisamineViga.Visible = False
-        '
-        'lblKaaluEesmargiSeadmineViga
-        '
-        Me.lblKaaluEesmargiSeadmineViga.AutoSize = True
-        Me.lblKaaluEesmargiSeadmineViga.Font = New System.Drawing.Font("Century Gothic", 12.0!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Italic), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblKaaluEesmargiSeadmineViga.ForeColor = System.Drawing.Color.Red
-        Me.lblKaaluEesmargiSeadmineViga.Location = New System.Drawing.Point(14, 119)
-        Me.lblKaaluEesmargiSeadmineViga.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
-        Me.lblKaaluEesmargiSeadmineViga.Name = "lblKaaluEesmargiSeadmineViga"
-        Me.lblKaaluEesmargiSeadmineViga.Size = New System.Drawing.Size(50, 21)
-        Me.lblKaaluEesmargiSeadmineViga.TabIndex = 38
-        Me.lblKaaluEesmargiSeadmineViga.Text = "VIGA"
-        Me.lblKaaluEesmargiSeadmineViga.Visible = False
         '
         'Pohiaken
         '
@@ -3128,7 +3128,7 @@ Partial Class Pohiaken
     Friend WithEvents PictureBox4 As PictureBox
     Friend WithEvents Label49 As Label
     Friend WithEvents Label50 As Label
-    Friend WithEvents Label59 As Label
+    Friend WithEvents lblKaloriLimiit As Label
     Friend WithEvents Label54 As Label
     Friend WithEvents lblKaaluEesmargiSeadmineViga As Label
     Friend WithEvents lblPaevaseKehakaaluLisamineViga As Label
