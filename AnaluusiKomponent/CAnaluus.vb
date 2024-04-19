@@ -9,13 +9,13 @@ Public Class CAnaluus
     Private ohtu
     Private vahepala
 
-    Public Function PaevaseAndmereaParing(ByVal kasutaja_id As Integer, ByVal kuupaev As Integer) As Integer Implements IAnaluus.PaevaseAndmereaParing
+    Public Function PaevaseAndmereaParing(ByVal kasutaja_id As Integer, ByVal kuupaev As Integer, ByVal otsitavSuurus As String) As Integer Implements IAnaluus.PaevaseAndmereaParing
         Dim paevaneKcal As Integer = -1
         Dim tabeli_asukoht As String = $"Data Source={Path.Combine(Path.GetFullPath(Path.Combine _
         (AppDomain.CurrentDomain.BaseDirectory, "..\..\..\")), "Data", "database.db")};Version=3;"
         Using connection As New SQLiteConnection(tabeli_asukoht)
             connection.Open()
-            Dim selectSql As String = "SELECT energy_intake FROM user_daily_data WHERE user_id = @kasutaja_id AND date = @kuupaev"
+            Dim selectSql As String = $"SELECT {otsitavSuurus} FROM user_daily_data WHERE user_id = @kasutaja_id AND date = @kuupaev"
             Using cmd As New SQLiteCommand(selectSql, connection)
                 cmd.Parameters.AddWithValue("@kasutaja_id", kasutaja_id)
                 cmd.Parameters.AddWithValue("@kuupaev", kuupaev)
