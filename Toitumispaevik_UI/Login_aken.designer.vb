@@ -127,7 +127,7 @@ Partial Class Login_aken
         '
         Me.lblKasutajanimi.AutoSize = True
         Me.lblKasutajanimi.Font = New System.Drawing.Font("Century Gothic", 12.0!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Italic), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblKasutajanimi.Location = New System.Drawing.Point(34, 91)
+        Me.lblKasutajanimi.Location = New System.Drawing.Point(34, 85)
         Me.lblKasutajanimi.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.lblKasutajanimi.Name = "lblKasutajanimi"
         Me.lblKasutajanimi.Size = New System.Drawing.Size(116, 21)
@@ -138,7 +138,7 @@ Partial Class Login_aken
         '
         Me.lblSalasona.AutoSize = True
         Me.lblSalasona.Font = New System.Drawing.Font("Century Gothic", 12.0!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Italic), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblSalasona.Location = New System.Drawing.Point(62, 143)
+        Me.lblSalasona.Location = New System.Drawing.Point(61, 137)
         Me.lblSalasona.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.lblSalasona.Name = "lblSalasona"
         Me.lblSalasona.Size = New System.Drawing.Size(90, 21)
@@ -207,7 +207,7 @@ Partial Class Login_aken
         Me.lblEesnimi.BackColor = System.Drawing.Color.Transparent
         Me.lblEesnimi.Font = New System.Drawing.Font("Century Gothic", 12.0!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Italic), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblEesnimi.ForeColor = System.Drawing.Color.Black
-        Me.lblEesnimi.Location = New System.Drawing.Point(78, 34)
+        Me.lblEesnimi.Location = New System.Drawing.Point(78, 28)
         Me.lblEesnimi.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.lblEesnimi.Name = "lblEesnimi"
         Me.lblEesnimi.Size = New System.Drawing.Size(72, 21)
@@ -218,7 +218,7 @@ Partial Class Login_aken
         '
         Me.lblKordaSalasona.AutoSize = True
         Me.lblKordaSalasona.Font = New System.Drawing.Font("Century Gothic", 12.0!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Italic), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblKordaSalasona.Location = New System.Drawing.Point(18, 192)
+        Me.lblKordaSalasona.Location = New System.Drawing.Point(14, 191)
         Me.lblKordaSalasona.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.lblKordaSalasona.Name = "lblKordaSalasona"
         Me.lblKordaSalasona.Size = New System.Drawing.Size(136, 21)
@@ -456,7 +456,7 @@ Partial Class Login_aken
         '
         Me.Label3.AutoSize = True
         Me.Label3.Font = New System.Drawing.Font("Century Gothic", 12.0!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Italic), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label3.Location = New System.Drawing.Point(86, 80)
+        Me.Label3.Location = New System.Drawing.Point(85, 79)
         Me.Label3.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(65, 21)
@@ -467,7 +467,7 @@ Partial Class Login_aken
         '
         Me.Label4.AutoSize = True
         Me.Label4.Font = New System.Drawing.Font("Century Gothic", 12.0!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Italic), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label4.Location = New System.Drawing.Point(44, 29)
+        Me.Label4.Location = New System.Drawing.Point(37, 27)
         Me.Label4.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(118, 21)
@@ -513,7 +513,7 @@ Partial Class Login_aken
         '
         Me.Label1.AutoSize = True
         Me.Label1.Font = New System.Drawing.Font("Century Gothic", 12.0!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Italic), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label1.Location = New System.Drawing.Point(62, 143)
+        Me.Label1.Location = New System.Drawing.Point(67, 137)
         Me.Label1.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(90, 21)
@@ -524,7 +524,7 @@ Partial Class Login_aken
         '
         Me.Label2.AutoSize = True
         Me.Label2.Font = New System.Drawing.Font("Century Gothic", 12.0!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Italic), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label2.Location = New System.Drawing.Point(34, 91)
+        Me.Label2.Location = New System.Drawing.Point(39, 85)
         Me.Label2.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(116, 21)
@@ -640,7 +640,7 @@ Partial Class Login_aken
         '
         Me.Label11.AutoSize = True
         Me.Label11.Font = New System.Drawing.Font("Century Gothic", 12.0!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Italic), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label11.Location = New System.Drawing.Point(86, 181)
+        Me.Label11.Location = New System.Drawing.Point(90, 183)
         Me.Label11.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.Label11.Name = "Label11"
         Me.Label11.Size = New System.Drawing.Size(65, 21)
@@ -651,7 +651,7 @@ Partial Class Login_aken
         '
         Me.Label8.AutoSize = True
         Me.Label8.Font = New System.Drawing.Font("Century Gothic", 12.0!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Italic), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label8.Location = New System.Drawing.Point(39, 152)
+        Me.Label8.Location = New System.Drawing.Point(36, 149)
         Me.Label8.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.Label8.Name = "Label8"
         Me.Label8.Size = New System.Drawing.Size(118, 21)
@@ -662,7 +662,7 @@ Partial Class Login_aken
         '
         Me.Label7.AutoSize = True
         Me.Label7.Font = New System.Drawing.Font("Century Gothic", 12.0!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Italic), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label7.Location = New System.Drawing.Point(34, 32)
+        Me.Label7.Location = New System.Drawing.Point(34, 28)
         Me.Label7.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.Label7.Name = "Label7"
         Me.Label7.Size = New System.Drawing.Size(116, 21)
@@ -706,7 +706,7 @@ Partial Class Login_aken
         Me.lblUnustasinSalasonaEdasiSalasonaMeenus.AutoSize = True
         Me.lblUnustasinSalasonaEdasiSalasonaMeenus.Font = New System.Drawing.Font("Century Gothic", 9.75!, CType((System.Drawing.FontStyle.Italic Or System.Drawing.FontStyle.Underline), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblUnustasinSalasonaEdasiSalasonaMeenus.ForeColor = System.Drawing.Color.FromArgb(CType(CType(51, Byte), Integer), CType(CType(75, Byte), Integer), CType(CType(72, Byte), Integer))
-        Me.lblUnustasinSalasonaEdasiSalasonaMeenus.Location = New System.Drawing.Point(226, 288)
+        Me.lblUnustasinSalasonaEdasiSalasonaMeenus.Location = New System.Drawing.Point(226, 274)
         Me.lblUnustasinSalasonaEdasiSalasonaMeenus.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.lblUnustasinSalasonaEdasiSalasonaMeenus.Name = "lblUnustasinSalasonaEdasiSalasonaMeenus"
         Me.lblUnustasinSalasonaEdasiSalasonaMeenus.Size = New System.Drawing.Size(191, 16)
@@ -718,7 +718,7 @@ Partial Class Login_aken
         Me.lblUnustasinSalasonaEdasiViga.AutoSize = True
         Me.lblUnustasinSalasonaEdasiViga.Font = New System.Drawing.Font("Century Gothic", 12.0!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Italic), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblUnustasinSalasonaEdasiViga.ForeColor = System.Drawing.Color.Red
-        Me.lblUnustasinSalasonaEdasiViga.Location = New System.Drawing.Point(113, 307)
+        Me.lblUnustasinSalasonaEdasiViga.Location = New System.Drawing.Point(113, 293)
         Me.lblUnustasinSalasonaEdasiViga.Name = "lblUnustasinSalasonaEdasiViga"
         Me.lblUnustasinSalasonaEdasiViga.RightToLeft = System.Windows.Forms.RightToLeft.No
         Me.lblUnustasinSalasonaEdasiViga.Size = New System.Drawing.Size(50, 21)
@@ -735,7 +735,7 @@ Partial Class Login_aken
         Me.btnKinnitaUusSalasona.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.btnKinnitaUusSalasona.Font = New System.Drawing.Font("Century Gothic", 12.0!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Italic), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnKinnitaUusSalasona.ForeColor = System.Drawing.Color.White
-        Me.btnKinnitaUusSalasona.Location = New System.Drawing.Point(173, 234)
+        Me.btnKinnitaUusSalasona.Location = New System.Drawing.Point(173, 220)
         Me.btnKinnitaUusSalasona.Margin = New System.Windows.Forms.Padding(6, 4, 6, 4)
         Me.btnKinnitaUusSalasona.Name = "btnKinnitaUusSalasona"
         Me.btnKinnitaUusSalasona.Size = New System.Drawing.Size(312, 50)
@@ -746,7 +746,7 @@ Partial Class Login_aken
         'lblTurvaKusimusEdasiKasutajanimi
         '
         Me.lblTurvaKusimusEdasiKasutajanimi.AutoSize = True
-        Me.lblTurvaKusimusEdasiKasutajanimi.Location = New System.Drawing.Point(173, 85)
+        Me.lblTurvaKusimusEdasiKasutajanimi.Location = New System.Drawing.Point(173, 71)
         Me.lblTurvaKusimusEdasiKasutajanimi.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.lblTurvaKusimusEdasiKasutajanimi.Name = "lblTurvaKusimusEdasiKasutajanimi"
         Me.lblTurvaKusimusEdasiKasutajanimi.Size = New System.Drawing.Size(112, 19)
@@ -757,7 +757,7 @@ Partial Class Login_aken
         '
         Me.Label14.AutoSize = True
         Me.Label14.Font = New System.Drawing.Font("Century Gothic", 12.0!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Italic), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label14.Location = New System.Drawing.Point(44, 85)
+        Me.Label14.Location = New System.Drawing.Point(44, 71)
         Me.Label14.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.Label14.Name = "Label14"
         Me.Label14.Size = New System.Drawing.Size(116, 21)
@@ -768,7 +768,7 @@ Partial Class Login_aken
         '
         Me.Label13.AutoSize = True
         Me.Label13.Font = New System.Drawing.Font("Century Gothic", 12.0!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Italic), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label13.Location = New System.Drawing.Point(28, 184)
+        Me.Label13.Location = New System.Drawing.Point(28, 170)
         Me.Label13.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.Label13.Name = "Label13"
         Me.Label13.Size = New System.Drawing.Size(136, 21)
@@ -777,7 +777,7 @@ Partial Class Login_aken
         '
         'txtUnustasinSalasonaEdasiKordaSalasona
         '
-        Me.txtUnustasinSalasonaEdasiKordaSalasona.Location = New System.Drawing.Point(173, 181)
+        Me.txtUnustasinSalasonaEdasiKordaSalasona.Location = New System.Drawing.Point(173, 167)
         Me.txtUnustasinSalasonaEdasiKordaSalasona.Margin = New System.Windows.Forms.Padding(6, 4, 6, 4)
         Me.txtUnustasinSalasonaEdasiKordaSalasona.Name = "txtUnustasinSalasonaEdasiKordaSalasona"
         Me.txtUnustasinSalasonaEdasiKordaSalasona.Size = New System.Drawing.Size(312, 27)
@@ -787,7 +787,7 @@ Partial Class Login_aken
         '
         Me.Label12.AutoSize = True
         Me.Label12.Font = New System.Drawing.Font("Century Gothic", 12.0!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Italic), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label12.Location = New System.Drawing.Point(48, 128)
+        Me.Label12.Location = New System.Drawing.Point(48, 114)
         Me.Label12.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.Label12.Name = "Label12"
         Me.Label12.Size = New System.Drawing.Size(116, 21)
@@ -796,7 +796,7 @@ Partial Class Login_aken
         '
         'txtUnustasinSalasonaEdasiUusSalasona
         '
-        Me.txtUnustasinSalasonaEdasiUusSalasona.Location = New System.Drawing.Point(173, 126)
+        Me.txtUnustasinSalasonaEdasiUusSalasona.Location = New System.Drawing.Point(173, 112)
         Me.txtUnustasinSalasonaEdasiUusSalasona.Margin = New System.Windows.Forms.Padding(6, 4, 6, 4)
         Me.txtUnustasinSalasonaEdasiUusSalasona.Name = "txtUnustasinSalasonaEdasiUusSalasona"
         Me.txtUnustasinSalasonaEdasiUusSalasona.Size = New System.Drawing.Size(312, 27)
@@ -823,11 +823,11 @@ Partial Class Login_aken
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(241, Byte), Integer), CType(CType(239, Byte), Integer))
         Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
         Me.ClientSize = New System.Drawing.Size(618, 642)
-        Me.Controls.Add(Me.pnlLogiSisse)
-        Me.Controls.Add(Me.pnlUnustasinSalasona)
-        Me.Controls.Add(Me.pnlUnustasinSalasonaEdasi)
-        Me.Controls.Add(Me.pnlLooKonto)
         Me.Controls.Add(Me.pnlLooKontoEdasi)
+        Me.Controls.Add(Me.pnlLooKonto)
+        Me.Controls.Add(Me.pnlUnustasinSalasonaEdasi)
+        Me.Controls.Add(Me.pnlUnustasinSalasona)
+        Me.Controls.Add(Me.pnlLogiSisse)
         Me.Controls.Add(Me.pnlLogoLogiSisse)
         Me.Font = New System.Drawing.Font("Century Gothic", 12.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.ForeColor = System.Drawing.Color.Black

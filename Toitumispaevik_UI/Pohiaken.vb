@@ -563,6 +563,7 @@ Public Class Pohiaken
         ProfiilK = New KasutajaProfiilKomponent.CKasutajaProfiil
 
         If IsNumeric(txtPaevaneKaal.Text) AndAlso txtPaevaneKaal.Text > 0 Then
+            lblPaevaseKehakaaluLisamineViga.Visible = False
             AnaluusK.KaaluLisamine(_kasutaja_id, txtPaevaneKaal.Text)
             ProfiilK.IntegerAndmeValjaSisestusKasutajaTabelisse(_kasutaja_id, txtPaevaneKaal.Text, "weight")
             lblKasutajaKaal.Text = ProfiilK.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "weight")
@@ -570,7 +571,8 @@ Public Class Pohiaken
             GraafikuSeaded()
             txtPaevaneKaal.Text = ""
         Else
-
+            lblPaevaseKehakaaluLisamineViga.Text = "Ebakorrektne sisestus!"
+            lblPaevaseKehakaaluLisamineViga.Visible = True
         End If
 
     End Sub
@@ -582,12 +584,14 @@ Public Class Pohiaken
     Private Sub btnEesmargiKinnitamine_Click(sender As Object, e As EventArgs) Handles btnEesmargiKinnitamine.Click
         ProfiilK = New KasutajaProfiilKomponent.CKasutajaProfiil
         If IsNumeric(txtKaaluEesmärk.Text) AndAlso txtKaaluEesmärk.Text > 0 Then
+            lblKaaluEesmargiSeadmineViga.Visible = False
             ProfiilK.IntegerAndmeValjaSisestusKasutajaTabelisse(_kasutaja_id, txtKaaluEesmärk.Text, "weight_goal")
             tabelSihtKaal = txtKaaluEesmärk.Text
             GraafikuSeaded()
             txtKaaluEesmärk.Text = ""
         Else
-
+            lblKaaluEesmargiSeadmineViga.Text = "Ebakorrektne sisestus!"
+            lblKaaluEesmargiSeadmineViga.Visible = True
         End If
     End Sub
 
@@ -708,6 +712,10 @@ Public Class Pohiaken
 
         AjalooInfo()
         MakroGraafik()
+    End Sub
+
+    Private Sub pnlAjalugu_Paint(sender As Object, e As PaintEventArgs) Handles pnlAjalugu.Paint
+
     End Sub
 End Class
 
