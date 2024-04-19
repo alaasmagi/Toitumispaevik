@@ -137,6 +137,7 @@ Public Class CAnaluus
 
             End Using
         End Using
+
         Return doubleValues.ToArray()
 
     End Function

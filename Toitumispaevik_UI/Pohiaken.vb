@@ -109,7 +109,7 @@ Public Class Pohiaken
 
         chrKaaluMuutumine.Series("Kaal").Points.Clear()
         chrKaaluMuutumine.Series("Siht Kaal").Points.Clear()
-        For muutuja As Integer = 0 To TabelKaalud.Length - 1 Step +1
+        For muutuja As Integer = 1 To TabelKaalud.Length - 1 Step +1
             If muutuja > 0 AndAlso (DateTabelKaalud(muutuja - 1) + 1) < DateTabelKaalud(muutuja) Then
                 DateTabelKaalud(muutuja - 1) = DateTabelKaalud(muutuja - 1) + 1
                 chrKaaluMuutumine.Series("Kaal").Points.AddXY(AnaluusK.IntegerKuupaevaks(DateTabelKaalud(muutuja - 1)), TabelKaalud(muutuja - 1))

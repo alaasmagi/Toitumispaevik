@@ -38,6 +38,7 @@ Public Class CKasutajaProfiil
                 End If
                 cmd.Parameters.AddWithValue("@vanus", vanus)
                 cmd.ExecuteNonQuery()
+
             End Using
         End Using
         Return kasutaja_id
