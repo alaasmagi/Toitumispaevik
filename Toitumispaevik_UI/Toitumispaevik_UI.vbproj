@@ -237,6 +237,18 @@
   <ItemGroup>
     <None Include="Resources\icons8-bulb-20.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BELIEF-FUNCTIONAL-WATER.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\934874eab74850fc1ba7f7d7d6aed3fa.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\pngegg.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\pngwing.com.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

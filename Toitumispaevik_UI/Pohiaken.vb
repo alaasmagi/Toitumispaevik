@@ -1,7 +1,9 @@
 ﻿Imports System.Data.Entity.Core.Mapping
 Imports System.Data.SQLite
 Imports System.Drawing.Text
+Imports System.Globalization
 Imports System.IO
+Imports System.Reflection
 Imports System.Security.Authentication.ExtendedProtection
 Imports System.Windows.Forms.VisualStyles
 Imports AnaluusiKomponent
@@ -14,8 +16,11 @@ Public Class Pohiaken
     Private kalorilimiit As Integer
     Private TabelKaalud As Double()
     Private DateTabelKaalud As Integer()
+    Private ajalooKuupaev As Integer
     Private tabelSihtKaal As Double
     Private valueMap As New Dictionary(Of String, Integer)()
+    Dim kultuur As New CultureInfo("et-EE")
+
 
     Dim retseptideKoostisosad As New List(Of Integer)
     Dim retseptideKoostisosadeKogused As New List(Of Integer)
@@ -42,13 +47,17 @@ Public Class Pohiaken
         ProfiilK = New KasutajaProfiilKomponent.CKasutajaProfiil
         AnaluusK = New AnaluusiKomponent.CAnaluus
 
-        If AnaluusK.PaevaseAndmereaParing(_kasutaja_id, AnaluusK.KuupaevIntegeriks(Date.Now.Date)) = -1 Then
+        ajalooKuupaev = AnaluusK.KuupaevIntegeriks(Date.Now.Date)
+        lblAjaluguKuupaev.Text = AnaluusK.IntegerKuupaevaks(ajalooKuupaev)
+        lblAjaluguNadalaPaev.Text = AnaluusK.IntegerKuupaevaks(ajalooKuupaev).ToString("ddd", kultuur) + ","
+
+        If AnaluusK.PaevaseAndmereaParing(_kasutaja_id, AnaluusK.KuupaevIntegeriks(Date.Now.Date), "energy_intake") = -1 Then
             AnaluusK.TuhjaPaevaseAndmereaSisestus(_kasutaja_id, AnaluusK.KuupaevIntegeriks(Date.Now.Date))
         End If
 
-        AnaluusK.DBParingBMR(_kasutaja_id, ProfiilK.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "sex"), ProfiilK.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "weight"),
-                             ProfiilK.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "height"), ProfiilK.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "age"),
-                             ProfiilK.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "calorie_limit"), AnaluusK.KuupaevIntegeriks(Date.Now.Date))
+        AnaluusK.DBParingBMR(_kasutaja_id, ProfiilK.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "sex"), ProfiilK.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "age"),
+                             ProfiilK.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "weight"), ProfiilK.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "weight_goal"),
+                             ProfiilK.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "height"), AnaluusK.KuupaevIntegeriks(Date.Now.Date))
 
         TuhjendaKonteiner(Me)
         pnlLogo.Visible = True
@@ -78,14 +87,6 @@ Public Class Pohiaken
             pbUlemineNaine.Visible = True
             pbAlumineNaine.Visible = True
         End If
-
-        If ProfiilK.UheAndmevaljaParingKasutajaTabelist(_kasutaja_id, "calorie_limit") = 0 Then
-            lblKoduSoovitus.Visible = True
-            lblKoduSoovitus2.Visible = True
-        Else
-            lblKoduSoovitus.Visible = False
-            lblKoduSoovitus2.Visible = False
-        End If
         KomboKastid()
         KoduGraafik()
         UlevaatusCmbBox()
@@ -95,9 +96,9 @@ Public Class Pohiaken
         cmbAjaluguGraafikuPeriood.Items.Add("Viimased 6 kuud")
         cmbAjaluguGraafikuPeriood.Items.Add("Viimane aasta")
         cmbAjaluguGraafikuPeriood.SelectedIndex = 0
-        lblAjaluguKuupaev.Text = Date.Now.Date()
 
         GraafikuSeaded()
+        AjalooAken()
 
     End Sub
 
@@ -147,8 +148,8 @@ Public Class Pohiaken
 
         chrKoduPaneel.Series("Soogikorrad").Points.AddXY("Vahepalad", AnaluusK.PariKcalPaveaHetkest(AnaluusK.KuupaevIntegeriks(Date.Now.Date), _kasutaja_id, 2))
 
-        chrKoduPaneel.Series("Soogikorrad").Points.AddXY("Söömata", AnaluusK.PariKaloriUlejaak(AnaluusK.PaevaneKcal(), kalorilimiit))
-        lblKcalPaev.Text = AnaluusK.PaevaneKcal() & Environment.NewLine & "/" & Environment.NewLine & kalorilimiit & Environment.NewLine & "kCal"
+        chrKoduPaneel.Series("Soogikorrad").Points.AddXY("Söömata", AnaluusK.PariKaloriUlejaak(AnaluusK.PaevaneKcal(_kasutaja_id, AnaluusK.KuupaevIntegeriks(Date.Now.Date)), kalorilimiit))
+        lblKcalPaev.Text = AnaluusK.PaevaneKcal(_kasutaja_id, AnaluusK.KuupaevIntegeriks(Date.Now.Date)) & Environment.NewLine & "/" & Environment.NewLine & kalorilimiit & Environment.NewLine & "kCal"
     End Sub
     Private Sub pnlLogo_Click(sender As Object, e As EventArgs) Handles pnlLogo.Click
         pnlYlevaade.Visible = False
@@ -273,14 +274,14 @@ Public Class Pohiaken
             End If
         Next
     End Sub
+    Sub AjalooVaade()
 
+    End Sub
     Sub KomboKastid()
 
         ProfiilK = New KasutajaProfiilKomponent.CKasutajaProfiil
         ToidudRetseptidK = New ToidudRetseptidKomponent.CToidudJaRetseptid
         TreeningudK = New TreeninguteKomponent.CTreeningud
-
-        Dim mukbangFlag As Integer = 0
 
         cmbMuudaVanust.Items.Clear()
         cmbMuudaKaalu.Items.Clear()
@@ -291,7 +292,9 @@ Public Class Pohiaken
         cmbTreeninguKustutamine.Items.Clear()
         cmbToiduaineKustutamine.Items.Clear()
 
-        If chbMukbangFilter.Checked = True Then
+        Dim mukbangFlag As Integer = 0
+
+        If chbMukbangFilter.Checked Then
             mukbangFlag = 1
         Else
             mukbangFlag = 0
@@ -444,22 +447,7 @@ Public Class Pohiaken
             lblToiduAineRetseptiLisamineViga.Text = "Viga koguse sisestuses!"
             lblToiduAineRetseptiLisamineViga.Visible = True
         End If
-        KoduGraafik()
-    End Sub
-
-    Private Sub btnKaloriLimiit_Click(sender As Object, e As EventArgs) Handles btnKaloriLimiit.Click
-        ProfiilK = New KasutajaProfiilKomponent.CKasutajaProfiil
-        If IsNumeric(txtKalorilimiit.Text) AndAlso txtKalorilimiit.Text >= 0 Then
-            ProfiilK.IntegerAndmeValjaSisestusKasutajaTabelisse(_kasutaja_id, txtKalorilimiit.Text, "calorie_limit")
-            Integer.TryParse(txtKalorilimiit.Text, kalorilimiit)
-            txtKalorilimiit.Text = ""
-            lblKaloriLimiitViga.Visible = False
-            lblKoduSoovitus.Visible = False
-            lblKoduSoovitus2.Visible = False
-        Else
-            lblKaloriLimiitViga.Text = "Viga limiidi seadmisel!"
-            lblKaloriLimiitViga.Visible = True
-        End If
+        AjalooInfo()
         KoduGraafik()
     End Sub
 
@@ -470,11 +458,13 @@ Public Class Pohiaken
         If IsNumeric(txtTreeninguKiirvalikKestus.Text) AndAlso txtTreeninguKiirvalikKestus.Text > 0 Then
             lblTreeninguKiirvalikViga.Visible = False
             TreeningudK.KasutajaTreeninguLisamine(_kasutaja_id, AnaluusK.KuupaevIntegeriks(Date.Now.Date), TreeningudK.TreeninguNimiEksisteerib(cmbTreeninguteKiirvalik.SelectedItem()), txtTreeninguKiirvalikKestus.Text)
+            AnaluusK.PaevaneKcal(_kasutaja_id, AnaluusK.KuupaevIntegeriks(Date.Now.Date))
             txtTreeninguKiirvalikKestus.Text = ""
         Else
             lblTreeninguKiirvalikViga.Text = "Viga kestuse sisestuses!"
             lblTreeninguKiirvalikViga.Visible = True
         End If
+        AjalooInfo()
     End Sub
 
     Private Sub btnTreeninguLisamine_Click(sender As Object, e As EventArgs) Handles btnTreeninguLisamine.Click
@@ -504,11 +494,11 @@ Public Class Pohiaken
         AnaluusK = New AnaluusiKomponent.CAnaluus
 
         If IsNumeric(txtRetseptiKoostisosaKogus.Text) AndAlso txtRetseptiKoostisosaKogus.Text > 0 Then
-            retseptiKcal = retseptiKcal + AnaluusK.RetseptiToiduaineToitevaartuseArvutus(ToidudRetseptidK.ToiteVaartuseParing(ToidudRetseptidK.ToiduAineNimiEksisteerib(cmbRetseptiKoostisosad.SelectedItem), "energy"), txtRetseptiKoostisosaKogus.Text)
-            retseptiSusivesikud = retseptiSusivesikud + AnaluusK.RetseptiToiduaineToitevaartuseArvutus(ToidudRetseptidK.ToiteVaartuseParing(ToidudRetseptidK.ToiduAineNimiEksisteerib(cmbRetseptiKoostisosad.SelectedItem), "c_hydrates"), txtRetseptiKoostisosaKogus.Text)
-            retseptiSuhkur = retseptiSuhkur + AnaluusK.RetseptiToiduaineToitevaartuseArvutus(ToidudRetseptidK.ToiteVaartuseParing(ToidudRetseptidK.ToiduAineNimiEksisteerib(cmbRetseptiKoostisosad.SelectedItem), "sugar"), txtRetseptiKoostisosaKogus.Text)
-            retseptiValgud = retseptiValgud + AnaluusK.RetseptiToiduaineToitevaartuseArvutus(ToidudRetseptidK.ToiteVaartuseParing(ToidudRetseptidK.ToiduAineNimiEksisteerib(cmbRetseptiKoostisosad.SelectedItem), "protein"), txtRetseptiKoostisosaKogus.Text)
-            retseptiLipiidid = retseptiLipiidid + AnaluusK.RetseptiToiduaineToitevaartuseArvutus(ToidudRetseptidK.ToiteVaartuseParing(ToidudRetseptidK.ToiduAineNimiEksisteerib(cmbRetseptiKoostisosad.SelectedItem), "lipid"), txtRetseptiKoostisosaKogus.Text)
+            retseptiKcal = retseptiKcal + AnaluusK.RetseptiToiduaineToitevaartuseArvutus(ToidudRetseptidK.ToiteVaartuseParing(ToidudRetseptidK.ToiduAineNimiEksisteerib(cmbRetseptiKoostisosad.SelectedItem), "energy", 0), txtRetseptiKoostisosaKogus.Text)
+            retseptiSusivesikud = retseptiSusivesikud + AnaluusK.RetseptiToiduaineToitevaartuseArvutus(ToidudRetseptidK.ToiteVaartuseParing(ToidudRetseptidK.ToiduAineNimiEksisteerib(cmbRetseptiKoostisosad.SelectedItem), "c_hydrates", 0), txtRetseptiKoostisosaKogus.Text)
+            retseptiSuhkur = retseptiSuhkur + AnaluusK.RetseptiToiduaineToitevaartuseArvutus(ToidudRetseptidK.ToiteVaartuseParing(ToidudRetseptidK.ToiduAineNimiEksisteerib(cmbRetseptiKoostisosad.SelectedItem), "sugar", 0), txtRetseptiKoostisosaKogus.Text)
+            retseptiValgud = retseptiValgud + AnaluusK.RetseptiToiduaineToitevaartuseArvutus(ToidudRetseptidK.ToiteVaartuseParing(ToidudRetseptidK.ToiduAineNimiEksisteerib(cmbRetseptiKoostisosad.SelectedItem), "protein", 0), txtRetseptiKoostisosaKogus.Text)
+            retseptiLipiidid = retseptiLipiidid + AnaluusK.RetseptiToiduaineToitevaartuseArvutus(ToidudRetseptidK.ToiteVaartuseParing(ToidudRetseptidK.ToiduAineNimiEksisteerib(cmbRetseptiKoostisosad.SelectedItem), "lipid", 0), txtRetseptiKoostisosaKogus.Text)
             lbRetseptiKoostisosad.Items.Add(cmbRetseptiKoostisosad.SelectedItem)
             retseptideKoostisosad.Add(ToidudRetseptidK.ToiduAineNimiEksisteerib(cmbRetseptiKoostisosad.SelectedItem.ToString()))
             retseptideKoostisosadeKogused.Add(txtRetseptiKoostisosaKogus.Text)
@@ -547,7 +537,7 @@ Public Class Pohiaken
             retseptideKoostisosadeKogused.Clear()
             lbRetseptiKoostisosad.Items.Clear()
         End If
-
+        KomboKastid()
     End Sub
 
     Private Sub btnKustutaTreening_Click(sender As Object, e As EventArgs) Handles btnKustutaTreening.Click
@@ -573,6 +563,7 @@ Public Class Pohiaken
         ProfiilK = New KasutajaProfiilKomponent.CKasutajaProfiil
 
         If IsNumeric(txtPaevaneKaal.Text) AndAlso txtPaevaneKaal.Text > 0 Then
+            lblPaevaseKehakaaluLisamineViga.Visible = False
             AnaluusK.KaaluLisamine(_kasutaja_id, txtPaevaneKaal.Text)
             ProfiilK.IntegerAndmeValjaSisestusKasutajaTabelisse(_kasutaja_id, txtPaevaneKaal.Text, "weight")
             lblKasutajaKaal.Text = ProfiilK.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "weight")
@@ -580,7 +571,8 @@ Public Class Pohiaken
             GraafikuSeaded()
             txtPaevaneKaal.Text = ""
         Else
-
+            lblPaevaseKehakaaluLisamineViga.Text = "Ebakorrektne sisestus!"
+            lblPaevaseKehakaaluLisamineViga.Visible = True
         End If
 
     End Sub
@@ -592,18 +584,17 @@ Public Class Pohiaken
     Private Sub btnEesmargiKinnitamine_Click(sender As Object, e As EventArgs) Handles btnEesmargiKinnitamine.Click
         ProfiilK = New KasutajaProfiilKomponent.CKasutajaProfiil
         If IsNumeric(txtKaaluEesmärk.Text) AndAlso txtKaaluEesmärk.Text > 0 Then
+            lblKaaluEesmargiSeadmineViga.Visible = False
             ProfiilK.IntegerAndmeValjaSisestusKasutajaTabelisse(_kasutaja_id, txtKaaluEesmärk.Text, "weight_goal")
             tabelSihtKaal = txtKaaluEesmärk.Text
             GraafikuSeaded()
             txtKaaluEesmärk.Text = ""
         Else
-
+            lblKaaluEesmargiSeadmineViga.Text = "Ebakorrektne sisestus!"
+            lblKaaluEesmargiSeadmineViga.Visible = True
         End If
     End Sub
 
-    Private Sub chbMukbangFilter_CheckedChanged(sender As Object, e As EventArgs) Handles chbMukbangFilter.CheckedChanged
-        KomboKastid()
-    End Sub
 
     Private Sub btnToiduaineKustutamine_Click(sender As Object, e As EventArgs) Handles btnToiduaineKustutamine.Click
         ToidudRetseptidK = New ToidudRetseptidKomponent.CToidudJaRetseptid
@@ -627,23 +618,101 @@ Public Class Pohiaken
             KomboKastid()
         End If
     End Sub
+    Private Sub chbMukbangFilter_CheckedChanged(sender As Object, e As EventArgs) Handles chbMukbangFilter.CheckedChanged
+        KomboKastid()
+    End Sub
+    Private Sub AjalooInfo()
+        AnaluusK = New AnaluusiKomponent.CAnaluus
+        TreeningudK = New TreeninguteKomponent.CTreeningud
+        ToidudRetseptidK = New ToidudRetseptidKomponent.CToidudJaRetseptid
+
+        lvPaevasedToidud.Items.Clear()
+        lvPaevasedTreeningud.Items.Clear()
+
+        Dim paevasteToitudeId As Double() = AnaluusK.PaevasedToidud(_kasutaja_id, ajalooKuupaev, "food_id")
+        Dim paevasteToitudeKcal As Double() = AnaluusK.PaevasedToidud(_kasutaja_id, ajalooKuupaev, "energy_intake")
+        Dim paevasteToitudeToidukord As Double() = AnaluusK.PaevasedToidud(_kasutaja_id, ajalooKuupaev, "time_of_meal")
+
+        lblAjaluguKehakaal.Text = AnaluusK.PaevaseAndmereaParing(_kasutaja_id, ajalooKuupaev, "daily_weight") & "kg"
+        lblAjaluguVordlusTanasega.Text = AnaluusK.PaevaseAndmereaParing(_kasutaja_id, AnaluusK.KuupaevIntegeriks(Date.Now.Date), "daily_weight") - AnaluusK.PaevaseAndmereaParing(_kasutaja_id, ajalooKuupaev, "daily_weight") & "kg"
+        lblAjaluguSoodudKalorid.Text = AnaluusK.PaevaseAndmereaParing(_kasutaja_id, ajalooKuupaev, "energy_intake") & "kcal"
+        lblAjaluguKulutatudKalorid.Text = AnaluusK.PaevaseAndmereaParing(_kasutaja_id, ajalooKuupaev, "energy_consumption") & "kcal"
+
+        For index_ = 0 To paevasteToitudeId.Count - 1
+            If paevasteToitudeId(index_) < 3000 Then
+                Select Case (paevasteToitudeToidukord(index_))
+                    Case 0
+                        lvPaevasedToidud.Items.Add(New ListViewItem({"Hommik", ToidudRetseptidK.ToiduaineVoiRetseptiNimi(paevasteToitudeId(index_), 0), paevasteToitudeKcal(index_) & "kcal"}))
+                    Case 1
+                        lvPaevasedToidud.Items.Add(New ListViewItem({"Lõuna", ToidudRetseptidK.ToiduaineVoiRetseptiNimi(paevasteToitudeId(index_), 0), paevasteToitudeKcal(index_) & "kcal"}))
+                    Case 2
+                        lvPaevasedToidud.Items.Add(New ListViewItem({"Vahepala", ToidudRetseptidK.ToiduaineVoiRetseptiNimi(paevasteToitudeId(index_), 0), paevasteToitudeKcal(index_) & "kcal"}))
+                    Case 3
+                        lvPaevasedToidud.Items.Add(New ListViewItem({"Õhtu", ToidudRetseptidK.ToiduaineVoiRetseptiNimi(paevasteToitudeId(index_), 0), paevasteToitudeKcal(index_) & "kcal"}))
+                End Select
+            Else
+                Select Case (paevasteToitudeToidukord(index_))
+                    Case 0
+                        lvPaevasedToidud.Items.Add(New ListViewItem({"Hommik", ToidudRetseptidK.ToiduaineVoiRetseptiNimi(paevasteToitudeId(index_), 1), paevasteToitudeKcal(index_) & "kcal"}))
+                    Case 1
+                        lvPaevasedToidud.Items.Add(New ListViewItem({"Lõuna", ToidudRetseptidK.ToiduaineVoiRetseptiNimi(paevasteToitudeId(index_), 1), paevasteToitudeKcal(index_) & "kcal"}))
+                    Case 2
+                        lvPaevasedToidud.Items.Add(New ListViewItem({"Vahepala", ToidudRetseptidK.ToiduaineVoiRetseptiNimi(paevasteToitudeId(index_), 1), paevasteToitudeKcal(index_) & "kcal"}))
+                    Case 3
+                        lvPaevasedToidud.Items.Add(New ListViewItem({"Õhtu", ToidudRetseptidK.ToiduaineVoiRetseptiNimi(paevasteToitudeId(index_), 1), paevasteToitudeKcal(index_) & "kcal"}))
+                End Select
+            End If
+
+
+        Next
+        Dim paevasteTreeninguteId As Double() = AnaluusK.PaevasedTreeningud(_kasutaja_id, ajalooKuupaev, "training_id")
+        Dim paevasteTreeninguteKcal As Double() = AnaluusK.PaevasedTreeningud(_kasutaja_id, ajalooKuupaev, "total_consumption")
+        Dim paevasteTreeninguteKestus As Double() = AnaluusK.PaevasedTreeningud(_kasutaja_id, ajalooKuupaev, "duration")
+
+        For index = 0 To paevasteTreeninguteId.Count - 1
+            lvPaevasedTreeningud.Items.Add(New ListViewItem({TreeningudK.TreeninguNimeLeidmine(paevasteTreeninguteId(index)), paevasteTreeninguteKcal(index) & "kcal", paevasteTreeninguteKestus(index) & "min"}))
+        Next
+
+
+
+    End Sub
 
     Private Sub MakroGraafik()
         chrAjalooPaneel.Series("Makrod").Points.Clear()
         AnaluusK = New AnaluusiKomponent.CAnaluus
 
-        chrAjalooPaneel.Series("Makrod").Points.AddXY("Süsivesikud", AnaluusK.PariMakroaineKogus(AnaluusK.KuupaevIntegeriks(Date.Now.Date), _kasutaja_id, "total_c_hydrates"))
+        chrAjalooPaneel.Series("Makrod").Points.AddXY("Süsivesikud", AnaluusK.PariMakroaineKogus(ajalooKuupaev, _kasutaja_id, "total_c_hydrates"))
 
-        chrAjalooPaneel.Series("Makrod").Points.AddXY("Suhkrud", AnaluusK.PariMakroaineKogus(AnaluusK.KuupaevIntegeriks(Date.Now.Date), _kasutaja_id, "total_sugar"))
+        chrAjalooPaneel.Series("Makrod").Points.AddXY("Suhkrud", AnaluusK.PariMakroaineKogus(ajalooKuupaev, _kasutaja_id, "total_sugar"))
 
-        chrAjalooPaneel.Series("Makrod").Points.AddXY("Valgud", AnaluusK.PariMakroaineKogus(AnaluusK.KuupaevIntegeriks(Date.Now.Date), _kasutaja_id, "total_protein"))
+        chrAjalooPaneel.Series("Makrod").Points.AddXY("Valgud", AnaluusK.PariMakroaineKogus(ajalooKuupaev, _kasutaja_id, "total_protein"))
 
-        chrAjalooPaneel.Series("Makrod").Points.AddXY("Rasvad", AnaluusK.PariMakroaineKogus(AnaluusK.KuupaevIntegeriks(Date.Now.Date), _kasutaja_id, "total_lipid"))
-
-    End Sub
-
-    Private Sub GroupBox12_Enter(sender As Object, e As EventArgs) Handles GroupBox12.Enter
+        chrAjalooPaneel.Series("Makrod").Points.AddXY("Rasvad", AnaluusK.PariMakroaineKogus(ajalooKuupaev, _kasutaja_id, "total_lipid"))
 
     End Sub
+
+    Private Sub bntAjalooKuupaevEdasi_Click(sender As Object, e As EventArgs) Handles bntAjalooKuupaevEdasi.Click
+        AnaluusK = New AnaluusiKomponent.CAnaluus
+        If ajalooKuupaev < AnaluusK.KuupaevIntegeriks(Date.Now.Date) Then
+            ajalooKuupaev = ajalooKuupaev + 1
+            AjalooAken()
+        End If
+    End Sub
+
+    Private Sub btnAjalooKuupaevTagasi_Click(sender As Object, e As EventArgs) Handles btnAjalooKuupaevTagasi.Click
+        AnaluusK = New AnaluusiKomponent.CAnaluus
+        ajalooKuupaev = ajalooKuupaev - 1
+        AjalooAken()
+    End Sub
+
+    Private Sub AjalooAken()
+        AnaluusK = New AnaluusiKomponent.CAnaluus
+        lblAjaluguKuupaev.Text = AnaluusK.IntegerKuupaevaks(ajalooKuupaev)
+        lblAjaluguNadalaPaev.Text = AnaluusK.IntegerKuupaevaks(ajalooKuupaev).ToString("ddd", kultuur) + ","
+
+        AjalooInfo()
+        MakroGraafik()
+    End Sub
+
 End Class
 
