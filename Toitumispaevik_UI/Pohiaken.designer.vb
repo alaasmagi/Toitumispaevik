@@ -2042,13 +2042,13 @@ Partial Class Pohiaken
         '
         Me.treeninguKalorid.DisplayIndex = 2
         Me.treeninguKalorid.Text = "Kalorid"
-        Me.treeninguKalorid.Width = 97
+        Me.treeninguKalorid.Width = 102
         '
         'treeninguKestus
         '
         Me.treeninguKestus.DisplayIndex = 1
         Me.treeninguKestus.Text = "Kestus"
-        Me.treeninguKestus.Width = 115
+        Me.treeninguKestus.Width = 113
         '
         'lvPaevasedToidud
         '
@@ -2071,12 +2071,12 @@ Partial Class Pohiaken
         'toiduNimetus
         '
         Me.toiduNimetus.Text = "Toidu nimetus"
-        Me.toiduNimetus.Width = 306
+        Me.toiduNimetus.Width = 277
         '
         'toiduKcal
         '
         Me.toiduKcal.Text = "Kalorid"
-        Me.toiduKcal.Width = 77
+        Me.toiduKcal.Width = 104
         '
         'btnAjalooKuupaevTagasi
         '
@@ -2591,8 +2591,8 @@ Partial Class Pohiaken
         Me.AutoSize = True
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(241, Byte), Integer), CType(CType(239, Byte), Integer))
         Me.ClientSize = New System.Drawing.Size(1065, 563)
-        Me.Controls.Add(Me.pnlKodu)
         Me.Controls.Add(Me.pnlAjalugu)
+        Me.Controls.Add(Me.pnlKodu)
         Me.Controls.Add(Me.pnlToidulaud)
         Me.Controls.Add(Me.pnlYlevaade)
         Me.Controls.Add(Me.pnlTreeningud)
