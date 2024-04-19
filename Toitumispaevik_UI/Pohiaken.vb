@@ -117,7 +117,10 @@ Public Class Pohiaken
                 muutuja -= 1
             Else
                 If muutuja = TabelKaalud.Length - 1 AndAlso TabelKaalud(muutuja) = 0 Then
-                    chrKaaluMuutumine.Series("Kaal").Points.AddXY(AnaluusK.IntegerKuupaevaks(DateTabelKaalud(muutuja)), TabelKaalud(muutuja - 1))
+                    If muutuja - 1 >= 0 Then
+                        chrKaaluMuutumine.Series("Kaal").Points.AddXY(AnaluusK.IntegerKuupaevaks(DateTabelKaalud(muutuja)), TabelKaalud(muutuja - 1))
+                    End If
+
                 Else
                     chrKaaluMuutumine.Series("Kaal").Points.AddXY(AnaluusK.IntegerKuupaevaks(DateTabelKaalud(muutuja)), TabelKaalud(muutuja))
                 End If
