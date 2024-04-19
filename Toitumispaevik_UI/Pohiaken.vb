@@ -447,6 +447,7 @@ Public Class Pohiaken
             lblToiduAineRetseptiLisamineViga.Text = "Viga koguse sisestuses!"
             lblToiduAineRetseptiLisamineViga.Visible = True
         End If
+        AjalooInfo()
         KoduGraafik()
     End Sub
 
@@ -463,6 +464,7 @@ Public Class Pohiaken
             lblTreeninguKiirvalikViga.Text = "Viga kestuse sisestuses!"
             lblTreeninguKiirvalikViga.Visible = True
         End If
+        AjalooInfo()
     End Sub
 
     Private Sub btnTreeninguLisamine_Click(sender As Object, e As EventArgs) Handles btnTreeninguLisamine.Click
