@@ -714,8 +714,5 @@ Public Class Pohiaken
         MakroGraafik()
     End Sub
 
-    Private Sub pnlAjalugu_Paint(sender As Object, e As PaintEventArgs) Handles pnlAjalugu.Paint
-
-    End Sub
 End Class
 
