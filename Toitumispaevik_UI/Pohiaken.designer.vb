@@ -219,6 +219,14 @@ Partial Class Pohiaken
         Me.txtKalorilimiit = New System.Windows.Forms.TextBox()
         Me.pbAlumineMees = New System.Windows.Forms.PictureBox()
         Me.pbAlumineNaine = New System.Windows.Forms.PictureBox()
+        Me.Label26 = New System.Windows.Forms.Label()
+        Me.Label43 = New System.Windows.Forms.Label()
+        Me.Label44 = New System.Windows.Forms.Label()
+        Me.Label48 = New System.Windows.Forms.Label()
+        Me.lblAjaluguSoodudKalorid = New System.Windows.Forms.Label()
+        Me.lblAjaluguKulutatudKalorid = New System.Windows.Forms.Label()
+        Me.lblAjaluguVordlusTanasega = New System.Windows.Forms.Label()
+        Me.lblAjaluguKehakaal = New System.Windows.Forms.Label()
         Me.pnlLeftBar.SuspendLayout()
         Me.pnlTopBar.SuspendLayout()
         CType(Me.pbUlemineNaine, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -270,7 +278,7 @@ Partial Class Pohiaken
         Me.pnlLeftBar.Location = New System.Drawing.Point(0, 0)
         Me.pnlLeftBar.Margin = New System.Windows.Forms.Padding(2)
         Me.pnlLeftBar.Name = "pnlLeftBar"
-        Me.pnlLeftBar.Size = New System.Drawing.Size(232, 563)
+        Me.pnlLeftBar.Size = New System.Drawing.Size(232, 581)
         Me.pnlLeftBar.TabIndex = 0
         '
         'btnAjalugu
@@ -369,10 +377,10 @@ Partial Class Pohiaken
         Me.btnKodu.Font = New System.Drawing.Font("Century Gothic", 12.0!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Italic), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnKodu.ForeColor = System.Drawing.Color.White
         Me.btnKodu.Image = Global.Toitumispaevik_UI.My.Resources.Resources.icons8_home_button_54
-        Me.btnKodu.Location = New System.Drawing.Point(0, 500)
+        Me.btnKodu.Location = New System.Drawing.Point(0, 487)
         Me.btnKodu.Margin = New System.Windows.Forms.Padding(2)
         Me.btnKodu.Name = "btnKodu"
-        Me.btnKodu.Size = New System.Drawing.Size(232, 76)
+        Me.btnKodu.Size = New System.Drawing.Size(232, 94)
         Me.btnKodu.TabIndex = 7
         Me.btnKodu.UseVisualStyleBackColor = False
         '
@@ -399,7 +407,7 @@ Partial Class Pohiaken
         Me.pnlTopBar.Location = New System.Drawing.Point(232, 0)
         Me.pnlTopBar.Margin = New System.Windows.Forms.Padding(2)
         Me.pnlTopBar.Name = "pnlTopBar"
-        Me.pnlTopBar.Size = New System.Drawing.Size(833, 100)
+        Me.pnlTopBar.Size = New System.Drawing.Size(852, 100)
         Me.pnlTopBar.TabIndex = 1
         '
         'pbUlemineNaine
@@ -479,7 +487,7 @@ Partial Class Pohiaken
         Me.pnlToidulaud.Location = New System.Drawing.Point(232, 100)
         Me.pnlToidulaud.Margin = New System.Windows.Forms.Padding(2)
         Me.pnlToidulaud.Name = "pnlToidulaud"
-        Me.pnlToidulaud.Size = New System.Drawing.Size(840, 481)
+        Me.pnlToidulaud.Size = New System.Drawing.Size(852, 481)
         Me.pnlToidulaud.TabIndex = 2
         Me.pnlToidulaud.Visible = False
         '
@@ -496,11 +504,12 @@ Partial Class Pohiaken
         Me.GroupBox14.Controls.Add(Me.cmbRetseptiKoostisosad)
         Me.GroupBox14.Controls.Add(Me.btnRetseptLisaKoostisosa)
         Me.GroupBox14.Controls.Add(Me.btnKinnitaRetsept)
-        Me.GroupBox14.Location = New System.Drawing.Point(378, 66)
+        Me.GroupBox14.Font = New System.Drawing.Font("Century Gothic", 12.0!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Italic), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.GroupBox14.Location = New System.Drawing.Point(378, 71)
         Me.GroupBox14.Margin = New System.Windows.Forms.Padding(2)
         Me.GroupBox14.Name = "GroupBox14"
         Me.GroupBox14.Padding = New System.Windows.Forms.Padding(2)
-        Me.GroupBox14.Size = New System.Drawing.Size(450, 211)
+        Me.GroupBox14.Size = New System.Drawing.Size(466, 205)
         Me.GroupBox14.TabIndex = 31
         Me.GroupBox14.TabStop = False
         Me.GroupBox14.Text = "Retsepti lisamine andmebaasi"
@@ -521,6 +530,7 @@ Partial Class Pohiaken
         'Label56
         '
         Me.Label56.AutoSize = True
+        Me.Label56.Font = New System.Drawing.Font("Century Gothic", 12.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label56.ForeColor = System.Drawing.Color.Black
         Me.Label56.Location = New System.Drawing.Point(12, 136)
         Me.Label56.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
@@ -532,6 +542,7 @@ Partial Class Pohiaken
         'Label53
         '
         Me.Label53.AutoSize = True
+        Me.Label53.Font = New System.Drawing.Font("Century Gothic", 12.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label53.ForeColor = System.Drawing.Color.Black
         Me.Label53.Location = New System.Drawing.Point(137, 141)
         Me.Label53.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
@@ -544,17 +555,19 @@ Partial Class Pohiaken
         '
         Me.lbRetseptiKoostisosad.BackColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(241, Byte), Integer), CType(CType(239, Byte), Integer))
         Me.lbRetseptiKoostisosad.BorderStyle = System.Windows.Forms.BorderStyle.None
+        Me.lbRetseptiKoostisosad.Font = New System.Drawing.Font("Century Gothic", 12.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lbRetseptiKoostisosad.FormattingEnabled = True
         Me.lbRetseptiKoostisosad.ItemHeight = 19
-        Me.lbRetseptiKoostisosad.Location = New System.Drawing.Point(254, 24)
+        Me.lbRetseptiKoostisosad.Location = New System.Drawing.Point(254, 31)
         Me.lbRetseptiKoostisosad.Margin = New System.Windows.Forms.Padding(2)
         Me.lbRetseptiKoostisosad.Name = "lbRetseptiKoostisosad"
         Me.lbRetseptiKoostisosad.SelectionMode = System.Windows.Forms.SelectionMode.None
-        Me.lbRetseptiKoostisosad.Size = New System.Drawing.Size(182, 95)
+        Me.lbRetseptiKoostisosad.Size = New System.Drawing.Size(182, 133)
         Me.lbRetseptiKoostisosad.TabIndex = 40
         '
         'txtRetseptiKoostisosaKogus
         '
+        Me.txtRetseptiKoostisosaKogus.Font = New System.Drawing.Font("Century Gothic", 12.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtRetseptiKoostisosaKogus.Location = New System.Drawing.Point(72, 133)
         Me.txtRetseptiKoostisosaKogus.Margin = New System.Windows.Forms.Padding(6, 4, 6, 4)
         Me.txtRetseptiKoostisosaKogus.Name = "txtRetseptiKoostisosaKogus"
@@ -564,6 +577,7 @@ Partial Class Pohiaken
         'Label40
         '
         Me.Label40.AutoSize = True
+        Me.Label40.Font = New System.Drawing.Font("Century Gothic", 12.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label40.ForeColor = System.Drawing.Color.Black
         Me.Label40.Location = New System.Drawing.Point(48, 73)
         Me.Label40.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
@@ -575,6 +589,7 @@ Partial Class Pohiaken
         'Label22
         '
         Me.Label22.AutoSize = True
+        Me.Label22.Font = New System.Drawing.Font("Century Gothic", 12.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label22.ForeColor = System.Drawing.Color.Black
         Me.Label22.Location = New System.Drawing.Point(8, 33)
         Me.Label22.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
@@ -585,6 +600,7 @@ Partial Class Pohiaken
         '
         'txtRetseptiNimi
         '
+        Me.txtRetseptiNimi.Font = New System.Drawing.Font("Century Gothic", 12.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtRetseptiNimi.Location = New System.Drawing.Point(61, 31)
         Me.txtRetseptiNimi.Margin = New System.Windows.Forms.Padding(6, 4, 6, 4)
         Me.txtRetseptiNimi.Name = "txtRetseptiNimi"
@@ -595,14 +611,14 @@ Partial Class Pohiaken
         '
         Me.cmbRetseptiKoostisosad.DropDownHeight = 100
         Me.cmbRetseptiKoostisosad.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cmbRetseptiKoostisosad.Font = New System.Drawing.Font("Century Gothic", 11.25!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmbRetseptiKoostisosad.Font = New System.Drawing.Font("Century Gothic", 12.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cmbRetseptiKoostisosad.FormattingEnabled = True
         Me.cmbRetseptiKoostisosad.IntegralHeight = False
-        Me.cmbRetseptiKoostisosad.ItemHeight = 18
+        Me.cmbRetseptiKoostisosad.ItemHeight = 19
         Me.cmbRetseptiKoostisosad.Location = New System.Drawing.Point(13, 94)
         Me.cmbRetseptiKoostisosad.Margin = New System.Windows.Forms.Padding(2)
         Me.cmbRetseptiKoostisosad.Name = "cmbRetseptiKoostisosad"
-        Me.cmbRetseptiKoostisosad.Size = New System.Drawing.Size(225, 26)
+        Me.cmbRetseptiKoostisosad.Size = New System.Drawing.Size(225, 27)
         Me.cmbRetseptiKoostisosad.TabIndex = 32
         '
         'btnRetseptLisaKoostisosa
@@ -643,11 +659,12 @@ Partial Class Pohiaken
         Me.GroupBox13.Controls.Add(Me.Label55)
         Me.GroupBox13.Controls.Add(Me.btnToiduaineKustutamine)
         Me.GroupBox13.Controls.Add(Me.cmbToiduaineKustutamine)
+        Me.GroupBox13.Font = New System.Drawing.Font("Century Gothic", 12.0!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Italic), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.GroupBox13.Location = New System.Drawing.Point(378, 286)
         Me.GroupBox13.Margin = New System.Windows.Forms.Padding(2)
         Me.GroupBox13.Name = "GroupBox13"
         Me.GroupBox13.Padding = New System.Windows.Forms.Padding(2)
-        Me.GroupBox13.Size = New System.Drawing.Size(450, 179)
+        Me.GroupBox13.Size = New System.Drawing.Size(466, 188)
         Me.GroupBox13.TabIndex = 30
         Me.GroupBox13.TabStop = False
         Me.GroupBox13.Text = "Toiduaine/retsepti kustutamine andmebaasist"
@@ -657,7 +674,7 @@ Partial Class Pohiaken
         Me.lblToiduaineKustutamineViga.AutoSize = True
         Me.lblToiduaineKustutamineViga.Font = New System.Drawing.Font("Century Gothic", 12.0!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Italic), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblToiduaineKustutamineViga.ForeColor = System.Drawing.Color.Red
-        Me.lblToiduaineKustutamineViga.Location = New System.Drawing.Point(42, 145)
+        Me.lblToiduaineKustutamineViga.Location = New System.Drawing.Point(56, 145)
         Me.lblToiduaineKustutamineViga.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.lblToiduaineKustutamineViga.Name = "lblToiduaineKustutamineViga"
         Me.lblToiduaineKustutamineViga.Size = New System.Drawing.Size(50, 21)
@@ -668,8 +685,9 @@ Partial Class Pohiaken
         'Label55
         '
         Me.Label55.AutoSize = True
+        Me.Label55.Font = New System.Drawing.Font("Century Gothic", 12.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label55.ForeColor = System.Drawing.Color.Black
-        Me.Label55.Location = New System.Drawing.Point(42, 62)
+        Me.Label55.Location = New System.Drawing.Point(56, 62)
         Me.Label55.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label55.Name = "Label55"
         Me.Label55.Size = New System.Drawing.Size(79, 19)
@@ -684,7 +702,7 @@ Partial Class Pohiaken
         Me.btnToiduaineKustutamine.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.btnToiduaineKustutamine.Font = New System.Drawing.Font("Century Gothic", 12.0!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Italic), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnToiduaineKustutamine.ForeColor = System.Drawing.SystemColors.Window
-        Me.btnToiduaineKustutamine.Location = New System.Drawing.Point(45, 99)
+        Me.btnToiduaineKustutamine.Location = New System.Drawing.Point(59, 99)
         Me.btnToiduaineKustutamine.Margin = New System.Windows.Forms.Padding(6, 4, 6, 4)
         Me.btnToiduaineKustutamine.Name = "btnToiduaineKustutamine"
         Me.btnToiduaineKustutamine.Size = New System.Drawing.Size(355, 35)
@@ -696,14 +714,14 @@ Partial Class Pohiaken
         '
         Me.cmbToiduaineKustutamine.DropDownHeight = 100
         Me.cmbToiduaineKustutamine.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cmbToiduaineKustutamine.Font = New System.Drawing.Font("Century Gothic", 11.25!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmbToiduaineKustutamine.Font = New System.Drawing.Font("Century Gothic", 12.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cmbToiduaineKustutamine.FormattingEnabled = True
         Me.cmbToiduaineKustutamine.IntegralHeight = False
-        Me.cmbToiduaineKustutamine.ItemHeight = 18
-        Me.cmbToiduaineKustutamine.Location = New System.Drawing.Point(122, 60)
+        Me.cmbToiduaineKustutamine.ItemHeight = 19
+        Me.cmbToiduaineKustutamine.Location = New System.Drawing.Point(136, 60)
         Me.cmbToiduaineKustutamine.Margin = New System.Windows.Forms.Padding(2)
         Me.cmbToiduaineKustutamine.Name = "cmbToiduaineKustutamine"
-        Me.cmbToiduaineKustutamine.Size = New System.Drawing.Size(278, 26)
+        Me.cmbToiduaineKustutamine.Size = New System.Drawing.Size(278, 27)
         Me.cmbToiduaineKustutamine.TabIndex = 24
         '
         'GroupBox7
@@ -727,11 +745,12 @@ Partial Class Pohiaken
         Me.GroupBox7.Controls.Add(Me.txtUueToiduaineValgud)
         Me.GroupBox7.Controls.Add(Me.txtUueToiduaineNimi)
         Me.GroupBox7.Controls.Add(Me.btnLisaUusToiduaine)
-        Me.GroupBox7.Location = New System.Drawing.Point(26, 66)
+        Me.GroupBox7.Font = New System.Drawing.Font("Century Gothic", 12.0!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Italic), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.GroupBox7.Location = New System.Drawing.Point(26, 71)
         Me.GroupBox7.Margin = New System.Windows.Forms.Padding(2)
         Me.GroupBox7.Name = "GroupBox7"
         Me.GroupBox7.Padding = New System.Windows.Forms.Padding(2)
-        Me.GroupBox7.Size = New System.Drawing.Size(328, 399)
+        Me.GroupBox7.Size = New System.Drawing.Size(328, 403)
         Me.GroupBox7.TabIndex = 29
         Me.GroupBox7.TabStop = False
         Me.GroupBox7.Text = "Toiduaine lisamine andmebaasi"
@@ -739,6 +758,7 @@ Partial Class Pohiaken
         'Label39
         '
         Me.Label39.AutoSize = True
+        Me.Label39.Font = New System.Drawing.Font("Century Gothic", 12.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label39.ForeColor = System.Drawing.Color.Black
         Me.Label39.Location = New System.Drawing.Point(178, 288)
         Me.Label39.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
@@ -750,6 +770,7 @@ Partial Class Pohiaken
         'Label38
         '
         Me.Label38.AutoSize = True
+        Me.Label38.Font = New System.Drawing.Font("Century Gothic", 12.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label38.ForeColor = System.Drawing.Color.Black
         Me.Label38.Location = New System.Drawing.Point(178, 244)
         Me.Label38.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
@@ -761,6 +782,7 @@ Partial Class Pohiaken
         'Label37
         '
         Me.Label37.AutoSize = True
+        Me.Label37.Font = New System.Drawing.Font("Century Gothic", 12.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label37.ForeColor = System.Drawing.Color.Black
         Me.Label37.Location = New System.Drawing.Point(178, 192)
         Me.Label37.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
@@ -772,6 +794,7 @@ Partial Class Pohiaken
         'Label36
         '
         Me.Label36.AutoSize = True
+        Me.Label36.Font = New System.Drawing.Font("Century Gothic", 12.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label36.ForeColor = System.Drawing.Color.Black
         Me.Label36.Location = New System.Drawing.Point(178, 144)
         Me.Label36.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
@@ -783,6 +806,7 @@ Partial Class Pohiaken
         'Label35
         '
         Me.Label35.AutoSize = True
+        Me.Label35.Font = New System.Drawing.Font("Century Gothic", 12.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label35.ForeColor = System.Drawing.Color.Black
         Me.Label35.Location = New System.Drawing.Point(182, 96)
         Me.Label35.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
@@ -794,6 +818,7 @@ Partial Class Pohiaken
         'Label34
         '
         Me.Label34.AutoSize = True
+        Me.Label34.Font = New System.Drawing.Font("Century Gothic", 12.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label34.ForeColor = System.Drawing.Color.Black
         Me.Label34.Location = New System.Drawing.Point(34, 284)
         Me.Label34.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
@@ -805,6 +830,7 @@ Partial Class Pohiaken
         'Label33
         '
         Me.Label33.AutoSize = True
+        Me.Label33.Font = New System.Drawing.Font("Century Gothic", 12.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label33.ForeColor = System.Drawing.Color.Black
         Me.Label33.Location = New System.Drawing.Point(34, 238)
         Me.Label33.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
@@ -816,6 +842,7 @@ Partial Class Pohiaken
         'Label32
         '
         Me.Label32.AutoSize = True
+        Me.Label32.Font = New System.Drawing.Font("Century Gothic", 12.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label32.ForeColor = System.Drawing.Color.Black
         Me.Label32.Location = New System.Drawing.Point(36, 188)
         Me.Label32.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
@@ -827,6 +854,7 @@ Partial Class Pohiaken
         'Label31
         '
         Me.Label31.AutoSize = True
+        Me.Label31.Font = New System.Drawing.Font("Century Gothic", 12.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label31.ForeColor = System.Drawing.Color.Black
         Me.Label31.Location = New System.Drawing.Point(12, 138)
         Me.Label31.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
@@ -838,6 +866,7 @@ Partial Class Pohiaken
         'Label30
         '
         Me.Label30.AutoSize = True
+        Me.Label30.Font = New System.Drawing.Font("Century Gothic", 12.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label30.ForeColor = System.Drawing.Color.Black
         Me.Label30.Location = New System.Drawing.Point(36, 90)
         Me.Label30.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
@@ -849,6 +878,7 @@ Partial Class Pohiaken
         'Label29
         '
         Me.Label29.AutoSize = True
+        Me.Label29.Font = New System.Drawing.Font("Century Gothic", 12.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label29.ForeColor = System.Drawing.Color.Black
         Me.Label29.Location = New System.Drawing.Point(26, 44)
         Me.Label29.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
@@ -872,6 +902,7 @@ Partial Class Pohiaken
         '
         'txtUueToiduaineRasvad
         '
+        Me.txtUueToiduaineRasvad.Font = New System.Drawing.Font("Century Gothic", 12.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtUueToiduaineRasvad.Location = New System.Drawing.Point(126, 280)
         Me.txtUueToiduaineRasvad.Margin = New System.Windows.Forms.Padding(6, 4, 6, 4)
         Me.txtUueToiduaineRasvad.Name = "txtUueToiduaineRasvad"
@@ -880,6 +911,7 @@ Partial Class Pohiaken
         '
         'txtUueToiduaineSuhkrud
         '
+        Me.txtUueToiduaineSuhkrud.Font = New System.Drawing.Font("Century Gothic", 12.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtUueToiduaineSuhkrud.Location = New System.Drawing.Point(124, 184)
         Me.txtUueToiduaineSuhkrud.Margin = New System.Windows.Forms.Padding(6, 4, 6, 4)
         Me.txtUueToiduaineSuhkrud.Name = "txtUueToiduaineSuhkrud"
@@ -888,6 +920,7 @@ Partial Class Pohiaken
         '
         'txtUueToiduaineKcal
         '
+        Me.txtUueToiduaineKcal.Font = New System.Drawing.Font("Century Gothic", 12.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtUueToiduaineKcal.Location = New System.Drawing.Point(124, 88)
         Me.txtUueToiduaineKcal.Margin = New System.Windows.Forms.Padding(6, 4, 6, 4)
         Me.txtUueToiduaineKcal.Name = "txtUueToiduaineKcal"
@@ -896,6 +929,7 @@ Partial Class Pohiaken
         '
         'txtUueToiduaineSusivesikud
         '
+        Me.txtUueToiduaineSusivesikud.Font = New System.Drawing.Font("Century Gothic", 12.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtUueToiduaineSusivesikud.Location = New System.Drawing.Point(124, 136)
         Me.txtUueToiduaineSusivesikud.Margin = New System.Windows.Forms.Padding(6, 4, 6, 4)
         Me.txtUueToiduaineSusivesikud.Name = "txtUueToiduaineSusivesikud"
@@ -904,6 +938,7 @@ Partial Class Pohiaken
         '
         'txtUueToiduaineValgud
         '
+        Me.txtUueToiduaineValgud.Font = New System.Drawing.Font("Century Gothic", 12.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtUueToiduaineValgud.Location = New System.Drawing.Point(124, 236)
         Me.txtUueToiduaineValgud.Margin = New System.Windows.Forms.Padding(6, 4, 6, 4)
         Me.txtUueToiduaineValgud.Name = "txtUueToiduaineValgud"
@@ -912,6 +947,7 @@ Partial Class Pohiaken
         '
         'txtUueToiduaineNimi
         '
+        Me.txtUueToiduaineNimi.Font = New System.Drawing.Font("Century Gothic", 12.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtUueToiduaineNimi.Location = New System.Drawing.Point(124, 40)
         Me.txtUueToiduaineNimi.Margin = New System.Windows.Forms.Padding(6, 4, 6, 4)
         Me.txtUueToiduaineNimi.Name = "txtUueToiduaineNimi"
@@ -1164,7 +1200,7 @@ Partial Class Pohiaken
         Me.pnlKodu.Location = New System.Drawing.Point(232, 100)
         Me.pnlKodu.Margin = New System.Windows.Forms.Padding(2)
         Me.pnlKodu.Name = "pnlKodu"
-        Me.pnlKodu.Size = New System.Drawing.Size(846, 481)
+        Me.pnlKodu.Size = New System.Drawing.Size(852, 481)
         Me.pnlKodu.TabIndex = 11
         '
         'GroupBox10
@@ -1176,6 +1212,7 @@ Partial Class Pohiaken
         Me.GroupBox10.Controls.Add(Me.btnTreeninguKiirvalikLisa)
         Me.GroupBox10.Controls.Add(Me.txtTreeninguKiirvalikKestus)
         Me.GroupBox10.Controls.Add(Me.cmbTreeninguteKiirvalik)
+        Me.GroupBox10.Font = New System.Drawing.Font("Century Gothic", 12.0!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Italic), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.GroupBox10.Location = New System.Drawing.Point(468, 295)
         Me.GroupBox10.Margin = New System.Windows.Forms.Padding(2)
         Me.GroupBox10.Name = "GroupBox10"
@@ -1188,6 +1225,7 @@ Partial Class Pohiaken
         'Label47
         '
         Me.Label47.AutoSize = True
+        Me.Label47.Font = New System.Drawing.Font("Century Gothic", 12.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label47.ForeColor = System.Drawing.Color.Black
         Me.Label47.Location = New System.Drawing.Point(170, 92)
         Me.Label47.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
@@ -1212,6 +1250,7 @@ Partial Class Pohiaken
         'Label41
         '
         Me.Label41.AutoSize = True
+        Me.Label41.Font = New System.Drawing.Font("Century Gothic", 12.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label41.ForeColor = System.Drawing.Color.Black
         Me.Label41.Location = New System.Drawing.Point(54, 90)
         Me.Label41.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
@@ -1223,6 +1262,7 @@ Partial Class Pohiaken
         'Label42
         '
         Me.Label42.AutoSize = True
+        Me.Label42.Font = New System.Drawing.Font("Century Gothic", 12.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label42.ForeColor = System.Drawing.Color.Black
         Me.Label42.Location = New System.Drawing.Point(38, 44)
         Me.Label42.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
@@ -1249,6 +1289,7 @@ Partial Class Pohiaken
         '
         'txtTreeninguKiirvalikKestus
         '
+        Me.txtTreeninguKiirvalikKestus.Font = New System.Drawing.Font("Century Gothic", 12.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtTreeninguKiirvalikKestus.Location = New System.Drawing.Point(118, 86)
         Me.txtTreeninguKiirvalikKestus.Margin = New System.Windows.Forms.Padding(2)
         Me.txtTreeninguKiirvalikKestus.Name = "txtTreeninguKiirvalikKestus"
@@ -1259,14 +1300,14 @@ Partial Class Pohiaken
         '
         Me.cmbTreeninguteKiirvalik.DropDownHeight = 100
         Me.cmbTreeninguteKiirvalik.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cmbTreeninguteKiirvalik.Font = New System.Drawing.Font("Century Gothic", 11.25!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmbTreeninguteKiirvalik.Font = New System.Drawing.Font("Century Gothic", 12.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cmbTreeninguteKiirvalik.FormattingEnabled = True
         Me.cmbTreeninguteKiirvalik.IntegralHeight = False
-        Me.cmbTreeninguteKiirvalik.ItemHeight = 18
+        Me.cmbTreeninguteKiirvalik.ItemHeight = 19
         Me.cmbTreeninguteKiirvalik.Location = New System.Drawing.Point(118, 42)
         Me.cmbTreeninguteKiirvalik.Margin = New System.Windows.Forms.Padding(2)
         Me.cmbTreeninguteKiirvalik.Name = "cmbTreeninguteKiirvalik"
-        Me.cmbTreeninguteKiirvalik.Size = New System.Drawing.Size(206, 26)
+        Me.cmbTreeninguteKiirvalik.Size = New System.Drawing.Size(206, 27)
         Me.cmbTreeninguteKiirvalik.TabIndex = 24
         '
         'lblKcalPaev
@@ -1295,6 +1336,7 @@ Partial Class Pohiaken
         Me.GroupBox8.Controls.Add(Me.btnToiduaineKiirvalikLisa)
         Me.GroupBox8.Controls.Add(Me.txtToiduaineKiirvalikKogus)
         Me.GroupBox8.Controls.Add(Me.cmbToiduaineKiirvalik)
+        Me.GroupBox8.Font = New System.Drawing.Font("Century Gothic", 12.0!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Italic), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.GroupBox8.Location = New System.Drawing.Point(468, 71)
         Me.GroupBox8.Margin = New System.Windows.Forms.Padding(2)
         Me.GroupBox8.Name = "GroupBox8"
@@ -1307,6 +1349,7 @@ Partial Class Pohiaken
         'chbMukbangFilter
         '
         Me.chbMukbangFilter.AutoSize = True
+        Me.chbMukbangFilter.Font = New System.Drawing.Font("Century Gothic", 12.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.chbMukbangFilter.ForeColor = System.Drawing.Color.Black
         Me.chbMukbangFilter.Location = New System.Drawing.Point(118, 63)
         Me.chbMukbangFilter.Name = "chbMukbangFilter"
@@ -1318,6 +1361,7 @@ Partial Class Pohiaken
         'Label45
         '
         Me.Label45.AutoSize = True
+        Me.Label45.Font = New System.Drawing.Font("Century Gothic", 12.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label45.ForeColor = System.Drawing.Color.Black
         Me.Label45.Location = New System.Drawing.Point(170, 119)
         Me.Label45.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
@@ -1342,6 +1386,7 @@ Partial Class Pohiaken
         'rdbOhtu
         '
         Me.rdbOhtu.AutoSize = True
+        Me.rdbOhtu.Font = New System.Drawing.Font("Century Gothic", 12.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.rdbOhtu.ForeColor = System.Drawing.Color.Black
         Me.rdbOhtu.Location = New System.Drawing.Point(284, 158)
         Me.rdbOhtu.Margin = New System.Windows.Forms.Padding(2)
@@ -1355,6 +1400,7 @@ Partial Class Pohiaken
         'rdbVahepala
         '
         Me.rdbVahepala.AutoSize = True
+        Me.rdbVahepala.Font = New System.Drawing.Font("Century Gothic", 12.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.rdbVahepala.ForeColor = System.Drawing.Color.Black
         Me.rdbVahepala.Location = New System.Drawing.Point(172, 159)
         Me.rdbVahepala.Margin = New System.Windows.Forms.Padding(2)
@@ -1368,6 +1414,7 @@ Partial Class Pohiaken
         'rdbLouna
         '
         Me.rdbLouna.AutoSize = True
+        Me.rdbLouna.Font = New System.Drawing.Font("Century Gothic", 12.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.rdbLouna.ForeColor = System.Drawing.Color.Black
         Me.rdbLouna.Location = New System.Drawing.Point(96, 159)
         Me.rdbLouna.Margin = New System.Windows.Forms.Padding(2)
@@ -1381,6 +1428,7 @@ Partial Class Pohiaken
         'rdbHommik
         '
         Me.rdbHommik.AutoSize = True
+        Me.rdbHommik.Font = New System.Drawing.Font("Century Gothic", 12.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.rdbHommik.ForeColor = System.Drawing.Color.Black
         Me.rdbHommik.Location = New System.Drawing.Point(6, 159)
         Me.rdbHommik.Margin = New System.Windows.Forms.Padding(2)
@@ -1394,6 +1442,7 @@ Partial Class Pohiaken
         'Label28
         '
         Me.Label28.AutoSize = True
+        Me.Label28.Font = New System.Drawing.Font("Century Gothic", 12.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label28.ForeColor = System.Drawing.Color.Black
         Me.Label28.Location = New System.Drawing.Point(58, 115)
         Me.Label28.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
@@ -1405,6 +1454,7 @@ Partial Class Pohiaken
         'Label27
         '
         Me.Label27.AutoSize = True
+        Me.Label27.Font = New System.Drawing.Font("Century Gothic", 12.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label27.ForeColor = System.Drawing.Color.Black
         Me.Label27.Location = New System.Drawing.Point(38, 34)
         Me.Label27.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
@@ -1431,6 +1481,7 @@ Partial Class Pohiaken
         '
         'txtToiduaineKiirvalikKogus
         '
+        Me.txtToiduaineKiirvalikKogus.Font = New System.Drawing.Font("Century Gothic", 12.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtToiduaineKiirvalikKogus.Location = New System.Drawing.Point(118, 111)
         Me.txtToiduaineKiirvalikKogus.Margin = New System.Windows.Forms.Padding(2)
         Me.txtToiduaineKiirvalikKogus.Name = "txtToiduaineKiirvalikKogus"
@@ -1441,14 +1492,14 @@ Partial Class Pohiaken
         '
         Me.cmbToiduaineKiirvalik.DropDownHeight = 100
         Me.cmbToiduaineKiirvalik.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cmbToiduaineKiirvalik.Font = New System.Drawing.Font("Century Gothic", 11.25!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmbToiduaineKiirvalik.Font = New System.Drawing.Font("Century Gothic", 12.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cmbToiduaineKiirvalik.FormattingEnabled = True
         Me.cmbToiduaineKiirvalik.IntegralHeight = False
-        Me.cmbToiduaineKiirvalik.ItemHeight = 18
+        Me.cmbToiduaineKiirvalik.ItemHeight = 19
         Me.cmbToiduaineKiirvalik.Location = New System.Drawing.Point(118, 32)
         Me.cmbToiduaineKiirvalik.Margin = New System.Windows.Forms.Padding(2)
         Me.cmbToiduaineKiirvalik.Name = "cmbToiduaineKiirvalik"
-        Me.cmbToiduaineKiirvalik.Size = New System.Drawing.Size(206, 26)
+        Me.cmbToiduaineKiirvalik.Size = New System.Drawing.Size(206, 27)
         Me.cmbToiduaineKiirvalik.TabIndex = 24
         '
         'chrKoduPaneel
@@ -1719,7 +1770,7 @@ Partial Class Pohiaken
         Me.pnlYlevaade.Location = New System.Drawing.Point(232, 100)
         Me.pnlYlevaade.Margin = New System.Windows.Forms.Padding(2)
         Me.pnlYlevaade.Name = "pnlYlevaade"
-        Me.pnlYlevaade.Size = New System.Drawing.Size(838, 476)
+        Me.pnlYlevaade.Size = New System.Drawing.Size(852, 481)
         Me.pnlYlevaade.TabIndex = 4
         '
         'Kaal
@@ -1727,11 +1778,12 @@ Partial Class Pohiaken
         Me.Kaal.Controls.Add(Me.Label58)
         Me.Kaal.Controls.Add(Me.txtKaaluEesmärk)
         Me.Kaal.Controls.Add(Me.btnEesmargiKinnitamine)
-        Me.Kaal.Location = New System.Drawing.Point(46, 200)
+        Me.Kaal.Font = New System.Drawing.Font("Century Gothic", 12.0!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Italic), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Kaal.Location = New System.Drawing.Point(46, 218)
         Me.Kaal.Margin = New System.Windows.Forms.Padding(2)
         Me.Kaal.Name = "Kaal"
         Me.Kaal.Padding = New System.Windows.Forms.Padding(2)
-        Me.Kaal.Size = New System.Drawing.Size(292, 124)
+        Me.Kaal.Size = New System.Drawing.Size(292, 122)
         Me.Kaal.TabIndex = 24
         Me.Kaal.TabStop = False
         Me.Kaal.Text = "Kaalu eesmärgi seadmine"
@@ -1739,6 +1791,7 @@ Partial Class Pohiaken
         'Label58
         '
         Me.Label58.AutoSize = True
+        Me.Label58.Font = New System.Drawing.Font("Century Gothic", 12.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label58.ForeColor = System.Drawing.Color.Black
         Me.Label58.Location = New System.Drawing.Point(206, 46)
         Me.Label58.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
@@ -1749,6 +1802,7 @@ Partial Class Pohiaken
         '
         'txtKaaluEesmärk
         '
+        Me.txtKaaluEesmärk.Font = New System.Drawing.Font("Century Gothic", 12.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtKaaluEesmärk.Location = New System.Drawing.Point(14, 37)
         Me.txtKaaluEesmärk.Margin = New System.Windows.Forms.Padding(6, 4, 6, 4)
         Me.txtKaaluEesmärk.Name = "txtKaaluEesmärk"
@@ -1763,7 +1817,7 @@ Partial Class Pohiaken
         Me.btnEesmargiKinnitamine.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.btnEesmargiKinnitamine.Font = New System.Drawing.Font("Century Gothic", 12.0!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Italic), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnEesmargiKinnitamine.ForeColor = System.Drawing.Color.White
-        Me.btnEesmargiKinnitamine.Location = New System.Drawing.Point(14, 68)
+        Me.btnEesmargiKinnitamine.Location = New System.Drawing.Point(14, 73)
         Me.btnEesmargiKinnitamine.Margin = New System.Windows.Forms.Padding(6, 4, 6, 4)
         Me.btnEesmargiKinnitamine.Name = "btnEesmargiKinnitamine"
         Me.btnEesmargiKinnitamine.Size = New System.Drawing.Size(258, 42)
@@ -1776,7 +1830,8 @@ Partial Class Pohiaken
         Me.GroupBox15.Controls.Add(Me.Label57)
         Me.GroupBox15.Controls.Add(Me.txtPaevaneKaal)
         Me.GroupBox15.Controls.Add(Me.btnPaevaneKaal)
-        Me.GroupBox15.Location = New System.Drawing.Point(46, 78)
+        Me.GroupBox15.Font = New System.Drawing.Font("Century Gothic", 12.0!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Italic), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.GroupBox15.Location = New System.Drawing.Point(46, 91)
         Me.GroupBox15.Margin = New System.Windows.Forms.Padding(2)
         Me.GroupBox15.Name = "GroupBox15"
         Me.GroupBox15.Padding = New System.Windows.Forms.Padding(2)
@@ -1788,6 +1843,7 @@ Partial Class Pohiaken
         'Label57
         '
         Me.Label57.AutoSize = True
+        Me.Label57.Font = New System.Drawing.Font("Century Gothic", 12.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label57.ForeColor = System.Drawing.Color.Black
         Me.Label57.Location = New System.Drawing.Point(206, 39)
         Me.Label57.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
@@ -1798,6 +1854,7 @@ Partial Class Pohiaken
         '
         'txtPaevaneKaal
         '
+        Me.txtPaevaneKaal.Font = New System.Drawing.Font("Century Gothic", 12.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtPaevaneKaal.Location = New System.Drawing.Point(10, 30)
         Me.txtPaevaneKaal.Margin = New System.Windows.Forms.Padding(6, 4, 6, 4)
         Me.txtPaevaneKaal.Name = "txtPaevaneKaal"
@@ -1812,7 +1869,7 @@ Partial Class Pohiaken
         Me.btnPaevaneKaal.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.btnPaevaneKaal.Font = New System.Drawing.Font("Century Gothic", 12.0!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Italic), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnPaevaneKaal.ForeColor = System.Drawing.Color.White
-        Me.btnPaevaneKaal.Location = New System.Drawing.Point(10, 62)
+        Me.btnPaevaneKaal.Location = New System.Drawing.Point(10, 68)
         Me.btnPaevaneKaal.Margin = New System.Windows.Forms.Padding(6, 4, 6, 4)
         Me.btnPaevaneKaal.Name = "btnPaevaneKaal"
         Me.btnPaevaneKaal.Size = New System.Drawing.Size(258, 42)
@@ -1836,7 +1893,7 @@ Partial Class Pohiaken
         Legend2.IsTextAutoFit = False
         Legend2.Name = "Legend1"
         Me.chrKaaluMuutumine.Legends.Add(Legend2)
-        Me.chrKaaluMuutumine.Location = New System.Drawing.Point(374, 78)
+        Me.chrKaaluMuutumine.Location = New System.Drawing.Point(364, 87)
         Me.chrKaaluMuutumine.Margin = New System.Windows.Forms.Padding(2)
         Me.chrKaaluMuutumine.Name = "chrKaaluMuutumine"
         Me.chrKaaluMuutumine.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.SeaGreen
@@ -1859,7 +1916,7 @@ Partial Class Pohiaken
         Series3.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.[Date]
         Me.chrKaaluMuutumine.Series.Add(Series2)
         Me.chrKaaluMuutumine.Series.Add(Series3)
-        Me.chrKaaluMuutumine.Size = New System.Drawing.Size(456, 388)
+        Me.chrKaaluMuutumine.Size = New System.Drawing.Size(482, 387)
         Me.chrKaaluMuutumine.TabIndex = 22
         Title2.Font = New System.Drawing.Font("Century Gothic", 14.25!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Italic), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Title2.Name = "Title1"
@@ -1871,8 +1928,9 @@ Partial Class Pohiaken
         Me.GroupBox2.Controls.Add(Me.btnNaitaYlevaadet)
         Me.GroupBox2.Controls.Add(Me.cmbAjaluguGraafikuPeriood)
         Me.GroupBox2.Controls.Add(Me.Label21)
+        Me.GroupBox2.Font = New System.Drawing.Font("Century Gothic", 12.0!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Italic), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.GroupBox2.ForeColor = System.Drawing.Color.Black
-        Me.GroupBox2.Location = New System.Drawing.Point(46, 334)
+        Me.GroupBox2.Location = New System.Drawing.Point(46, 344)
         Me.GroupBox2.Margin = New System.Windows.Forms.Padding(2)
         Me.GroupBox2.Name = "GroupBox2"
         Me.GroupBox2.Padding = New System.Windows.Forms.Padding(2)
@@ -1889,7 +1947,7 @@ Partial Class Pohiaken
         Me.btnNaitaYlevaadet.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.btnNaitaYlevaadet.Font = New System.Drawing.Font("Century Gothic", 12.0!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Italic), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnNaitaYlevaadet.ForeColor = System.Drawing.Color.White
-        Me.btnNaitaYlevaadet.Location = New System.Drawing.Point(14, 76)
+        Me.btnNaitaYlevaadet.Location = New System.Drawing.Point(14, 81)
         Me.btnNaitaYlevaadet.Margin = New System.Windows.Forms.Padding(6, 4, 6, 4)
         Me.btnNaitaYlevaadet.Name = "btnNaitaYlevaadet"
         Me.btnNaitaYlevaadet.Size = New System.Drawing.Size(258, 42)
@@ -1900,17 +1958,18 @@ Partial Class Pohiaken
         'cmbAjaluguGraafikuPeriood
         '
         Me.cmbAjaluguGraafikuPeriood.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cmbAjaluguGraafikuPeriood.Font = New System.Drawing.Font("Century Gothic", 11.25!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmbAjaluguGraafikuPeriood.Font = New System.Drawing.Font("Century Gothic", 12.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cmbAjaluguGraafikuPeriood.FormattingEnabled = True
         Me.cmbAjaluguGraafikuPeriood.Location = New System.Drawing.Point(102, 34)
         Me.cmbAjaluguGraafikuPeriood.Margin = New System.Windows.Forms.Padding(2)
         Me.cmbAjaluguGraafikuPeriood.Name = "cmbAjaluguGraafikuPeriood"
-        Me.cmbAjaluguGraafikuPeriood.Size = New System.Drawing.Size(170, 26)
+        Me.cmbAjaluguGraafikuPeriood.Size = New System.Drawing.Size(170, 27)
         Me.cmbAjaluguGraafikuPeriood.TabIndex = 7
         '
         'Label21
         '
         Me.Label21.AutoSize = True
+        Me.Label21.Font = New System.Drawing.Font("Century Gothic", 12.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label21.Location = New System.Drawing.Point(10, 36)
         Me.Label21.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label21.Name = "Label21"
@@ -1968,7 +2027,7 @@ Partial Class Pohiaken
         Me.pnlAjalugu.Location = New System.Drawing.Point(232, 100)
         Me.pnlAjalugu.Margin = New System.Windows.Forms.Padding(2)
         Me.pnlAjalugu.Name = "pnlAjalugu"
-        Me.pnlAjalugu.Size = New System.Drawing.Size(833, 481)
+        Me.pnlAjalugu.Size = New System.Drawing.Size(852, 481)
         Me.pnlAjalugu.TabIndex = 5
         '
         'chrAjalooPaneel
@@ -1987,7 +2046,7 @@ Partial Class Pohiaken
         Legend4.IsTextAutoFit = False
         Legend4.Name = "Legend1"
         Me.chrAjalooPaneel.Legends.Add(Legend4)
-        Me.chrAjalooPaneel.Location = New System.Drawing.Point(544, 110)
+        Me.chrAjalooPaneel.Location = New System.Drawing.Point(544, 112)
         Me.chrAjalooPaneel.Margin = New System.Windows.Forms.Padding(2)
         Me.chrAjalooPaneel.Name = "chrAjalooPaneel"
         Me.chrAjalooPaneel.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.SeaGreen
@@ -2000,7 +2059,7 @@ Partial Class Pohiaken
         Series5.Name = "Makrod"
         Series5.SmartLabelStyle.CalloutBackColor = System.Drawing.Color.White
         Me.chrAjalooPaneel.Series.Add(Series5)
-        Me.chrAjalooPaneel.Size = New System.Drawing.Size(276, 330)
+        Me.chrAjalooPaneel.Size = New System.Drawing.Size(300, 360)
         Me.chrAjalooPaneel.TabIndex = 26
         Title3.Font = New System.Drawing.Font("Century Gothic", 14.25!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Italic), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Title3.Name = "Title1"
@@ -2009,13 +2068,22 @@ Partial Class Pohiaken
         '
         'GroupBox12
         '
+        Me.GroupBox12.Controls.Add(Me.lblAjaluguKehakaal)
+        Me.GroupBox12.Controls.Add(Me.lblAjaluguVordlusTanasega)
+        Me.GroupBox12.Controls.Add(Me.lblAjaluguKulutatudKalorid)
+        Me.GroupBox12.Controls.Add(Me.lblAjaluguSoodudKalorid)
+        Me.GroupBox12.Controls.Add(Me.Label48)
+        Me.GroupBox12.Controls.Add(Me.Label44)
+        Me.GroupBox12.Controls.Add(Me.Label43)
+        Me.GroupBox12.Controls.Add(Me.Label26)
         Me.GroupBox12.Controls.Add(Me.lvPaevasedTreeningud)
         Me.GroupBox12.Controls.Add(Me.lvPaevasedToidud)
+        Me.GroupBox12.Font = New System.Drawing.Font("Century Gothic", 12.0!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Italic), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.GroupBox12.Location = New System.Drawing.Point(16, 103)
         Me.GroupBox12.Margin = New System.Windows.Forms.Padding(2)
         Me.GroupBox12.Name = "GroupBox12"
         Me.GroupBox12.Padding = New System.Windows.Forms.Padding(2)
-        Me.GroupBox12.Size = New System.Drawing.Size(496, 338)
+        Me.GroupBox12.Size = New System.Drawing.Size(506, 373)
         Me.GroupBox12.TabIndex = 25
         Me.GroupBox12.TabStop = False
         Me.GroupBox12.Text = "Toidud ja treeningud"
@@ -2025,8 +2093,9 @@ Partial Class Pohiaken
         Me.lvPaevasedTreeningud.BackColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(241, Byte), Integer), CType(CType(239, Byte), Integer))
         Me.lvPaevasedTreeningud.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.lvPaevasedTreeningud.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.treeninguNimi, Me.treeninguKalorid, Me.treeninguKestus})
+        Me.lvPaevasedTreeningud.Font = New System.Drawing.Font("Century Gothic", 12.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lvPaevasedTreeningud.HideSelection = False
-        Me.lvPaevasedTreeningud.Location = New System.Drawing.Point(11, 227)
+        Me.lvPaevasedTreeningud.Location = New System.Drawing.Point(16, 266)
         Me.lvPaevasedTreeningud.Name = "lvPaevasedTreeningud"
         Me.lvPaevasedTreeningud.Size = New System.Drawing.Size(472, 97)
         Me.lvPaevasedTreeningud.TabIndex = 1
@@ -2035,7 +2104,7 @@ Partial Class Pohiaken
         '
         'treeninguNimi
         '
-        Me.treeninguNimi.Text = "Treeningu nimi"
+        Me.treeninguNimi.Text = "Treeningu nimetus"
         Me.treeninguNimi.Width = 257
         '
         'treeninguKalorid
@@ -2055,8 +2124,9 @@ Partial Class Pohiaken
         Me.lvPaevasedToidud.BackColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(241, Byte), Integer), CType(CType(239, Byte), Integer))
         Me.lvPaevasedToidud.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.lvPaevasedToidud.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.toiduKord, Me.toiduNimetus, Me.toiduKcal})
+        Me.lvPaevasedToidud.Font = New System.Drawing.Font("Century Gothic", 12.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lvPaevasedToidud.HideSelection = False
-        Me.lvPaevasedToidud.Location = New System.Drawing.Point(11, 39)
+        Me.lvPaevasedToidud.Location = New System.Drawing.Point(16, 90)
         Me.lvPaevasedToidud.Name = "lvPaevasedToidud"
         Me.lvPaevasedToidud.Size = New System.Drawing.Size(472, 163)
         Me.lvPaevasedToidud.TabIndex = 0
@@ -2115,13 +2185,13 @@ Partial Class Pohiaken
         'lblAjaluguNadalaPaev
         '
         Me.lblAjaluguNadalaPaev.AutoSize = True
-        Me.lblAjaluguNadalaPaev.Font = New System.Drawing.Font("Century Gothic", 14.25!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Italic), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblAjaluguNadalaPaev.Font = New System.Drawing.Font("Century Gothic", 15.75!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Italic), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblAjaluguNadalaPaev.ForeColor = System.Drawing.Color.Black
-        Me.lblAjaluguNadalaPaev.Location = New System.Drawing.Point(317, 58)
+        Me.lblAjaluguNadalaPaev.Location = New System.Drawing.Point(301, 58)
         Me.lblAjaluguNadalaPaev.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.lblAjaluguNadalaPaev.Name = "lblAjaluguNadalaPaev"
         Me.lblAjaluguNadalaPaev.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.lblAjaluguNadalaPaev.Size = New System.Drawing.Size(28, 23)
+        Me.lblAjaluguNadalaPaev.Size = New System.Drawing.Size(33, 25)
         Me.lblAjaluguNadalaPaev.TabIndex = 6
         Me.lblAjaluguNadalaPaev.Text = "D,"
         Me.lblAjaluguNadalaPaev.TextAlign = System.Drawing.ContentAlignment.TopRight
@@ -2129,12 +2199,12 @@ Partial Class Pohiaken
         'lblAjaluguKuupaev
         '
         Me.lblAjaluguKuupaev.AutoSize = True
-        Me.lblAjaluguKuupaev.Font = New System.Drawing.Font("Century Gothic", 14.25!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Italic), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblAjaluguKuupaev.Font = New System.Drawing.Font("Century Gothic", 15.75!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Italic), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblAjaluguKuupaev.ForeColor = System.Drawing.Color.Black
-        Me.lblAjaluguKuupaev.Location = New System.Drawing.Point(342, 58)
+        Me.lblAjaluguKuupaev.Location = New System.Drawing.Point(335, 58)
         Me.lblAjaluguKuupaev.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.lblAjaluguKuupaev.Name = "lblAjaluguKuupaev"
-        Me.lblAjaluguKuupaev.Size = New System.Drawing.Size(128, 23)
+        Me.lblAjaluguKuupaev.Size = New System.Drawing.Size(144, 25)
         Me.lblAjaluguKuupaev.TabIndex = 5
         Me.lblAjaluguKuupaev.Text = "DD.MM.YYYY"
         '
@@ -2584,17 +2654,113 @@ Partial Class Pohiaken
         Me.pbAlumineNaine.TabStop = False
         Me.pbAlumineNaine.Visible = False
         '
+        'Label26
+        '
+        Me.Label26.AutoSize = True
+        Me.Label26.Font = New System.Drawing.Font("Century Gothic", 12.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label26.ForeColor = System.Drawing.Color.Black
+        Me.Label26.Location = New System.Drawing.Point(12, 35)
+        Me.Label26.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.Label26.Name = "Label26"
+        Me.Label26.Size = New System.Drawing.Size(130, 19)
+        Me.Label26.TabIndex = 32
+        Me.Label26.Text = "Söödud kalorid:"
+        '
+        'Label43
+        '
+        Me.Label43.AutoSize = True
+        Me.Label43.Font = New System.Drawing.Font("Century Gothic", 12.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label43.ForeColor = System.Drawing.Color.Black
+        Me.Label43.Location = New System.Drawing.Point(12, 55)
+        Me.Label43.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.Label43.Name = "Label43"
+        Me.Label43.Size = New System.Drawing.Size(149, 19)
+        Me.Label43.TabIndex = 33
+        Me.Label43.Text = "Kulutatud kalorid:"
+        '
+        'Label44
+        '
+        Me.Label44.AutoSize = True
+        Me.Label44.Font = New System.Drawing.Font("Century Gothic", 12.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label44.ForeColor = System.Drawing.Color.Black
+        Me.Label44.Location = New System.Drawing.Point(270, 35)
+        Me.Label44.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.Label44.Name = "Label44"
+        Me.Label44.Size = New System.Drawing.Size(88, 19)
+        Me.Label44.TabIndex = 34
+        Me.Label44.Text = "Kehakaal:"
+        '
+        'Label48
+        '
+        Me.Label48.AutoSize = True
+        Me.Label48.Font = New System.Drawing.Font("Century Gothic", 12.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label48.ForeColor = System.Drawing.Color.Black
+        Me.Label48.Location = New System.Drawing.Point(268, 53)
+        Me.Label48.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.Label48.Name = "Label48"
+        Me.Label48.Size = New System.Drawing.Size(152, 19)
+        Me.Label48.TabIndex = 35
+        Me.Label48.Text = "Võrdlus tänasega:"
+        '
+        'lblAjaluguSoodudKalorid
+        '
+        Me.lblAjaluguSoodudKalorid.AutoSize = True
+        Me.lblAjaluguSoodudKalorid.Font = New System.Drawing.Font("Century Gothic", 12.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblAjaluguSoodudKalorid.ForeColor = System.Drawing.Color.Black
+        Me.lblAjaluguSoodudKalorid.Location = New System.Drawing.Point(165, 35)
+        Me.lblAjaluguSoodudKalorid.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.lblAjaluguSoodudKalorid.Name = "lblAjaluguSoodudKalorid"
+        Me.lblAjaluguSoodudKalorid.Size = New System.Drawing.Size(59, 19)
+        Me.lblAjaluguSoodudKalorid.TabIndex = 36
+        Me.lblAjaluguSoodudKalorid.Text = "Kogus:"
+        '
+        'lblAjaluguKulutatudKalorid
+        '
+        Me.lblAjaluguKulutatudKalorid.AutoSize = True
+        Me.lblAjaluguKulutatudKalorid.Font = New System.Drawing.Font("Century Gothic", 12.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblAjaluguKulutatudKalorid.ForeColor = System.Drawing.Color.Black
+        Me.lblAjaluguKulutatudKalorid.Location = New System.Drawing.Point(165, 55)
+        Me.lblAjaluguKulutatudKalorid.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.lblAjaluguKulutatudKalorid.Name = "lblAjaluguKulutatudKalorid"
+        Me.lblAjaluguKulutatudKalorid.Size = New System.Drawing.Size(59, 19)
+        Me.lblAjaluguKulutatudKalorid.TabIndex = 37
+        Me.lblAjaluguKulutatudKalorid.Text = "Kogus:"
+        '
+        'lblAjaluguVordlusTanasega
+        '
+        Me.lblAjaluguVordlusTanasega.AutoSize = True
+        Me.lblAjaluguVordlusTanasega.Font = New System.Drawing.Font("Century Gothic", 12.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblAjaluguVordlusTanasega.ForeColor = System.Drawing.Color.Black
+        Me.lblAjaluguVordlusTanasega.Location = New System.Drawing.Point(429, 55)
+        Me.lblAjaluguVordlusTanasega.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.lblAjaluguVordlusTanasega.Name = "lblAjaluguVordlusTanasega"
+        Me.lblAjaluguVordlusTanasega.Size = New System.Drawing.Size(59, 19)
+        Me.lblAjaluguVordlusTanasega.TabIndex = 38
+        Me.lblAjaluguVordlusTanasega.Text = "Kogus:"
+        '
+        'lblAjaluguKehakaal
+        '
+        Me.lblAjaluguKehakaal.AutoSize = True
+        Me.lblAjaluguKehakaal.Font = New System.Drawing.Font("Century Gothic", 12.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblAjaluguKehakaal.ForeColor = System.Drawing.Color.Black
+        Me.lblAjaluguKehakaal.Location = New System.Drawing.Point(430, 34)
+        Me.lblAjaluguKehakaal.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.lblAjaluguKehakaal.Name = "lblAjaluguKehakaal"
+        Me.lblAjaluguKehakaal.Size = New System.Drawing.Size(59, 19)
+        Me.lblAjaluguKehakaal.TabIndex = 39
+        Me.lblAjaluguKehakaal.Text = "Kogus:"
+        '
         'Pohiaken
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(96.0!, 96.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi
         Me.AutoSize = True
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(241, Byte), Integer), CType(CType(239, Byte), Integer))
-        Me.ClientSize = New System.Drawing.Size(1065, 563)
+        Me.ClientSize = New System.Drawing.Size(1084, 581)
+        Me.Controls.Add(Me.pnlYlevaade)
+        Me.Controls.Add(Me.pnlToidulaud)
         Me.Controls.Add(Me.pnlAjalugu)
         Me.Controls.Add(Me.pnlKodu)
-        Me.Controls.Add(Me.pnlToidulaud)
-        Me.Controls.Add(Me.pnlYlevaade)
         Me.Controls.Add(Me.pnlTreeningud)
         Me.Controls.Add(Me.pnlRakenduseInfo)
         Me.Controls.Add(Me.pnlProfiiliSeaded)
@@ -2606,9 +2772,9 @@ Partial Class Pohiaken
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Margin = New System.Windows.Forms.Padding(6, 4, 6, 4)
         Me.MaximizeBox = False
-        Me.MaximumSize = New System.Drawing.Size(1081, 602)
+        Me.MaximumSize = New System.Drawing.Size(1100, 620)
         Me.MinimizeBox = False
-        Me.MinimumSize = New System.Drawing.Size(953, 490)
+        Me.MinimumSize = New System.Drawing.Size(1100, 620)
         Me.Name = "Pohiaken"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Janar"
@@ -2657,6 +2823,7 @@ Partial Class Pohiaken
         Me.pnlAjalugu.PerformLayout()
         CType(Me.chrAjalooPaneel, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupBox12.ResumeLayout(False)
+        Me.GroupBox12.PerformLayout()
         Me.GroupBox3.ResumeLayout(False)
         Me.GroupBox3.PerformLayout()
         Me.GroupBox4.ResumeLayout(False)
@@ -2853,4 +3020,12 @@ Partial Class Pohiaken
     Friend WithEvents treeninguNimi As ColumnHeader
     Friend WithEvents treeninguKalorid As ColumnHeader
     Friend WithEvents treeninguKestus As ColumnHeader
+    Friend WithEvents Label43 As Label
+    Friend WithEvents Label26 As Label
+    Friend WithEvents lblAjaluguKulutatudKalorid As Label
+    Friend WithEvents lblAjaluguSoodudKalorid As Label
+    Friend WithEvents Label48 As Label
+    Friend WithEvents Label44 As Label
+    Friend WithEvents lblAjaluguKehakaal As Label
+    Friend WithEvents lblAjaluguVordlusTanasega As Label
 End Class
