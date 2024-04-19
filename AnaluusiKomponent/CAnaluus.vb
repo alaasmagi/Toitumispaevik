@@ -56,16 +56,16 @@ Public Class CAnaluus
     Public Function PariKcalPaveaHetkest(kuupaev As Integer, kasutaja_id As Integer, toidukord As Integer) As Integer Implements IAnaluus.PariKcalPaveaHetkest
         Select Case toidukord
             Case 0
-                hommik = KaloridKokku(KclParingAndmebaasist(kasutaja_id, kuupaev, toidukord))
+                hommik = MassiivLiikmedKokku(KclParingAndmebaasist(kasutaja_id, kuupaev, toidukord))
                 Return hommik
             Case 1
-                louna = KaloridKokku(KclParingAndmebaasist(kasutaja_id, kuupaev, toidukord))
+                louna = MassiivLiikmedKokku(KclParingAndmebaasist(kasutaja_id, kuupaev, toidukord))
                 Return louna
             Case 2
-                vahepala = KaloridKokku(KclParingAndmebaasist(kasutaja_id, kuupaev, toidukord))
+                vahepala = MassiivLiikmedKokku(KclParingAndmebaasist(kasutaja_id, kuupaev, toidukord))
                 Return vahepala
             Case 3
-                ohtu = KaloridKokku(KclParingAndmebaasist(kasutaja_id, kuupaev, toidukord))
+                ohtu = MassiivLiikmedKokku(KclParingAndmebaasist(kasutaja_id, kuupaev, toidukord))
                 Return ohtu
         End Select
         Return 0
@@ -87,7 +87,7 @@ Public Class CAnaluus
     Public Function PaevaneKcal(ByVal kasutaja_id As Integer, ByVal kuupaev As Integer) As Integer Implements IAnaluus.PaevaneKcal
         Dim soodudKalorid As Integer = hommik + louna + vahepala + ohtu
 
-        Dim treeninguKaloridKokku As Integer = KaloridKokku(PaevasedTreeninguKalorid(kasutaja_id, kuupaev))
+        Dim treeninguKaloridKokku As Integer = MassiivLiikmedKokku(PaevasedTreeninguKalorid(kasutaja_id, kuupaev))
         Dim kaloriteVahe As Integer = soodudKalorid - treeninguKaloridKokku
         Dim tabeli_asukoht As String = $"Data Source={Path.Combine(Path.GetFullPath(Path.Combine _
         (AppDomain.CurrentDomain.BaseDirectory, "..\..\..\")), "Data", "database.db")};Version= 3;"
@@ -208,7 +208,7 @@ Public Class CAnaluus
         Return intValues.ToArray()
     End Function
 
-    Private Function KaloridKokku(ByRef KcalLoend As Double()) As Double Implements IAnaluus.KaloridKokku
+    Private Function MassiivLiikmedKokku(ByRef KcalLoend As Double()) As Double Implements IAnaluus.MassiivLiikmedKokku
         Dim koguvaartus As Double = 0
 
         For i As Integer = 0 To KcalLoend.Length - 1
@@ -316,16 +316,16 @@ Public Class CAnaluus
     Public Function PariMakroaineKogus(kuupaev As Integer, kasutaja_id As Integer, makroaine As String) As Integer Implements IAnaluus.PariMakroaineKogus
         Select Case makroaine
             Case "total_c_hydrates"
-                Return KaloridKokku(MakroaineParingAndmebaasist(kasutaja_id, kuupaev, makroaine))
+                Return MassiivLiikmedKokku(MakroaineParingAndmebaasist(kasutaja_id, kuupaev, makroaine))
 
             Case "total_sugar"
-                Return KaloridKokku(MakroaineParingAndmebaasist(kasutaja_id, kuupaev, makroaine))
+                Return MassiivLiikmedKokku(MakroaineParingAndmebaasist(kasutaja_id, kuupaev, makroaine))
 
             Case "total_protein"
-                Return KaloridKokku(MakroaineParingAndmebaasist(kasutaja_id, kuupaev, makroaine))
+                Return MassiivLiikmedKokku(MakroaineParingAndmebaasist(kasutaja_id, kuupaev, makroaine))
 
             Case "total_lipid"
-                Return KaloridKokku(MakroaineParingAndmebaasist(kasutaja_id, kuupaev, makroaine))
+                Return MassiivLiikmedKokku(MakroaineParingAndmebaasist(kasutaja_id, kuupaev, makroaine))
 
         End Select
         Return 0
