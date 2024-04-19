@@ -10,7 +10,7 @@ Public Class CAnaluus
     Private vahepala
 
     Public Function PaevaseAndmereaParing(ByVal kasutaja_id As Integer, ByVal kuupaev As Integer, ByVal otsitavSuurus As String) As Integer Implements IAnaluus.PaevaseAndmereaParing
-        Dim paevaneKcal As Integer = -1
+        Dim paevasedAndmed As Integer = -1
         Dim tabeli_asukoht As String = $"Data Source={Path.Combine(Path.GetFullPath(Path.Combine _
         (AppDomain.CurrentDomain.BaseDirectory, "..\..\..\")), "Data", "database.db")};Version=3;"
         Using connection As New SQLiteConnection(tabeli_asukoht)
@@ -21,11 +21,11 @@ Public Class CAnaluus
                 cmd.Parameters.AddWithValue("@kuupaev", kuupaev)
                 Dim result As Object = cmd.ExecuteScalar()
                 If result IsNot Nothing AndAlso Not DBNull.Value.Equals(result) Then
-                    paevaneKcal = Convert.ToInt32(result)
+                    paevasedAndmed = Convert.ToInt32(result)
                 End If
             End Using
         End Using
-        Return paevaneKcal
+        Return paevasedAndmed
     End Function
 
     Public Function TuhjaPaevaseAndmereaSisestus(ByVal kasutaja_id As Integer, ByVal kuupaev As Integer) As Integer Implements IAnaluus.TuhjaPaevaseAndmereaSisestus
