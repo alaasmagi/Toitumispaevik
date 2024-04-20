@@ -248,6 +248,21 @@ Public Class Pohiaken
         pnlKodu.Visible = False
         pnlRakenduseInfo.Visible = False
         pnlProfiiliSeaded.Visible = True
+
+        If cmbMuudaKaalu.SelectedItem > tabelSihtKaal Then
+            lblProfiilKehakaaluLangus.Visible = True
+            lblProfiilKehakaaluTõstmine.Visible = False
+            lblProfiilKehakaalSama.Visible = False
+        ElseIf cmbMuudaKaalu.SelectedItem < tabelSihtKaal Then
+            lblProfiilKehakaaluLangus.Visible = False
+            lblProfiilKehakaaluTõstmine.Visible = True
+            lblProfiilKehakaalSama.Visible = False
+        Else
+            lblProfiilKehakaaluLangus.Visible = False
+            lblProfiilKehakaaluTõstmine.Visible = False
+            lblProfiilKehakaalSama.Visible = True
+        End If
+
     End Sub
 
     Private Sub btnKodu_Click(sender As Object, e As EventArgs) Handles btnKodu.Click
@@ -276,9 +291,6 @@ Public Class Pohiaken
                 TuhjendaKonteiner(ctrl)
             End If
         Next
-    End Sub
-    Sub AjalooVaade()
-
     End Sub
     Sub KomboKastid()
 
@@ -725,5 +737,6 @@ Public Class Pohiaken
         AjalooInfo()
         MakroGraafik()
     End Sub
+
 End Class
 
