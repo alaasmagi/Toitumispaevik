@@ -14,10 +14,13 @@ Public Class Pohiaken
 
     Private _kasutaja_id As Integer
     Private kalorilimiit As Integer
+    Private kasutajaKaal As Double
+    Private kaaluEesmark As Double
+    Private kaaluEesmarkVahe As Double
+    Private kaaluEesmarkAeg As Double
     Private TabelKaalud As Double()
     Private DateTabelKaalud As Integer()
     Private ajalooKuupaev As Integer
-    Private tabelSihtKaal As Double
     Private valueMap As New Dictionary(Of String, Integer)()
     Dim kultuur As New CultureInfo("et-EE")
 
@@ -41,23 +44,37 @@ Public Class Pohiaken
         _kasutaja_id = kasutaja_id
         Dim ProfiilK As New KasutajaProfiilKomponent.CKasutajaProfiil
         kalorilimiit = ProfiilK.UheAndmevaljaParingKasutajaTabelist(_kasutaja_id, "calorie_limit")
-        tabelSihtKaal = ProfiilK.UheAndmevaljaParingKasutajaTabelist(_kasutaja_id, "weight_goal")
+        kaaluEesmark = ProfiilK.UheAndmevaljaParingKasutajaTabelist(_kasutaja_id, "weight_goal")
+
     End Sub
     Public Sub ResetForm()
         ProfiilK = New KasutajaProfiilKomponent.CKasutajaProfiil
         AnaluusK = New AnaluusiKomponent.CAnaluus
+
+        kasutajaKaal = ProfiilK.UheAndmevaljaParingKasutajaTabelist(_kasutaja_id, "weight")
+        kaaluEesmark = ProfiilK.UheAndmevaljaParingKasutajaTabelist(_kasutaja_id, "weight_goal")
+        kaaluEesmarkVahe = Math.Abs(kaaluEesmark - kasutajaKaal)
+        kaaluEesmarkAeg = kaaluEesmarkVahe / 0.5
 
         ajalooKuupaev = AnaluusK.KuupaevIntegeriks(Date.Now.Date)
         lblAjaluguKuupaev.Text = AnaluusK.IntegerKuupaevaks(ajalooKuupaev)
         lblAjaluguNadalaPaev.Text = AnaluusK.IntegerKuupaevaks(ajalooKuupaev).ToString("ddd", kultuur) + ","
 
         If AnaluusK.PaevaseAndmereaParing(_kasutaja_id, AnaluusK.KuupaevIntegeriks(Date.Now.Date), "energy_intake") = -1 Then
-            AnaluusK.TuhjaPaevaseAndmereaSisestus(_kasutaja_id, AnaluusK.KuupaevIntegeriks(Date.Now.Date))
+            AnaluusK.TuhjaPaevaseAndmereaSisestus(_kasutaja_id, ProfiilK.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "weight"), AnaluusK.KuupaevIntegeriks(Date.Now.Date))
         End If
-
-        AnaluusK.DBParingBMR(_kasutaja_id, ProfiilK.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "sex"), ProfiilK.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "age"),
+        kalorilimiit = AnaluusK.DBParingBMR(_kasutaja_id, ProfiilK.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "sex"), ProfiilK.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "age"),
                              ProfiilK.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "weight"), ProfiilK.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "weight_goal"),
                              ProfiilK.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "height"), AnaluusK.KuupaevIntegeriks(Date.Now.Date))
+
+        If kalorilimiit < 1000 Then
+            lblSulOnProbleem.Visible = True
+            lblKaloriLimiit.Visible = False
+        Else
+            lblKaloriLimiit.Text = kalorilimiit & "kcal"
+            lblSulOnProbleem.Visible = False
+            lblKaloriLimiit.Visible = True
+        End If
 
         TuhjendaKonteiner(Me)
         pnlLogo.Visible = True
@@ -75,9 +92,14 @@ Public Class Pohiaken
         lblKoduEesnimi.Text = lblEesnimi.Text & "!"
         lblProfiiliSeadedEesnimi.Text = lblEesnimi.Text
         lblProfiiliSeadedKasutajanimi.Text = ProfiilK.Dekrupteerimine(ProfiilK.UheAndmevaljaParingKasutajaTabelist(_kasutaja_id, "username"))
-        lblKasutajaPikkus.Text = ProfiilK.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "height")
-        lblKasutajaKaal.Text = ProfiilK.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "weight")
-        lblKasutajaVanus.Text = ProfiilK.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "age")
+        lblKasutajaPikkus.Text = ProfiilK.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "height") & "cm"
+
+
+        lblKasutajaKaal.Text = kasutajaKaal & "kg"
+        lblKaaluEesmark.Text = kaaluEesmark & "kg"
+        lblKaaluEesmargiVahe.Text = kaaluEesmarkVahe & "kg"
+        lblKaaluEesmargiAeg.Text = kaaluEesmarkAeg & "ndl"
+        lblKasutajaVanus.Text = ProfiilK.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "age") & "aastat"
 
 
         If ProfiilK.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "sex") = 0 Then
@@ -113,15 +135,18 @@ Public Class Pohiaken
             If muutuja > 0 AndAlso (DateTabelKaalud(muutuja - 1) + 1) < DateTabelKaalud(muutuja) Then
                 DateTabelKaalud(muutuja - 1) = DateTabelKaalud(muutuja - 1) + 1
                 chrKaaluMuutumine.Series("Kaal").Points.AddXY(AnaluusK.IntegerKuupaevaks(DateTabelKaalud(muutuja - 1)), TabelKaalud(muutuja - 1))
-                chrKaaluMuutumine.Series("Siht Kaal").Points.AddXY(AnaluusK.IntegerKuupaevaks(DateTabelKaalud(muutuja - 1)), tabelSihtKaal)
+                chrKaaluMuutumine.Series("Siht Kaal").Points.AddXY(AnaluusK.IntegerKuupaevaks(DateTabelKaalud(muutuja - 1)), kaaluEesmark)
                 muutuja -= 1
             Else
                 If muutuja = TabelKaalud.Length - 1 AndAlso TabelKaalud(muutuja) = 0 Then
-                    chrKaaluMuutumine.Series("Kaal").Points.AddXY(AnaluusK.IntegerKuupaevaks(DateTabelKaalud(muutuja)), TabelKaalud(muutuja - 1))
+                    If muutuja - 1 >= 0 Then
+                        chrKaaluMuutumine.Series("Kaal").Points.AddXY(AnaluusK.IntegerKuupaevaks(DateTabelKaalud(muutuja)), TabelKaalud(muutuja - 1))
+                    End If
+
                 Else
                     chrKaaluMuutumine.Series("Kaal").Points.AddXY(AnaluusK.IntegerKuupaevaks(DateTabelKaalud(muutuja)), TabelKaalud(muutuja))
                 End If
-                chrKaaluMuutumine.Series("Siht Kaal").Points.AddXY(AnaluusK.IntegerKuupaevaks(DateTabelKaalud(muutuja)), tabelSihtKaal)
+                chrKaaluMuutumine.Series("Siht Kaal").Points.AddXY(AnaluusK.IntegerKuupaevaks(DateTabelKaalud(muutuja)), kaaluEesmark)
             End If
 
         Next
@@ -149,7 +174,7 @@ Public Class Pohiaken
         chrKoduPaneel.Series("Soogikorrad").Points.AddXY("Vahepalad", AnaluusK.PariKcalPaveaHetkest(AnaluusK.KuupaevIntegeriks(Date.Now.Date), _kasutaja_id, 2))
 
         chrKoduPaneel.Series("Soogikorrad").Points.AddXY("Söömata", AnaluusK.PariKaloriUlejaak(AnaluusK.PaevaneKcal(_kasutaja_id, AnaluusK.KuupaevIntegeriks(Date.Now.Date)), kalorilimiit))
-        lblKcalPaev.Text = AnaluusK.PaevaneKcal(_kasutaja_id, AnaluusK.KuupaevIntegeriks(Date.Now.Date)) & Environment.NewLine & "/" & Environment.NewLine & kalorilimiit & Environment.NewLine & "kCal"
+        lblKcalPaev.Text = AnaluusK.PaevaneKcal(_kasutaja_id, AnaluusK.KuupaevIntegeriks(Date.Now.Date)) & Environment.NewLine & "/" & Environment.NewLine & kalorilimiit & Environment.NewLine & "kcal"
     End Sub
     Private Sub pnlLogo_Click(sender As Object, e As EventArgs) Handles pnlLogo.Click
         pnlYlevaade.Visible = False
@@ -245,6 +270,32 @@ Public Class Pohiaken
         pnlKodu.Visible = False
         pnlRakenduseInfo.Visible = False
         pnlProfiiliSeaded.Visible = True
+
+        kasutajaKaal = ProfiilK.UheAndmevaljaParingKasutajaTabelist(_kasutaja_id, "weight")
+        kaaluEesmark = ProfiilK.UheAndmevaljaParingKasutajaTabelist(_kasutaja_id, "weight_goal")
+        kaaluEesmarkVahe = Math.Abs(kaaluEesmark - kasutajaKaal)
+        kaaluEesmarkAeg = kaaluEesmarkVahe / 0.5
+
+        lblKasutajaKaal.Text = kasutajaKaal & "kg"
+        lblKaaluEesmark.Text = kaaluEesmark & "kg"
+        lblKaaluEesmargiVahe.Text = kaaluEesmarkVahe & "kg"
+        lblKaaluEesmargiAeg.Text = kaaluEesmarkAeg & "ndl"
+
+
+        If kasutajaKaal > kaaluEesmark Then
+            lblProfiilKehakaaluLangus.Visible = True
+            lblProfiilKehakaaluTõstmine.Visible = False
+            lblProfiilKehakaalSama.Visible = False
+        ElseIf kasutajaKaal < kaaluEesmark Then
+            lblProfiilKehakaaluLangus.Visible = False
+            lblProfiilKehakaaluTõstmine.Visible = True
+            lblProfiilKehakaalSama.Visible = False
+        Else
+            lblProfiilKehakaaluLangus.Visible = False
+            lblProfiilKehakaaluTõstmine.Visible = False
+            lblProfiilKehakaalSama.Visible = True
+        End If
+
     End Sub
 
     Private Sub btnKodu_Click(sender As Object, e As EventArgs) Handles btnKodu.Click
@@ -274,9 +325,6 @@ Public Class Pohiaken
             End If
         Next
     End Sub
-    Sub AjalooVaade()
-
-    End Sub
     Sub KomboKastid()
 
         ProfiilK = New KasutajaProfiilKomponent.CKasutajaProfiil
@@ -284,7 +332,6 @@ Public Class Pohiaken
         TreeningudK = New TreeninguteKomponent.CTreeningud
 
         cmbMuudaVanust.Items.Clear()
-        cmbMuudaKaalu.Items.Clear()
         cmbMuudaPikkust.Items.Clear()
         cmbToiduaineKiirvalik.Items.Clear()
         cmbTreeninguteKiirvalik.Items.Clear()
@@ -329,11 +376,6 @@ Public Class Pohiaken
         Next
         cmbMuudaPikkust.SelectedItem = ProfiilK.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "height")
 
-        For index = 30 To 150
-            cmbMuudaKaalu.Items.Add(index)
-        Next
-        cmbMuudaKaalu.SelectedItem = ProfiilK.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "weight")
-
         For index = 12 To 100
             cmbMuudaVanust.Items.Add(index)
         Next
@@ -344,21 +386,14 @@ Public Class Pohiaken
     Private Sub btnMuudaVanust_Click(sender As Object, e As EventArgs) Handles btnMuudaVanust.Click
         ProfiilK = New KasutajaProfiilKomponent.CKasutajaProfiil
         ProfiilK.IntegerAndmeValjaSisestusKasutajaTabelisse(_kasutaja_id, cmbMuudaVanust.SelectedItem, "age")
-        lblKasutajaVanus.Text = ProfiilK.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "age")
-        KomboKastid()
-    End Sub
-
-    Private Sub btnMuudaKaalu_Click(sender As Object, e As EventArgs) Handles btnMuudaKaalu.Click
-        ProfiilK = New KasutajaProfiilKomponent.CKasutajaProfiil
-        ProfiilK.IntegerAndmeValjaSisestusKasutajaTabelisse(_kasutaja_id, cmbMuudaKaalu.SelectedItem, "weight")
-        lblKasutajaKaal.Text = ProfiilK.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "weight")
+        lblKasutajaVanus.Text = ProfiilK.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "age") & "aastat"
         KomboKastid()
     End Sub
 
     Private Sub btnMuudaPikkust_Click(sender As Object, e As EventArgs) Handles btnMuudaPikkust.Click
         ProfiilK = New KasutajaProfiilKomponent.CKasutajaProfiil
         ProfiilK.IntegerAndmeValjaSisestusKasutajaTabelisse(_kasutaja_id, cmbMuudaPikkust.SelectedItem, "height")
-        lblKasutajaPikkus.Text = ProfiilK.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "height")
+        lblKasutajaPikkus.Text = ProfiilK.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "height") & "cm"
         KomboKastid()
     End Sub
 
@@ -586,7 +621,7 @@ Public Class Pohiaken
         If IsNumeric(txtKaaluEesmärk.Text) AndAlso txtKaaluEesmärk.Text > 0 Then
             lblKaaluEesmargiSeadmineViga.Visible = False
             ProfiilK.IntegerAndmeValjaSisestusKasutajaTabelisse(_kasutaja_id, txtKaaluEesmärk.Text, "weight_goal")
-            tabelSihtKaal = txtKaaluEesmärk.Text
+            kaaluEesmark = txtKaaluEesmärk.Text
             GraafikuSeaded()
             txtKaaluEesmärk.Text = ""
         Else
@@ -633,10 +668,19 @@ Public Class Pohiaken
         Dim paevasteToitudeKcal As Double() = AnaluusK.PaevasedToidud(_kasutaja_id, ajalooKuupaev, "energy_intake")
         Dim paevasteToitudeToidukord As Double() = AnaluusK.PaevasedToidud(_kasutaja_id, ajalooKuupaev, "time_of_meal")
 
-        lblAjaluguKehakaal.Text = AnaluusK.PaevaseAndmereaParing(_kasutaja_id, ajalooKuupaev, "daily_weight") & "kg"
-        lblAjaluguVordlusTanasega.Text = AnaluusK.PaevaseAndmereaParing(_kasutaja_id, AnaluusK.KuupaevIntegeriks(Date.Now.Date), "daily_weight") - AnaluusK.PaevaseAndmereaParing(_kasutaja_id, ajalooKuupaev, "daily_weight") & "kg"
-        lblAjaluguSoodudKalorid.Text = AnaluusK.PaevaseAndmereaParing(_kasutaja_id, ajalooKuupaev, "energy_intake") & "kcal"
-        lblAjaluguKulutatudKalorid.Text = AnaluusK.PaevaseAndmereaParing(_kasutaja_id, ajalooKuupaev, "energy_consumption") & "kcal"
+
+        If AnaluusK.PaevaseAndmereaParing(_kasutaja_id, ajalooKuupaev, "daily_weight") > 0 Then
+            lblAjaluguKehakaal.Text = AnaluusK.PaevaseAndmereaParing(_kasutaja_id, ajalooKuupaev, "daily_weight") & "kg"
+            lblAjaluguVordlusTanasega.Text = AnaluusK.PaevaseAndmereaParing(_kasutaja_id, AnaluusK.KuupaevIntegeriks(Date.Now.Date), "daily_weight") - AnaluusK.PaevaseAndmereaParing(_kasutaja_id, ajalooKuupaev, "daily_weight") & "kg"
+            lblAjaluguSoodudKalorid.Text = AnaluusK.PaevaseAndmereaParing(_kasutaja_id, ajalooKuupaev, "energy_intake") & "kcal"
+            lblAjaluguKulutatudKalorid.Text = AnaluusK.PaevaseAndmereaParing(_kasutaja_id, ajalooKuupaev, "energy_consumption") & "kcal"
+        Else
+            lblAjaluguKehakaal.Text = "0"
+            lblAjaluguVordlusTanasega.Text = "0"
+            lblAjaluguSoodudKalorid.Text = "0"
+            lblAjaluguKulutatudKalorid.Text = "0"
+        End If
+
 
         For index_ = 0 To paevasteToitudeId.Count - 1
             If paevasteToitudeId(index_) < 3000 Then
@@ -713,6 +757,5 @@ Public Class Pohiaken
         AjalooInfo()
         MakroGraafik()
     End Sub
-
 End Class
 
