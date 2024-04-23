@@ -16,7 +16,7 @@ Public Interface IAnaluus
                          ByVal kaaluEesmark As Double, ByVal pikkus As Integer, ByVal kuupaev As Integer) As Integer
     Function KaaluLisamine(ByVal kasutaja_id As Integer, ByVal uus_kaal As Double) As Double
     Function PaevaseAndmereaParing(ByVal kasutaja_id As Integer, ByVal kuupaev As Integer, ByVal otsitavSuurus As String) As Integer
-    Function TuhjaPaevaseAndmereaSisestus(ByVal kasutaja_id As Integer, ByVal kuupaev As Integer) As Integer
+    Function TuhjaPaevaseAndmereaSisestus(ByVal kasutaja_id As Integer, ByVal kaal As Integer, ByVal kuupaev As Integer) As Integer
     Function KaaluDateParingAndmebaasist(ByVal kasutaja_id As Integer, ByVal kuupaev As Integer, ByVal graafikuPikkus As Integer) As Integer()
     Function MakroaineParingAndmebaasist(ByVal kasutaja_id As Integer, ByVal kuupaev As Integer, ByVal makroaine As String) As Double()
     Function PariMakroaineKogus(kuupaev As Integer, kasutaja_id As Integer, makroaine As String) As Integer

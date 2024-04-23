@@ -21,7 +21,7 @@ Public Class CKasutajaProfiil
             connection.Open()
             Dim insertDataSql As String = "INSERT INTO user_data (user_id, username, password, firstname, recovery_question_id,
                 recovery_answer, height, weight, sex, age, calorie_limit, weight_goal) VALUES (@kasutaja_id, @kasutajanimi_krupt, @salasona_hash, @eesnimi_krupt, @taaste_id,
-                @taaste_vastus_hash, @pikkus, @kaal, @sugu, @vanus, 0, 0)"
+                @taaste_vastus_hash, @pikkus, @kaal, @sugu, @vanus, 0, @kaal)"
             Using cmd As New SQLiteCommand(insertDataSql, connection)
                 cmd.Parameters.AddWithValue("@kasutaja_id", kasutaja_id)
                 cmd.Parameters.AddWithValue("@kasutajanimi_krupt", kasutajanimi_krupt)
@@ -38,6 +38,7 @@ Public Class CKasutajaProfiil
                 End If
                 cmd.Parameters.AddWithValue("@vanus", vanus)
                 cmd.ExecuteNonQuery()
+
             End Using
         End Using
         Return kasutaja_id
