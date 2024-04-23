@@ -7,7 +7,7 @@ Public Interface IAnaluus
     Sub LisaValueMap(newKeyStr As String, newValue As Integer, ByVal valueMap As Dictionary(Of String, Integer))
     Function PaevaneKcal(ByVal kasutaja_id As Integer, ByVal kuupaev As Integer) As Integer
     Function KclParingAndmebaasist(kasutajaId As Integer, kuupaev As Integer, toidukord As Integer) As Double()
-    Function MassiivLiikmedKokku(ByRef KcalLoend() As Double) As Double
+    Function KaloridKokku(ByRef KcalLoend() As Double) As Double
     Function KuupaevIntegeriks(ByVal sisendKuupaev As DateTime) As Integer
     Function IntegerKuupaevaks(ByVal sisendInteger As Integer) As DateTime
     Function KaaluParingAndmebaasist(ByVal kasutaja_id As Integer, ByVal kuupaev As Integer, ByVal graafikuPikkus As Integer) As Double()
