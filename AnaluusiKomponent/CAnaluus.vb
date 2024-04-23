@@ -2,12 +2,14 @@
 Imports System.IO
 Public Class CAnaluus
 
+    'Kasutab IAnaluusi
     Implements IAnaluus
 
-    Private hommik
-    Private louna
-    Private ohtu
-    Private vahepala
+    'Loome muutujad hommik, louna, ohtu ja vahepala, et kasutada neid väärtusi päevase kaloraaši leidmiseks
+    Private hommik As Double
+    Private louna As Double
+    Private ohtu As Double
+    Private vahepala As Double
 
     Public Function PaevaseAndmereaParing(ByVal kasutaja_id As Integer, ByVal kuupaev As Integer, ByVal otsitavSuurus As String) As Integer Implements IAnaluus.PaevaseAndmereaParing
         Dim paevasedAndmed As Integer = -1
@@ -44,16 +46,21 @@ Public Class CAnaluus
         Return kasutaja_id
     End Function
 
+    'Kalori ülejäägi päring
     Public Function PariKaloriUlejaak(tarbitudKcal As Integer, KcalLimiit As Integer) As Integer Implements IAnaluus.PariKaloriUlejaak
+        'Juhul kui tarbitud on rohkem, kui kalori limiit, tagastatakse null
         If tarbitudKcal > KcalLimiit Then
             Return 0
         Else
+            'Igal muul jhul tagstatakse kalorilimiit - tarbitud kalorid, ehk kalorite ülejääk.
             Return KcalLimiit - tarbitudKcal
         End If
         Return 0
     End Function
 
+    'Funktsioon mille kaudu saab läbi interface'i küsida antud päeva ajas tarbitud kaloreid
     Public Function PariKcalPaveaHetkest(kuupaev As Integer, kasutaja_id As Integer, toidukord As Integer) As Integer Implements IAnaluus.PariKcalPaveaHetkest
+        'vastavalt toidukorrale, mis antud on viiakse läbi protsess, kus kutsutakse esile andmebaasi päring tarbitud kaloritele ja tagastatakse see väärtus
         Select Case toidukord
             Case 0
                 hommik = MassiiviLiikmedKokku(KclParingAndmebaasist(kasutaja_id, kuupaev, toidukord))
