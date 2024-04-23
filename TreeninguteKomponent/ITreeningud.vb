@@ -6,4 +6,5 @@
     Function TreeninguEnergiakuluParing(ByVal toiduaine_id As Integer, ByVal otsitav_suurus As String) As Integer
     Function KasutajaTreeninguLisamine(ByVal kasutaja_id As String, ByVal kuupaev As Integer, ByVal treeningu_id As Integer, ByVal kestus As Integer) As Integer
     Function KustutaTreening(ByVal treeningu_id As Integer) As Integer
+    Function TreeninguNimeLeidmine(treeningu_id As Integer) As String
 End Interface

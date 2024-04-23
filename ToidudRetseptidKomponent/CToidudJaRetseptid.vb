@@ -74,23 +74,18 @@ Public Class CToidudJaRetseptid
         Using connection As New SQLiteConnection(tabeli_asukoht)
             connection.Open()
             Dim selectSql As String
-            For index = 2000 To 2500
-                If mukbangFlag = 1 Then
-                    selectSql = "SELECT food_name FROM food_data WHERE food_id = @id ORDER BY energy DESC"
-                Else
-                    selectSql = "SELECT food_name FROM food_data WHERE food_id = @id"
-                End If
-
-                Using cmd As New SQLiteCommand(selectSql, connection)
-                    cmd.Parameters.AddWithValue("@id", index)
-
-                    Using reader As SQLiteDataReader = cmd.ExecuteReader()
-                        While reader.Read()
-                            toiduaineteNimed.Add(reader("food_name"))
-                        End While
-                    End Using
+            If mukbangFlag = 1 Then
+                selectSql = "SELECT food_name FROM food_data ORDER BY energy DESC"
+            Else
+                selectSql = "SELECT food_name FROM food_data"
+            End If
+            Using cmd As New SQLiteCommand(selectSql, connection)
+                Using reader As SQLiteDataReader = cmd.ExecuteReader()
+                    While reader.Read()
+                        toiduaineteNimed.Add(reader("food_name"))
+                    End While
                 End Using
-            Next
+            End Using
         End Using
         Return toiduaineteNimed
     End Function
@@ -134,15 +129,22 @@ Public Class CToidudJaRetseptid
     End Function
 
 
-    Public Function ToiteVaartuseParing(ByVal toiduaine_id As Integer, ByVal otsitav_suurus As String) As Integer Implements IToidudjaRetseptid.ToiteVaartuseParing
+    Public Function ToiteVaartuseParing(ByVal toidu_id As Integer, ByVal otsitav_suurus As String, ByVal retseptFlag As Integer) As Integer Implements IToidudjaRetseptid.ToiteVaartuseParing
         Dim tulemus As Integer
         Dim tabeli_asukoht As String = $"Data Source={Path.Combine(Path.GetFullPath(Path.Combine _
         (AppDomain.CurrentDomain.BaseDirectory, "..\..\..\")), "Data", "database.db")};Version=3;"
         Using connection As New SQLiteConnection(tabeli_asukoht)
             connection.Open()
-            Dim selectSql As String = $"SELECT {otsitav_suurus} FROM food_data WHERE food_id = @toiduaine_id"
+
+            Dim selectSql As String
+            If retseptFlag = 0 Then
+                selectSql = $"SELECT {otsitav_suurus} FROM food_data WHERE food_id = @toidu_id"
+            Else
+                selectSql = $"SELECT {otsitav_suurus} FROM recipe_data WHERE recipe_id = @toidu_id"
+            End If
+
             Using cmd As New SQLiteCommand(selectSql, connection)
-                cmd.Parameters.AddWithValue("@toiduaine_id", toiduaine_id)
+                cmd.Parameters.AddWithValue("@toidu_id", toidu_id)
                 Dim result As Object = cmd.ExecuteScalar()
                 If result IsNot Nothing AndAlso Not DBNull.Value.Equals(result) Then
                     tulemus = Convert.ToInt32(result)
@@ -152,14 +154,21 @@ Public Class CToidudJaRetseptid
         Return tulemus
     End Function
 
-    Public Function KasutajaToiduaineVõiRetseptiLisamine(ByVal kasutaja_id As String, ByVal kuupaev As Integer, ByVal toidukord As Integer, ByVal toiduaine_id As Integer, ByVal kogus As Integer) As Integer Implements IToidudjaRetseptid.KasutajaToiduaineVõiRetseptiLisamine
-        Dim kalorid = 0.1 * kogus * ToiteVaartuseParing(toiduaine_id, "energy")
-        Dim susivesikud = 0.1 * kogus * ToiteVaartuseParing(toiduaine_id, "c_hydrates")
-        Dim suhkur = 0.1 * kogus * ToiteVaartuseParing(toiduaine_id, "sugar")
-        Dim valgud = 0.1 * kogus * ToiteVaartuseParing(toiduaine_id, "protein")
-        Dim rasvad = 0.1 * kogus * ToiteVaartuseParing(toiduaine_id, "lipid")
+    Public Function KasutajaToiduaineVõiRetseptiLisamine(ByVal kasutaja_id As String, ByVal kuupaev As Integer, ByVal toidukord As Integer, ByVal toidu_id As Integer, ByVal kogus As Integer) As Integer Implements IToidudjaRetseptid.KasutajaToiduaineVõiRetseptiLisamine
 
+        Dim retseptFlag As Integer
 
+        If toidu_id > 3000 Then
+            retseptFlag = 1
+        Else
+            retseptFlag = 0
+        End If
+
+        Dim kalorid As Double = 0.01 * kogus * ToiteVaartuseParing(toidu_id, "energy", retseptFlag)
+        Dim susivesikud As Double = 0.01 * kogus * ToiteVaartuseParing(toidu_id, "c_hydrates", retseptFlag)
+        Dim suhkur As Double = 0.01 * kogus * ToiteVaartuseParing(toidu_id, "sugar", retseptFlag)
+        Dim valgud As Double = 0.01 * kogus * ToiteVaartuseParing(toidu_id, "protein", retseptFlag)
+        Dim rasvad As Double = 0.01 * kogus * ToiteVaartuseParing(toidu_id, "lipid", retseptFlag)
 
         Dim tabeli_asukoht As String = $"Data Source={Path.Combine(Path.GetFullPath(Path.Combine _
         (AppDomain.CurrentDomain.BaseDirectory, "..\..\..\")), "Data", "database.db")};Version=3;"
@@ -171,17 +180,17 @@ Public Class CToidudJaRetseptid
                 cmd.Parameters.AddWithValue("@kasutaja_id", kasutaja_id)
                 cmd.Parameters.AddWithValue("@kuupaev", kuupaev)
                 cmd.Parameters.AddWithValue("@toidukord", toidukord)
-                cmd.Parameters.AddWithValue("@toiduaine_id", toiduaine_id)
+                cmd.Parameters.AddWithValue("@toiduaine_id", toidu_id)
                 cmd.Parameters.AddWithValue("@kogus", kogus)
-                cmd.Parameters.AddWithValue("@kalorid", 0.01 * kogus * ToiteVaartuseParing(toiduaine_id, "energy"))
-                cmd.Parameters.AddWithValue("@susivesikud", 0.01 * kogus * ToiteVaartuseParing(toiduaine_id, "c_hydrates"))
-                cmd.Parameters.AddWithValue("@suhkur", 0.01 * kogus * ToiteVaartuseParing(toiduaine_id, "sugar"))
-                cmd.Parameters.AddWithValue("@valgud", 0.01 * kogus * ToiteVaartuseParing(toiduaine_id, "protein"))
-                cmd.Parameters.AddWithValue("@rasvad", 0.01 * kogus * ToiteVaartuseParing(toiduaine_id, "lipid"))
+                cmd.Parameters.AddWithValue("@kalorid", kalorid)
+                cmd.Parameters.AddWithValue("@susivesikud", susivesikud)
+                cmd.Parameters.AddWithValue("@suhkur", suhkur)
+                cmd.Parameters.AddWithValue("@valgud", valgud)
+                cmd.Parameters.AddWithValue("@rasvad", rasvad)
                 cmd.ExecuteNonQuery()
             End Using
         End Using
-        Return toiduaine_id
+        Return toidu_id
     End Function
 
     Public Function LisaRetseptiKoostisosadeTabelisse(ByVal retsepti_id As Integer, ByVal toiduaine_id As Integer, ByVal kogus As Integer) As Integer Implements IToidudjaRetseptid.LisaRetseptiKoostisosadeTabelisse
@@ -208,23 +217,18 @@ Public Class CToidudJaRetseptid
         Using connection As New SQLiteConnection(tabeli_asukoht)
             connection.Open()
             Dim selectSql As String
-            For index = 3000 To 4000
-                If mukbangFlag = 1 Then
-                    selectSql = "SELECT recipe_name FROM recipe_data WHERE recipe_id = @id ORDER BY energy DESC"
-                Else
-                    selectSql = "SELECT recipe_name FROM recipe_data WHERE recipe_id = @id"
-                End If
-
-                Using cmd As New SQLiteCommand(selectSql, connection)
-                    cmd.Parameters.AddWithValue("@id", index)
-
-                    Using reader As SQLiteDataReader = cmd.ExecuteReader()
-                        While reader.Read()
-                            retseptideNimed.Add(reader("recipe_name"))
-                        End While
-                    End Using
+            If mukbangFlag = 1 Then
+                selectSql = "SELECT recipe_name FROM recipe_data ORDER BY energy DESC"
+            Else
+                selectSql = "SELECT recipe_name FROM recipe_data"
+            End If
+            Using cmd As New SQLiteCommand(selectSql, connection)
+                Using reader As SQLiteDataReader = cmd.ExecuteReader()
+                    While reader.Read()
+                        retseptideNimed.Add(reader("recipe_name"))
+                    End While
                 End Using
-            Next
+            End Using
         End Using
         Return retseptideNimed
     End Function
@@ -254,5 +258,29 @@ Public Class CToidudJaRetseptid
         Return tulemus
     End Function
 
+    Public Function ToiduaineVoiRetseptiNimi(ByVal toiduaineVoiRetseptiId As Integer, ByVal retseptFlag As Integer) As String Implements IToidudjaRetseptid.ToiduaineVoiRetseptiNimi
+        Dim toiduaineVoiRetseptiNimetus As String = ""
+        Dim tabeli_asukoht As String = $"Data Source={Path.Combine(Path.GetFullPath(Path.Combine _
+        (AppDomain.CurrentDomain.BaseDirectory, "..\..\..\")), "Data", "database.db")};Version=3;"
+        Using connection As New SQLiteConnection(tabeli_asukoht)
+            connection.Open()
+            Dim selectSql As String
+            If retseptFlag = 1 Then
+                selectSql = "SELECT recipe_name FROM recipe_data WHERE recipe_id = @toiduaineVoiRetseptiId"
+            Else
+                selectSql = "SELECT food_name FROM food_data WHERE food_id = @toiduaineVoiRetseptiId"
+            End If
+
+            Using cmd As New SQLiteCommand(selectSql, connection)
+                cmd.Parameters.AddWithValue("@toiduaineVoiRetseptiId", toiduaineVoiRetseptiId)
+
+                Dim result As Object = cmd.ExecuteScalar()
+                If result IsNot Nothing AndAlso Not DBNull.Value.Equals(result) Then
+                    toiduaineVoiRetseptiNimetus = Convert.ToString(result)
+                End If
+            End Using
+        End Using
+        Return toiduaineVoiRetseptiNimetus
+    End Function
 
 End Class

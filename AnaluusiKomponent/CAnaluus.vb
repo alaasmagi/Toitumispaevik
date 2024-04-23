@@ -9,23 +9,23 @@ Public Class CAnaluus
     Private ohtu
     Private vahepala
 
-    Public Function PaevaseAndmereaParing(ByVal kasutaja_id As Integer, ByVal kuupaev As Integer) As Integer Implements IAnaluus.PaevaseAndmereaParing
-        Dim paevaneKcal As Integer = -1
+    Public Function PaevaseAndmereaParing(ByVal kasutaja_id As Integer, ByVal kuupaev As Integer, ByVal otsitavSuurus As String) As Integer Implements IAnaluus.PaevaseAndmereaParing
+        Dim paevasedAndmed As Integer = -1
         Dim tabeli_asukoht As String = $"Data Source={Path.Combine(Path.GetFullPath(Path.Combine _
         (AppDomain.CurrentDomain.BaseDirectory, "..\..\..\")), "Data", "database.db")};Version=3;"
         Using connection As New SQLiteConnection(tabeli_asukoht)
             connection.Open()
-            Dim selectSql As String = "SELECT energy_intake FROM user_daily_data WHERE user_id = @kasutaja_id AND date = @kuupaev"
+            Dim selectSql As String = $"SELECT {otsitavSuurus} FROM user_daily_data WHERE user_id = @kasutaja_id AND date = @kuupaev"
             Using cmd As New SQLiteCommand(selectSql, connection)
                 cmd.Parameters.AddWithValue("@kasutaja_id", kasutaja_id)
                 cmd.Parameters.AddWithValue("@kuupaev", kuupaev)
                 Dim result As Object = cmd.ExecuteScalar()
                 If result IsNot Nothing AndAlso Not DBNull.Value.Equals(result) Then
-                    paevaneKcal = Convert.ToInt32(result)
+                    paevasedAndmed = Convert.ToInt32(result)
                 End If
             End Using
         End Using
-        Return paevaneKcal
+        Return paevasedAndmed
     End Function
 
     Public Function TuhjaPaevaseAndmereaSisestus(ByVal kasutaja_id As Integer, ByVal kuupaev As Integer) As Integer Implements IAnaluus.TuhjaPaevaseAndmereaSisestus
@@ -56,16 +56,16 @@ Public Class CAnaluus
     Public Function PariKcalPaveaHetkest(kuupaev As Integer, kasutaja_id As Integer, toidukord As Integer) As Integer Implements IAnaluus.PariKcalPaveaHetkest
         Select Case toidukord
             Case 0
-                hommik = MassiivLiikmedKokku(KclParingAndmebaasist(kasutaja_id, kuupaev, toidukord))
+                hommik = KaloridKokku(KclParingAndmebaasist(kasutaja_id, kuupaev, toidukord))
                 Return hommik
             Case 1
-                louna = MassiivLiikmedKokku(KclParingAndmebaasist(kasutaja_id, kuupaev, toidukord))
+                louna = KaloridKokku(KclParingAndmebaasist(kasutaja_id, kuupaev, toidukord))
                 Return louna
             Case 2
-                vahepala = MassiivLiikmedKokku(KclParingAndmebaasist(kasutaja_id, kuupaev, toidukord))
+                vahepala = KaloridKokku(KclParingAndmebaasist(kasutaja_id, kuupaev, toidukord))
                 Return vahepala
             Case 3
-                ohtu = MassiivLiikmedKokku(KclParingAndmebaasist(kasutaja_id, kuupaev, toidukord))
+                ohtu = KaloridKokku(KclParingAndmebaasist(kasutaja_id, kuupaev, toidukord))
                 Return ohtu
         End Select
         Return 0
@@ -87,7 +87,11 @@ Public Class CAnaluus
     Public Function PaevaneKcal(ByVal kasutaja_id As Integer, ByVal kuupaev As Integer) As Integer Implements IAnaluus.PaevaneKcal
         Dim soodudKalorid As Integer = hommik + louna + vahepala + ohtu
 
-        Dim treeninguKaloridKokku As Integer = MassiivLiikmedKokku(PaevasedTreeninguKalorid(kasutaja_id, kuupaev))
+        Dim treeninguKalorid As Double() = PaevasedTreeningud(kasutaja_id, kuupaev, "total_consumption")
+        Dim treeninguKaloridKokku As Integer = 0
+        For index = 0 To treeninguKalorid.Count - 1
+            treeninguKaloridKokku = treeninguKaloridKokku + treeninguKalorid(index)
+        Next
         Dim kaloriteVahe As Integer = soodudKalorid - treeninguKaloridKokku
         Dim tabeli_asukoht As String = $"Data Source={Path.Combine(Path.GetFullPath(Path.Combine _
         (AppDomain.CurrentDomain.BaseDirectory, "..\..\..\")), "Data", "database.db")};Version= 3;"
@@ -208,7 +212,7 @@ Public Class CAnaluus
         Return intValues.ToArray()
     End Function
 
-    Private Function MassiivLiikmedKokku(ByRef KcalLoend As Double()) As Double Implements IAnaluus.MassiivLiikmedKokku
+    Private Function KaloridKokku(ByRef KcalLoend As Double()) As Double Implements IAnaluus.KaloridKokku
         Dim koguvaartus As Double = 0
 
         For i As Integer = 0 To KcalLoend.Length - 1
@@ -316,25 +320,25 @@ Public Class CAnaluus
     Public Function PariMakroaineKogus(kuupaev As Integer, kasutaja_id As Integer, makroaine As String) As Integer Implements IAnaluus.PariMakroaineKogus
         Select Case makroaine
             Case "total_c_hydrates"
-                Return MassiivLiikmedKokku(MakroaineParingAndmebaasist(kasutaja_id, kuupaev, makroaine))
+                Return KaloridKokku(MakroaineParingAndmebaasist(kasutaja_id, kuupaev, makroaine))
 
             Case "total_sugar"
-                Return MassiivLiikmedKokku(MakroaineParingAndmebaasist(kasutaja_id, kuupaev, makroaine))
+                Return KaloridKokku(MakroaineParingAndmebaasist(kasutaja_id, kuupaev, makroaine))
 
             Case "total_protein"
-                Return MassiivLiikmedKokku(MakroaineParingAndmebaasist(kasutaja_id, kuupaev, makroaine))
+                Return KaloridKokku(MakroaineParingAndmebaasist(kasutaja_id, kuupaev, makroaine))
 
             Case "total_lipid"
-                Return MassiivLiikmedKokku(MakroaineParingAndmebaasist(kasutaja_id, kuupaev, makroaine))
+                Return KaloridKokku(MakroaineParingAndmebaasist(kasutaja_id, kuupaev, makroaine))
 
         End Select
         Return 0
     End Function
-    Public Function PaevasedTreeninguKalorid(ByVal kasutaja_id As Integer, ByVal kuupaev As Integer) As Double() Implements IAnaluus.PaevasedTreeninguKalorid
+    Public Function PaevasedTreeningud(ByVal kasutaja_id As Integer, ByVal kuupaev As Integer, ByVal otsitavSuurus As String) As Double() Implements IAnaluus.PaevasedTreeningud
         Dim tabeli_asukoht As String = $"Data Source={Path.Combine(Path.GetFullPath(Path.Combine _
         (AppDomain.CurrentDomain.BaseDirectory, "..\..\..\")), "Data", "database.db")};Version=3;"
 
-        Dim paring As String = "SELECT total_consumption FROM user_training_history WHERE user_id = @kasutaja_id AND date = @kuupaev"
+        Dim paring As String = $"SELECT {otsitavSuurus} FROM user_training_history WHERE user_id = @kasutaja_id AND date = @kuupaev"
         Dim doubleValues As New List(Of Double)
 
         Using connection As New SQLiteConnection(tabeli_asukoht)
@@ -351,7 +355,30 @@ Public Class CAnaluus
                         Next
                     End While
                 End Using
+            End Using
+        End Using
+        Return doubleValues.ToArray()
+    End Function
+    Public Function PaevasedToidud(ByVal kasutaja_id As Integer, ByVal kuupaev As Integer, ByVal otsitavSuurus As String) As Double() Implements IAnaluus.PaevasedToidud
+        Dim tabeli_asukoht As String = $"Data Source={Path.Combine(Path.GetFullPath(Path.Combine _
+        (AppDomain.CurrentDomain.BaseDirectory, "..\..\..\")), "Data", "database.db")};Version=3;"
 
+        Dim paring As String = $"SELECT {otsitavSuurus} FROM user_food_history WHERE user_id = @kasutaja_id AND date = @kuupaev"
+        Dim doubleValues As New List(Of Double)
+        Using connection As New SQLiteConnection(tabeli_asukoht)
+            Using command As New SQLiteCommand(paring, connection)
+                command.Parameters.AddWithValue("@kasutaja_id", kasutaja_id)
+                command.Parameters.AddWithValue("@kuupaev", kuupaev)
+
+                connection.Open()
+
+                Using reader As SQLiteDataReader = command.ExecuteReader()
+                    While reader.Read()
+                        For i As Double = 0 To reader.FieldCount - 1
+                            doubleValues.Add(reader.GetDouble(i))
+                        Next
+                    End While
+                End Using
             End Using
         End Using
         Return doubleValues.ToArray()
