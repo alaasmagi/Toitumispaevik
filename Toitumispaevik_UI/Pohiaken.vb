@@ -63,10 +63,18 @@ Public Class Pohiaken
         If AnaluusK.PaevaseAndmereaParing(_kasutaja_id, AnaluusK.KuupaevIntegeriks(Date.Now.Date), "energy_intake") = -1 Then
             AnaluusK.TuhjaPaevaseAndmereaSisestus(_kasutaja_id, ProfiilK.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "weight"), AnaluusK.KuupaevIntegeriks(Date.Now.Date))
         End If
-
-        lblKaloriLimiit.Text = AnaluusK.DBParingBMR(_kasutaja_id, ProfiilK.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "sex"), ProfiilK.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "age"),
+        kalorilimiit = AnaluusK.DBParingBMR(_kasutaja_id, ProfiilK.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "sex"), ProfiilK.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "age"),
                              ProfiilK.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "weight"), ProfiilK.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "weight_goal"),
-                             ProfiilK.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "height"), AnaluusK.KuupaevIntegeriks(Date.Now.Date)) & "kcal"
+                             ProfiilK.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "height"), AnaluusK.KuupaevIntegeriks(Date.Now.Date))
+
+        If kalorilimiit < 1000 Then
+            lblSulOnProbleem.Visible = True
+            lblKaloriLimiit.Visible = False
+        Else
+            lblKaloriLimiit.Text = kalorilimiit & "kcal"
+            lblSulOnProbleem.Visible = False
+            lblKaloriLimiit.Visible = True
+        End If
 
         TuhjendaKonteiner(Me)
         pnlLogo.Visible = True
