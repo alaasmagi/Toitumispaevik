@@ -617,6 +617,7 @@ Public Class Pohiaken
             lblSulOnProbleem.Visible = False
             lblKaloriLimiit.Visible = True
         End If
+        KoduGraafik()
     End Sub
     Private Sub btnEesmargiKinnitamine_Click(sender As Object, e As EventArgs) Handles btnEesmargiKinnitamine.Click
         ProfiilK = New KasutajaProfiilKomponent.CKasutajaProfiil
