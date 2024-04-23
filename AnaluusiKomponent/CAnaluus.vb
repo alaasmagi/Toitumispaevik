@@ -2,14 +2,12 @@
 Imports System.IO
 Public Class CAnaluus
 
-    'Kasutab IAnaluusi
     Implements IAnaluus
 
-    'Loome muutujad hommik, louna, ohtu ja vahepala, et kasutada neid väärtusi päevase kaloraaši leidmiseks
-    Private hommik As Double
-    Private louna As Double
-    Private ohtu As Double
-    Private vahepala As Double
+    Private hommik
+    Private louna
+    Private ohtu
+    Private vahepala
 
     Public Function PaevaseAndmereaParing(ByVal kasutaja_id As Integer, ByVal kuupaev As Integer, ByVal otsitavSuurus As String) As Integer Implements IAnaluus.PaevaseAndmereaParing
         Dim paevasedAndmed As Integer = -1
@@ -46,39 +44,33 @@ Public Class CAnaluus
         Return kasutaja_id
     End Function
 
-    'Kalori ülejäägi päring
     Public Function PariKaloriUlejaak(tarbitudKcal As Integer, KcalLimiit As Integer) As Integer Implements IAnaluus.PariKaloriUlejaak
-        'Juhul kui tarbitud on rohkem, kui kalori limiit, tagastatakse null
         If tarbitudKcal > KcalLimiit Then
             Return 0
         Else
-            'Igal muul jhul tagstatakse kalorilimiit - tarbitud kalorid, ehk kalorite ülejääk.
             Return KcalLimiit - tarbitudKcal
         End If
         Return 0
     End Function
 
-    'Funktsioon mille kaudu saab läbi interface'i küsida antud päeva ajas tarbitud kaloreid
     Public Function PariKcalPaveaHetkest(kuupaev As Integer, kasutaja_id As Integer, toidukord As Integer) As Integer Implements IAnaluus.PariKcalPaveaHetkest
-        'vastavalt toidukorrale, mis antud on viiakse läbi protsess, kus kutsutakse esile andmebaasi päring tarbitud kaloritele ja tagastatakse see väärtus
         Select Case toidukord
             Case 0
-                hommik = MassiiviLiikmedKokku(KclParingAndmebaasist(kasutaja_id, kuupaev, toidukord))
+                hommik = KaloridKokku(KclParingAndmebaasist(kasutaja_id, kuupaev, toidukord))
                 Return hommik
             Case 1
-                louna = MassiiviLiikmedKokku(KclParingAndmebaasist(kasutaja_id, kuupaev, toidukord))
+                louna = KaloridKokku(KclParingAndmebaasist(kasutaja_id, kuupaev, toidukord))
                 Return louna
             Case 2
-                vahepala = MassiiviLiikmedKokku(KclParingAndmebaasist(kasutaja_id, kuupaev, toidukord))
+                vahepala = KaloridKokku(KclParingAndmebaasist(kasutaja_id, kuupaev, toidukord))
                 Return vahepala
             Case 3
-                ohtu = MassiiviLiikmedKokku(KclParingAndmebaasist(kasutaja_id, kuupaev, toidukord))
+                ohtu = KaloridKokku(KclParingAndmebaasist(kasutaja_id, kuupaev, toidukord))
                 Return ohtu
         End Select
         Return 0
     End Function
 
-    'Võtab kaasa antud dictionary ja võtme stringi, mille järgi tagastatakse stringile vastav väärtus.
     Public Function PariValueMap(keyStr As String, ByVal valueMap As Dictionary(Of String, Integer)) As Integer Implements IAnaluus.PariValueMap
         If valueMap.ContainsKey(keyStr) Then
             Return valueMap(keyStr)
@@ -86,7 +78,6 @@ Public Class CAnaluus
         Return 0
     End Function
 
-    'Lisab valueamp dictionary'sse väärtused, mis numbriliselt vastavad sringidele 7 päeva, 1 kuu jne.
     Public Sub LisaValueMap(newKeyStr As String, newValue As Integer, ByVal valueMap As Dictionary(Of String, Integer)) Implements IAnaluus.LisaValueMap
         If Not valueMap.ContainsKey(newKeyStr) Then
             valueMap.Add(newKeyStr, newValue)
@@ -121,15 +112,11 @@ Public Class CAnaluus
         Return soodudKalorid
     End Function
 
-    'Kalori koguse pärimine andmebaasist päevakorra kohta.
     Private Function KclParingAndmebaasist(ByVal kasutaja_id As Integer, ByVal kuupaev As Integer, ByVal toidukord As Integer) As Double() Implements IAnaluus.KclParingAndmebaasist
-        'määran andmebaasi asukoha
         Dim tabeli_asukoht As String = $"Data Source={Path.Combine(Path.GetFullPath(Path.Combine _
         (AppDomain.CurrentDomain.BaseDirectory, "..\..\..\")), "Data", "database.db")};Version=3;"
 
-        'määran andmebaasi päringu
         Dim paring As String = "Select energy_intake FROM user_food_history WHERE user_id = @kasutaja_id And Date = @kuupaev And time_of_meal = @toidukord;"
-        'uus array väärtuste salvestamiseks
         Dim doubleValues As New List(Of Double)
 
         Using connection As New SQLiteConnection(tabeli_asukoht)
@@ -138,10 +125,8 @@ Public Class CAnaluus
                 command.Parameters.AddWithValue("@kuupaev", kuupaev)
                 command.Parameters.AddWithValue("@toidukord", toidukord)
 
-                'avan suhtluskanali andmebaasiga
                 connection.Open()
 
-                'loen andmebaasist kuni antud kriteeriumitega on andmed otsas.
                 Using reader As SQLiteDataReader = command.ExecuteReader()
                     While reader.Read()
                         For i As Double = 0 To reader.FieldCount - 1
@@ -153,12 +138,10 @@ Public Class CAnaluus
             End Using
         End Using
 
-        'tagastan täidetud array
         Return doubleValues.ToArray()
 
     End Function
 
-    'Kasutaja kaalu olekute päring teatud ajavahemikus andmebaasist. Sama teema pmst mis KcalParingAndmebaasist.
     Public Function KaaluParingAndmebaasist(ByVal kasutaja_id As Integer, ByVal kuupaev As Integer, ByVal graafikuPikkus As Integer) As Double() Implements IAnaluus.KaaluParingAndmebaasist
         Dim tabeli_asukoht As String = $"Data Source={Path.Combine(Path.GetFullPath(Path.Combine _
     (AppDomain.CurrentDomain.BaseDirectory, "..\..\..\")), "Data", "database.db")};Version=3;"
@@ -186,7 +169,6 @@ Public Class CAnaluus
         End Using
         Return doubleValues.ToArray()
     End Function
-
     Public Function KaaluLisamine(ByVal kasutaja_id As Integer, ByVal uus_kaal As Double) As Double Implements IAnaluus.KaaluLisamine
         Dim kuupaev As Integer = KuupaevIntegeriks(Date.Now.Date)
         Dim tabeli_asukoht As String = $"Data Source={Path.Combine(Path.GetFullPath(Path.Combine _
@@ -203,10 +185,6 @@ Public Class CAnaluus
         End Using
         Return uus_kaal
     End Function
-
-    'Kaalu kuupäeva päring andmebaasist käib käsikäes kaalu päringuga andmebaasist ja massiivid järjestatakse üksteisega vastavusse.
-    'KaaluParingAndmebaasist saadud massiivi esimene liige on kõige vanem andmepunkt kaalu lahtris ja KaaluDateParingAndmebaasist saadud massiivi
-    'esimene liige on sellele kaalule vastav kuupäev.
     Public Function KaaluDateParingAndmebaasist(ByVal kasutaja_id As Integer, ByVal kuupaev As Integer, ByVal graafikuPikkus As Integer) As Integer() Implements IAnaluus.KaaluDateParingAndmebaasist
         Dim tabeli_asukoht As String = $"Data Source={Path.Combine(Path.GetFullPath(Path.Combine _
     (AppDomain.CurrentDomain.BaseDirectory, "..\..\..\")), "Data", "database.db")};Version=3;"
@@ -235,8 +213,7 @@ Public Class CAnaluus
         Return intValues.ToArray()
     End Function
 
-    'Võtab arvude massiivi ja liidab selle liikmed omavahel. tagastab saadud tulemuse
-    Private Function MassiiviLiikmedKokku(ByRef KcalLoend As Double()) As Double Implements IAnaluus.MassiivLiikmedKokku
+    Private Function KaloridKokku(ByRef KcalLoend As Double()) As Double Implements IAnaluus.KaloridKokku
         Dim koguvaartus As Double = 0
 
         For i As Integer = 0 To KcalLoend.Length - 1
@@ -245,23 +222,19 @@ Public Class CAnaluus
         Return koguvaartus
     End Function
 
-    'Teisendab kuupäeva numbriks unix aja suhtes
     Public Function KuupaevIntegeriks(ByVal sisendKuupaev As DateTime) As Integer Implements IAnaluus.KuupaevIntegeriks
         Dim unixAeg As New DateTime(1970, 1, 1)
         Return (sisendKuupaev - unixAeg).Days
     End Function
 
-    'teisendab numbri tagasi kuupäeva formaati unix aja suhtes
     Public Function IntegerKuupaevaks(ByVal sisendInteger As Integer) As DateTime Implements IAnaluus.IntegerKuupaevaks
         Dim unixAeg As New DateTime(1970, 1, 1)
         Return (unixAeg.AddDays(sisendInteger))
     End Function
 
-
     Public Function RetseptiToiduaineToitevaartuseArvutus(ByVal toitevaartus100gKohta As Integer, ByVal kogus As Integer) As Integer Implements IAnaluus.RetseptiToiduaineToitevaartuseArvutus
         Return (toitevaartus100gKohta / 100) * kogus
     End Function
-
 
     Public Function DBParingBMR(ByVal kasutaja_id As Integer, ByVal sugu As Integer, ByVal vanus As Integer, ByVal kaal As Double, ByVal kaaluEesmark As Double, ByVal pikkus As Integer,
                                 ByVal kuupaev As Integer) As Integer Implements IAnaluus.DBParingBMR
@@ -316,7 +289,7 @@ Public Class CAnaluus
         Return kcal_limiit
     End Function
 
-    'Andmebaasist päritakse kindla makroaine kogus teatud kuupäeval. töötab nagu teisedki päringu funktsioonid
+
     Private Function MakroaineParingAndmebaasist(ByVal kasutaja_id As Integer, ByVal kuupaev As Integer, ByVal makroaine As String) As Double() Implements IAnaluus.MakroaineParingAndmebaasist
         Dim tabeli_asukoht As String = $"Data Source={Path.Combine(Path.GetFullPath(Path.Combine _
         (AppDomain.CurrentDomain.BaseDirectory, "..\..\..\")), "Data", "database.db")};Version=3;"
@@ -345,20 +318,19 @@ Public Class CAnaluus
 
     End Function
 
-    'kasutatakse kaasa antud makro ainet, et kutsuda esile antud makroaine koguse päring ja tagastada saadud tulemus.
     Public Function PariMakroaineKogus(kuupaev As Integer, kasutaja_id As Integer, makroaine As String) As Integer Implements IAnaluus.PariMakroaineKogus
         Select Case makroaine
             Case "total_c_hydrates"
-                Return MassiiviLiikmedKokku(MakroaineParingAndmebaasist(kasutaja_id, kuupaev, makroaine))
+                Return KaloridKokku(MakroaineParingAndmebaasist(kasutaja_id, kuupaev, makroaine))
 
             Case "total_sugar"
-                Return MassiiviLiikmedKokku(MakroaineParingAndmebaasist(kasutaja_id, kuupaev, makroaine))
+                Return KaloridKokku(MakroaineParingAndmebaasist(kasutaja_id, kuupaev, makroaine))
 
             Case "total_protein"
-                Return MassiiviLiikmedKokku(MakroaineParingAndmebaasist(kasutaja_id, kuupaev, makroaine))
+                Return KaloridKokku(MakroaineParingAndmebaasist(kasutaja_id, kuupaev, makroaine))
 
             Case "total_lipid"
-                Return MassiiviLiikmedKokku(MakroaineParingAndmebaasist(kasutaja_id, kuupaev, makroaine))
+                Return KaloridKokku(MakroaineParingAndmebaasist(kasutaja_id, kuupaev, makroaine))
 
         End Select
         Return 0
