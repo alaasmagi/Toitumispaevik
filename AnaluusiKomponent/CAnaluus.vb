@@ -56,16 +56,16 @@ Public Class CAnaluus
     Public Function PariKcalPaveaHetkest(kuupaev As Integer, kasutaja_id As Integer, toidukord As Integer) As Integer Implements IAnaluus.PariKcalPaveaHetkest
         Select Case toidukord
             Case 0
-                hommik = KaloridKokku(KclParingAndmebaasist(kasutaja_id, kuupaev, toidukord))
+                hommik = MassiiviLiikmedKokku(KclParingAndmebaasist(kasutaja_id, kuupaev, toidukord))
                 Return hommik
             Case 1
-                louna = KaloridKokku(KclParingAndmebaasist(kasutaja_id, kuupaev, toidukord))
+                louna = MassiiviLiikmedKokku(KclParingAndmebaasist(kasutaja_id, kuupaev, toidukord))
                 Return louna
             Case 2
-                vahepala = KaloridKokku(KclParingAndmebaasist(kasutaja_id, kuupaev, toidukord))
+                vahepala = MassiiviLiikmedKokku(KclParingAndmebaasist(kasutaja_id, kuupaev, toidukord))
                 Return vahepala
             Case 3
-                ohtu = KaloridKokku(KclParingAndmebaasist(kasutaja_id, kuupaev, toidukord))
+                ohtu = MassiiviLiikmedKokku(KclParingAndmebaasist(kasutaja_id, kuupaev, toidukord))
                 Return ohtu
         End Select
         Return 0
@@ -212,7 +212,7 @@ Public Class CAnaluus
         Return intValues.ToArray()
     End Function
 
-    Private Function KaloridKokku(ByRef KcalLoend As Double()) As Double Implements IAnaluus.KaloridKokku
+    Private Function MassiiviLiikmedKokku(ByRef KcalLoend As Double()) As Double Implements IAnaluus.MassiivLiikmedKokku
         Dim koguvaartus As Double = 0
 
         For i As Integer = 0 To KcalLoend.Length - 1
@@ -320,16 +320,16 @@ Public Class CAnaluus
     Public Function PariMakroaineKogus(kuupaev As Integer, kasutaja_id As Integer, makroaine As String) As Integer Implements IAnaluus.PariMakroaineKogus
         Select Case makroaine
             Case "total_c_hydrates"
-                Return KaloridKokku(MakroaineParingAndmebaasist(kasutaja_id, kuupaev, makroaine))
+                Return MassiiviLiikmedKokku(MakroaineParingAndmebaasist(kasutaja_id, kuupaev, makroaine))
 
             Case "total_sugar"
-                Return KaloridKokku(MakroaineParingAndmebaasist(kasutaja_id, kuupaev, makroaine))
+                Return MassiiviLiikmedKokku(MakroaineParingAndmebaasist(kasutaja_id, kuupaev, makroaine))
 
             Case "total_protein"
-                Return KaloridKokku(MakroaineParingAndmebaasist(kasutaja_id, kuupaev, makroaine))
+                Return MassiiviLiikmedKokku(MakroaineParingAndmebaasist(kasutaja_id, kuupaev, makroaine))
 
             Case "total_lipid"
-                Return KaloridKokku(MakroaineParingAndmebaasist(kasutaja_id, kuupaev, makroaine))
+                Return MassiiviLiikmedKokku(MakroaineParingAndmebaasist(kasutaja_id, kuupaev, makroaine))
 
         End Select
         Return 0
