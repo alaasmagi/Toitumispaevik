@@ -675,7 +675,7 @@ Public Class Pohiaken
 
         If AnaluusK.PaevaseAndmereaParing(_kasutaja_id, ajalooKuupaev, "daily_weight") > 0 Then
             lblAjaluguKehakaal.Text = AnaluusK.PaevaseAndmereaParing(_kasutaja_id, ajalooKuupaev, "daily_weight") & "kg"
-            lblAjaluguVordlusTanasega.Text = AnaluusK.PaevaseAndmereaParing(_kasutaja_id, AnaluusK.KuupaevIntegeriks(Date.Now.Date), "daily_weight") - AnaluusK.PaevaseAndmereaParing(_kasutaja_id, ajalooKuupaev, "daily_weight") & "kg"
+            lblAjaluguVordlusTanasega.Text = AnaluusK.PaevaseAndmereaParing(_kasutaja_id, ajalooKuupaev, "daily_weight") - AnaluusK.PaevaseAndmereaParing(_kasutaja_id, AnaluusK.KuupaevIntegeriks(Date.Now.Date), "daily_weight") & "kg"
             lblAjaluguSoodudKalorid.Text = AnaluusK.PaevaseAndmereaParing(_kasutaja_id, ajalooKuupaev, "energy_intake") & "kcal"
             lblAjaluguKulutatudKalorid.Text = AnaluusK.PaevaseAndmereaParing(_kasutaja_id, ajalooKuupaev, "energy_consumption") & "kcal"
         Else
