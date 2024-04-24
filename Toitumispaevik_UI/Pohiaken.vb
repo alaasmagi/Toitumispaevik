@@ -116,26 +116,34 @@ Public Class Pohiaken
 
     End Sub
 
+    'Funktsioon, mis haldab õlevaatus aknas oleva graafiku kuvamist
     Private Sub GraafikuSeaded()
         AnaluusK = New AnaluusiKomponent.CAnaluus
+        'Väärtustan TabelKaalud andmebaasis olevate kaaludega ja DateTabelKaalud andmebaasis olevate kaaludele vastavate kuupäevadega
         TabelKaalud = AnaluusK.KaaluParingAndmebaasist(_kasutaja_id, AnaluusK.KuupaevIntegeriks(Date.Now.Date), AnaluusK.PariValueMap(cmbAjaluguGraafikuPeriood.SelectedItem, valueMap))
         DateTabelKaalud = AnaluusK.KaaluDateParingAndmebaasist(_kasutaja_id, AnaluusK.KuupaevIntegeriks(Date.Now.Date), AnaluusK.PariValueMap(cmbAjaluguGraafikuPeriood.SelectedItem, valueMap))
 
+        'Kustutan tabelis asuvad punktid, et sinna uued asemele kirjutada
         chrKaaluMuutumine.Series("Kaal").Points.Clear()
         chrKaaluMuutumine.Series("Siht Kaal").Points.Clear()
+
+        'Tsükkel, mis annab tabelis kuvatavatele punktidele kaalu väärtused
         For muutuja As Integer = 0 To TabelKaalud.Length - 1 Step +1
+            'Kontrollin kas DateTabelKaalud eelnev kuupäeva väärtus on rohkem kui 1 võrra väiksem preagu käsitletavast kuupäeva väärtusest
+            'Ehk ksutaja ei ole lisanud nende kuupäevade vahelises vahemikus päevast kaalu
+            'Kasutatakse eelneva päeva kaalu
             If muutuja > 0 AndAlso (DateTabelKaalud(muutuja - 1) + 1) < DateTabelKaalud(muutuja) Then
                 DateTabelKaalud(muutuja - 1) = DateTabelKaalud(muutuja - 1) + 1
                 chrKaaluMuutumine.Series("Kaal").Points.AddXY(AnaluusK.IntegerKuupaevaks(DateTabelKaalud(muutuja - 1)), TabelKaalud(muutuja - 1))
                 chrKaaluMuutumine.Series("Siht Kaal").Points.AddXY(AnaluusK.IntegerKuupaevaks(DateTabelKaalud(muutuja - 1)), kaaluEesmark)
-                muutuja -= 1
+                muutuja -= 1 'hoiab tsüklit paigal, et saaks uuesti kontrollida, kas on veel kuupäevi vahele jäänud
             Else
+                'Kui tänane kaal on null siis arvestatakse sinna eilne kaal
                 If muutuja = TabelKaalud.Length - 1 AndAlso TabelKaalud(muutuja) = 0 Then
                     If muutuja - 1 >= 0 Then
                         chrKaaluMuutumine.Series("Kaal").Points.AddXY(AnaluusK.IntegerKuupaevaks(DateTabelKaalud(muutuja)), TabelKaalud(muutuja - 1))
                     End If
-
-                Else
+                Else 'Muudel juhtudel kantakse väärtused vastavalt tsükli sammule.
                     chrKaaluMuutumine.Series("Kaal").Points.AddXY(AnaluusK.IntegerKuupaevaks(DateTabelKaalud(muutuja)), TabelKaalud(muutuja))
                 End If
                 chrKaaluMuutumine.Series("Siht Kaal").Points.AddXY(AnaluusK.IntegerKuupaevaks(DateTabelKaalud(muutuja)), kaaluEesmark)
@@ -144,6 +152,7 @@ Public Class Pohiaken
         Next
     End Sub
 
+    'Täidab valueMap dictionary soovitud väärtustega.
     Private Sub UlevaatusCmbBox()
         AnaluusK = New AnaluusiKomponent.CAnaluus
         AnaluusK.LisaValueMap("Viimased 7 päeva", 7, valueMap)
@@ -153,19 +162,28 @@ Public Class Pohiaken
         AnaluusK.LisaValueMap("Viimane aasta", 365, valueMap)
     End Sub
 
+    'Kuvab kodu ekraanil asuval graafikul toidukordade kaupa ja kogu tarbitud kaloraaši.
     Private Sub KoduGraafik()
+        'Tühjendan eelnevad graafiku andmed
         chrKoduPaneel.Series("Soogikorrad").Points.Clear()
         AnaluusK = New AnaluusiKomponent.CAnaluus
 
+        'Pärin ja kuvan hommiku kalorid
         chrKoduPaneel.Series("Soogikorrad").Points.AddXY("Hommik", AnaluusK.PariKcalPaveaHetkest(AnaluusK.KuupaevIntegeriks(Date.Now.Date), _kasutaja_id, 0))
 
+        'Pärin ja kuvan lõuna kalorid
         chrKoduPaneel.Series("Soogikorrad").Points.AddXY("Lõuna", AnaluusK.PariKcalPaveaHetkest(AnaluusK.KuupaevIntegeriks(Date.Now.Date), _kasutaja_id, 1))
 
+        'Pärin ja kuvan õhtu kalorid
         chrKoduPaneel.Series("Soogikorrad").Points.AddXY("Õhtu", AnaluusK.PariKcalPaveaHetkest(AnaluusK.KuupaevIntegeriks(Date.Now.Date), _kasutaja_id, 3))
 
+        'Pärin ja kuvan vahepalade kalorid
         chrKoduPaneel.Series("Soogikorrad").Points.AddXY("Vahepalad", AnaluusK.PariKcalPaveaHetkest(AnaluusK.KuupaevIntegeriks(Date.Now.Date), _kasutaja_id, 2))
 
+        'Pärin ja kuvan söömata kalorite kogused
         chrKoduPaneel.Series("Soogikorrad").Points.AddXY("Söömata", AnaluusK.PariKaloriUlejaak(AnaluusK.PaevaneKcal(_kasutaja_id, AnaluusK.KuupaevIntegeriks(Date.Now.Date)), kalorilimiit))
+
+        'Kuvan kogu päevase terbitud kalorid ja limiidi suhtes.
         lblKcalPaev.Text = AnaluusK.PaevaneKcal(_kasutaja_id, AnaluusK.KuupaevIntegeriks(Date.Now.Date)) & Environment.NewLine & "/" & Environment.NewLine & kalorilimiit & Environment.NewLine & "kcal"
     End Sub
     Private Sub pnlLogo_Click(sender As Object, e As EventArgs) Handles pnlLogo.Click

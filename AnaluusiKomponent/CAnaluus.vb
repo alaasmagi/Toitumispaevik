@@ -58,7 +58,7 @@ Public Class CAnaluus
         Return 0
     End Function
 
-    'Funktsioon mille kaudu saab läbi interface'i küsida antud päeva ajas tarbitud kaloreid
+    'Funktsioon mille kaudu saab läbi interface'i küsida antud päeva ajas tarbitud kaloreid. Toidukorrad on andmebaasis märgitud numbritega 0-3
     Public Function PariKcalPaveaHetkest(kuupaev As Integer, kasutaja_id As Integer, toidukord As Integer) As Integer Implements IAnaluus.PariKcalPaveaHetkest
         'vastavalt toidukorrale, mis antud on viiakse läbi protsess, kus kutsutakse esile andmebaasi päring tarbitud kaloritele ja tagastatakse see väärtus
         Select Case toidukord
