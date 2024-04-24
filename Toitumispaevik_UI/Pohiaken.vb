@@ -376,6 +376,8 @@ Public Class Pohiaken
         ProfiilK = New KasutajaProfiilKomponent.CKasutajaProfiil
         ProfiilK.IntegerAndmeValjaSisestusKasutajaTabelisse(_kasutaja_id, cmbMuudaVanust.SelectedItem, "age")
         lblKasutajaVanus.Text = ProfiilK.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "age") & "aastat"
+        pbVanuseMuutmineOnnestus.Visible = True
+        Timer2s.Start()
         KomboKastid()
     End Sub
 
@@ -383,11 +385,12 @@ Public Class Pohiaken
         ProfiilK = New KasutajaProfiilKomponent.CKasutajaProfiil
         ProfiilK.IntegerAndmeValjaSisestusKasutajaTabelisse(_kasutaja_id, cmbMuudaPikkust.SelectedItem, "height")
         lblKasutajaPikkus.Text = ProfiilK.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "height") & "cm"
+        pbPikkuseMuutmineOnnestus.Visible = True
+        Timer2s.Start()
         KomboKastid()
     End Sub
 
     Private Sub btnKinnitaUusSalasona_Click(sender As Object, e As EventArgs) Handles btnKinnitaUusSalasona.Click
-        lblVahetaSalasonaViga.ForeColor = Color.Red
         lblVahetaSalasonaViga.Visible = False
         ProfiilK = New KasutajaProfiilKomponent.CKasutajaProfiil
         If (ProfiilK.ArvutaHash(txtKehtivSalasona.Text) = ProfiilK.UheAndmevaljaParingKasutajaTabelist(_kasutaja_id, "password")) Then
@@ -401,12 +404,11 @@ Public Class Pohiaken
                 lblVahetaSalasonaViga.Visible = True
             Else
                 ProfiilK.VahetaSalasona(_kasutaja_id, txtVahetaSalasona.Text)
-                lblVahetaSalasonaViga.ForeColor = Color.Green
                 txtKehtivSalasona.Text = ""
                 txtKordaSalasona.Text = ""
                 txtVahetaSalasona.Text = ""
-                lblVahetaSalasonaViga.Text = "Salasõna vahetus õnnestus!"
-                lblVahetaSalasonaViga.Visible = True
+                pbSalasonaVahetusOnnestus.Visible = True
+                Timer2s.Start()
             End If
         Else
             txtKehtivSalasona.Text = ""
@@ -419,27 +421,35 @@ Public Class Pohiaken
     Private Sub btnLisaUusToiduaine_Click(sender As Object, e As EventArgs) Handles btnLisaUusToiduaine.Click
         ToidudRetseptidK = New ToidudRetseptidKomponent.CToidudJaRetseptid
 
-        If IsNumeric(txtUueToiduaineKcal.Text) AndAlso IsNumeric(txtUueToiduaineSusivesikud.Text) AndAlso IsNumeric(txtUueToiduaineSuhkrud.Text) AndAlso
-            IsNumeric(txtUueToiduaineRasvad.Text) AndAlso IsNumeric(txtUueToiduaineValgud.Text) Then
-            If ToidudRetseptidK.ToiduAineNimiEksisteerib(txtUueToiduaineNimi.Text) > 0 Then
+        If txtUueToiduaineNimi.Text = "" Then
+            lblUueToiduaineLisamineViga.Text = "Nime lahter on tühi!"
+            lblUueToiduaineLisamineViga.Visible = True
+        Else
+            If IsNumeric(txtUueToiduaineKcal.Text) AndAlso IsNumeric(txtUueToiduaineSusivesikud.Text) AndAlso IsNumeric(txtUueToiduaineSuhkrud.Text) AndAlso
+               IsNumeric(txtUueToiduaineRasvad.Text) AndAlso IsNumeric(txtUueToiduaineValgud.Text) Then
+                If ToidudRetseptidK.ToiduAineNimiEksisteerib(txtUueToiduaineNimi.Text) > 0 Then
+                    lblUueToiduaineLisamineViga.Text = "Viga toiduaine lisamisel!"
+                    lblUueToiduaineLisamineViga.Visible = True
+                Else
+                    lblUueToiduaineLisamineViga.Visible = False
+                    ToidudRetseptidK.LisaToiduaine(txtUueToiduaineNimi.Text, txtUueToiduaineKcal.Text, txtUueToiduaineValgud.Text, txtUueToiduaineSusivesikud.Text,
+                                          txtUueToiduaineRasvad.Text, txtUueToiduaineSuhkrud.Text)
+                    txtUueToiduaineNimi.Text = ""
+                    txtUueToiduaineKcal.Text = ""
+                    txtUueToiduaineSusivesikud.Text = ""
+                    txtUueToiduaineSuhkrud.Text = ""
+                    txtUueToiduaineValgud.Text = ""
+                    txtUueToiduaineRasvad.Text = ""
+                    pbToiduaineLoomineOnnestus.Visible = True
+                    Timer2s.Start()
+                End If
+            Else
                 lblUueToiduaineLisamineViga.Text = "Viga toiduaine lisamisel!"
                 lblUueToiduaineLisamineViga.Visible = True
-            Else
-                lblUueToiduaineLisamineViga.Visible = False
-                ToidudRetseptidK.LisaToiduaine(txtUueToiduaineNimi.Text, txtUueToiduaineKcal.Text, txtUueToiduaineValgud.Text, txtUueToiduaineSusivesikud.Text,
-                                      txtUueToiduaineRasvad.Text, txtUueToiduaineSuhkrud.Text)
-                txtUueToiduaineNimi.Text = ""
-                txtUueToiduaineKcal.Text = ""
-                txtUueToiduaineSusivesikud.Text = ""
-                txtUueToiduaineSuhkrud.Text = ""
-                txtUueToiduaineValgud.Text = ""
-                txtUueToiduaineRasvad.Text = ""
             End If
-        Else
-            lblUueToiduaineLisamineViga.Text = "Viga toiduaine lisamisel!"
-            lblUueToiduaineLisamineViga.Visible = True
+            KomboKastid()
         End If
-        KomboKastid()
+
     End Sub
 
     Private Sub btnToiduaineKiirvalikLisa_Click(sender As Object, e As EventArgs) Handles btnToiduaineKiirvalikLisa.Click
@@ -467,6 +477,8 @@ Public Class Pohiaken
             End If
             lblToiduAineRetseptiLisamineViga.Visible = False
             txtToiduaineKiirvalikKogus.Text = ""
+            pbToidukorraLisamineOnnestus.Visible = True
+            Timer2s.Start()
         Else
             lblToiduAineRetseptiLisamineViga.Text = "Viga koguse sisestuses!"
             lblToiduAineRetseptiLisamineViga.Visible = True
@@ -484,6 +496,8 @@ Public Class Pohiaken
             TreeningudK.KasutajaTreeninguLisamine(_kasutaja_id, AnaluusK.KuupaevIntegeriks(Date.Now.Date), TreeningudK.TreeninguNimiEksisteerib(cmbTreeninguteKiirvalik.SelectedItem()), txtTreeninguKiirvalikKestus.Text)
             AnaluusK.PaevaneKcal(_kasutaja_id, AnaluusK.KuupaevIntegeriks(Date.Now.Date))
             txtTreeninguKiirvalikKestus.Text = ""
+            pbTreeningsessiooniLisamineOnnestus.Visible = True
+            Timer2s.Start()
         Else
             lblTreeninguKiirvalikViga.Text = "Viga kestuse sisestuses!"
             lblTreeninguKiirvalikViga.Visible = True
@@ -493,20 +507,26 @@ Public Class Pohiaken
 
     Private Sub btnTreeninguLisamine_Click(sender As Object, e As EventArgs) Handles btnTreeninguLisamine.Click
         TreeningudK = New TreeninguteKomponent.CTreeningud
-
-        If IsNumeric(txtTreeninguLisamineEnergialkulu.Text) AndAlso txtTreeninguLisamineEnergialkulu.Text > 0 Then
-            If TreeningudK.TreeninguNimiEksisteerib(txtUueToiduaineNimi.Text) > 0 Then
-                lblTreeninguLisamineViga.Text = "Treening on juba andmebaasis!"
-                lblTreeninguLisamineViga.Visible = True
-            Else
-                lblTreeninguLisamineViga.Visible = False
-                TreeningudK.LisaTreening(txtTreeninguLisamineNimi.Text, txtTreeninguLisamineEnergialkulu.Text)
-                txtTreeninguLisamineNimi.Text = ""
-                txtTreeninguLisamineEnergialkulu.Text = ""
-            End If
+        If txtTreeninguLisamineNimi.Text = "" Then
+            lblTreeninguLisamineViga.Text = "Nime lahter tühi!"
+            lblTreeninguLisamineViga.Visible = True
         Else
-            lblUueToiduaineLisamineViga.Text = "Viga energiakulu sisestuses!"
-            lblUueToiduaineLisamineViga.Visible = True
+            If IsNumeric(txtTreeninguLisamineEnergialkulu.Text) AndAlso txtTreeninguLisamineEnergialkulu.Text > 0 Then
+                If TreeningudK.TreeninguNimiEksisteerib(txtUueToiduaineNimi.Text) > 0 Then
+                    lblTreeninguLisamineViga.Text = "Treening on juba andmebaasis!"
+                    lblTreeninguLisamineViga.Visible = True
+                Else
+                    lblTreeninguLisamineViga.Visible = False
+                    TreeningudK.LisaTreening(txtTreeninguLisamineNimi.Text, txtTreeninguLisamineEnergialkulu.Text)
+                    txtTreeninguLisamineNimi.Text = ""
+                    txtTreeninguLisamineEnergialkulu.Text = ""
+                    pbTreeninguLisamineOnnestus.Visible = True
+                    Timer2s.Start()
+                End If
+            Else
+                lblTreeninguLisamineViga.Text = "Viga energiakulu sisestuses!"
+                lblTreeninguLisamineViga.Visible = True
+            End If
         End If
         KomboKastid()
     End Sub
@@ -537,29 +557,41 @@ Public Class Pohiaken
 
     Private Sub btnKinnitaRetsept_Click(sender As Object, e As EventArgs) Handles btnKinnitaRetsept.Click
         ToidudRetseptidK = New ToidudRetseptidKomponent.CToidudJaRetseptid
-
-        If ToidudRetseptidK.RetseptiNimiEksisteerib(txtRetseptiNimi.Text) > 0 Then
-            lblRetseptiLisamineViga.Text = "Nimi juba kasutusel!"
+        If txtRetseptiNimi.Text = "" Then
+            lblRetseptiLisamineViga.Text = "Nime lahter tühi!"
             lblRetseptiLisamineViga.Visible = True
         Else
-            lblRetseptiLisamineViga.Visible = False
-            Dim retsepti_id = ToidudRetseptidK.LisaRetsept(txtRetseptiNimi.Text, retseptiKcal, retseptiSusivesikud, retseptiSuhkur, retseptiValgud, retseptiLipiidid)
-            retseptiKcal = 0
-            retseptiSusivesikud = 0
-            retseptiSuhkur = 0
-            retseptiValgud = 0
-            retseptiLipiidid = 0
-            txtRetseptiNimi.Text = ""
-            For i As Integer = 0 To retseptideKoostisosad.Count - 1
-                Dim koostisosa As String = retseptideKoostisosad(i)
-                Dim kogus As String = retseptideKoostisosadeKogused(i)
+            If ToidudRetseptidK.RetseptiNimiEksisteerib(txtRetseptiNimi.Text) > 0 Then
+                lblRetseptiLisamineViga.Text = "Retsept on juba andmebaasis!"
+                lblRetseptiLisamineViga.Visible = True
+            Else
+                If lbRetseptiKoostisosad.Items.Count = 0 Then
+                    lblRetseptiLisamineViga.Text = "Toiduained puuduvad!"
+                    lblRetseptiLisamineViga.Visible = True
+                Else
+                    lblRetseptiLisamineViga.Visible = False
+                    Dim retsepti_id = ToidudRetseptidK.LisaRetsept(txtRetseptiNimi.Text, retseptiKcal, retseptiSusivesikud, retseptiSuhkur, retseptiValgud, retseptiLipiidid)
+                    retseptiKcal = 0
+                    retseptiSusivesikud = 0
+                    retseptiSuhkur = 0
+                    retseptiValgud = 0
+                    retseptiLipiidid = 0
+                    txtRetseptiNimi.Text = ""
+                    pbRetseptiLoomineOnnestus.Visible = True
+                    Timer2s.Start()
+                    For i As Integer = 0 To retseptideKoostisosad.Count - 1
+                        Dim koostisosa As String = retseptideKoostisosad(i)
+                        Dim kogus As String = retseptideKoostisosadeKogused(i)
 
-                ToidudRetseptidK.LisaRetseptiKoostisosadeTabelisse(retsepti_id, koostisosa, kogus)
-            Next
-            retseptideKoostisosad.Clear()
-            retseptideKoostisosadeKogused.Clear()
-            lbRetseptiKoostisosad.Items.Clear()
+                        ToidudRetseptidK.LisaRetseptiKoostisosadeTabelisse(retsepti_id, koostisosa, kogus)
+                    Next
+                    retseptideKoostisosad.Clear()
+                    retseptideKoostisosadeKogused.Clear()
+                    lbRetseptiKoostisosad.Items.Clear()
+                End If
+            End If
         End If
+
         KomboKastid()
     End Sub
 
@@ -576,6 +608,8 @@ Public Class Pohiaken
                 lblKustutaTreeningViga.Visible = True
             Else
                 lblKustutaTreeningViga.Visible = False
+                pbTreeninguKustutamineOnnestus.Visible = True
+                Timer2s.Start()
                 KomboKastid()
             End If
         End If
@@ -593,6 +627,8 @@ Public Class Pohiaken
             KomboKastid()
             GraafikuSeaded()
             txtPaevaneKaal.Text = ""
+            pbKehakaaluLisamineOnnestus.Visible = True
+            Timer2s.Start()
         Else
             lblPaevaseKehakaaluLisamineViga.Text = "Ebakorrektne sisestus!"
             lblPaevaseKehakaaluLisamineViga.Visible = True
@@ -627,13 +663,14 @@ Public Class Pohiaken
             kaaluEesmark = txtKaaluEesmärk.Text
             GraafikuSeaded()
             txtKaaluEesmärk.Text = ""
+            pbKaaluEesmarkOnnestus.Visible = True
+            Timer2s.Start()
         Else
             lblKaaluEesmargiSeadmineViga.Text = "Ebakorrektne sisestus!"
             lblKaaluEesmargiSeadmineViga.Visible = True
         End If
         KaloriteLimiidiLeidmine()
     End Sub
-
 
     Private Sub btnToiduaineKustutamine_Click(sender As Object, e As EventArgs) Handles btnToiduaineKustutamine.Click
         ToidudRetseptidK = New ToidudRetseptidKomponent.CToidudJaRetseptid
@@ -648,12 +685,16 @@ Public Class Pohiaken
             Else
                 lblToiduaineKustutamineViga.Visible = False
                 ToidudRetseptidK.ToiduaineVoiRetseptiKustutamine(toiduaine_retsepti_id, 1)
+                pbRetseptiKustutamineOnnestus.Visible = True
+                Timer2s.Start()
                 KomboKastid()
             End If
         Else
             lblToiduaineKustutamineViga.Visible =
             toiduaine_retsepti_id = ToidudRetseptidK.RetseptiNimiEksisteerib(cmbToiduaineKustutamine.SelectedItem)
             ToidudRetseptidK.ToiduaineVoiRetseptiKustutamine(toiduaine_retsepti_id, 0)
+            pbRetseptiKustutamineOnnestus.Visible = True
+            Timer2s.Start()
             KomboKastid()
         End If
     End Sub
@@ -761,5 +802,22 @@ Public Class Pohiaken
         AjalooInfo()
         MakroGraafik()
     End Sub
+
+    Private Sub Timer2s_Tick(sender As Object, e As EventArgs) Handles Timer2s.Tick
+        Timer2s.Stop()
+        pbRetseptiLoomineOnnestus.Visible = False
+        pbRetseptiKustutamineOnnestus.Visible = False
+        pbToiduaineLoomineOnnestus.Visible = False
+        pbTreeninguLisamineOnnestus.Visible = False
+        pbTreeninguKustutamineOnnestus.Visible = False
+        pbPikkuseMuutmineOnnestus.Visible = False
+        pbVanuseMuutmineOnnestus.Visible = False
+        pbSalasonaVahetusOnnestus.Visible = False
+        pbToidukorraLisamineOnnestus.Visible = False
+        pbTreeningsessiooniLisamineOnnestus.Visible = False
+        pbKehakaaluLisamineOnnestus.Visible = False
+        pbKaaluEesmarkOnnestus.Visible = False
+    End Sub
+
 End Class
 

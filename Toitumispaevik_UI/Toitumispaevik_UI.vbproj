@@ -249,6 +249,12 @@
   <ItemGroup>
     <None Include="Resources\pngwing.com.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icons8-tick-48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icons8-tick-96.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
