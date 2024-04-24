@@ -823,11 +823,11 @@ Partial Class Login_aken
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(241, Byte), Integer), CType(CType(239, Byte), Integer))
         Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
         Me.ClientSize = New System.Drawing.Size(618, 642)
+        Me.Controls.Add(Me.pnlLogiSisse)
         Me.Controls.Add(Me.pnlLooKontoEdasi)
         Me.Controls.Add(Me.pnlLooKonto)
         Me.Controls.Add(Me.pnlUnustasinSalasonaEdasi)
         Me.Controls.Add(Me.pnlUnustasinSalasona)
-        Me.Controls.Add(Me.pnlLogiSisse)
         Me.Controls.Add(Me.pnlLogoLogiSisse)
         Me.Font = New System.Drawing.Font("Century Gothic", 12.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.ForeColor = System.Drawing.Color.Black

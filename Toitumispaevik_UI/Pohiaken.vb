@@ -819,5 +819,28 @@ Public Class Pohiaken
         pbKaaluEesmarkOnnestus.Visible = False
     End Sub
 
+    Private Sub lblValiKuupaevKalendrist_Click(sender As Object, e As EventArgs) Handles lblValiKuupaevKalendrist.Click
+        calAjalugu.Visible = True
+    End Sub
+
+    Private Sub calAjalugu_DateChanged(sender As Object, e As DateRangeEventArgs) Handles calAjalugu.DateChanged
+
+    End Sub
+
+    Private Sub calAjalugu_DateSelected(sender As Object, e As DateRangeEventArgs) Handles calAjalugu.DateSelected
+        AnaluusK = New AnaluusiKomponent.CAnaluus
+        ajalooKuupaev = AnaluusK.KuupaevIntegeriks(calAjalugu.SelectionEnd)
+        If ajalooKuupaev > AnaluusK.KuupaevIntegeriks(Date.Now.Date) Then
+            calAjalugu.SelectionEnd = Date.Now.Date
+            ajalooKuupaev = AnaluusK.KuupaevIntegeriks(Date.Now.Date)
+        End If
+        calAjalugu.Visible = False
+        AjalooAken()
+        MakroGraafik()
+    End Sub
+
+    Private Sub pnlAjalugu_Click(sender As Object, e As EventArgs) Handles pnlAjalugu.Click
+        calAjalugu.Visible = False
+    End Sub
 End Class
 
