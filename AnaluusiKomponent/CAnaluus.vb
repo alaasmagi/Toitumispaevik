@@ -116,7 +116,6 @@ Public Class CAnaluus
     End Function
 
     'Kalori koguse pärimine andmebaasist päevakorra kohta.
-    'Kalori koguse pärimine andmebaasist päevakorra kohta.
     Private Function KclParingAndmebaasist(ByVal kasutaja_id As Integer, ByVal kuupaev As Integer, ByVal toidukord As Integer) As Double() Implements IAnaluus.KclParingAndmebaasist
         Dim tabeli_asukoht As String = $"Data Source={Path.Combine(Path.GetFullPath(Path.Combine _
         (AppDomain.CurrentDomain.BaseDirectory, "..\..\..\")), "Data", "database.db")};Version=3;"
