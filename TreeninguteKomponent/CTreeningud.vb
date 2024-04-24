@@ -87,7 +87,7 @@ Public Class CTreeningud
     End Function
 
     Public Function KasutajaTreeninguLisamine(kasutaja_id As String, kuupaev As Integer, treeningu_id As Integer, kestus As Integer) As Integer Implements ITreeningud.KasutajaTreeninguLisamine
-        Dim energiakulu = kestus * (TreeninguEnergiakuluParing(treeningu_id, "consumption") / 60)
+        Dim energiakulu = Math.Round(kestus * (TreeninguEnergiakuluParing(treeningu_id, "consumption") / 60), 1)
 
         Dim tabeli_asukoht As String = $"Data Source={Path.Combine(Path.GetFullPath(Path.Combine _
         (AppDomain.CurrentDomain.BaseDirectory, "..\..\..\")), "Data", "database.db")};Version=3;"

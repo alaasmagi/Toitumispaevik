@@ -63,10 +63,7 @@ Public Class Pohiaken
         If AnaluusK.PaevaseAndmereaParing(_kasutaja_id, AnaluusK.KuupaevIntegeriks(Date.Now.Date), "energy_intake") = -1 Then
             AnaluusK.TuhjaPaevaseAndmereaSisestus(_kasutaja_id, ProfiilK.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "weight"), AnaluusK.KuupaevIntegeriks(Date.Now.Date))
         End If
-
-        lblKaloriLimiit.Text = AnaluusK.DBParingBMR(_kasutaja_id, ProfiilK.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "sex"), ProfiilK.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "age"),
-                             ProfiilK.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "weight"), ProfiilK.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "weight_goal"),
-                             ProfiilK.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "height"), AnaluusK.KuupaevIntegeriks(Date.Now.Date)) & "kcal"
+        KaloriteLimiidiLeidmine()
 
         TuhjendaKonteiner(Me)
         pnlLogo.Visible = True
@@ -553,7 +550,6 @@ Public Class Pohiaken
             lblRetseptiLisamineViga.Text = "Viga koostisosa koguses!"
             lblRetseptiLisamineViga.Visible = True
         End If
-
         KomboKastid()
     End Sub
 
@@ -619,13 +615,28 @@ Public Class Pohiaken
             lblPaevaseKehakaaluLisamineViga.Text = "Ebakorrektne sisestus!"
             lblPaevaseKehakaaluLisamineViga.Visible = True
         End If
-
+        KaloriteLimiidiLeidmine()
     End Sub
 
     Private Sub btnNaitaYlevaadet_Click(sender As Object, e As EventArgs) Handles btnNaitaYlevaadet.Click
         GraafikuSeaded()
     End Sub
+    Private Sub KaloriteLimiidiLeidmine()
+        kalorilimiit = AnaluusK.DBParingBMR(_kasutaja_id, ProfiilK.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "sex"), ProfiilK.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "age"),
+                             ProfiilK.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "weight"), ProfiilK.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "weight_goal"),
+                             ProfiilK.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutaja_id, "height"), AnaluusK.KuupaevIntegeriks(Date.Now.Date))
 
+        If kalorilimiit < 1000 Then
+            lblSulOnProbleem.Visible = True
+            lblKaloriLimiit.Visible = False
+            kalorilimiit = 1000
+        Else
+            lblKaloriLimiit.Text = kalorilimiit & "kcal"
+            lblSulOnProbleem.Visible = False
+            lblKaloriLimiit.Visible = True
+        End If
+        KoduGraafik()
+    End Sub
     Private Sub btnEesmargiKinnitamine_Click(sender As Object, e As EventArgs) Handles btnEesmargiKinnitamine.Click
         ProfiilK = New KasutajaProfiilKomponent.CKasutajaProfiil
         If IsNumeric(txtKaaluEesmärk.Text) AndAlso txtKaaluEesmärk.Text > 0 Then
@@ -638,6 +649,7 @@ Public Class Pohiaken
             lblKaaluEesmargiSeadmineViga.Text = "Ebakorrektne sisestus!"
             lblKaaluEesmargiSeadmineViga.Visible = True
         End If
+        KaloriteLimiidiLeidmine()
     End Sub
 
 
@@ -681,7 +693,7 @@ Public Class Pohiaken
 
         If AnaluusK.PaevaseAndmereaParing(_kasutaja_id, ajalooKuupaev, "daily_weight") > 0 Then
             lblAjaluguKehakaal.Text = AnaluusK.PaevaseAndmereaParing(_kasutaja_id, ajalooKuupaev, "daily_weight") & "kg"
-            lblAjaluguVordlusTanasega.Text = AnaluusK.PaevaseAndmereaParing(_kasutaja_id, AnaluusK.KuupaevIntegeriks(Date.Now.Date), "daily_weight") - AnaluusK.PaevaseAndmereaParing(_kasutaja_id, ajalooKuupaev, "daily_weight") & "kg"
+            lblAjaluguVordlusTanasega.Text = AnaluusK.PaevaseAndmereaParing(_kasutaja_id, ajalooKuupaev, "daily_weight") - AnaluusK.PaevaseAndmereaParing(_kasutaja_id, AnaluusK.KuupaevIntegeriks(Date.Now.Date), "daily_weight") & "kg"
             lblAjaluguSoodudKalorid.Text = AnaluusK.PaevaseAndmereaParing(_kasutaja_id, ajalooKuupaev, "energy_intake") & "kcal"
             lblAjaluguKulutatudKalorid.Text = AnaluusK.PaevaseAndmereaParing(_kasutaja_id, ajalooKuupaev, "energy_consumption") & "kcal"
         Else
