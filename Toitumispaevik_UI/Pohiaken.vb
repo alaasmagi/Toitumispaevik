@@ -784,6 +784,7 @@ Public Class Pohiaken
         AnaluusK = New AnaluusiKomponent.CAnaluus
         If ajalooKuupaev < AnaluusK.KuupaevIntegeriks(Date.Now.Date) Then
             ajalooKuupaev = ajalooKuupaev + 1
+            calAjalugu.SelectionEnd = AnaluusK.IntegerKuupaevaks(ajalooKuupaev)
             AjalooAken()
         End If
     End Sub
@@ -791,6 +792,7 @@ Public Class Pohiaken
     Private Sub btnAjalooKuupaevTagasi_Click(sender As Object, e As EventArgs) Handles btnAjalooKuupaevTagasi.Click
         AnaluusK = New AnaluusiKomponent.CAnaluus
         ajalooKuupaev = ajalooKuupaev - 1
+        calAjalugu.SelectionEnd = AnaluusK.IntegerKuupaevaks(ajalooKuupaev)
         AjalooAken()
     End Sub
 
@@ -821,10 +823,6 @@ Public Class Pohiaken
 
     Private Sub lblValiKuupaevKalendrist_Click(sender As Object, e As EventArgs) Handles lblValiKuupaevKalendrist.Click
         calAjalugu.Visible = True
-    End Sub
-
-    Private Sub calAjalugu_DateChanged(sender As Object, e As DateRangeEventArgs) Handles calAjalugu.DateChanged
-
     End Sub
 
     Private Sub calAjalugu_DateSelected(sender As Object, e As DateRangeEventArgs) Handles calAjalugu.DateSelected
