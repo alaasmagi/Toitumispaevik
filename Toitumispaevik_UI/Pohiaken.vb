@@ -38,6 +38,7 @@ Public Class Pohiaken
     Dim AnaluusK As AnaluusiKomponent.IAnaluus
     Dim ToidudRetseptidK As ToidudRetseptidKomponent.IToidudjaRetseptid
     Dim TreeningudK As TreeninguteKomponent.ITreeningud
+    Dim SalvestamineK As CSVExporterDNF.IExporter
 
     Public Sub New(ByVal kasutaja_id As Integer)
         InitializeComponent()
@@ -819,6 +820,7 @@ Public Class Pohiaken
         pbTreeningsessiooniLisamineOnnestus.Visible = False
         pbKehakaaluLisamineOnnestus.Visible = False
         pbKaaluEesmarkOnnestus.Visible = False
+        pbAjalooValjavoteOnnestus.Visible = False
     End Sub
 
     Private Sub lblValiKuupaevKalendrist_Click(sender As Object, e As EventArgs) Handles lblValiKuupaevKalendrist.Click
@@ -839,6 +841,16 @@ Public Class Pohiaken
 
     Private Sub pnlAjalugu_Click(sender As Object, e As EventArgs) Handles pnlAjalugu.Click
         calAjalugu.Visible = False
+    End Sub
+
+    Private Sub btnAjalooValjavote_Click(sender As Object, e As EventArgs) Handles btnAjalooValjavote.Click
+        SalvestamineK = New CSVExporterDNF.CExporter
+
+
+
+
+        pbAjalooValjavoteOnnestus.Visible = True
+        Timer2s.Start()
     End Sub
 End Class
 
