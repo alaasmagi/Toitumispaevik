@@ -681,21 +681,20 @@ Public Class Pohiaken
         Dim toiduaine_retsepti_id As Integer?
         toiduaine_retsepti_id = ToidudRetseptidK.ToiduAineNimiEksisteerib(cmbToiduaineKustutamine.SelectedItem)
 
-        If toiduaine_retsepti_id.HasValue Then
-            If toiduaine_retsepti_id < 2006 Then
-                lblToiduaineKustutamineViga.Text = "Baastoiduainet ei saa kustutada!"
-                lblToiduaineKustutamineViga.Visible = True
-            Else
-                lblToiduaineKustutamineViga.Visible = False
-                ToidudRetseptidK.ToiduaineVoiRetseptiKustutamine(toiduaine_retsepti_id, 1)
-                pbRetseptiKustutamineOnnestus.Visible = True
-                Timer2s.Start()
-                KomboKastid()
-            End If
-        Else
-            lblToiduaineKustutamineViga.Visible =
+        If toiduaine_retsepti_id = 0 Then
+            lblToiduaineKustutamineViga.Visible = False
             toiduaine_retsepti_id = ToidudRetseptidK.RetseptiNimiEksisteerib(cmbToiduaineKustutamine.SelectedItem)
             ToidudRetseptidK.ToiduaineVoiRetseptiKustutamine(toiduaine_retsepti_id, 0)
+            pbRetseptiKustutamineOnnestus.Visible = True
+            Timer2s.Start()
+            KomboKastid()
+        ElseIf toiduaine_retsepti_id < 2006 Then
+            lblToiduaineKustutamineViga.Text = "Baastoiduainet ei saa kustutada!"
+            lblToiduaineKustutamineViga.Visible = True
+        Else
+
+            lblToiduaineKustutamineViga.Visible = False
+            ToidudRetseptidK.ToiduaineVoiRetseptiKustutamine(toiduaine_retsepti_id, 1)
             pbRetseptiKustutamineOnnestus.Visible = True
             Timer2s.Start()
             KomboKastid()
