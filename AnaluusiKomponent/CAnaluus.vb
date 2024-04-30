@@ -34,9 +34,10 @@ Public Class CAnaluus
         Using connection As New SQLiteConnection(tabeli_asukoht)
             connection.Open()
             Dim selectSql As String = "INSERT INTO user_daily_data (user_id, date, daily_weight, energy_intake, energy_consumption, energy_balance) 
-                                        VALUES (@kasutaja_id, @kuupaev, 0, 0, 0, 0)"
+                                        VALUES (@kasutaja_id, @kuupaev, @kaal, 0, 0, 0)"
             Using cmd As New SQLiteCommand(selectSql, connection)
                 cmd.Parameters.AddWithValue("@kasutaja_id", kasutaja_id)
+                cmd.Parameters.AddWithValue("@kaal", kaal)
                 cmd.Parameters.AddWithValue("@kuupaev", kuupaev)
                 cmd.ExecuteNonQuery()
             End Using
