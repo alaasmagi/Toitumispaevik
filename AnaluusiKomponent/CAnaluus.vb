@@ -117,7 +117,7 @@ Public Class CAnaluus
         Return soodudKalorid
     End Function
 
-    ' Pärib andmeid tabelist user_food_history, tagastab listi 
+    ' Pärib toidukorra kaloraaži tabelist user_food_history, tagastab listi 
     Private Function KclParingAndmebaasist(ByVal kasutaja_id As Integer, ByVal kuupaev As Integer, ByVal toidukord As Integer) As Double() Implements IAnaluus.KclParingAndmebaasist
         Dim tabeli_asukoht As String = $"Data Source={Path.Combine(Path.GetFullPath(Path.Combine _
         (AppDomain.CurrentDomain.BaseDirectory, "..\..\..\")), "Data", "database.db")};Version=3;"
