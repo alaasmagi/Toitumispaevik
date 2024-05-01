@@ -850,7 +850,7 @@ Public Class Pohiaken
         ToidudRetseptidK = New ToidudRetseptidKomponent.CToidudJaRetseptid
         TreeningudK = New TreeninguteKomponent.CTreeningud
 
-        SalvestamineK.delimiter = ","
+        SalvestamineK.delimiter = "     "
 
 
         Dim failiAsukoht As String = SalvestamineK.setFileToSave()
@@ -871,37 +871,39 @@ Public Class Pohiaken
         Dim paevasteTreeninguteKcal As Double() = AnaluusK.PaevasedTreeningud(_kasutaja_id, ajalooKuupaev, "total_consumption")
 
         paevasedToidud(0)(0) = "Kuupäev:"
-        paevasedToidud(0)(1) = "Söödud toit:"
-        paevasedToidud(0)(2) = "Tarbitud kalorid:"
+        paevasedToidud(0)(1) = "Toit:"
+        paevasedToidud(0)(2) = "Kalorid:"
 
         For toit = 0 To paevasteToitudeId.Count - 1
-            paevasedToidud(toit + 1)(0) = AnaluusK.IntegerKuupaevaks(ajalooKuupaev)
-            If paevasteToitudeId(toit + 1) < 3000 Then
-                paevasedToidud(toit + 1)(1) = ToidudRetseptidK.ToiduaineVoiRetseptiNimi(paevasteToitudeId(toit), 0)
+            Dim toiduRida(2) As String ' Loome uue massiivi 3 elemendiga
+            toiduRida(0) = AnaluusK.IntegerKuupaevaks(ajalooKuupaev)
+            If paevasteToitudeId(toit) < 3000 Then
+                toiduRida(1) = ToidudRetseptidK.ToiduaineVoiRetseptiNimi(paevasteToitudeId(toit), 0)
             Else
-                paevasedToidud(toit + 1)(1) = ToidudRetseptidK.ToiduaineVoiRetseptiNimi(paevasteToitudeId(toit), 1)
+                toiduRida(1) = ToidudRetseptidK.ToiduaineVoiRetseptiNimi(paevasteToitudeId(toit), 1)
             End If
-            paevasedToidud(toit + 1)(2) = paevasteToitudeKcal(toit) & "kcal"
+            toiduRida(2) = paevasteToitudeKcal(toit) & "kcal"
+            paevasedToidud.Add(toiduRida)
         Next
+
 
 
         paevasedTreeningud(0)(0) = "Kuupäev:"
         paevasedTreeningud(0)(1) = "Treeningu liik:"
         paevasedTreeningud(0)(2) = "Kulutatud kalorid:"
 
-        For treening = 0 To paevasteTreeninguteId.Count - 1
-            paevasedTreeningud(treening + 1)(0) = ajalooKuupaev
-            paevasedTreeningud(treening + 1)(1) = TreeningudK.TreeninguNimeLeidmine(paevasteTreeninguteId(treening))
-            paevasedTreeningud(treening + 1)(2) = paevasteTreeninguteKcal(treening) & "kcal"
-        Next
+        'For treening = 0 To paevasteTreeninguteId.Count - 1
+        'paevasedTreeningud(treening + 1)(0) = ajalooKuupaev
+        'paevasedTreeningud(treening + 1)(1) = TreeningudK.TreeninguNimeLeidmine(paevasteTreeninguteId(treening))
+        'paevasedTreeningud(treening + 1)(2) = paevasteTreeninguteKcal(treening) & "kcal"
+        'Next
 
-        Dim paevasedToidudArray As String(,)
-        For toit = 0 To paevasedToidud.Count - 1
-            ReDim Preserve paevasedToidudArray(toit, UBound(paevasedToidud(toit)))
-            For veerg = 0 To UBound(paevasedToidud(toit))
-                paevasedToidudArray(toit, veerg) = paevasedToidud(toit)(veerg)
-            Next veerg
-        Next toit
+        Dim paevasedToidudArray As String(,) = New String(paevasedToidud.Count - 1, 2) {}
+        For i = 0 To paevasedToidud.Count - 1
+            For j = 0 To paevasedToidud(i).Length - 1
+                paevasedToidudArray(i, j) = paevasedToidud(i)(j)
+            Next
+        Next
 
         SalvestamineK.saveDataToCsv(paevasedToidudArray, True)
 
