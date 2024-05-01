@@ -9,6 +9,7 @@ Public Class CAnaluus
     Private ohtu
     Private vahepala
 
+    ' taaskasutatav funktsioon andmete pärimiseks tabelist user_daily_data, tagastatakse päritud andmed
     Public Function PaevaseAndmereaParing(ByVal kasutaja_id As Integer, ByVal kuupaev As Integer, ByVal otsitavSuurus As String) As Integer Implements IAnaluus.PaevaseAndmereaParing
         Dim paevasedAndmed As Integer = -1
         Dim tabeli_asukoht As String = $"Data Source={Path.Combine(Path.GetFullPath(Path.Combine _
@@ -28,6 +29,7 @@ Public Class CAnaluus
         Return paevasedAndmed
     End Function
 
+    ' Juhul kui kasutaja jätab mingil päeval sisestused vahele, lisatakse tabelisse user_daily_data numbrilistesse kohtadesse 0
     Public Function TuhjaPaevaseAndmereaSisestus(ByVal kasutaja_id As Integer, ByVal kaal As Integer, ByVal kuupaev As Integer) As Integer Implements IAnaluus.TuhjaPaevaseAndmereaSisestus
         Dim tabeli_asukoht As String = $"Data Source={Path.Combine(Path.GetFullPath(Path.Combine _
        (AppDomain.CurrentDomain.BaseDirectory, "..\..\..\")), "Data", "database.db")};Version=3;"
@@ -44,6 +46,7 @@ Public Class CAnaluus
         Return kasutaja_id
     End Function
 
+    ' Arvutatakse kasutaja päevane kaloraaži ülejääk, tagastatakse saadud ülejääk
     Public Function PariKaloriUlejaak(tarbitudKcal As Integer, KcalLimiit As Integer) As Integer Implements IAnaluus.PariKaloriUlejaak
         If tarbitudKcal > KcalLimiit Then
             Return 0
@@ -53,6 +56,7 @@ Public Class CAnaluus
         Return 0
     End Function
 
+    ' Toidukorra kaloraži arvutus päeva kohta kasutades funktsiooni KclParingAndmebaasist, tagastatakse toidukorra kaloraaž
     Public Function PariKcalPaveaHetkest(kuupaev As Integer, kasutaja_id As Integer, toidukord As Integer) As Integer Implements IAnaluus.PariKcalPaveaHetkest
         Select Case toidukord
             Case 0
@@ -84,7 +88,7 @@ Public Class CAnaluus
         End If
     End Sub
 
-    ' Päevase kaloraaži arvutamine koos user_daily_data tabeli uuendamine 
+    ' Päevase kaloraaži arvutamine ja user_daily_data tabeli uuendamisega 
     Public Function PaevaneKcal(ByVal kasutaja_id As Integer, ByVal kuupaev As Integer) As Integer Implements IAnaluus.PaevaneKcal
         Dim soodudKalorid As Integer = hommik + louna + vahepala + ohtu
 
@@ -173,7 +177,7 @@ Public Class CAnaluus
         Return doubleValues.ToArray()
     End Function
 
-    ' Päevase kaalu lisamine ja kaalu uuendamine 
+    ' Päevase kaalu lisamine ja kaalu uuendamine, tagastab uue kaalu 
     Public Function KaaluLisamine(ByVal kasutaja_id As Integer, ByVal uus_kaal As Double) As Double Implements IAnaluus.KaaluLisamine
         Dim kuupaev As Integer = KuupaevIntegeriks(Date.Now.Date)
         Dim tabeli_asukoht As String = $"Data Source={Path.Combine(Path.GetFullPath(Path.Combine _
@@ -191,7 +195,7 @@ Public Class CAnaluus
         Return uus_kaal
     End Function
 
-    ' Kuupäeva päring tabelist User_daily_data, tagastab listi
+    ' Kuupäeva päring tabelist User_daily_data, tagastab listi (vajalik kaalu graafiku kuvamiseks)
     Public Function KaaluDateParingAndmebaasist(ByVal kasutaja_id As Integer, ByVal kuupaev As Integer, ByVal graafikuPikkus As Integer) As Integer() Implements IAnaluus.KaaluDateParingAndmebaasist
         Dim tabeli_asukoht As String = $"Data Source={Path.Combine(Path.GetFullPath(Path.Combine _
     (AppDomain.CurrentDomain.BaseDirectory, "..\..\..\")), "Data", "database.db")};Version=3;"
@@ -230,21 +234,24 @@ Public Class CAnaluus
         Return koguvaartus
     End Function
 
+    ' Kuupäeva formaat teisendatakse int'ks ja tagastatakse see
     Public Function KuupaevIntegeriks(ByVal sisendKuupaev As DateTime) As Integer Implements IAnaluus.KuupaevIntegeriks
         Dim unixAeg As New DateTime(1970, 1, 1)
         Return (sisendKuupaev - unixAeg).Days
     End Function
 
+    ' Int teisendatakse kuupäeva formaati ja tagastatakse see
     Public Function IntegerKuupaevaks(ByVal sisendInteger As Integer) As DateTime Implements IAnaluus.IntegerKuupaevaks
         Dim unixAeg As New DateTime(1970, 1, 1)
         Return (unixAeg.AddDays(sisendInteger))
     End Function
 
+    ' Retsepti või üksiku toiduaine toiteväärtuse arvutus vastavalt kasutaja sisestusele ja selle tagastus 
     Public Function RetseptiToiduaineToitevaartuseArvutus(ByVal toitevaartus100gKohta As Integer, ByVal kogus As Integer) As Integer Implements IAnaluus.RetseptiToiduaineToitevaartuseArvutus
         Return (toitevaartus100gKohta / 100) * kogus
     End Function
 
-    ' Päring andmebaasist BMR-i arvutamiseks. 
+    ' Päring tabelist user_training_history BMR-i arvutamiseks
     ' Arvutab BMR-i ja tagastab väärtuse
     Public Function DBParingBMR(ByVal kasutaja_id As Integer, ByVal sugu As Integer, ByVal vanus As Integer, ByVal kaal As Double, ByVal kaaluEesmark As Double, ByVal pikkus As Integer,
                                 ByVal kuupaev As Integer) As Integer Implements IAnaluus.DBParingBMR
@@ -299,7 +306,7 @@ Public Class CAnaluus
         Return kcal_limiit
     End Function
 
-
+    ' Makrotoitaine päring tabelist user_food_history, tagastatakse list
     Private Function MakroaineParingAndmebaasist(ByVal kasutaja_id As Integer, ByVal kuupaev As Integer, ByVal makroaine As String) As Double() Implements IAnaluus.MakroaineParingAndmebaasist
         Dim tabeli_asukoht As String = $"Data Source={Path.Combine(Path.GetFullPath(Path.Combine _
         (AppDomain.CurrentDomain.BaseDirectory, "..\..\..\")), "Data", "database.db")};Version=3;"
@@ -328,6 +335,7 @@ Public Class CAnaluus
 
     End Function
 
+    ' Makrotoitaine koguse saamine kasutades funktsiooni MakroaineParingAndmebaasist, tagastatakse mkaroaine kogus
     Public Function PariMakroaineKogus(kuupaev As Integer, kasutaja_id As Integer, makroaine As String) As Integer Implements IAnaluus.PariMakroaineKogus
         Select Case makroaine
             Case "total_c_hydrates"
@@ -345,6 +353,8 @@ Public Class CAnaluus
         End Select
         Return 0
     End Function
+
+    ' Päeva jooksul tehtud treeningute päring tabelist user_training_history, tagastatakse list
     Public Function PaevasedTreeningud(ByVal kasutaja_id As Integer, ByVal kuupaev As Integer, ByVal otsitavSuurus As String) As Double() Implements IAnaluus.PaevasedTreeningud
         Dim tabeli_asukoht As String = $"Data Source={Path.Combine(Path.GetFullPath(Path.Combine _
         (AppDomain.CurrentDomain.BaseDirectory, "..\..\..\")), "Data", "database.db")};Version=3;"
@@ -370,6 +380,8 @@ Public Class CAnaluus
         End Using
         Return doubleValues.ToArray()
     End Function
+
+    ' Päeva jooksul tarbitud toitude päring tabelist user_food_history, tagastatakse list
     Public Function PaevasedToidud(ByVal kasutaja_id As Integer, ByVal kuupaev As Integer, ByVal otsitavSuurus As String) As Double() Implements IAnaluus.PaevasedToidud
         Dim tabeli_asukoht As String = $"Data Source={Path.Combine(Path.GetFullPath(Path.Combine _
         (AppDomain.CurrentDomain.BaseDirectory, "..\..\..\")), "Data", "database.db")};Version=3;"

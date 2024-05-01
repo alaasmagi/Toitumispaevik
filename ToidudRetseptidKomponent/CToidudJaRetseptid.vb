@@ -38,7 +38,7 @@ Public Class CToidudJaRetseptid
         (AppDomain.CurrentDomain.BaseDirectory, "..\..\..\")), "Data", "database.db")};Version=3;"
         Using connection As New SQLiteConnection(tabeli_asukoht)
             connection.Open()
-            Dim insertDataSql As String = "INSERT INTO recipe_data (recipe_id, recipe_name, energy, c_hydrates, sugar, proteins, lipids) VALUES (@retsepti_id, @retsepti_nimi, @energia, @susivesikud, 
+            Dim insertDataSql As String = "INSERT INTO recipe_data (recipe_id, recipe_name, energy, c_hydrates, sugar, protein, lipid) VALUES (@retsepti_id, @retsepti_nimi, @energia, @susivesikud, 
                                             @suhkur, @valgud, @lipiidid)"
             Using cmd As New SQLiteCommand(insertDataSql, connection)
                 cmd.Parameters.AddWithValue("@retsepti_id", retsepti_id)
