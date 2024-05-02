@@ -4,7 +4,7 @@ Imports System.Data.SQLite
 
 Public Class CToidudJaRetseptid
     Implements IToidudjaRetseptid
-
+    ' Lisab uue toiduaine andmebaasi tabelisse food_data, sisestades selle nime, energiasisalduse, valkude, süsivesikute, rasvade ja suhkrute kogused ning tagastab unikaalse võtme toiduaine_id.
     Public Function LisaToiduaine(ByVal toiduainenimi As String, ByVal energia As Double, ByVal valgud As Double,
                                    ByVal susivesikud As Double, ByVal rasvad As Double, ByVal suhkrud As Double) As Integer Implements IToidudjaRetseptid.LisaToiduaine
 
@@ -30,7 +30,7 @@ Public Class CToidudJaRetseptid
         End Using
         Return toiduaine_id
     End Function
-
+    ' Lisab uue retsepti andmebaasi tabelisse recipe_data, sisestades selle nime, energiasisalduse, valkude, süsivesikute, rasvade ja suhkrute kogused ning tagastab unikaalse võtme retsepti_id.
     Public Function LisaRetsept(ByVal retsepti_nimi As String, ByVal retsepti_kcal As Integer, ByVal retsepti_susivesikud As Integer, ByVal retsepti_suhkur As Integer,
                                 ByVal retsepti_valgud As Integer, ByVal retsepti_lipiidid As Integer) As Integer Implements IToidudjaRetseptid.LisaRetsept
         Dim retsepti_id As Integer = GenereeriId(0)
@@ -54,7 +54,7 @@ Public Class CToidudJaRetseptid
 
         Return retsepti_id
     End Function
-
+    'Genereerib unikaalsed võtmed
     Private Function GenereeriId(ByVal toiduaineFlag As Integer) As Integer Implements IToidudjaRetseptid.GenereeriId
         Dim random As New Random()
         Dim genereeritudId As Integer
@@ -66,7 +66,7 @@ Public Class CToidudJaRetseptid
 
         Return genereeritudId
     End Function
-
+    'Toiduaine kiirlisamine pealehelt, kui valitud on mukbang filter, siis sorteeritakse kõrgema sisaldusega toidud eelisjärjekorras
     Public Function KiirlisamiseToiduaineNimed(ByVal mukbangFlag As Integer) As List(Of String) Implements IToidudjaRetseptid.KiirlisamiseToiduaineNimed
         Dim toiduaineteNimed As New List(Of String)()
         Dim tabeli_asukoht As String = $"Data Source={Path.Combine(Path.GetFullPath(Path.Combine _
@@ -89,7 +89,7 @@ Public Class CToidudJaRetseptid
         End Using
         Return toiduaineteNimed
     End Function
-
+    'Juba andmebaasis olemasoleva toiduaine nime kontroll
     Public Function ToiduAineNimiEksisteerib(ByVal toiduaine_nimi As String) As Integer Implements IToidudjaRetseptid.ToiduAineNimiEksisteerib
         Dim toiduaine_id As Integer = 0
         Dim tabeli_asukoht As String = $"Data Source={Path.Combine(Path.GetFullPath(Path.Combine _
@@ -108,7 +108,7 @@ Public Class CToidudJaRetseptid
         End Using
         Return toiduaine_id
     End Function
-
+    'Juba andmebaasis olemasoleva retsepti nime kontroll
     Public Function RetseptiNimiEksisteerib(ByVal retsepti_nimi As String) As Integer Implements IToidudjaRetseptid.RetseptiNimiEksisteerib
         Dim retsepti_id As Integer = 0
         Dim tabeli_asukoht As String = $"Data Source={Path.Combine(Path.GetFullPath(Path.Combine _
@@ -127,8 +127,7 @@ Public Class CToidudJaRetseptid
         End Using
         Return retsepti_id
     End Function
-
-
+    'Toiduaine või retsepti toiteväärtuse(ntks energia, valgud jne) päring
     Public Function ToiteVaartuseParing(ByVal toidu_id As Integer, ByVal otsitav_suurus As String, ByVal retseptFlag As Integer) As Integer Implements IToidudjaRetseptid.ToiteVaartuseParing
         Dim tulemus As Integer
         Dim tabeli_asukoht As String = $"Data Source={Path.Combine(Path.GetFullPath(Path.Combine _
@@ -153,7 +152,7 @@ Public Class CToidudJaRetseptid
         End Using
         Return tulemus
     End Function
-
+    'Kasutaja tarbitud toiduaine või retsepti andmebaasi tabelisse user_food_history lisamine
     Public Function KasutajaToiduaineVõiRetseptiLisamine(ByVal kasutaja_id As String, ByVal kuupaev As Integer, ByVal toidukord As Integer, ByVal toidu_id As Integer, ByVal kogus As Integer) As Integer Implements IToidudjaRetseptid.KasutajaToiduaineVõiRetseptiLisamine
 
         Dim retseptFlag As Integer
@@ -192,7 +191,7 @@ Public Class CToidudJaRetseptid
         End Using
         Return toidu_id
     End Function
-
+    'Retsepti lisamine andmebaasi tabelisse recipe_ingredients, lisades retsepti_id, toiduaine_id ja ka koguse
     Public Function LisaRetseptiKoostisosadeTabelisse(ByVal retsepti_id As Integer, ByVal toiduaine_id As Integer, ByVal kogus As Integer) As Integer Implements IToidudjaRetseptid.LisaRetseptiKoostisosadeTabelisse
         Dim tabeli_asukoht As String = $"Data Source={Path.Combine(Path.GetFullPath(Path.Combine _
         (AppDomain.CurrentDomain.BaseDirectory, "..\..\..\")), "Data", "database.db")};Version=3;"
@@ -209,7 +208,7 @@ Public Class CToidudJaRetseptid
         End Using
         Return retsepti_id
     End Function
-
+    'Retsepti kiirlisamine pealehelt, kui valitud on mukbang filter, siis sorteeritakse kõrgema sisaldusega retseptid eelisjärjekorras
     Public Function KiirlisamiseRetseptideNimed(ByVal mukbangFlag As Integer) As List(Of String) Implements IToidudjaRetseptid.KiirlisamiseRetseptideNimed
         Dim retseptideNimed As New List(Of String)()
         Dim tabeli_asukoht As String = $"Data Source={Path.Combine(Path.GetFullPath(Path.Combine _
@@ -232,7 +231,7 @@ Public Class CToidudJaRetseptid
         End Using
         Return retseptideNimed
     End Function
-
+    'Lisatud toiduaine või retsepti kustutamine andmebaasist
     Public Function ToiduaineVoiRetseptiKustutamine(ByVal toiduaine_retsepti_id As Integer, ByVal toiduaineFlag As Integer) As Integer Implements IToidudjaRetseptid.ToiduaineVoiRetseptiKustutamine
 
         Dim tulemus As Integer = 0
@@ -257,7 +256,6 @@ Public Class CToidudJaRetseptid
         End Using
         Return tulemus
     End Function
-
     Public Function ToiduaineVoiRetseptiNimi(ByVal toiduaineVoiRetseptiId As Integer, ByVal retseptFlag As Integer) As String Implements IToidudjaRetseptid.ToiduaineVoiRetseptiNimi
         Dim toiduaineVoiRetseptiNimetus As String = ""
         Dim tabeli_asukoht As String = $"Data Source={Path.Combine(Path.GetFullPath(Path.Combine _
