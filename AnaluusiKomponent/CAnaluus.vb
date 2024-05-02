@@ -9,7 +9,7 @@ Public Class CAnaluus
     Private ohtu
     Private vahepala
 
-    ' taaskasutatav funktsioon andmete pärimiseks tabelist user_daily_data, tagastatakse päritud andmed
+    ' Taaskasutatav funktsioon andmete pärimiseks tabelist user_daily_data, tagastatakse päritud andmed
     Public Function PaevaseAndmereaParing(ByVal kasutaja_id As Integer, ByVal kuupaev As Integer, ByVal otsitavSuurus As String) As Integer Implements IAnaluus.PaevaseAndmereaParing
         Dim paevasedAndmed As Integer = -1
         Dim tabeli_asukoht As String = $"Data Source={Path.Combine(Path.GetFullPath(Path.Combine _
