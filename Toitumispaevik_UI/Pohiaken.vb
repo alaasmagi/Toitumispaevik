@@ -1,5 +1,7 @@
 ﻿Imports System.Data.Entity.Core.Mapping
+Imports System.Data.Entity.ModelConfiguration.Configuration.Properties
 Imports System.Data.SQLite
+Imports System.Drawing.Design
 Imports System.Drawing.Text
 Imports System.Globalization
 Imports System.IO
@@ -697,21 +699,20 @@ Public Class Pohiaken
         Dim toiduaine_retsepti_id As Integer?
         toiduaine_retsepti_id = ToidudRetseptidK.ToiduAineNimiEksisteerib(cmbToiduaineKustutamine.SelectedItem)
 
-        If toiduaine_retsepti_id.HasValue Then
-            If toiduaine_retsepti_id < 2006 Then
-                lblToiduaineKustutamineViga.Text = "Baastoiduainet ei saa kustutada!"
-                lblToiduaineKustutamineViga.Visible = True
-            Else
-                lblToiduaineKustutamineViga.Visible = False
-                ToidudRetseptidK.ToiduaineVoiRetseptiKustutamine(toiduaine_retsepti_id, 1)
-                pbRetseptiKustutamineOnnestus.Visible = True
-                Timer2s.Start()
-                KomboKastid()
-            End If
-        Else
-            lblToiduaineKustutamineViga.Visible =
+        If toiduaine_retsepti_id = 0 Then
+            lblToiduaineKustutamineViga.Visible = False
             toiduaine_retsepti_id = ToidudRetseptidK.RetseptiNimiEksisteerib(cmbToiduaineKustutamine.SelectedItem)
             ToidudRetseptidK.ToiduaineVoiRetseptiKustutamine(toiduaine_retsepti_id, 0)
+            pbRetseptiKustutamineOnnestus.Visible = True
+            Timer2s.Start()
+            KomboKastid()
+        ElseIf toiduaine_retsepti_id < 2006 Then
+            lblToiduaineKustutamineViga.Text = "Baastoiduainet ei saa kustutada!"
+            lblToiduaineKustutamineViga.Visible = True
+        Else
+
+            lblToiduaineKustutamineViga.Visible = False
+            ToidudRetseptidK.ToiduaineVoiRetseptiKustutamine(toiduaine_retsepti_id, 1)
             pbRetseptiKustutamineOnnestus.Visible = True
             Timer2s.Start()
             KomboKastid()
@@ -863,9 +864,66 @@ Public Class Pohiaken
 
     Private Sub btnAjalooValjavote_Click(sender As Object, e As EventArgs) Handles btnAjalooValjavote.Click
         SalvestamineK = New CSVExporterDNF.CExporter
+        AnaluusK = New AnaluusiKomponent.CAnaluus
+        ToidudRetseptidK = New ToidudRetseptidKomponent.CToidudJaRetseptid
+        TreeningudK = New TreeninguteKomponent.CTreeningud
+
+        SalvestamineK.delimiter = "     "
+
+
+        Dim failiAsukoht As String = SalvestamineK.setFileToSave()
+        If failiAsukoht Is Nothing Then Exit Sub
+        lblFailiAsukoht.Text = failiAsukoht
+        lblFailiAsukoht.Visible = True
+
+        Dim paevasedToidud As New List(Of String())()
+        Dim paevasedTreeningud As New List(Of String())()
+
+        paevasedToidud.Add(New String(2) {})
+        paevasedTreeningud.Add(New String(2) {})
+
+        Dim paevasteToitudeId As Double() = AnaluusK.PaevasedToidud(_kasutaja_id, ajalooKuupaev, "food_id")
+        Dim paevasteToitudeKcal As Double() = AnaluusK.PaevasedToidud(_kasutaja_id, ajalooKuupaev, "energy_intake")
+
+        Dim paevasteTreeninguteId As Double() = AnaluusK.PaevasedTreeningud(_kasutaja_id, ajalooKuupaev, "training_id")
+        Dim paevasteTreeninguteKcal As Double() = AnaluusK.PaevasedTreeningud(_kasutaja_id, ajalooKuupaev, "total_consumption")
+
+        paevasedToidud(0)(0) = "Kuupäev:"
+        paevasedToidud(0)(1) = "Toit:"
+        paevasedToidud(0)(2) = "Kalorid:"
+
+        For toit = 0 To paevasteToitudeId.Count - 1
+            Dim toiduRida(2) As String ' Loome uue massiivi 3 elemendiga
+            toiduRida(0) = AnaluusK.IntegerKuupaevaks(ajalooKuupaev)
+            If paevasteToitudeId(toit) < 3000 Then
+                toiduRida(1) = ToidudRetseptidK.ToiduaineVoiRetseptiNimi(paevasteToitudeId(toit), 0)
+            Else
+                toiduRida(1) = ToidudRetseptidK.ToiduaineVoiRetseptiNimi(paevasteToitudeId(toit), 1)
+            End If
+            toiduRida(2) = paevasteToitudeKcal(toit) & "kcal"
+            paevasedToidud.Add(toiduRida)
+        Next
 
 
 
+        paevasedTreeningud(0)(0) = "Kuupäev:"
+        paevasedTreeningud(0)(1) = "Treeningu liik:"
+        paevasedTreeningud(0)(2) = "Kulutatud kalorid:"
+
+        'For treening = 0 To paevasteTreeninguteId.Count - 1
+        'paevasedTreeningud(treening + 1)(0) = ajalooKuupaev
+        'paevasedTreeningud(treening + 1)(1) = TreeningudK.TreeninguNimeLeidmine(paevasteTreeninguteId(treening))
+        'paevasedTreeningud(treening + 1)(2) = paevasteTreeninguteKcal(treening) & "kcal"
+        'Next
+
+        Dim paevasedToidudArray As String(,) = New String(paevasedToidud.Count - 1, 2) {}
+        For i = 0 To paevasedToidud.Count - 1
+            For j = 0 To paevasedToidud(i).Length - 1
+                paevasedToidudArray(i, j) = paevasedToidud(i)(j)
+            Next
+        Next
+
+        SalvestamineK.saveDataToCsv(paevasedToidudArray, True)
 
         pbAjalooValjavoteOnnestus.Visible = True
         Timer2s.Start()
