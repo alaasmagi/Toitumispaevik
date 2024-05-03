@@ -39,7 +39,7 @@ Public Class CTreeningud
     End Function
 
 
-    ' Funktsioon uue lisatava treeningu identifikaatori(id) juhuslikuks genereerimiseks vahemiks 4006-4500
+    ' Funktsioon uue lisatava treeningu võtme juhuslikuks genereerimiseks vahemikus 4006-4500
     Private Function GenereeriId() As Integer Implements ITreeningud.GenereeriId
         Dim juhuslikNr As New Random()
         Dim genereeritudId As Integer = juhuslikNr.Next(4006, 4500)
@@ -67,7 +67,7 @@ Public Class CTreeningud
 
 
     ' Funktsioon kontrollimaks, et enne uue treeningu treeningute andmebaasi lisamist samanimelisi treeninguid andmebaasis pole.
-    ' Lisaks kasutatakse seda funktsiooni treeningu identifikaatori(id) leidmiseks treeningu nime kaudu
+    ' Lisaks kasutatakse seda funktsiooni treeningu võtme leidmiseks treeningu nime kaudu
     Public Function TreeninguNimiEksisteerib(ByVal treeninguNimi As String) As Integer Implements ITreeningud.TreeninguNimiEksisteerib
         Dim treeningu_id As Integer = 0
 
@@ -145,7 +145,7 @@ Public Class CTreeningud
     End Function
 
 
-    ' Funktsioon treeningu nime leidmiseks läbi treeningu identifikaatori(id)
+    ' Funktsioon treeningu nime leidmiseks läbi treeningu võtme
     Public Function TreeninguNimeLeidmine(ByVal treeninguId As Integer) As String Implements ITreeningud.TreeninguNimeLeidmine
         Dim treeninguNimi As String = ""
 
