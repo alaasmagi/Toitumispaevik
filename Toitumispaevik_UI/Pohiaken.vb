@@ -854,7 +854,6 @@ Public Class Pohiaken
 
 
         Dim failiAsukoht As String = SalvestamineK.setFileToSave()
-        If failiAsukoht Is Nothing Then Exit Sub
         lblFailiAsukoht.Text = failiAsukoht
         lblFailiAsukoht.Visible = True
 
@@ -886,29 +885,42 @@ Public Class Pohiaken
             paevasedToidud.Add(toiduRida)
         Next
 
-
-
         paevasedTreeningud(0)(0) = "Kuupäev:"
         paevasedTreeningud(0)(1) = "Treeningu liik:"
         paevasedTreeningud(0)(2) = "Kulutatud kalorid:"
 
-        'For treening = 0 To paevasteTreeninguteId.Count - 1
-        'paevasedTreeningud(treening + 1)(0) = ajalooKuupaev
-        'paevasedTreeningud(treening + 1)(1) = TreeningudK.TreeninguNimeLeidmine(paevasteTreeninguteId(treening))
-        'paevasedTreeningud(treening + 1)(2) = paevasteTreeninguteKcal(treening) & "kcal"
-        'Next
+        For treening = 0 To paevasteTreeninguteId.Count - 1
+            Dim treeninguRida(2) As String ' Loome uue massiivi 3 elemendiga
+            treeninguRida(0) = AnaluusK.IntegerKuupaevaks(ajalooKuupaev)
+            treeninguRida(1) = TreeningudK.TreeninguNimeLeidmine(paevasteTreeninguteId(treening))
+            treeninguRida(2) = paevasteTreeninguteKcal(treening) & "kcal"
+            paevasedTreeningud.Add(treeninguRida)
+        Next
 
-        Dim paevasedToidudArray As String(,) = New String(paevasedToidud.Count - 1, 2) {}
+        Dim paevasedToidudMassiiv As String(,) = New String(paevasedToidud.Count - 1, 2) {}
         For i = 0 To paevasedToidud.Count - 1
             For j = 0 To paevasedToidud(i).Length - 1
-                paevasedToidudArray(i, j) = paevasedToidud(i)(j)
+                paevasedToidudMassiiv(i, j) = paevasedToidud(i)(j)
             Next
         Next
 
-        SalvestamineK.saveDataToCsv(paevasedToidudArray, True)
+        Dim paevasedTreeningudMassiiv As String(,) = New String(paevasedTreeningud.Count - 1, 2) {}
+        For i = 0 To paevasedTreeningud.Count - 1
+            For j = 0 To paevasedTreeningud(i).Length - 1
+                paevasedTreeningudMassiiv(i, j) = paevasedTreeningud(i)(j)
+            Next
+        Next
 
-        pbAjalooValjavoteOnnestus.Visible = True
-        Timer2s.Start()
+        If failiAsukoht.Length > 1 Then
+            SalvestamineK.saveDataToCsv(paevasedToidudMassiiv, True)
+            SalvestamineK.saveDataToCsv(paevasedTreeningudMassiiv, True)
+
+            pbAjalooValjavoteOnnestus.Visible = True
+            Timer2s.Start()
+        Else
+            Exit Sub
+        End If
+
     End Sub
 End Class
 
