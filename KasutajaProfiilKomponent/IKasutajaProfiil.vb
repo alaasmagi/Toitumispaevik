@@ -19,7 +19,7 @@ Public Interface IKasutajaProfiil
     Function SisseLogimine(ByVal kasutajaId As Integer, ByVal salasona As String) As Integer
     Function GenereeriId() As Integer
     Function ArvutaHash(ByVal sisend As String) As String
-    Function UheAndmevaljaParingKasutajaTabelist(ByVal kasutajaId As String, ByVal andmevali As String) As String
+    Function UheAndmevaljaParingKasutajaTabelist(ByVal kasutajaId As Integer, ByVal andmevali As String) As String
     Function Krupteerimine(ByVal sisend As String) As String
     Function Dekrupteerimine(ByVal sisend As String) As String
     Function UheIntegerAndmeValjaParingKasutajaTabelist(ByVal kasutajaId As Integer, ByVal andmevali As String) As Integer

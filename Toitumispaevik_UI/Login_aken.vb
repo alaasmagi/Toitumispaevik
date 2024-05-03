@@ -21,8 +21,8 @@ Public Class Login_aken
 
     Dim ProfiilK As KasutajaProfiilKomponent.IKasutajaProfiil
 
-    Dim sugu As Integer
-    Dim kasutajaId As Integer
+    Dim sugu As Integer = 0
+    Dim kasutajaId As Integer = 0
 
     Private Sub Login_aken_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ResetForm()
@@ -52,9 +52,6 @@ Public Class Login_aken
         lblTurvaKusimus.Visible = False
         lblTurvaKusimusEdasiKasutajanimi.Visible = False
         pnlUnustasinSalasonaEdasi.Visible = False
-
-        sugu = 0
-        kasutajaId = 0
     End Sub
 
 
@@ -186,9 +183,9 @@ Public Class Login_aken
                                                               cmbTurvaKüsimus.SelectedIndex, txtTurvaVastus.Text, cmbPikkus.SelectedItem, cmbKehaKaal.SelectedItem, sugu,
                                                               cmbVanus.SelectedItem)
             If kasutajaId > 0 Then
-                ResetForm()
                 Me.Hide()
                 Dim pohiaken As New Pohiaken(kasutajaId)
+                ResetForm()
                 pohiaken.ResetForm()
                 pohiaken.Show()
             Else

@@ -122,7 +122,7 @@ Public Class CKasutajaProfiil
         Using connection As New SQLiteConnection(tabeliAsukoht)
             connection.Open()
             Dim sqlParing As String = "SELECT password FROM user_data WHERE user_id = @kasutaja_id"
-            Using cmd As New SQLiteCommand(sql, connection)
+            Using cmd As New SQLiteCommand(sqlParing, connection)
                 cmd.Parameters.AddWithValue("@kasutaja_id", kasutajaId)
                 Using reader As SQLiteDataReader = cmd.ExecuteReader()
                     While reader.Read()
@@ -163,7 +163,7 @@ Public Class CKasutajaProfiil
 
 
     ' Funktsioon kasutajaprofiili tabelist ühe andmevälja pärimiseks
-    Public Function UheAndmevaljaParingKasutajaTabelist(ByVal kasutajaId As String, ByVal andmevali As String) As String Implements IKasutajaProfiil.UheAndmevaljaParingKasutajaTabelist
+    Public Function UheAndmevaljaParingKasutajaTabelist(ByVal kasutajaId As Integer, ByVal andmevali As String) As String Implements IKasutajaProfiil.UheAndmevaljaParingKasutajaTabelist
         Dim tagastus As String = ""
 
         Using connection As New SQLiteConnection(tabeliAsukoht)
