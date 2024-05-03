@@ -1,44 +1,59 @@
-﻿Imports System.IO
+﻿
+' Kaloripäeviku projekt "Janar"
+' Treeningute komponent
+'
+' Autorid:
+'           Aleksander Laasmägi
+'           Kristofer Mäeots
+'           Carmen Raun
+'           Eeva-Maria Tšernova
+'
+' 2024, TalTech
+
+Imports System.IO
 Imports System.Data.SQLite
 Public Class CTreeningud
     Implements ITreeningud
-    Public Function LisaTreening(treeninguNimi As String, energiakulu As Double) As Integer Implements ITreeningud.LisaTreening
-        Dim treeningu_id As Integer = GenereeriId()
 
-        Dim tabeli_asukoht As String = $"Data Source={Path.Combine(Path.GetFullPath(Path.Combine _
+    Dim tabeliAsukoht As String = $"Data Source={Path.Combine(Path.GetFullPath(Path.Combine _
         (AppDomain.CurrentDomain.BaseDirectory, "..\..\..\")), "Data", "database.db")};Version=3;"
-        Using connection As New SQLiteConnection(tabeli_asukoht)
-            connection.Open()
-            Dim insertDataSql As String = "INSERT INTO training_data (training_id, training_name, consumption)
-          VALUES (@treeningu_id, @treeninguNimi, @energiakulu)"
-            Using cmd As New SQLiteCommand(insertDataSql, connection)
-                cmd.Parameters.AddWithValue("@treeningu_id", treeningu_id)
-                cmd.Parameters.AddWithValue("@treeninguNimi", treeninguNimi)
-                cmd.Parameters.AddWithValue("@energiakulu", energiakulu)
 
+
+    ' Funktsioon treeningu lisamiseks treeningute andmebaasi
+    Public Function LisaTreening(treeninguNimi As String, energiaKulu As Double) As Integer Implements ITreeningud.LisaTreening
+        Dim treeninguId As Integer = GenereeriId()
+
+        Using connection As New SQLiteConnection(tabeliAsukoht)
+            connection.Open()
+            Dim sqlSisestus As String = "INSERT INTO training_data (training_id, training_name, consumption)
+          VALUES (@treeningu_id, @treeninguNimi, @energiakulu)"
+            Using cmd As New SQLiteCommand(sqlSisestus, connection)
+                cmd.Parameters.AddWithValue("@treeningu_id", treeninguId)
+                cmd.Parameters.AddWithValue("@treeninguNimi", treeninguNimi)
+                cmd.Parameters.AddWithValue("@energiakulu", energiaKulu)
                 cmd.ExecuteNonQuery()
             End Using
         End Using
-        Return treeningu_id
+        Return treeninguId
     End Function
 
-    Public Function GenereeriId() As Integer Implements ITreeningud.GenereeriId
-        Dim random As New Random()
-        Dim genereeritudId As Integer = random.Next(4006, 4500)
 
+    ' Funktsioon uue lisatava treeningu identifikaatori(id) juhuslikuks genereerimiseks vahemiks 4006-4500
+    Private Function GenereeriId() As Integer Implements ITreeningud.GenereeriId
+        Dim juhuslikNr As New Random()
+        Dim genereeritudId As Integer = juhuslikNr.Next(4006, 4500)
         Return genereeritudId
     End Function
 
+
+    ' Funktsioon kõikide treeningute väljastuseks treeeningute andmebaasist kasutajaliidesesse
     Public Function KiirlisamiseTreeninguNimed() As List(Of String) Implements ITreeningud.KiirlisamiseTreeninguNimed
         Dim treeninguteNimed As New List(Of String)()
-        Dim tabeli_asukoht As String = $"Data Source={Path.Combine(Path.GetFullPath(Path.Combine _
-               (AppDomain.CurrentDomain.BaseDirectory, "..\..\..\")), "Data", "database.db")};Version=3;"
-        Using connection As New SQLiteConnection(tabeli_asukoht)
+
+        Using connection As New SQLiteConnection(tabeliAsukoht)
             connection.Open()
-            Dim selectSql As String = "SELECT training_name FROM training_data"
-
-            Using cmd As New SQLiteCommand(selectSql, connection)
-
+            Dim sqlParing As String = "SELECT training_name FROM training_data"
+            Using cmd As New SQLiteCommand(sqlParing, connection)
                 Using reader As SQLiteDataReader = cmd.ExecuteReader()
                     While reader.Read()
                         treeninguteNimed.Add(reader("training_name"))
@@ -49,73 +64,76 @@ Public Class CTreeningud
         Return treeninguteNimed
     End Function
 
+
+    ' Funktsioon kontrollimaks, et enne uue treeningu treeningute andmebaasi lisamist samanimelisi treeninguid andmebaasis pole.
+    ' Lisaks kasutatakse seda funktsiooni treeningu identifikaatori(id) leidmiseks treeningu nime kaudu
     Public Function TreeninguNimiEksisteerib(ByVal treeninguNimi As String) As Integer Implements ITreeningud.TreeninguNimiEksisteerib
         Dim treeningu_id As Integer = 0
-        Dim tabeli_asukoht As String = $"Data Source={Path.Combine(Path.GetFullPath(Path.Combine _
-        (AppDomain.CurrentDomain.BaseDirectory, "..\..\..\")), "Data", "database.db")};Version=3;"
-        Using connection As New SQLiteConnection(tabeli_asukoht)
-            connection.Open()
-            Dim selectSql As String = "SELECT training_id FROM training_data WHERE training_name = @treeninguNimi"
-            Using cmd As New SQLiteCommand(selectSql, connection)
-                cmd.Parameters.AddWithValue("@treeninguNimi", treeninguNimi)
 
-                Dim result As Object = cmd.ExecuteScalar()
-                If result IsNot Nothing AndAlso Not DBNull.Value.Equals(result) Then
-                    treeningu_id = Convert.ToInt32(result)
+        Using connection As New SQLiteConnection(tabeliAsukoht)
+            connection.Open()
+            Dim sqlParing As String = "SELECT training_id FROM training_data WHERE training_name = @treeninguNimi"
+            Using cmd As New SQLiteCommand(sqlParing, connection)
+                cmd.Parameters.AddWithValue("@treeninguNimi", treeninguNimi)
+                Dim tulem As Object = cmd.ExecuteScalar()
+                If tulem IsNot Nothing AndAlso Not DBNull.Value.Equals(tulem) Then
+                    treeningu_id = Convert.ToInt32(tulem)
                 End If
             End Using
         End Using
         Return treeningu_id
     End Function
 
-    Public Function TreeninguEnergiakuluParing(treeningu_id As Integer, otsitav_suurus As String) As Integer Implements ITreeningud.TreeninguEnergiakuluParing
+
+    ' Funktsioon treeningu energiakulu leidmiseks treeningute andmebaasist
+    Public Function TreeninguEnergiakuluParing(ByVal treeninguId As Integer) As Integer Implements ITreeningud.TreeninguEnergiakuluParing
         Dim tulemus As Integer
-        Dim tabeli_asukoht As String = $"Data Source={Path.Combine(Path.GetFullPath(Path.Combine _
-        (AppDomain.CurrentDomain.BaseDirectory, "..\..\..\")), "Data", "database.db")};Version=3;"
-        Using connection As New SQLiteConnection(tabeli_asukoht)
+
+        Using connection As New SQLiteConnection(tabeliAsukoht)
             connection.Open()
-            Dim selectSql As String = $"SELECT {otsitav_suurus} FROM training_data WHERE training_id = @treeningu_id"
-            Using cmd As New SQLiteCommand(selectSql, connection)
-                cmd.Parameters.AddWithValue("@treeningu_id", treeningu_id)
-                Dim result As Object = cmd.ExecuteScalar()
-                If result IsNot Nothing AndAlso Not DBNull.Value.Equals(result) Then
-                    tulemus = Convert.ToInt32(result)
+            Dim sqlParing As String = $"SELECT consumption FROM training_data WHERE training_id = @treeningu_id"
+            Using cmd As New SQLiteCommand(sqlParing, connection)
+                cmd.Parameters.AddWithValue("@treeningu_id", treeninguId)
+                Dim tulem As Object = cmd.ExecuteScalar()
+                If tulem IsNot Nothing AndAlso Not DBNull.Value.Equals(tulem) Then
+                    tulemus = Convert.ToInt32(tulem)
                 End If
             End Using
         End Using
         Return tulemus
     End Function
 
-    Public Function KasutajaTreeninguLisamine(kasutaja_id As String, kuupaev As Integer, treeningu_id As Integer, kestus As Integer) As Integer Implements ITreeningud.KasutajaTreeninguLisamine
-        Dim energiakulu = Math.Round(kestus * (TreeninguEnergiakuluParing(treeningu_id, "consumption") / 60), 1)
 
-        Dim tabeli_asukoht As String = $"Data Source={Path.Combine(Path.GetFullPath(Path.Combine _
-        (AppDomain.CurrentDomain.BaseDirectory, "..\..\..\")), "Data", "database.db")};Version=3;"
-        Using connection As New SQLiteConnection(tabeli_asukoht)
+    ' Funktsioon treeningsessiooni lisamiseks kasutaja treeningu ajaloo tabelisse
+    Public Function KasutajaTreeninguLisamine(ByVal kasutajaId As String, ByVal kuupaev As Integer, ByVal treeninguId As Integer, ByVal kestus As Integer) As Integer Implements ITreeningud.KasutajaTreeninguLisamine
+        Dim energiakulu = Math.Round(kestus * (TreeninguEnergiakuluParing(treeninguId) / 60), 1)
+
+        Using connection As New SQLiteConnection(tabeliAsukoht)
             connection.Open()
-            Dim insertDataSql As String = "INSERT INTO user_training_history (user_id, date, training_id, total_consumption, duration)
+            Dim sqlSisestus As String = "INSERT INTO user_training_history (user_id, date, training_id, total_consumption, duration)
           VALUES (@kasutaja_id, @kuupaev, @treeningu_id, @energiakulu, @kestus)"
-            Using cmd As New SQLiteCommand(insertDataSql, connection)
-                cmd.Parameters.AddWithValue("@kasutaja_id", kasutaja_id)
+            Using cmd As New SQLiteCommand(sqlSisestus, connection)
+                cmd.Parameters.AddWithValue("@kasutaja_id", kasutajaId)
                 cmd.Parameters.AddWithValue("@kuupaev", kuupaev)
-                cmd.Parameters.AddWithValue("@treeningu_id", treeningu_id)
+                cmd.Parameters.AddWithValue("@treeningu_id", treeninguId)
                 cmd.Parameters.AddWithValue("@energiakulu", energiakulu)
                 cmd.Parameters.AddWithValue("@kestus", kestus)
                 cmd.ExecuteNonQuery()
             End Using
         End Using
-        Return treeningu_id
+        Return treeninguId
     End Function
 
-    Public Function KustutaTreening(treeningu_id As Integer) As Integer Implements ITreeningud.KustutaTreening
+
+    ' Funktsioon treeningu kustutamiseks treeningute andmebaasist
+    Public Function KustutaTreening(ByVal treeninguId As Integer) As Integer Implements ITreeningud.KustutaTreening
         Dim tulemus As Integer = 0
-        Dim tabeli_asukoht As String = $"Data Source={Path.Combine(Path.GetFullPath(Path.Combine _
-        (AppDomain.CurrentDomain.BaseDirectory, "..\..\..\")), "Data", "database.db")};Version=3;"
-        Using connection As New SQLiteConnection(tabeli_asukoht)
+
+        Using connection As New SQLiteConnection(tabeliAsukoht)
             connection.Open()
-            Dim deleteSql As String = $"DELETE FROM training_data WHERE training_id = @treeningu_id"
-            Using cmd As New SQLiteCommand(deleteSql, connection)
-                cmd.Parameters.AddWithValue("@treeningu_id", treeningu_id)
+            Dim sqlEemaldus As String = $"DELETE FROM training_data WHERE training_id = @treeningu_id"
+            Using cmd As New SQLiteCommand(sqlEemaldus, connection)
+                cmd.Parameters.AddWithValue("@treeningu_id", treeninguId)
                 Dim rowsAffected As Integer = cmd.ExecuteNonQuery()
                 If rowsAffected > 0 Then
                     tulemus = 1
@@ -125,15 +143,16 @@ Public Class CTreeningud
         Return tulemus
     End Function
 
-    Public Function TreeninguNimeLeidmine(treeningu_id As Integer) As String Implements ITreeningud.TreeninguNimeLeidmine
+
+    ' Funktsioon treeningu nime leidmiseks läbi treeningu identifikaatori(id)
+    Public Function TreeninguNimeLeidmine(ByVal treeninguId As Integer) As String Implements ITreeningud.TreeninguNimeLeidmine
         Dim treeninguNimi As String = ""
-        Dim tabeli_asukoht As String = $"Data Source={Path.Combine(Path.GetFullPath(Path.Combine _
-        (AppDomain.CurrentDomain.BaseDirectory, "..\..\..\")), "Data", "database.db")};Version=3;"
-        Using connection As New SQLiteConnection(tabeli_asukoht)
+
+        Using connection As New SQLiteConnection(tabeliAsukoht)
             connection.Open()
-            Dim selectSql As String = "SELECT training_name FROM training_data WHERE training_id = @treeningu_id"
-            Using cmd As New SQLiteCommand(selectSql, connection)
-                cmd.Parameters.AddWithValue("@treeningu_id", treeningu_id)
+            Dim sqlParing As String = "SELECT training_name FROM training_data WHERE training_id = @treeningu_id"
+            Using cmd As New SQLiteCommand(sqlParing, connection)
+                cmd.Parameters.AddWithValue("@treeningu_id", treeninguId)
 
                 Dim result As Object = cmd.ExecuteScalar()
                 If result IsNot Nothing AndAlso Not DBNull.Value.Equals(result) Then
