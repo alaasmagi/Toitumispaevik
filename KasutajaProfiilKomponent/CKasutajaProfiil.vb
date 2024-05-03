@@ -1,34 +1,51 @@
-﻿Imports System.Data.SqlClient
+﻿
+' Kaloripäeviku projekt "Janar"
+' Kasutajaprofiili komponent
+'
+' Autorid:
+'           Aleksander Laasmägi
+'           Kristofer Mäeots
+'           Carmen Raun
+'           Eeva-Maria Tšernova
+'
+' 2024, TalTech
+
+Imports System.Data.SqlClient
 Imports System.Data.SQLite
 Imports System.IO
 Imports System.Security.Cryptography
 Imports System.Text
 Public Class CKasutajaProfiil
     Implements IKasutajaProfiil
+
+    ' Andmebaasi asukoha määramine
+    Dim tabeliAsukoht As String = $"Data Source={Path.Combine(Path.GetFullPath(Path.Combine _
+        (AppDomain.CurrentDomain.BaseDirectory, "..\..\..\")), "Data", "database.db")};Version=3;"
+
+
+    ' Funktsioon kasutajakonto loomiseks
     Public Function LooKonto(ByVal kasutajanimi As String, ByVal salasona As String, ByVal eesnimi As String,
-                                 ByVal taaste_id As Integer, ByVal taaste_vastus As String, ByVal pikkus As Integer,
+                                 ByVal taasteId As Integer, ByVal taasteVastus As String, ByVal pikkus As Integer,
                                  ByVal kaal As Integer, ByVal sugu As Boolean, ByVal vanus As Integer) As Integer Implements IKasutajaProfiil.LooKonto
 
-        Dim kasutaja_id As Integer = GenereeriId()
-        Dim salasona_hash As String = ArvutaHash(salasona)
-        Dim taaste_vastus_hash As String = ArvutaHash(taaste_vastus)
-        Dim eesnimi_krupt As String = Krupteerimine(eesnimi)
-        Dim kasutajanimi_krupt As String = Krupteerimine(kasutajanimi)
+        Dim kasutajaId As Integer = GenereeriId()
+        Dim salasonaHash As String = ArvutaHash(salasona)
+        Dim taasteVastusHash As String = ArvutaHash(taasteVastus)
+        Dim eesnimiKrupt As String = Krupteerimine(eesnimi)
+        Dim kasutajanimiKrupt As String = Krupteerimine(kasutajanimi)
 
-        Dim tabeli_asukoht As String = $"Data Source={Path.Combine(Path.GetFullPath(Path.Combine _
-        (AppDomain.CurrentDomain.BaseDirectory, "..\..\..\")), "Data", "database.db")};Version=3;"
-        Using connection As New SQLiteConnection(tabeli_asukoht)
+        Using connection As New SQLiteConnection(tabeliAsukoht)
             connection.Open()
-            Dim insertDataSql As String = "INSERT INTO user_data (user_id, username, password, firstname, recovery_question_id,
+            Dim sqlSisestus As String = "INSERT INTO user_data (user_id, username, password, firstname, recovery_question_id,
                 recovery_answer, height, weight, sex, age, calorie_limit, weight_goal) VALUES (@kasutaja_id, @kasutajanimi_krupt, @salasona_hash, @eesnimi_krupt, @taaste_id,
                 @taaste_vastus_hash, @pikkus, @kaal, @sugu, @vanus, 0, @kaal)"
-            Using cmd As New SQLiteCommand(insertDataSql, connection)
-                cmd.Parameters.AddWithValue("@kasutaja_id", kasutaja_id)
-                cmd.Parameters.AddWithValue("@kasutajanimi_krupt", kasutajanimi_krupt)
-                cmd.Parameters.AddWithValue("@salasona_hash", salasona_hash)
-                cmd.Parameters.AddWithValue("@eesnimi_krupt", eesnimi_krupt)
-                cmd.Parameters.AddWithValue("@taaste_id", taaste_id)
-                cmd.Parameters.AddWithValue("@taaste_vastus_hash", taaste_vastus_hash)
+            Using cmd As New SQLiteCommand(sqlSisestus, connection)
+                cmd.Parameters.AddWithValue("@kasutaja_id", kasutajaId)
+                cmd.Parameters.AddWithValue("@kasutajanimi_krupt", kasutajanimiKrupt)
+                cmd.Parameters.AddWithValue("@salasona_hash", salasonaHash)
+                cmd.Parameters.AddWithValue("@eesnimi_krupt", eesnimiKrupt)
+                cmd.Parameters.AddWithValue("@taaste_id", taasteId)
+                cmd.Parameters.AddWithValue("@taaste_vastus_hash", taasteVastusHash)
                 cmd.Parameters.AddWithValue("@pikkus", pikkus)
                 cmd.Parameters.AddWithValue("@kaal", kaal)
                 If sugu = True Then
@@ -38,55 +55,53 @@ Public Class CKasutajaProfiil
                 End If
                 cmd.Parameters.AddWithValue("@vanus", vanus)
                 cmd.ExecuteNonQuery()
-
             End Using
         End Using
-        Return kasutaja_id
+        Return kasutajaId
     End Function
 
+
+    ' Funktsioon kontrollimaks kasutajakonto olemasolu enne uue kasutajakonto loomist
+    ' Kasutatakse ka kasutajakonto identifikaatori(id) leidmiseks nime järgi
     Public Function KontrolliKontoOlemasolu(ByVal kasutajanimi As String) As Integer Implements IKasutajaProfiil.KontrolliKontoOlemasolu
-        Dim kasutaja_id As Integer = 0
-        Dim kasutajanimi_krupt As String = Krupteerimine(kasutajanimi)
-        Dim tabeli_asukoht As String = $"Data Source={Path.Combine(Path.GetFullPath(Path.Combine _
-        (AppDomain.CurrentDomain.BaseDirectory, "..\..\..\")), "Data", "database.db")};Version=3;"
-        Using connection As New SQLiteConnection(tabeli_asukoht)
+        Dim kasutajaId As Integer = 0
+        Dim kasutajanimiKrupt As String = Krupteerimine(kasutajanimi)
+
+        Using connection As New SQLiteConnection(tabeliAsukoht)
             connection.Open()
-
-            Dim sql As String = "SELECT user_id FROM user_data WHERE username = @kasutajanimi_krupt"
-            Using cmd As New SQLiteCommand(sql, connection)
-                cmd.Parameters.AddWithValue("@kasutajanimi_krupt", kasutajanimi_krupt)
-
-                Dim result As Object = cmd.ExecuteScalar()
-                If result IsNot Nothing AndAlso Not DBNull.Value.Equals(result) Then
-                    kasutaja_id = Convert.ToInt32(result)
+            Dim sqlParing As String = "SELECT user_id FROM user_data WHERE username = @kasutajanimi_krupt"
+            Using cmd As New SQLiteCommand(sqlParing, connection)
+                cmd.Parameters.AddWithValue("@kasutajanimi_krupt", kasutajanimiKrupt)
+                Dim tulem As Object = cmd.ExecuteScalar()
+                If tulem IsNot Nothing AndAlso Not DBNull.Value.Equals(tulem) Then
+                    kasutajaId = Convert.ToInt32(tulem)
                 End If
             End Using
         End Using
-        Return kasutaja_id
+        Return kasutajaId
     End Function
 
-    Public Function TurvaKusimuseLeidmine(ByVal kasutaja_id As Integer) As String Implements IKasutajaProfiil.TurvaKusimuseLeidmine
 
-        Dim kusimuse_id As Integer
+    ' Funktsioon leidmaks kasutajakontoga seotud turvaküsimust
+    Public Function TurvaKusimuseLeidmine(ByVal kasutajaId As Integer) As String Implements IKasutajaProfiil.TurvaKusimuseLeidmine
+        Dim kusimuseId As Integer
         Dim kusimus As String = ""
 
-        Dim tabeli_asukoht As String = $"Data Source={Path.Combine(Path.GetFullPath(Path.Combine _
-        (AppDomain.CurrentDomain.BaseDirectory, "..\..\..\")), "Data", "database.db")};Version=3;"
-        Using connection As New SQLiteConnection(tabeli_asukoht)
+        Using connection As New SQLiteConnection(tabeliAsukoht)
             connection.Open()
-            Dim sql As String = $"SELECT recovery_question_id FROM user_data WHERE user_id = @kasutaja_id"
-            Using cmd As New SQLiteCommand(sql, connection)
-                cmd.Parameters.AddWithValue("@kasutaja_id", kasutaja_id)
+            Dim sqlParing As String = $"SELECT recovery_question_id FROM user_data WHERE user_id = @kasutaja_id"
+            Using cmd As New SQLiteCommand(sqlParing, connection)
+                cmd.Parameters.AddWithValue("@kasutaja_id", kasutajaId)
                 Using reader As SQLiteDataReader = cmd.ExecuteReader()
                     While reader.Read()
-                        kusimuse_id = reader("recovery_question_id")
+                        kusimuseId = reader("recovery_question_id")
                     End While
                 End Using
             End Using
 
-            sql = "SELECT recovery_question FROM recovery_questions WHERE recovery_question_id = @kusimuse_id"
-            Using cmd As New SQLiteCommand(sql, connection)
-                cmd.Parameters.AddWithValue("@kusimuse_id", kusimuse_id)
+            sqlParing = "SELECT recovery_question FROM recovery_questions WHERE recovery_question_id = @kusimuse_id"
+            Using cmd As New SQLiteCommand(sqlParing, connection)
+                cmd.Parameters.AddWithValue("@kusimuse_id", kusimuseId)
 
                 Using reader As SQLiteDataReader = cmd.ExecuteReader()
                     While reader.Read()
@@ -98,59 +113,64 @@ Public Class CKasutajaProfiil
         Return kusimus
     End Function
 
-    Public Function SisseLogimine(ByVal kasutaja_id As Integer, ByVal salasona As String) As Integer Implements IKasutajaProfiil.SisseLogimine
 
-        Dim salasona_hash As String = ArvutaHash(salasona)
-        Dim tabeli_salasona_hash As String = ""
-        Dim tabeli_asukoht As String = $"Data Source={Path.Combine(Path.GetFullPath(Path.Combine _
-       (AppDomain.CurrentDomain.BaseDirectory, "..\..\..\")), "Data", "database.db")};Version=3;"
-        Using connection As New SQLiteConnection(tabeli_asukoht)
+    ' Funktsioon kasutajakontosse sisselogimiseks
+    Public Function SisseLogimine(ByVal kasutajaId As Integer, ByVal salasona As String) As Integer Implements IKasutajaProfiil.SisseLogimine
+        Dim salasonaHash As String = ArvutaHash(salasona)
+        Dim tabeliSalasonaHash As String = ""
+
+        Using connection As New SQLiteConnection(tabeliAsukoht)
             connection.Open()
-            Dim sql As String = "SELECT password FROM user_data WHERE user_id = @kasutaja_id"
+            Dim sqlParing As String = "SELECT password FROM user_data WHERE user_id = @kasutaja_id"
             Using cmd As New SQLiteCommand(sql, connection)
-                cmd.Parameters.AddWithValue("@kasutaja_id", kasutaja_id)
+                cmd.Parameters.AddWithValue("@kasutaja_id", kasutajaId)
                 Using reader As SQLiteDataReader = cmd.ExecuteReader()
                     While reader.Read()
-                        tabeli_salasona_hash = reader("password")
+                        tabeliSalasonaHash = reader("password")
                     End While
                 End Using
             End Using
         End Using
 
-        If tabeli_salasona_hash = salasona_hash Then
+        If tabeliSalasonaHash = salasonaHash Then
             Return 1
         Else
             Return 0
         End If
     End Function
-    Private Function GenereeriId() As Integer Implements IKasutajaProfiil.GenereeriId
-        Dim random As New Random()
-        Dim genereeritudId As Integer = random.Next(1002, 1200)
 
+
+    ' Funktsioon uue lisatava kasutajakonto identifikaatori(id) juhuslikuks genereerimiseks vahemiks 1002-1200
+    Private Function GenereeriId() As Integer Implements IKasutajaProfiil.GenereeriId
+        Dim juhuslikNr As New Random()
+        Dim genereeritudId As Integer = juhuslikNr.Next(1002, 1200)
         Return genereeritudId
     End Function
 
+
+    ' Funktsioon hash-i arvutamiseks
     Public Function ArvutaHash(ByVal sisend As String) As String Implements IKasutajaProfiil.ArvutaHash
         Dim sha256 As SHA256 = SHA256.Create()
-        Dim baitide_massiiv As Byte() = Encoding.UTF8.GetBytes(sisend)
-        Dim hashi_baidid As Byte() = sha256.ComputeHash(baitide_massiiv)
+        Dim baitideMassiiv As Byte() = Encoding.UTF8.GetBytes(sisend)
+        Dim hashiBaidid As Byte() = sha256.ComputeHash(baitideMassiiv)
         Dim builder As New StringBuilder()
 
-        For Each b As Byte In hashi_baidid
+        For Each b As Byte In hashiBaidid
             builder.Append(b.ToString("x2"))
         Next
-
         Return builder.ToString()
     End Function
-    Public Function UheAndmevaljaParingKasutajaTabelist(ByVal kasutaja_id As String, ByVal andmevali As String) As String Implements IKasutajaProfiil.UheAndmevaljaParingKasutajaTabelist
+
+
+    ' Funktsioon kasutajaprofiili tabelist ühe andmevälja pärimiseks
+    Public Function UheAndmevaljaParingKasutajaTabelist(ByVal kasutajaId As String, ByVal andmevali As String) As String Implements IKasutajaProfiil.UheAndmevaljaParingKasutajaTabelist
         Dim tagastus As String = ""
-        Dim tabeli_asukoht As String = $"Data Source={Path.Combine(Path.GetFullPath(Path.Combine _
-        (AppDomain.CurrentDomain.BaseDirectory, "..\..\..\")), "Data", "database.db")};Version=3;"
-        Using connection As New SQLiteConnection(tabeli_asukoht)
+
+        Using connection As New SQLiteConnection(tabeliAsukoht)
             connection.Open()
-            Dim sql As String = $"SELECT {andmevali} FROM user_data WHERE user_id = @kasutaja_id"
-            Using cmd As New SQLiteCommand(sql, connection)
-                cmd.Parameters.AddWithValue("@kasutaja_id", kasutaja_id)
+            Dim sqlParing As String = $"SELECT {andmevali} FROM user_data WHERE user_id = @kasutaja_id"
+            Using cmd As New SQLiteCommand(sqlParing, connection)
+                cmd.Parameters.AddWithValue("@kasutaja_id", kasutajaId)
                 Using reader As SQLiteDataReader = cmd.ExecuteReader()
                     While reader.Read()
                         tagastus = reader(andmevali).ToString()
@@ -160,6 +180,9 @@ Public Class CKasutajaProfiil
         End Using
         Return tagastus
     End Function
+
+
+    ' Funktsioon kasutaja eesnime ja kasutajanime krüpteerimiseks
     Public Function Krupteerimine(ByVal sisend As String) As String Implements IKasutajaProfiil.Krupteerimine
         Dim valjund As New StringBuilder()
 
@@ -176,6 +199,9 @@ Public Class CKasutajaProfiil
         Next
         Return valjund.ToString()
     End Function
+
+
+    ' Funktsioon kasutaja eesnime ja kasutajanime dekrüpteerimiseks
     Public Function Dekrupteerimine(ByVal sisend As String) As String Implements IKasutajaProfiil.Dekrupteerimine
         Dim valjund As New StringBuilder()
 
@@ -190,19 +216,19 @@ Public Class CKasutajaProfiil
                 valjund.Append(taht)
             End If
         Next
-
         Return valjund.ToString()
     End Function
 
-    Public Function UheIntegerAndmeValjaParingKasutajaTabelist(ByVal kasutaja_id As Integer, ByVal andmevali As String) As Integer Implements IKasutajaProfiil.UheIntegerAndmeValjaParingKasutajaTabelist
+
+
+    ' Funktsioon kasutajaprofiili tabelist ühe integer tüüpi andmevälja pärimiseks
+    Public Function UheIntegerAndmeValjaParingKasutajaTabelist(ByVal kasutajaId As Integer, ByVal andmevali As String) As Integer Implements IKasutajaProfiil.UheIntegerAndmeValjaParingKasutajaTabelist
         Dim tagastus As Integer
-        Dim tabeli_asukoht As String = $"Data Source={Path.Combine(Path.GetFullPath(Path.Combine _
-        (AppDomain.CurrentDomain.BaseDirectory, "..\..\..\")), "Data", "database.db")};Version=3;"
-        Using connection As New SQLiteConnection(tabeli_asukoht)
+        Using connection As New SQLiteConnection(tabeliAsukoht)
             connection.Open()
-            Dim sql As String = $"SELECT {andmevali} FROM user_data WHERE user_id = @kasutaja_id"
-            Using cmd As New SQLiteCommand(sql, connection)
-                cmd.Parameters.AddWithValue("@kasutaja_id", kasutaja_id)
+            Dim sqlParing As String = $"SELECT {andmevali} FROM user_data WHERE user_id = @kasutaja_id"
+            Using cmd As New SQLiteCommand(sqlParing, connection)
+                cmd.Parameters.AddWithValue("@kasutaja_id", kasutajaId)
                 Using reader As SQLiteDataReader = cmd.ExecuteReader()
                     While reader.Read()
                         tagastus = Integer.Parse(reader(andmevali).ToString())
@@ -213,46 +239,47 @@ Public Class CKasutajaProfiil
         Return tagastus
     End Function
 
-    Public Sub IntegerAndmeValjaSisestusKasutajaTabelisse(ByVal kasutaja_id As Integer, ByVal uus_vaartus As Integer, ByVal andmevali As String) Implements IKasutajaProfiil.IntegerAndmeValjaSisestusKasutajaTabelisse
-        Dim tabeli_asukoht As String = $"Data Source={Path.Combine(Path.GetFullPath(Path.Combine _
-        (AppDomain.CurrentDomain.BaseDirectory, "..\..\..\")), "Data", "database.db")};Version=3;"
-        Using connection As New SQLiteConnection(tabeli_asukoht)
+
+    ' Funktsioon ühe integer andmevälja uuendamiseks kasutajaprofiili tabelis
+    Public Sub IntegerAndmeValjaSisestusKasutajaTabelisse(ByVal kasutajaId As Integer, ByVal uusVaartus As Integer, ByVal andmevali As String) Implements IKasutajaProfiil.IntegerAndmeValjaSisestusKasutajaTabelisse
+        Using connection As New SQLiteConnection(tabeliAsukoht)
             connection.Open()
-            Dim sql As String = $"UPDATE user_data SET {andmevali} = @sisend WHERE user_id = @kasutaja_id"
-            Using cmd As New SQLiteCommand(sql, connection)
-                cmd.Parameters.AddWithValue("@sisend", uus_vaartus)
-                cmd.Parameters.AddWithValue("@kasutaja_id", kasutaja_id)
-                cmd.ExecuteNonQuery()
-            End Using
-        End Using
-    End Sub
-    Public Sub VahetaSalasona(ByVal kasutaja_id As String, ByVal uus_salasona As String) Implements IKasutajaProfiil.VahetaSalasona
-        Dim sisend = ArvutaHash(uus_salasona)
-        Dim tabeli_asukoht As String = $"Data Source={Path.Combine(Path.GetFullPath(Path.Combine _
-        (AppDomain.CurrentDomain.BaseDirectory, "..\..\..\")), "Data", "database.db")};Version=3;"
-        Using connection As New SQLiteConnection(tabeli_asukoht)
-            connection.Open()
-            Dim sql As String = "UPDATE user_data SET password = @sisend WHERE user_id = @kasutaja_id"
-            Using cmd As New SQLiteCommand(sql, connection)
-                cmd.Parameters.AddWithValue("@sisend", sisend)
-                cmd.Parameters.AddWithValue("@kasutaja_id", kasutaja_id)
+            Dim sqlUuendus As String = $"UPDATE user_data SET {andmevali} = @sisend WHERE user_id = @kasutaja_id"
+            Using cmd As New SQLiteCommand(sqlUuendus, connection)
+                cmd.Parameters.AddWithValue("@sisend", uusVaartus)
+                cmd.Parameters.AddWithValue("@kasutaja_id", kasutajaId)
                 cmd.ExecuteNonQuery()
             End Using
         End Using
     End Sub
 
+
+    ' Funktsioon kasutaja salasõna vahetamiseks
+    Public Sub VahetaSalasona(ByVal kasutajaId As String, ByVal uusSalasona As String) Implements IKasutajaProfiil.VahetaSalasona
+        Dim sisend = ArvutaHash(uusSalasona)
+
+        Using connection As New SQLiteConnection(tabeliAsukoht)
+            connection.Open()
+            Dim sqlUuendus As String = "UPDATE user_data SET password = @sisend WHERE user_id = @kasutaja_id"
+            Using cmd As New SQLiteCommand(sqlUuendus, connection)
+                cmd.Parameters.AddWithValue("@sisend", sisend)
+                cmd.Parameters.AddWithValue("@kasutaja_id", kasutajaId)
+                cmd.ExecuteNonQuery()
+            End Using
+        End Using
+    End Sub
+
+
+    ' Funktsioon kõikide turvaküsimuste kuvamiseks kasutajaliideses
     Public Function TurvaKusimused() As List(Of String) Implements IKasutajaProfiil.TurvaKusimused
         Dim kusimused As New List(Of String)()
-        Dim tabeli_asukoht As String = $"Data Source={Path.Combine(Path.GetFullPath(Path.Combine _
-        (AppDomain.CurrentDomain.BaseDirectory, "..\..\..\")), "Data", "database.db")};Version=3;"
-        Using connection As New SQLiteConnection(tabeli_asukoht)
+
+        Using connection As New SQLiteConnection(tabeliAsukoht)
             connection.Open()
             For index = 0 To 10
-                Dim selectSql As String = "SELECT recovery_question FROM recovery_questions WHERE recovery_question_id = @id"
-
-                Using cmd As New SQLiteCommand(selectSql, connection)
+                Dim sqlParing As String = "SELECT recovery_question FROM recovery_questions WHERE recovery_question_id = @id"
+                Using cmd As New SQLiteCommand(sqlParing, connection)
                     cmd.Parameters.AddWithValue("@id", index)
-
                     Using reader As SQLiteDataReader = cmd.ExecuteReader()
                         While reader.Read()
                             kusimused.Add(reader("recovery_question"))

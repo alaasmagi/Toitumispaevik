@@ -21,6 +21,7 @@ Public Class CAnaluus
     Private ohtu
     Private vahepala
 
+    ' Andmebaasi asukoha määramine
     Dim tabeliAsukoht As String = $"Data Source={Path.Combine(Path.GetFullPath(Path.Combine _
         (AppDomain.CurrentDomain.BaseDirectory, "..\..\..\")), "Data", "database.db")};Version=3;"
 

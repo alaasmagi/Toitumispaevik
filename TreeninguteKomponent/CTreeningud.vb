@@ -15,6 +15,7 @@ Imports System.Data.SQLite
 Public Class CTreeningud
     Implements ITreeningud
 
+    ' Andmebaasi asukoha määramine
     Dim tabeliAsukoht As String = $"Data Source={Path.Combine(Path.GetFullPath(Path.Combine _
         (AppDomain.CurrentDomain.BaseDirectory, "..\..\..\")), "Data", "database.db")};Version=3;"
 

@@ -26,7 +26,7 @@ Public Interface IAnaluus
     Function RetseptiToiduaineToitevaartuseArvutus(ByVal toitevaartus100gKohta As Integer, ByVal kogus As Integer) As Integer
     Function DBParingBMR(ByVal kasutajaId As Integer, ByVal sugu As Integer, ByVal vanus As Integer, ByVal kaal As Double,
                          ByVal kaaluEesmark As Double, ByVal pikkus As Integer, ByVal kuupaev As Integer) As Integer
-    Function KaaluLisamine(ByVal kasutajaId As Integer, ByVal uus_kaal As Double) As Double
+    Function KaaluLisamine(ByVal kasutajaId As Integer, ByVal uusKaal As Double) As Double
     Function PaevaseAndmereaParing(ByVal kasutajaId As Integer, ByVal kuupaev As Integer, ByVal otsitavSuurus As String) As Integer
     Function TuhjaPaevaseAndmereaSisestus(ByVal kasutajaId As Integer, ByVal kaal As Integer, ByVal kuupaev As Integer) As Integer
     Function KaaluDateParingAndmebaasist(ByVal kasutajaId As Integer, ByVal kuupaev As Integer, ByVal graafikuPikkus As Integer) As Integer()
