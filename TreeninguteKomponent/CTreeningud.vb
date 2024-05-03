@@ -134,8 +134,8 @@ Public Class CTreeningud
             Dim sqlEemaldus As String = $"DELETE FROM training_data WHERE training_id = @treeningu_id"
             Using cmd As New SQLiteCommand(sqlEemaldus, connection)
                 cmd.Parameters.AddWithValue("@treeningu_id", treeninguId)
-                Dim rowsAffected As Integer = cmd.ExecuteNonQuery()
-                If rowsAffected > 0 Then
+                Dim muudetudRead As Integer = cmd.ExecuteNonQuery()
+                If muudetudRead > 0 Then
                     tulemus = 1
                 End If
             End Using
@@ -153,10 +153,9 @@ Public Class CTreeningud
             Dim sqlParing As String = "SELECT training_name FROM training_data WHERE training_id = @treeningu_id"
             Using cmd As New SQLiteCommand(sqlParing, connection)
                 cmd.Parameters.AddWithValue("@treeningu_id", treeninguId)
-
-                Dim result As Object = cmd.ExecuteScalar()
-                If result IsNot Nothing AndAlso Not DBNull.Value.Equals(result) Then
-                    treeninguNimi = Convert.ToString(result)
+                Dim tulem As Object = cmd.ExecuteScalar()
+                If tulem IsNot Nothing AndAlso Not DBNull.Value.Equals(tulem) Then
+                    treeninguNimi = Convert.ToString(tulem)
                 End If
             End Using
         End Using
