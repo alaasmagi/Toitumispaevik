@@ -947,7 +947,7 @@ Public Class Pohiaken
         paevasedToidud(0)(2) = "Kalorid:"
 
         For toit = 0 To paevasteToitudeId.Count - 1
-            Dim toiduRida(2) As String ' Loome uue massiivi 3 elemendiga
+            Dim toiduRida(2) As String
             toiduRida(0) = AnaluusK.IntegerKuupaevaks(ajalooKuupaev)
             If paevasteToitudeId(toit) < 3000 Then
                 toiduRida(1) = ToidudRetseptidK.ToiduaineVoiRetseptiNimi(paevasteToitudeId(toit), 0)
@@ -963,7 +963,7 @@ Public Class Pohiaken
         paevasedTreeningud(0)(2) = "Kulutatud kalorid:"
 
         For treening = 0 To paevasteTreeninguteId.Count - 1
-            Dim treeninguRida(2) As String ' Loome uue massiivi 3 elemendiga
+            Dim treeninguRida(2) As String
             treeninguRida(0) = AnaluusK.IntegerKuupaevaks(ajalooKuupaev)
             treeninguRida(1) = TreeningudK.TreeninguNimeLeidmine(paevasteTreeninguteId(treening))
             treeninguRida(2) = paevasteTreeninguteKcal(treening) & "kcal"
