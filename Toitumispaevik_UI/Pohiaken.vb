@@ -94,6 +94,8 @@ Public Class Pohiaken
         pnlProfiiliSeaded.Visible = False
         pnlRakenduseInfo.Visible = False
         pnlKodu.Visible = True
+        menuuNuppudeVaikeVarv()
+        btnKodu.BackColor = Color.FromArgb(221, 241, 239)
 
         lblEesnimi.Text = ProfiilK.Dekrupteerimine(ProfiilK.UheAndmevaljaParingKasutajaTabelist(_kasutajaId, "firstname"))
         lblKoduEesnimi.Text = lblEesnimi.Text & "!"
@@ -321,6 +323,8 @@ Public Class Pohiaken
         pnlProfiiliSeaded.Visible = False
         pnlRakenduseInfo.Visible = False
         pnlToidulaud.Visible = True
+        menuuNuppudeVaikeVarv()
+        btnToidulaud.BackColor = Color.FromArgb(221, 241, 239)
     End Sub
 
 
@@ -333,6 +337,8 @@ Public Class Pohiaken
         pnlProfiiliSeaded.Visible = False
         pnlRakenduseInfo.Visible = False
         pnlTreeningud.Visible = True
+        menuuNuppudeVaikeVarv()
+        btnTreeningud.BackColor = Color.FromArgb(221, 241, 239)
     End Sub
 
 
@@ -345,6 +351,8 @@ Public Class Pohiaken
         pnlRakenduseInfo.Visible = False
         pnlProfiiliSeaded.Visible = False
         pnlYlevaade.Visible = True
+        menuuNuppudeVaikeVarv()
+        btnYlevaade.BackColor = Color.FromArgb(221, 241, 239)
     End Sub
 
 
@@ -359,18 +367,8 @@ Public Class Pohiaken
         pnlRakenduseInfo.Visible = False
         pnlAjalugu.Visible = True
         MakroGraafik()
-    End Sub
-
-
-    ' Funktsioon, mis reageerib tuleviku nupu vajutusele
-    Private Sub btnTulevik_Click(sender As Object, e As EventArgs)
-        pnlYlevaade.Visible = False
-        pnlTreeningud.Visible = False
-        pnlToidulaud.Visible = False
-        pnlAjalugu.Visible = False
-        pnlKodu.Visible = False
-        pnlProfiiliSeaded.Visible = False
-        pnlRakenduseInfo.Visible = False
+        menuuNuppudeVaikeVarv()
+        btnAjalugu.BackColor = Color.FromArgb(221, 241, 239)
     End Sub
 
 
@@ -383,6 +381,8 @@ Public Class Pohiaken
         pnlKodu.Visible = False
         pnlRakenduseInfo.Visible = False
         pnlProfiiliSeaded.Visible = True
+        menuuNuppudeVaikeVarv()
+        btnProfiiliSeaded.BackColor = Color.FromArgb(221, 241, 239)
 
         kasutajaKaal = ProfiilK.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutajaId, "weight")
         kaaluEesmark = ProfiilK.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutajaId, "weight_goal")
@@ -419,6 +419,8 @@ Public Class Pohiaken
         pnlProfiiliSeaded.Visible = False
         pnlRakenduseInfo.Visible = False
         pnlKodu.Visible = True
+        menuuNuppudeVaikeVarv()
+        btnKodu.BackColor = Color.FromArgb(221, 241, 239)
     End Sub
 
 
@@ -544,6 +546,17 @@ Public Class Pohiaken
         End If
         AjalooInfo()
         KoduGraafik()
+    End Sub
+
+
+    ' Funktsioon, mis seab menüünuppudele taustaks programmi vaikeväärtuse
+    Private Sub menuuNuppudeVaikeVarv()
+        btnToidulaud.BackColor = Color.FromArgb(188, 227, 224)
+        btnTreeningud.BackColor = Color.FromArgb(188, 227, 224)
+        btnYlevaade.BackColor = Color.FromArgb(188, 227, 224)
+        btnAjalugu.BackColor = Color.FromArgb(188, 227, 224)
+        btnKodu.BackColor = Color.FromArgb(188, 227, 224)
+        btnProfiiliSeaded.BackColor = Color.FromArgb(188, 227, 224)
     End Sub
 
 
