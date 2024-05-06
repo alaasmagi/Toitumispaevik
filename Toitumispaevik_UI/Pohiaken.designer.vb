@@ -498,7 +498,7 @@ Partial Class Pohiaken
         Me.btnProfiiliSeaded.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.btnProfiiliSeaded.Font = New System.Drawing.Font("Century Gothic", 12.0!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Italic), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnProfiiliSeaded.ForeColor = System.Drawing.Color.FromArgb(CType(CType(35, Byte), Integer), CType(CType(74, Byte), Integer), CType(CType(71, Byte), Integer))
-        Me.btnProfiiliSeaded.Location = New System.Drawing.Point(496, 0)
+        Me.btnProfiiliSeaded.Location = New System.Drawing.Point(497, 0)
         Me.btnProfiiliSeaded.Margin = New System.Windows.Forms.Padding(2)
         Me.btnProfiiliSeaded.Name = "btnProfiiliSeaded"
         Me.btnProfiiliSeaded.Size = New System.Drawing.Size(178, 100)
