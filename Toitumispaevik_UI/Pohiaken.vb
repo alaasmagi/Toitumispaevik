@@ -95,7 +95,7 @@ Public Class Pohiaken
         pnlRakenduseInfo.Visible = False
         pnlKodu.Visible = True
         menuuNuppudeVaikeVarv()
-        btnKodu.BackColor = Color.FromArgb(221, 241, 239)
+        btnKodu.BackColor = Color.FromArgb(205, 234, 231)
 
         lblEesnimi.Text = ProfiilK.Dekrupteerimine(ProfiilK.UheAndmevaljaParingKasutajaTabelist(_kasutajaId, "firstname"))
         lblKoduEesnimi.Text = lblEesnimi.Text & "!"
@@ -324,7 +324,7 @@ Public Class Pohiaken
         pnlRakenduseInfo.Visible = False
         pnlToidulaud.Visible = True
         menuuNuppudeVaikeVarv()
-        btnToidulaud.BackColor = Color.FromArgb(221, 241, 239)
+        btnToidulaud.BackColor = Color.FromArgb(205, 234, 231)
     End Sub
 
 
@@ -338,7 +338,7 @@ Public Class Pohiaken
         pnlRakenduseInfo.Visible = False
         pnlTreeningud.Visible = True
         menuuNuppudeVaikeVarv()
-        btnTreeningud.BackColor = Color.FromArgb(221, 241, 239)
+        btnTreeningud.BackColor = Color.FromArgb(205, 234, 231)
     End Sub
 
 
@@ -352,7 +352,7 @@ Public Class Pohiaken
         pnlProfiiliSeaded.Visible = False
         pnlYlevaade.Visible = True
         menuuNuppudeVaikeVarv()
-        btnYlevaade.BackColor = Color.FromArgb(221, 241, 239)
+        btnYlevaade.BackColor = Color.FromArgb(205, 234, 231)
     End Sub
 
 
@@ -368,7 +368,7 @@ Public Class Pohiaken
         pnlAjalugu.Visible = True
         MakroGraafik()
         menuuNuppudeVaikeVarv()
-        btnAjalugu.BackColor = Color.FromArgb(221, 241, 239)
+        btnAjalugu.BackColor = Color.FromArgb(205, 234, 231)
     End Sub
 
 
@@ -382,7 +382,7 @@ Public Class Pohiaken
         pnlRakenduseInfo.Visible = False
         pnlProfiiliSeaded.Visible = True
         menuuNuppudeVaikeVarv()
-        btnProfiiliSeaded.BackColor = Color.FromArgb(221, 241, 239)
+        btnProfiiliSeaded.BackColor = Color.FromArgb(205, 234, 231)
 
         kasutajaKaal = ProfiilK.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutajaId, "weight")
         kaaluEesmark = ProfiilK.UheIntegerAndmeValjaParingKasutajaTabelist(_kasutajaId, "weight_goal")
@@ -420,7 +420,7 @@ Public Class Pohiaken
         pnlRakenduseInfo.Visible = False
         pnlKodu.Visible = True
         menuuNuppudeVaikeVarv()
-        btnKodu.BackColor = Color.FromArgb(221, 241, 239)
+        btnKodu.BackColor = Color.FromArgb(205, 234, 231)
     End Sub
 
 
