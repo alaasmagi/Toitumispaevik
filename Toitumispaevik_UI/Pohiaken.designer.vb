@@ -26,22 +26,22 @@ Partial Class Pohiaken
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Pohiaken))
-        Dim ChartArea25 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
-        Dim Legend25 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
-        Dim Series31 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
-        Dim Title19 As System.Windows.Forms.DataVisualization.Charting.Title = New System.Windows.Forms.DataVisualization.Charting.Title()
-        Dim ChartArea26 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
-        Dim Legend26 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
-        Dim Series32 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
-        Dim Series33 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
-        Dim Title20 As System.Windows.Forms.DataVisualization.Charting.Title = New System.Windows.Forms.DataVisualization.Charting.Title()
-        Dim ChartArea27 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
-        Dim Legend27 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
-        Dim Series34 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
-        Dim ChartArea28 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
-        Dim Legend28 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
-        Dim Series35 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
-        Dim Title21 As System.Windows.Forms.DataVisualization.Charting.Title = New System.Windows.Forms.DataVisualization.Charting.Title()
+        Dim ChartArea9 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
+        Dim Legend9 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
+        Dim Series11 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
+        Dim Title7 As System.Windows.Forms.DataVisualization.Charting.Title = New System.Windows.Forms.DataVisualization.Charting.Title()
+        Dim ChartArea10 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
+        Dim Legend10 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
+        Dim Series12 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
+        Dim Series13 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
+        Dim Title8 As System.Windows.Forms.DataVisualization.Charting.Title = New System.Windows.Forms.DataVisualization.Charting.Title()
+        Dim ChartArea11 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
+        Dim Legend11 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
+        Dim Series14 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
+        Dim ChartArea12 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
+        Dim Legend12 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
+        Dim Series15 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
+        Dim Title9 As System.Windows.Forms.DataVisualization.Charting.Title = New System.Windows.Forms.DataVisualization.Charting.Title()
         Me.pnlLeftBar = New System.Windows.Forms.Panel()
         Me.btnToidulaud = New System.Windows.Forms.Button()
         Me.btnAjalugu = New System.Windows.Forms.Button()
@@ -99,6 +99,9 @@ Partial Class Pohiaken
         Me.btnLisaUusToiduaine = New System.Windows.Forms.Button()
         Me.Label15 = New System.Windows.Forms.Label()
         Me.pnlRakenduseInfo = New System.Windows.Forms.Panel()
+        Me.lnklblPaulig = New System.Windows.Forms.LinkLabel()
+        Me.lnklblBelief = New System.Windows.Forms.LinkLabel()
+        Me.lnklblMonster = New System.Windows.Forms.LinkLabel()
         Me.Label50 = New System.Windows.Forms.Label()
         Me.Label49 = New System.Windows.Forms.Label()
         Me.PictureBox4 = New System.Windows.Forms.PictureBox()
@@ -479,7 +482,7 @@ Partial Class Pohiaken
         Me.btnLogiValja.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.btnLogiValja.Font = New System.Drawing.Font("Century Gothic", 12.0!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Italic), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnLogiValja.ForeColor = System.Drawing.Color.White
-        Me.btnLogiValja.Location = New System.Drawing.Point(672, 0)
+        Me.btnLogiValja.Location = New System.Drawing.Point(673, 0)
         Me.btnLogiValja.Margin = New System.Windows.Forms.Padding(2)
         Me.btnLogiValja.Name = "btnLogiValja"
         Me.btnLogiValja.Size = New System.Drawing.Size(178, 100)
@@ -495,7 +498,7 @@ Partial Class Pohiaken
         Me.btnProfiiliSeaded.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.btnProfiiliSeaded.Font = New System.Drawing.Font("Century Gothic", 12.0!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Italic), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnProfiiliSeaded.ForeColor = System.Drawing.Color.FromArgb(CType(CType(35, Byte), Integer), CType(CType(74, Byte), Integer), CType(CType(71, Byte), Integer))
-        Me.btnProfiiliSeaded.Location = New System.Drawing.Point(494, 0)
+        Me.btnProfiiliSeaded.Location = New System.Drawing.Point(495, 0)
         Me.btnProfiiliSeaded.Margin = New System.Windows.Forms.Padding(2)
         Me.btnProfiiliSeaded.Name = "btnProfiiliSeaded"
         Me.btnProfiiliSeaded.Size = New System.Drawing.Size(178, 100)
@@ -1069,6 +1072,9 @@ Partial Class Pohiaken
         '
         'pnlRakenduseInfo
         '
+        Me.pnlRakenduseInfo.Controls.Add(Me.lnklblPaulig)
+        Me.pnlRakenduseInfo.Controls.Add(Me.lnklblBelief)
+        Me.pnlRakenduseInfo.Controls.Add(Me.lnklblMonster)
         Me.pnlRakenduseInfo.Controls.Add(Me.Label50)
         Me.pnlRakenduseInfo.Controls.Add(Me.Label49)
         Me.pnlRakenduseInfo.Controls.Add(Me.PictureBox4)
@@ -1088,6 +1094,48 @@ Partial Class Pohiaken
         Me.pnlRakenduseInfo.Size = New System.Drawing.Size(852, 481)
         Me.pnlRakenduseInfo.TabIndex = 0
         '
+        'lnklblPaulig
+        '
+        Me.lnklblPaulig.AutoSize = True
+        Me.lnklblPaulig.DisabledLinkColor = System.Drawing.Color.FromArgb(CType(CType(35, Byte), Integer), CType(CType(74, Byte), Integer), CType(CType(71, Byte), Integer))
+        Me.lnklblPaulig.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lnklblPaulig.LinkColor = System.Drawing.Color.FromArgb(CType(CType(35, Byte), Integer), CType(CType(74, Byte), Integer), CType(CType(71, Byte), Integer))
+        Me.lnklblPaulig.Location = New System.Drawing.Point(696, 432)
+        Me.lnklblPaulig.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.lnklblPaulig.Name = "lnklblPaulig"
+        Me.lnklblPaulig.Size = New System.Drawing.Size(34, 16)
+        Me.lnklblPaulig.TabIndex = 18
+        Me.lnklblPaulig.TabStop = True
+        Me.lnklblPaulig.Text = "LINK"
+        '
+        'lnklblBelief
+        '
+        Me.lnklblBelief.AutoSize = True
+        Me.lnklblBelief.DisabledLinkColor = System.Drawing.Color.FromArgb(CType(CType(35, Byte), Integer), CType(CType(74, Byte), Integer), CType(CType(71, Byte), Integer))
+        Me.lnklblBelief.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lnklblBelief.LinkColor = System.Drawing.Color.FromArgb(CType(CType(35, Byte), Integer), CType(CType(74, Byte), Integer), CType(CType(71, Byte), Integer))
+        Me.lnklblBelief.Location = New System.Drawing.Point(696, 349)
+        Me.lnklblBelief.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.lnklblBelief.Name = "lnklblBelief"
+        Me.lnklblBelief.Size = New System.Drawing.Size(34, 16)
+        Me.lnklblBelief.TabIndex = 17
+        Me.lnklblBelief.TabStop = True
+        Me.lnklblBelief.Text = "LINK"
+        '
+        'lnklblMonster
+        '
+        Me.lnklblMonster.AutoSize = True
+        Me.lnklblMonster.DisabledLinkColor = System.Drawing.Color.FromArgb(CType(CType(35, Byte), Integer), CType(CType(74, Byte), Integer), CType(CType(71, Byte), Integer))
+        Me.lnklblMonster.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lnklblMonster.LinkColor = System.Drawing.Color.FromArgb(CType(CType(35, Byte), Integer), CType(CType(74, Byte), Integer), CType(CType(71, Byte), Integer))
+        Me.lnklblMonster.Location = New System.Drawing.Point(696, 263)
+        Me.lnklblMonster.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.lnklblMonster.Name = "lnklblMonster"
+        Me.lnklblMonster.Size = New System.Drawing.Size(34, 16)
+        Me.lnklblMonster.TabIndex = 16
+        Me.lnklblMonster.TabStop = True
+        Me.lnklblMonster.Text = "LINK"
+        '
         'Label50
         '
         Me.Label50.AutoSize = True
@@ -1105,7 +1153,7 @@ Partial Class Pohiaken
         Me.Label49.AutoSize = True
         Me.Label49.Font = New System.Drawing.Font("Century Gothic", 12.0!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Italic), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label49.ForeColor = System.Drawing.Color.Black
-        Me.Label49.Location = New System.Drawing.Point(570, 235)
+        Me.Label49.Location = New System.Drawing.Point(570, 172)
         Me.Label49.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label49.Name = "Label49"
         Me.Label49.Size = New System.Drawing.Size(222, 21)
@@ -1116,7 +1164,7 @@ Partial Class Pohiaken
         '
         Me.PictureBox4.BackgroundImage = Global.Toitumispaevik_UI.My.Resources.Resources.pngegg
         Me.PictureBox4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
-        Me.PictureBox4.Location = New System.Drawing.Point(574, 395)
+        Me.PictureBox4.Location = New System.Drawing.Point(574, 372)
         Me.PictureBox4.Margin = New System.Windows.Forms.Padding(2)
         Me.PictureBox4.Name = "PictureBox4"
         Me.PictureBox4.Size = New System.Drawing.Size(270, 58)
@@ -1127,7 +1175,7 @@ Partial Class Pohiaken
         '
         Me.PictureBox3.BackgroundImage = Global.Toitumispaevik_UI.My.Resources.Resources.BELIEF_FUNCTIONAL_WATER
         Me.PictureBox3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
-        Me.PictureBox3.Location = New System.Drawing.Point(574, 327)
+        Me.PictureBox3.Location = New System.Drawing.Point(574, 289)
         Me.PictureBox3.Margin = New System.Windows.Forms.Padding(2)
         Me.PictureBox3.Name = "PictureBox3"
         Me.PictureBox3.Size = New System.Drawing.Size(270, 58)
@@ -1138,7 +1186,7 @@ Partial Class Pohiaken
         '
         Me.PictureBox1.BackgroundImage = Global.Toitumispaevik_UI.My.Resources.Resources.pngwing_com
         Me.PictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
-        Me.PictureBox1.Location = New System.Drawing.Point(574, 262)
+        Me.PictureBox1.Location = New System.Drawing.Point(574, 203)
         Me.PictureBox1.Margin = New System.Windows.Forms.Padding(2)
         Me.PictureBox1.Name = "PictureBox1"
         Me.PictureBox1.Size = New System.Drawing.Size(270, 58)
@@ -1685,33 +1733,33 @@ Partial Class Pohiaken
         Me.chrKoduPaneel.BorderlineWidth = 0
         Me.chrKoduPaneel.BorderSkin.BackColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(241, Byte), Integer), CType(CType(239, Byte), Integer))
         Me.chrKoduPaneel.BorderSkin.PageColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(241, Byte), Integer), CType(CType(239, Byte), Integer))
-        ChartArea25.BackColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(241, Byte), Integer), CType(CType(239, Byte), Integer))
-        ChartArea25.Name = "ChartArea1"
-        Me.chrKoduPaneel.ChartAreas.Add(ChartArea25)
-        Legend25.BackColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(241, Byte), Integer), CType(CType(239, Byte), Integer))
-        Legend25.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Legend25.IsTextAutoFit = False
-        Legend25.Name = "Legend1"
-        Me.chrKoduPaneel.Legends.Add(Legend25)
+        ChartArea9.BackColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(241, Byte), Integer), CType(CType(239, Byte), Integer))
+        ChartArea9.Name = "ChartArea1"
+        Me.chrKoduPaneel.ChartAreas.Add(ChartArea9)
+        Legend9.BackColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(241, Byte), Integer), CType(CType(239, Byte), Integer))
+        Legend9.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Legend9.IsTextAutoFit = False
+        Legend9.Name = "Legend1"
+        Me.chrKoduPaneel.Legends.Add(Legend9)
         Me.chrKoduPaneel.Location = New System.Drawing.Point(26, 78)
         Me.chrKoduPaneel.Margin = New System.Windows.Forms.Padding(2)
         Me.chrKoduPaneel.Name = "chrKoduPaneel"
         Me.chrKoduPaneel.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.SeaGreen
         Me.chrKoduPaneel.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Series31.ChartArea = "ChartArea1"
-        Series31.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Doughnut
-        Series31.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Series31.IsValueShownAsLabel = True
-        Series31.Legend = "Legend1"
-        Series31.Name = "Soogikorrad"
-        Series31.SmartLabelStyle.CalloutBackColor = System.Drawing.Color.White
-        Me.chrKoduPaneel.Series.Add(Series31)
+        Series11.ChartArea = "ChartArea1"
+        Series11.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Doughnut
+        Series11.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Series11.IsValueShownAsLabel = True
+        Series11.Legend = "Legend1"
+        Series11.Name = "Soogikorrad"
+        Series11.SmartLabelStyle.CalloutBackColor = System.Drawing.Color.White
+        Me.chrKoduPaneel.Series.Add(Series11)
         Me.chrKoduPaneel.Size = New System.Drawing.Size(432, 374)
         Me.chrKoduPaneel.TabIndex = 6
-        Title19.Font = New System.Drawing.Font("Century Gothic", 14.25!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Italic), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Title19.Name = "Title1"
-        Title19.Text = "Päevane tarbimine"
-        Me.chrKoduPaneel.Titles.Add(Title19)
+        Title7.Font = New System.Drawing.Font("Century Gothic", 14.25!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Italic), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Title7.Name = "Title1"
+        Title7.Text = "Päevane tarbimine"
+        Me.chrKoduPaneel.Titles.Add(Title7)
         '
         'lblKoduEesnimi
         '
@@ -2144,43 +2192,43 @@ Partial Class Pohiaken
         Me.chrKaaluMuutumine.BorderlineWidth = 0
         Me.chrKaaluMuutumine.BorderSkin.BackColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(241, Byte), Integer), CType(CType(239, Byte), Integer))
         Me.chrKaaluMuutumine.BorderSkin.PageColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(241, Byte), Integer), CType(CType(239, Byte), Integer))
-        ChartArea26.BackColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(241, Byte), Integer), CType(CType(239, Byte), Integer))
-        ChartArea26.Name = "ChartArea1"
-        Me.chrKaaluMuutumine.ChartAreas.Add(ChartArea26)
-        Legend26.BackColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(241, Byte), Integer), CType(CType(239, Byte), Integer))
-        Legend26.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Legend26.IsTextAutoFit = False
-        Legend26.Name = "Legend1"
-        Me.chrKaaluMuutumine.Legends.Add(Legend26)
+        ChartArea10.BackColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(241, Byte), Integer), CType(CType(239, Byte), Integer))
+        ChartArea10.Name = "ChartArea1"
+        Me.chrKaaluMuutumine.ChartAreas.Add(ChartArea10)
+        Legend10.BackColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(241, Byte), Integer), CType(CType(239, Byte), Integer))
+        Legend10.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Legend10.IsTextAutoFit = False
+        Legend10.Name = "Legend1"
+        Me.chrKaaluMuutumine.Legends.Add(Legend10)
         Me.chrKaaluMuutumine.Location = New System.Drawing.Point(364, 87)
         Me.chrKaaluMuutumine.Margin = New System.Windows.Forms.Padding(2)
         Me.chrKaaluMuutumine.Name = "chrKaaluMuutumine"
         Me.chrKaaluMuutumine.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.SeaGreen
         Me.chrKaaluMuutumine.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Series32.BorderWidth = 3
-        Series32.ChartArea = "ChartArea1"
-        Series32.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line
-        Series32.Color = System.Drawing.Color.Blue
-        Series32.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Series32.Legend = "Legend1"
-        Series32.Name = "Kaal"
-        Series32.SmartLabelStyle.CalloutBackColor = System.Drawing.Color.White
-        Series32.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.[Date]
-        Series33.BorderWidth = 3
-        Series33.ChartArea = "ChartArea1"
-        Series33.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line
-        Series33.Color = System.Drawing.Color.Lime
-        Series33.Legend = "Legend1"
-        Series33.Name = "Siht Kaal"
-        Series33.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.[Date]
-        Me.chrKaaluMuutumine.Series.Add(Series32)
-        Me.chrKaaluMuutumine.Series.Add(Series33)
+        Series12.BorderWidth = 3
+        Series12.ChartArea = "ChartArea1"
+        Series12.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line
+        Series12.Color = System.Drawing.Color.Blue
+        Series12.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Series12.Legend = "Legend1"
+        Series12.Name = "Kaal"
+        Series12.SmartLabelStyle.CalloutBackColor = System.Drawing.Color.White
+        Series12.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.[Date]
+        Series13.BorderWidth = 3
+        Series13.ChartArea = "ChartArea1"
+        Series13.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line
+        Series13.Color = System.Drawing.Color.Lime
+        Series13.Legend = "Legend1"
+        Series13.Name = "Siht Kaal"
+        Series13.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.[Date]
+        Me.chrKaaluMuutumine.Series.Add(Series12)
+        Me.chrKaaluMuutumine.Series.Add(Series13)
         Me.chrKaaluMuutumine.Size = New System.Drawing.Size(482, 387)
         Me.chrKaaluMuutumine.TabIndex = 22
-        Title20.Font = New System.Drawing.Font("Century Gothic", 14.25!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Italic), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Title20.Name = "Title1"
-        Title20.Text = "Kehakaalu graafik"
-        Me.chrKaaluMuutumine.Titles.Add(Title20)
+        Title8.Font = New System.Drawing.Font("Century Gothic", 14.25!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Italic), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Title8.Name = "Title1"
+        Title8.Text = "Kehakaalu graafik"
+        Me.chrKaaluMuutumine.Titles.Add(Title8)
         '
         'GroupBox2
         '
@@ -2255,18 +2303,18 @@ Partial Class Pohiaken
         Me.chrYlevaade.BorderlineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid
         Me.chrYlevaade.BorderSkin.BackColor = System.Drawing.Color.FromArgb(CType(CType(238, Byte), Integer), CType(CType(248, Byte), Integer), CType(CType(247, Byte), Integer))
         Me.chrYlevaade.BorderSkin.PageColor = System.Drawing.Color.FromArgb(CType(CType(238, Byte), Integer), CType(CType(248, Byte), Integer), CType(CType(247, Byte), Integer))
-        ChartArea27.Name = "ChartArea1"
-        Me.chrYlevaade.ChartAreas.Add(ChartArea27)
-        Legend27.Name = "Legend1"
-        Me.chrYlevaade.Legends.Add(Legend27)
+        ChartArea11.Name = "ChartArea1"
+        Me.chrYlevaade.ChartAreas.Add(ChartArea11)
+        Legend11.Name = "Legend1"
+        Me.chrYlevaade.Legends.Add(Legend11)
         Me.chrYlevaade.Location = New System.Drawing.Point(677, 101)
         Me.chrYlevaade.Margin = New System.Windows.Forms.Padding(5)
         Me.chrYlevaade.Name = "chrYlevaade"
-        Series34.ChartArea = "ChartArea1"
-        Series34.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Doughnut
-        Series34.Legend = "Legend1"
-        Series34.Name = "Series1"
-        Me.chrYlevaade.Series.Add(Series34)
+        Series14.ChartArea = "ChartArea1"
+        Series14.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Doughnut
+        Series14.Legend = "Legend1"
+        Series14.Name = "Series1"
+        Me.chrYlevaade.Series.Add(Series14)
         Me.chrYlevaade.Size = New System.Drawing.Size(992, 892)
         Me.chrYlevaade.TabIndex = 8
         Me.chrYlevaade.Text = "Ajalugu"
@@ -2419,33 +2467,33 @@ Partial Class Pohiaken
         Me.chrAjalooPaneel.BorderlineWidth = 0
         Me.chrAjalooPaneel.BorderSkin.BackColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(241, Byte), Integer), CType(CType(239, Byte), Integer))
         Me.chrAjalooPaneel.BorderSkin.PageColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(241, Byte), Integer), CType(CType(239, Byte), Integer))
-        ChartArea28.BackColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(241, Byte), Integer), CType(CType(239, Byte), Integer))
-        ChartArea28.Name = "ChartArea1"
-        Me.chrAjalooPaneel.ChartAreas.Add(ChartArea28)
-        Legend28.BackColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(241, Byte), Integer), CType(CType(239, Byte), Integer))
-        Legend28.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Legend28.IsTextAutoFit = False
-        Legend28.Name = "Legend1"
-        Me.chrAjalooPaneel.Legends.Add(Legend28)
+        ChartArea12.BackColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(241, Byte), Integer), CType(CType(239, Byte), Integer))
+        ChartArea12.Name = "ChartArea1"
+        Me.chrAjalooPaneel.ChartAreas.Add(ChartArea12)
+        Legend12.BackColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(241, Byte), Integer), CType(CType(239, Byte), Integer))
+        Legend12.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Legend12.IsTextAutoFit = False
+        Legend12.Name = "Legend1"
+        Me.chrAjalooPaneel.Legends.Add(Legend12)
         Me.chrAjalooPaneel.Location = New System.Drawing.Point(544, 112)
         Me.chrAjalooPaneel.Margin = New System.Windows.Forms.Padding(2)
         Me.chrAjalooPaneel.Name = "chrAjalooPaneel"
         Me.chrAjalooPaneel.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.SeaGreen
         Me.chrAjalooPaneel.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Series35.ChartArea = "ChartArea1"
-        Series35.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Doughnut
-        Series35.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Series35.IsValueShownAsLabel = True
-        Series35.Legend = "Legend1"
-        Series35.Name = "Makrod"
-        Series35.SmartLabelStyle.CalloutBackColor = System.Drawing.Color.White
-        Me.chrAjalooPaneel.Series.Add(Series35)
+        Series15.ChartArea = "ChartArea1"
+        Series15.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Doughnut
+        Series15.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Series15.IsValueShownAsLabel = True
+        Series15.Legend = "Legend1"
+        Series15.Name = "Makrod"
+        Series15.SmartLabelStyle.CalloutBackColor = System.Drawing.Color.White
+        Me.chrAjalooPaneel.Series.Add(Series15)
         Me.chrAjalooPaneel.Size = New System.Drawing.Size(300, 257)
         Me.chrAjalooPaneel.TabIndex = 26
-        Title21.Font = New System.Drawing.Font("Century Gothic", 14.25!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Italic), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Title21.Name = "Title1"
-        Title21.Text = "Päevane tarbimine"
-        Me.chrAjalooPaneel.Titles.Add(Title21)
+        Title9.Font = New System.Drawing.Font("Century Gothic", 14.25!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Italic), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Title9.Name = "Title1"
+        Title9.Text = "Päevane tarbimine"
+        Me.chrAjalooPaneel.Titles.Add(Title9)
         '
         'lblAjaluguKulutatudKalorid
         '
@@ -3217,13 +3265,13 @@ Partial Class Pohiaken
         Me.AutoSize = True
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(241, Byte), Integer), CType(CType(239, Byte), Integer))
         Me.ClientSize = New System.Drawing.Size(1083, 579)
+        Me.Controls.Add(Me.pnlRakenduseInfo)
         Me.Controls.Add(Me.pnlKodu)
         Me.Controls.Add(Me.pnlProfiiliSeaded)
         Me.Controls.Add(Me.pnlAjalugu)
         Me.Controls.Add(Me.pnlYlevaade)
         Me.Controls.Add(Me.pnlToidulaud)
         Me.Controls.Add(Me.pnlTreeningud)
-        Me.Controls.Add(Me.pnlRakenduseInfo)
         Me.Controls.Add(Me.pnlTopBar)
         Me.Controls.Add(Me.pnlLeftBar)
         Me.Font = New System.Drawing.Font("Century Gothic", 12.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -3533,4 +3581,7 @@ Partial Class Pohiaken
     Friend WithEvents pbAjalooValjavoteOnnestus As PictureBox
     Friend WithEvents btnAjalooValjavote As Button
     Friend WithEvents lblFailiAsukoht As Label
+    Friend WithEvents lnklblPaulig As LinkLabel
+    Friend WithEvents lnklblBelief As LinkLabel
+    Friend WithEvents lnklblMonster As LinkLabel
 End Class

@@ -305,6 +305,21 @@ Public Class Pohiaken
     End Sub
 
 
+    Private Sub lnklblMonster_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles lnklblMonster.LinkClicked
+        Process.Start("https://i.pinimg.com/originals/54/e0/5d/54e05d64cfba06861544f94d5405802f.png")
+    End Sub
+
+
+    Private Sub lnklblBelief_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles lnklblBelief.LinkClicked
+        Process.Start("https://www.beliefwater.com/wp-content/uploads/2021/05/BELIEF-FUNCTIONAL-WATER.png")
+    End Sub
+
+
+    Private Sub lnklblPaulig_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles lnklblPaulig.LinkClicked
+        Process.Start("https://banner2.cleanpng.com/20180813/osa/kisspng-paulig-oy-logo-coffee-brand-amp-quot-amp-quot-29-5b72054d8dbfa3.3462457815341991175806.jpg")
+    End Sub
+
+
     ' Funktsioon, mis reageerib väljalogimisnupu vajutusele
     Private Sub btnLogiValja_Click(sender As Object, e As EventArgs) Handles btnLogiValja.Click
         Me.Hide()
