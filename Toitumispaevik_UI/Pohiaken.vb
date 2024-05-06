@@ -366,9 +366,9 @@ Public Class Pohiaken
         pnlProfiiliSeaded.Visible = False
         pnlRakenduseInfo.Visible = False
         pnlAjalugu.Visible = True
+        MakroGraafik()
         menuuNuppudeVaikeVarv()
         btnAjalugu.BackColor = Color.FromArgb(205, 234, 231)
-        MakroGraafik()
     End Sub
 
 
