@@ -605,6 +605,8 @@ Public Class Pohiaken
             If IsNumeric(txtTreeninguLisamineEnergialkulu.Text) AndAlso txtTreeninguLisamineEnergialkulu.Text > 0 Then
                 If TreeningudK.TreeninguNimiEksisteerib(txtTreeninguLisamineNimi.Text) > 0 Then
                     lblTreeninguLisamineViga.Text = "Treening on juba andmebaasis!"
+                    txtTreeninguLisamineNimi.Text = ""
+                    txtTreeninguLisamineEnergialkulu.Text = ""
                     lblTreeninguLisamineViga.Visible = True
                 Else
                     lblTreeninguLisamineViga.Visible = False
