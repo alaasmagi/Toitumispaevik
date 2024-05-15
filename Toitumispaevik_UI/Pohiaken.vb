@@ -476,6 +476,10 @@ Public Class Pohiaken
                 txtKordaSalasona.Text = ""
                 lblVahetaSalasonaViga.Text = "Salasõnad ei ühti!"
                 lblVahetaSalasonaViga.Visible = True
+            ElseIf ProfiilK.ArvutaHash(txtVahetaSalasona.Text) = ProfiilK.UheAndmevaljaParingKasutajaTabelist(_kasutajaId, "password") OrElse
+                    ProfiilK.ArvutaHash(txtKordaSalasona.Text) = ProfiilK.UheAndmevaljaParingKasutajaTabelist(_kasutajaId, "password") Then
+                lblVahetaSalasonaViga.Text = "Salasõna juba kasutusel!"
+                lblVahetaSalasonaViga.Visible = True
             Else
                 ProfiilK.VahetaSalasona(_kasutajaId, txtVahetaSalasona.Text)
                 txtKehtivSalasona.Text = ""
