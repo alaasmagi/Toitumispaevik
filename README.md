@@ -1,4 +1,4 @@
-# Toitumispaevik(Janar) - fitness tracker 
+# Toitumispaevik (Janar) - fitness tracker 
 
 ## Description
 
