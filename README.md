@@ -37,7 +37,7 @@ The application uses SQLite database which means that data is stored locally.
 
 Data is separated between 11 tables. Each table has its own use.
 
-* **user_data** - stores information about user. Sensitive info is protected by using my own encryption methods and salted hash.
+* **user_data** - stores information about user. Sensitive info is protected by using my own encryption methods and hashing.
 
 * **user_daily_data** - stores daily information about user (ig. their calorie daily intake, consumption).
 
