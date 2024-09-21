@@ -20,15 +20,11 @@ As it is Windows application which was created as Visual Studio solution, the UI
 No external UI elements were used in this project. 
 
 ### Structure of the backend
-The application uses component-based architecture which means that the app is divided into 8 parts. Each part is a project on its own and has an interface.
+The application uses component-based architecture which means that the app is divided into 5 parts. Each part is a project on its own and has an interface.
 
 * **UI component** - contains and implements both login and main window and the logic behind UI elements.
 
-* **Core component** - implements different functions for calculations and connecting to database.
-
-* **Security layer** - implements functions which help to keep user data secure.
-
-* **Analysis component** - performs analysis specifically related to fitness functionality.
+* **Analysis component** - performs analysis and calculations specifically related to fitness functionality.
 
 * **Foods'/recipes' component** - handles food and recipe data. 
 
@@ -36,11 +32,8 @@ The application uses component-based architecture which means that the app is di
 
 * **Trainings' component** - handles training data.
 
-* **Sleep component** - handles sleep data.
-
 ### Data management
-The application uses Microsoft Azure SQL database as database server. Predecessor ("Toitumispaevik") used SQLite and, therefore, stored data locally. However this application can be used in any modern Windows system and data will be always within reach.
-Database is secured with username and password. Both are set as environmental variables in systems that use this application.
+The application uses SQLite database which means that data is stored locally. 
 
 Data is separated between 11 tables. Each table has its own use.
 
@@ -58,11 +51,7 @@ Data is separated between 11 tables. Each table has its own use.
 
 * **training_data** - stores all training styles (and fitness related information) that are available to select. User can also add their own training styles.
 
-* **user_training_plan** - stores all future plans related to user's training sessions.
-
 * **user_training_history** - stores all history related to user's training sessions.
-
-* **user_sleep_history** - stores all history related to user's sleeping sessions.
 
 * **recovery_questions** - stores all app's security questions used to recover forgotten password.
 
