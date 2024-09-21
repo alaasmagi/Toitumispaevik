@@ -7,7 +7,7 @@
 * UI language: Estonian
 * Languages and technologies: **Visual Basic, .NET framework & SQLite**
 * Authors: Aleksander Laasmägi, Kristofer Mäeots, Carmen Raun, Eeva-Maria Tšernova
-* Development place and year: **TalTech 2023**
+* Development place and year: **TalTech 2024**
 * Successor: Apexfit_desktop
 
 ## How to run
