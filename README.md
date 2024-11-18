@@ -66,3 +66,23 @@ UI is on a web page that runs on a server and backend runs on a different server
 
 ### iOS/Android application
 It is possible to create a phone application which contains UI. Backend still runs on a different server.
+
+## Illustrative images
+
+### Login window:
+![Screenshot 2024-11-18 211951](https://github.com/user-attachments/assets/fc056a66-4e53-439f-975b-c89e2ad28afd)
+
+### Home page:
+![Screenshot 2024-11-18 211648](https://github.com/user-attachments/assets/967c3a8e-bc7f-48a7-af31-2db02e6dfc60)
+
+### History page:
+![Screenshot 2024-11-18 211750](https://github.com/user-attachments/assets/055c5987-4ec7-441b-956f-20b6429d5750)
+
+### Overview page:
+![Screenshot 2024-11-18 212037](https://github.com/user-attachments/assets/25d58d5e-ddbf-41b3-84df-19abd2897cab)
+
+### Settings page:
+![Screenshot 2024-11-18 211845](https://github.com/user-attachments/assets/1380dd1a-6151-4475-8f08-f0d9640a2b25)
+
+
+
