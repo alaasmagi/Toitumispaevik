@@ -84,5 +84,9 @@ It is possible to create a phone application which contains UI. Backend still ru
 ### Settings page:
 ![Screenshot 2024-11-18 211845](https://github.com/user-attachments/assets/1380dd1a-6151-4475-8f08-f0d9640a2b25)
 
+## Detailed Documentation (In Estonian)
+[Report_EST](https://github.com/user-attachments/files/18101169/IAS0110_PROJEKT_Toitumispaevik_2024.pdf)
+
+
 
 
